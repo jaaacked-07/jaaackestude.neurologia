@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>NeuroResidência · Plataforma de Estudos · por Jackeline Delfini</title>
+<meta name="description" content="Plataforma de estudos de Neurologia para provas de residência médica (ENARE, Revalida, SUS-SP, PSU-MG, SES-PE, SES-RJ)." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   NEURORESIDÊNCIA — DESIGN SYSTEM
+   ============================================================ */
+:root{
+  --font-display:'Fraunces', Georgia, serif;
+  --font-body:'Manrope', system-ui, sans-serif;
+  --font-mono:'Spline Sans Mono', ui-monospace, monospace;
+
+  /* DARK (default) */
+  --bg:#0A0E18;
+  --bg-grad-1:#0c1424;
+  --bg-grad-2:#0a0e18;
+  --surface:rgba(22,29,46,0.72);
+  --surface-solid:#151b2b;
+  --surface-2:rgba(30,39,61,0.6);
+  --border:rgba(120,140,190,0.16);
+  --border-strong:rgba(120,140,190,0.30);
+  --text:#EAF0FF;
+  --text-soft:#A7B3CE;
+  --text-dim:#6B7795;
+
+  --teal:#2DD4BF;
+  --cyan:#38BDF8;
+  --rose:#FB7185;
+  --violet:#A78BFA;
+  --gold:#F5C451;
+  --green:#34D399;
+  --red:#F87171;
+  --amber:#FBBF24;
+
+  --accent:var(--teal);
+  --accent-2:var(--cyan);
+  --glow:0 0 0 1px rgba(45,212,191,.25), 0 8px 40px -8px rgba(45,212,191,.35);
+  --shadow:0 18px 50px -18px rgba(0,0,0,.6);
+  --radius:18px;
+  --radius-sm:12px;
+  --sidebar-w:264px;
+  --sidebar-w-collapsed:74px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+[data-theme="light"]{
+  --bg:#F4F6FC;
+  --bg-grad-1:#eef1fb;
+  --bg-grad-2:#f7f8fe;
+  --surface:rgba(255,255,255,0.78);
+  --surface-solid:#ffffff;
+  --surface-2:rgba(245,247,253,0.85);
+  --border:rgba(40,60,110,0.12);
+  --border-strong:rgba(40,60,110,0.22);
+  --text:#16203A;
+  --text-soft:#4A5878;
+  --text-dim:#8А96B4;
+  --text-dim:#8a96b4;
+  --teal:#0EA89A;
+  --cyan:#0284C7;
+  --rose:#E11D74;
+  --violet:#7C3AED;
+  --gold:#C8941B;
+  --green:#0F9D58;
+  --red:#DC2626;
+  --shadow:0 18px 50px -22px rgba(40,60,110,.28);
+  --glow:0 0 0 1px rgba(14,168,154,.18), 0 8px 30px -10px rgba(14,168,154,.30);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--font-body);
+  color:var(--text);
+  background:var(--bg);
+  background-image:
+    radial-gradient(1200px 700px at 85% -10%, rgba(56,189,248,.10), transparent 60%),
+    radial-gradient(900px 600px at -5% 110%, rgba(167,139,250,.10), transparent 55%),
+    radial-gradient(700px 500px at 50% 50%, rgba(45,212,191,.05), transparent 60%),
+    linear-gradient(160deg,var(--bg-grad-1),var(--bg-grad-2));
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.55;
+  transition:background-color .4s var(--ease), color .3s var(--ease);
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;line-height:1.15;letter-spacing:-.01em}
+.mono{font-family:var(--font-mono)}
+a{color:var(--accent);text-decoration:none}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:20px}
+::-webkit-scrollbar-track{background:transparent}
+::selection{background:rgba(45,212,191,.35);color:#fff}
+
+.glass{background:var(--surface);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);border:1px solid var(--border);border-radius:var(--radius)}
+.hidden{display:none!important}
+.btn{font-family:var(--font-body);cursor:pointer;border:none;border-radius:12px;padding:11px 18px;font-weight:700;font-size:.92rem;display:inline-flex;align-items:center;gap:8px;transition:.2s var(--ease);color:#06121b}
+.btn-primary{background:linear-gradient(120deg,var(--teal),var(--cyan));box-shadow:var(--glow)}
+.btn-primary:hover{transform:translateY(-2px);filter:brightness(1.07)}
+.btn-ghost{background:var(--surface-2);color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn-sm{padding:7px 13px;font-size:.82rem;border-radius:10px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:99px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-soft)}
+.pill.teal{color:var(--teal);border-color:rgba(45,212,191,.4);background:rgba(45,212,191,.10)}
+.pill.rose{color:var(--rose);border-color:rgba(251,113,133,.4);background:rgba(251,113,133,.10)}
+.pill.gold{color:var(--gold);border-color:rgba(245,196,81,.4);background:rgba(245,196,81,.10)}
+.pill.violet{color:var(--violet);border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.10)}
+
+/* ============== GATE / AUTH ============== */
+.veil{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;
+  background:radial-gradient(900px 600px at 50% -10%, rgba(56,189,248,.14), transparent 60%), linear-gradient(160deg,#0a0e18,#0c1424);}
+.auth-card{width:100%;max-width:430px;padding:38px 34px;border-radius:24px;position:relative;overflow:hidden}
+.auth-card::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(45,212,191,.07),transparent 40%);pointer-events:none}
+.brand-mark{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.brand-logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--teal),var(--cyan));display:grid;place-items:center;box-shadow:var(--glow);font-size:24px}
+.brand-name{font-family:var(--font-display);font-weight:700;font-size:1.25rem;letter-spacing:-.02em}
+.brand-name small{display:block;font-family:var(--font-body);font-weight:600;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim)}
+.auth-card h2{font-size:1.5rem;margin:6px 0 4px}
+.auth-card p.sub{color:var(--text-soft);font-size:.9rem;margin-bottom:22px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.78rem;font-weight:700;color:var(--text-soft);margin-bottom:6px;letter-spacing:.02em}
+.input{width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:13px 14px;color:var(--text);font-family:var(--font-body);font-size:.95rem;transition:.2s}
+.input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,212,191,.16)}
+.auth-switch{margin-top:18px;font-size:.86rem;color:var(--text-soft);text-align:center}
+.auth-switch b{color:var(--accent);cursor:pointer}
+.auth-msg{font-size:.82rem;border-radius:10px;padding:10px 12px;margin-bottom:12px}
+.auth-msg.err{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.auth-msg.ok{background:rgba(52,211,153,.12);color:var(--green);border:1px solid rgba(52,211,153,.3)}
+.auth-foot{margin-top:22px;text-align:center;font-size:.74rem;color:var(--text-dim)}
+
+/* ============== APP SHELL ============== */
+#app{display:none;min-height:100vh}
+.shell{display:flex;min-height:100vh}
+.sidebar{width:var(--sidebar-w);flex-shrink:0;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;
+  border-right:1px solid var(--border);background:var(--surface);backdrop-filter:blur(20px);transition:width .3s var(--ease);z-index:40}
+.sidebar.collapsed{width:var(--sidebar-w-collapsed)}
+.side-head{display:flex;align-items:center;gap:11px;padding:18px 16px 14px;border-bottom:1px solid var(--border)}
+.side-head .brand-logo{width:38px;height:38px;font-size:19px;border-radius:11px}
+.side-title{overflow:hidden;white-space:nowrap}
+.side-title b{font-family:var(--font-display);font-size:1.02rem;font-weight:700}
+.side-title small{display:block;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-dim)}
+.sidebar.collapsed .side-title,.sidebar.collapsed .nav-label,.sidebar.collapsed .side-foot-text,.sidebar.collapsed .np-text{display:none}
+.nav{flex:1;overflow-y:auto;padding:12px 10px;display:flex;flex-direction:column;gap:3px}
+.nav-section{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);padding:12px 12px 5px;font-weight:700}
+.sidebar.collapsed .nav-section{text-align:center;font-size:.5rem;padding:10px 0 4px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;cursor:pointer;color:var(--text-soft);font-weight:600;font-size:.9rem;transition:.18s var(--ease);position:relative;border:1px solid transparent}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}
+.nav-item.active{background:linear-gradient(100deg,rgba(45,212,191,.16),rgba(56,189,248,.08));color:var(--text);border-color:rgba(45,212,191,.3)}
+.nav-item.active::before{content:"";position:absolute;left:-10px;top:18%;height:64%;width:3px;border-radius:3px;background:linear-gradient(var(--teal),var(--cyan))}
+.nav-ico{width:22px;text-align:center;font-size:1.05rem;flex-shrink:0}
+.side-foot{padding:12px;border-top:1px solid var(--border)}
+.np-chip{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:9px 11px}
+.np-chip .np-ico{font-size:1.1rem}
+.np-text b{display:block;font-family:var(--font-mono);font-size:.95rem;color:var(--gold)}
+.np-text small{font-size:.64rem;color:var(--text-dim)}
+
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:14px;padding:13px 22px;border-bottom:1px solid var(--border);background:var(--surface);backdrop-filter:blur(18px)}
+.icon-btn{width:40px;height:40px;border-radius:11px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-soft);cursor:pointer;display:grid;place-items:center;font-size:1.1rem;transition:.18s;flex-shrink:0}
+.icon-btn:hover{color:var(--accent);border-color:var(--accent)}
+.search-wrap{flex:1;max-width:560px;position:relative}
+.search-wrap input{width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:11px 14px 11px 40px;color:var(--text);font-family:var(--font-body)}
+.search-wrap input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,212,191,.14)}
+.search-wrap .s-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text-dim)}
+.search-results{position:absolute;top:52px;left:0;right:0;max-height:380px;overflow-y:auto;z-index:60;padding:6px}
+.search-results .sr{padding:10px 12px;border-radius:10px;cursor:pointer;display:flex;gap:10px;align-items:center}
+.search-results .sr:hover{background:var(--surface-2)}
+.search-results .sr small{color:var(--text-dim);font-size:.72rem}
+.topbar-user{display:flex;align-items:center;gap:10px}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--violet));display:grid;place-items:center;font-weight:800;color:#fff;font-size:.9rem}
+.content{padding:26px clamp(16px,3vw,40px);max-width:1240px;width:100%;margin:0 auto;flex:1}
+
+/* page transitions */
+.view{animation:fadeUp .45s var(--ease) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.page-head{margin-bottom:22px}
+.page-head h1{font-size:clamp(1.6rem,3vw,2.2rem)}
+.page-head .crumb{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:6px}
+.page-head p{color:var(--text-soft);max-width:760px;margin-top:6px}
+
+.grid{display:grid;gap:16px}
+.g-2{grid-template-columns:repeat(2,1fr)}
+.g-3{grid-template-columns:repeat(3,1fr)}
+.g-4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1000px){.g-3,.g-4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.g-2,.g-3,.g-4{grid-template-columns:1fr}}
+
+.card{padding:20px;border-radius:var(--radius)}
+.card.glass{transition:transform .25s var(--ease),border-color .25s}
+.card.hover:hover{transform:translateY(-4px);border-color:var(--border-strong);box-shadow:var(--shadow)}
+.stat{display:flex;flex-direction:column;gap:4px}
+.stat .v{font-family:var(--font-mono);font-size:1.9rem;font-weight:600;line-height:1}
+.stat .l{font-size:.78rem;color:var(--text-soft);font-weight:600}
+.stat .ico{font-size:1.3rem;margin-bottom:6px}
+
+.credit{display:inline-flex;align-items:center;gap:10px;padding:9px 16px;border-radius:99px;background:linear-gradient(100deg,rgba(251,113,133,.12),rgba(167,139,250,.10));border:1px solid rgba(251,113,133,.3);font-size:.84rem;color:var(--text)}
+.credit b{font-family:var(--font-display);font-weight:600;background:linear-gradient(100deg,var(--rose),var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.credit .spark{animation:spark 3s ease-in-out infinite}
+@keyframes spark{0%,100%{opacity:.6;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+
+.progress{height:9px;border-radius:99px;background:var(--surface-2);overflow:hidden;border:1px solid var(--border)}
+.progress > i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--cyan));transition:width 1s var(--ease);box-shadow:0 0 12px rgba(45,212,191,.5)}
+
+/* module cards */
+.mod-card{padding:18px;border-radius:var(--radius);cursor:pointer;position:relative;overflow:hidden}
+.mod-card .mod-emoji{font-size:1.6rem}
+.mod-card h3{font-size:1.05rem;margin:8px 0 4px}
+.mod-card p{font-size:.82rem;color:var(--text-soft);min-height:34px}
+.mod-card .mod-meta{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 10px}
+.mod-card .tag{font-size:.66rem;font-weight:700;padding:3px 8px;border-radius:7px;background:var(--surface-2);color:var(--text-dim)}
+
+/* module detail tabs */
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:6px;border-radius:14px;margin-bottom:20px;border:1px solid var(--border);background:var(--surface)}
+.tab{white-space:nowrap;padding:9px 15px;border-radius:10px;cursor:pointer;font-weight:700;font-size:.84rem;color:var(--text-soft);border:1px solid transparent;transition:.18s}
+.tab:hover{color:var(--text)}
+.tab.active{background:linear-gradient(100deg,rgba(45,212,191,.18),rgba(56,189,248,.08));color:var(--text);border-color:rgba(45,212,191,.3)}
+
+/* teaching content */
+.teach{font-size:.97rem;color:var(--text)}
+.teach h3{font-size:1.25rem;margin:26px 0 10px;color:var(--text);display:flex;align-items:center;gap:9px}
+.teach h3::before{content:"";width:5px;height:22px;border-radius:4px;background:linear-gradient(var(--teal),var(--cyan));display:inline-block}
+.teach h4{font-size:1.05rem;margin:18px 0 7px;color:var(--accent-2)}
+.teach p{margin:9px 0;color:var(--text-soft);line-height:1.72}
+.teach strong{color:var(--text);font-weight:700}
+.teach ul,.teach ol{margin:9px 0 9px 8px;padding-left:18px;color:var(--text-soft)}
+.teach li{margin:5px 0;line-height:1.65}
+.teach li::marker{color:var(--accent)}
+.callout{border-radius:14px;padding:14px 16px;margin:16px 0;border:1px solid var(--border);background:var(--surface-2);position:relative;font-size:.92rem}
+.callout b{display:block;margin-bottom:4px}
+.callout.tip{border-color:rgba(45,212,191,.35);background:rgba(45,212,191,.08)}
+.callout.tip b{color:var(--teal)}
+.callout.warn{border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.08)}
+.callout.warn b{color:var(--amber)}
+.callout.trap{border-color:rgba(248,113,113,.35);background:rgba(248,113,113,.08)}
+.callout.trap b{color:var(--red)}
+.callout.mne{border-color:rgba(167,139,250,.35);background:rgba(167,139,250,.08)}
+.callout.mne b{color:var(--violet)}
+.callout.fast{border-color:rgba(245,196,81,.35);background:rgba(245,196,81,.08)}
+.callout.fast b{color:var(--gold)}
+
+table.med{width:100%;border-collapse:collapse;margin:14px 0;font-size:.86rem;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+table.med th{background:var(--surface-2);text-align:left;padding:10px 12px;font-weight:700;color:var(--text);font-size:.78rem;letter-spacing:.02em;border-bottom:1px solid var(--border)}
+table.med td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text-soft);vertical-align:top}
+table.med tr:last-child td{border-bottom:none}
+table.med tr:hover td{background:var(--surface-2)}
+
+/* flowchart */
+.flow{display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.flow-node{border:1px solid var(--border);border-radius:14px;padding:14px 16px;background:var(--surface-2);transition:.2s;cursor:default}
+.flow-node.q{cursor:pointer;border-color:rgba(56,189,248,.35)}
+.flow-node.q:hover{border-color:var(--accent-2);transform:translateX(4px)}
+.flow-node b{color:var(--text)}
+.flow-opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.flow-opts .btn-sm{background:var(--surface);border:1px solid var(--border);color:var(--text)}
+.flow-opts .btn-sm:hover{border-color:var(--accent);color:var(--accent)}
+.flow-result{border-left:3px solid var(--teal);padding-left:14px;margin-top:10px}
+.flow-step{display:flex;gap:12px;align-items:flex-start}
+.flow-step .n{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--cyan));color:#06121b;font-weight:800;display:grid;place-items:center;font-size:.85rem}
+.flow-arrow{text-align:center;color:var(--accent);font-size:1.1rem;line-height:.5}
+
+/* questions */
+.q-card{padding:20px;border-radius:var(--radius);margin-bottom:14px}
+.q-stem{font-size:.97rem;line-height:1.7;margin-bottom:14px}
+.q-stem .qn{font-family:var(--font-mono);color:var(--accent);font-weight:600;margin-right:6px}
+.q-opt{display:flex;gap:11px;align-items:flex-start;padding:11px 14px;border:1px solid var(--border);border-radius:11px;margin-bottom:8px;cursor:pointer;transition:.16s;font-size:.9rem}
+.q-opt:hover{border-color:var(--accent)}
+.q-opt .letter{font-weight:800;color:var(--text-dim);flex-shrink:0}
+.q-opt.correct{border-color:var(--green);background:rgba(52,211,153,.10)}
+.q-opt.correct .letter{color:var(--green)}
+.q-opt.wrong{border-color:var(--red);background:rgba(248,113,113,.10)}
+.q-opt.wrong .letter{color:var(--red)}
+.q-opt.disabled{cursor:default}
+.q-expl{margin-top:12px;border-radius:12px;padding:14px;background:var(--surface-2);border:1px solid var(--border);font-size:.88rem;color:var(--text-soft);line-height:1.7;display:none}
+.q-expl.show{display:block;animation:fadeUp .3s}
+.q-expl b{color:var(--teal)}
+
+/* flashcards */
+.fc-stage{perspective:1600px;max-width:560px;margin:0 auto}
+.fc{position:relative;width:100%;min-height:240px;transform-style:preserve-3d;transition:transform .6s var(--ease);cursor:pointer}
+.fc.flip{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border:1px solid var(--border)}
+.fc-front{background:linear-gradient(150deg,var(--surface-2),var(--surface));}
+.fc-back{background:linear-gradient(150deg,rgba(45,212,191,.10),var(--surface));transform:rotateY(180deg)}
+.fc-face .tagm{position:absolute;top:14px;left:16px;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);font-weight:700}
+.fc-q{font-size:1.15rem;font-family:var(--font-display);line-height:1.3}
+.fc-a{font-size:.98rem;color:var(--text-soft);line-height:1.65}
+.fc-hint{position:absolute;bottom:14px;font-size:.7rem;color:var(--text-dim)}
+.fc-controls{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+.fc-rate{display:flex;gap:8px;justify-content:center;margin-top:14px}
+.fc-rate .btn-sm{flex:1;max-width:130px}
+.rate-hard{background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.rate-med{background:rgba(251,191,36,.15);color:var(--amber);border:1px solid rgba(251,191,36,.3)}
+.rate-easy{background:rgba(52,211,153,.15);color:var(--green);border:1px solid rgba(52,211,153,.3)}
+.fc-counter{text-align:center;color:var(--text-dim);font-family:var(--font-mono);font-size:.82rem;margin-top:10px}
+
+/* clinical case */
+.case{padding:20px;border-radius:var(--radius);margin-bottom:16px}
+.case .case-tag{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose)}
+.case h4{margin:6px 0 10px;font-size:1.15rem;color:var(--text)}
+.case-block{margin:12px 0}
+.case-block .lbl{font-size:.74rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-2);margin-bottom:5px}
+.case-block p{font-size:.9rem;color:var(--text-soft);line-height:1.7}
+.case-reveal{border:1px dashed var(--border-strong);border-radius:12px;padding:14px;margin-top:10px}
+.case-reveal[open] summary{color:var(--accent)}
+.case-reveal summary{cursor:pointer;font-weight:700;color:var(--text);list-style:none}
+.case-reveal summary::before{content:"▸ ";color:var(--accent)}
+.case-reveal[open] summary::before{content:"▾ "}
+
+/* checklist */
+.checklist{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.check{display:flex;align-items:center;gap:12px;padding:13px 15px;border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:.16s;background:var(--surface-2)}
+.check:hover{border-color:var(--accent)}
+.check .box{width:24px;height:24px;border-radius:7px;border:2px solid var(--border-strong);display:grid;place-items:center;flex-shrink:0;transition:.2s;font-size:.85rem;color:transparent}
+.check.done .box{background:linear-gradient(135deg,var(--teal),var(--cyan));border-color:transparent;color:#06121b}
+.check.done span{color:var(--text-dim);text-decoration:line-through}
+.check span{font-weight:600;font-size:.92rem}
+
+/* notes */
+.note-area{width:100%;min-height:200px;background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:16px;color:var(--text);font-family:var(--font-body);font-size:.95rem;line-height:1.7;resize:vertical}
+.note-area:focus{outline:none;border-color:var(--accent)}
+.save-state{font-size:.78rem;color:var(--text-dim)}
+.save-state.saved{color:var(--green)}
+
+/* toast */
+.toast-wrap{position:fixed;bottom:22px;right:22px;z-index:200;display:flex;flex-direction:column;gap:10px}
+.toast{padding:13px 18px;border-radius:13px;background:var(--surface-solid);border:1px solid var(--border-strong);box-shadow:var(--shadow);font-size:.88rem;font-weight:600;display:flex;align-items:center;gap:10px;animation:toastIn .3s var(--ease);max-width:340px}
+.toast.gold{border-color:rgba(245,196,81,.5)}
+@keyframes toastIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
+
+/* brain map */
+.brain-wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
+@media(max-width:940px){.brain-wrap{grid-template-columns:1fr}}
+.brain-stage{border-radius:22px;padding:18px;position:relative;min-height:440px;display:flex;align-items:center;justify-content:center;overflow:hidden;
+  background:radial-gradient(600px 400px at 50% 40%, rgba(56,189,248,.08), transparent 70%)}
+.brain-stage svg{width:100%;max-width:560px;filter:drop-shadow(0 18px 40px rgba(0,0,0,.4));animation:brainFloat 7s ease-in-out infinite}
+@keyframes brainFloat{0%,100%{transform:translateY(0) rotateZ(0)}50%{transform:translateY(-8px)}}
+.region{cursor:pointer;transition:.4s var(--ease);transform-box:fill-box;transform-origin:center}
+.region:hover{filter:brightness(1.25)}
+.region.mastered{animation:pulseRegion 2.2s ease-in-out infinite}
+@keyframes pulseRegion{0%,100%{filter:drop-shadow(0 0 3px currentColor)}50%{filter:drop-shadow(0 0 14px currentColor) brightness(1.3)}}
+.brain-info{padding:20px;border-radius:18px}
+.brain-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.brain-legend .lg{display:flex;align-items:center;gap:6px;font-size:.74rem;color:var(--text-soft)}
+.brain-legend .dot{width:11px;height:11px;border-radius:50%}
+.region-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.region-row:last-child{border-bottom:none}
+.region-row .rdot{width:12px;height:12px;border-radius:4px;flex-shrink:0}
+.region-row .rname{flex:1;font-size:.86rem;font-weight:600}
+.region-row .rpct{font-family:var(--font-mono);font-size:.82rem;color:var(--accent)}
+
+/* achievements */
+.ach{padding:18px;border-radius:16px;text-align:center;transition:.25s;border:1px solid var(--border)}
+.ach.locked{opacity:.5;filter:grayscale(.6)}
+.ach.unlocked{border-color:rgba(245,196,81,.4);background:rgba(245,196,81,.06)}
+.ach .medal{font-size:2.2rem;margin-bottom:8px}
+.ach h4{font-size:.95rem}
+.ach p{font-size:.74rem;color:var(--text-soft);margin-top:4px}
+
+/* calendar */
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:12px}
+.cal .d{aspect-ratio:1;border-radius:8px;background:var(--surface-2);display:grid;place-items:center;font-size:.72rem;color:var(--text-dim);border:1px solid var(--border)}
+.cal .d.on{background:linear-gradient(135deg,rgba(45,212,191,.4),rgba(56,189,248,.3));color:var(--text);border-color:rgba(45,212,191,.4)}
+.cal .d.today{outline:2px solid var(--accent)}
+
+/* chart bars */
+.bar-row{display:flex;align-items:center;gap:12px;margin:9px 0}
+.bar-row .blbl{width:130px;font-size:.82rem;font-weight:600;flex-shrink:0}
+.bar-track{flex:1;height:24px;border-radius:7px;background:var(--surface-2);overflow:hidden;border:1px solid var(--border);position:relative}
+.bar-fill{height:100%;border-radius:7px;background:linear-gradient(90deg,var(--teal),var(--cyan));display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:.7rem;font-weight:800;color:#06121b;transition:width 1s var(--ease)}
+
+.footer{padding:24px;text-align:center;border-top:1px solid var(--border);color:var(--text-dim);font-size:.8rem;margin-top:30px}
+.footer .credit{margin-top:8px}
+
+/* mobile sidebar */
+.scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:35}
+@media(max-width:880px){
+  .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);box-shadow:var(--shadow)}
+  .sidebar.open{transform:none}
+  .sidebar.collapsed{width:var(--sidebar-w)}
+  .sidebar.collapsed .side-title,.sidebar.collapsed .nav-label,.sidebar.collapsed .np-text{display:block}
+  .scrim.show{display:block}
+  .content{padding:18px 14px}
+}
+.skeleton{background:linear-gradient(90deg,var(--surface-2) 25%,var(--surface) 50%,var(--surface-2) 75%);background-size:200% 100%;animation:sk 1.3s infinite;border-radius:12px}
+@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.loader{position:fixed;inset:0;display:grid;place-items:center;z-index:90;background:var(--bg)}
+.loader .ring{width:54px;height:54px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- ============ LOADER ============ -->
+<div class="loader" id="loader"><div style="text-align:center"><div class="ring" style="margin:0 auto 14px"></div><div style="color:var(--text-dim);font-size:.85rem">Carregando NeuroResidência…</div></div></div>
+
+<!-- ============ GATE (senha geral) ============ -->
+<div class="veil" id="gate">
+  <div class="auth-card glass">
+    <div class="brand-mark"><div class="brand-logo">🧠</div><div class="brand-name">NeuroResidência<small>Acesso Restrito</small></div></div>
+    <h2>Área exclusiva</h2>
+    <p class="sub">Esta plataforma é de uso convidado. Insira a senha de acesso para continuar.</p>
+    <div id="gateMsg"></div>
+    <div class="field"><label>Senha geral de acesso</label>
+      <input class="input" type="password" id="gatePass" placeholder="••••••••••••" autocomplete="off" onkeydown="if(event.key==='Enter')checkGate()"/></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="checkGate()">Entrar</button>
+    <div class="auth-foot">Plataforma desenvolvida por <b style="color:var(--rose)">Jackeline Delfini</b></div>
+  </div>
+</div>
+
+<!-- ============ AUTH (login/cadastro) ============ -->
+<div class="veil hidden" id="auth">
+  <div class="auth-card glass">
+    <div class="brand-mark"><div class="brand-logo">🧠</div><div class="brand-name">NeuroResidência<small>ENARE · Revalida · SUS</small></div></div>
+    <h2 id="authTitle">Bem-vinda de volta</h2>
+    <p class="sub" id="authSub">Acesse sua conta para continuar seus estudos.</p>
+    <div id="authMsg"></div>
+    <div class="field" id="nameField" style="display:none"><label>Nome</label><input class="input" id="aName" placeholder="Seu nome"/></div>
+    <div class="field"><label>E-mail</label><input class="input" type="email" id="aEmail" placeholder="voce@email.com"/></div>
+    <div class="field"><label>Senha</label><input class="input" type="password" id="aPass" placeholder="Mínimo 6 caracteres" onkeydown="if(event.key==='Enter')doAuth()"/></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" id="authBtn" onclick="doAuth()">Entrar</button>
+    <div class="auth-switch" id="authSwitch">Ainda não tem conta? <b onclick="toggleAuth()">Cadastre-se</b></div>
+    <div class="auth-foot">Seus dados de estudo são salvos automaticamente.</div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app">
+  <div class="scrim" id="scrim" onclick="closeMobileSidebar()"></div>
+  <div class="shell">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="side-head">
+        <div class="brand-logo">🧠</div>
+        <div class="side-title"><b>NeuroResidência</b><small>by Jackeline D.</small></div>
+      </div>
+      <nav class="nav" id="nav"></nav>
+      <div class="side-foot">
+        <div class="np-chip">
+          <span class="np-ico">⚡</span>
+          <div class="np-text"><b id="sideNP">0</b><small>NeuroPontos</small></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn" onclick="toggleSidebar()" title="Recolher menu">☰</button>
+        <div class="search-wrap">
+          <span class="s-ico">🔎</span>
+          <input id="globalSearch" placeholder="Buscar temas, módulos, tópicos…" oninput="doSearch(this.value)" onblur="setTimeout(()=>hideSearch(),180)"/>
+          <div class="search-results glass hidden" id="searchResults"></div>
+        </div>
+        <div class="topbar-user">
+          <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Tema">🌙</button>
+          <div class="avatar" id="userAvatar">J</div>
+          <button class="icon-btn" onclick="doLogout()" title="Sair">⏻</button>
+        </div>
+      </header>
+      <div class="content" id="content"></div>
+      <footer class="footer">
+        NeuroResidência · Plataforma de estudos para residência médica
+        <div class="credit"><span class="spark">✦</span> Desenvolvido por <b>Jackeline Delfini</b></div>
+      </footer>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toasts"></div>
+
+<script type="module">
+/* ============================================================
+   FIREBASE + DATA LAYER  (com fallback localStorage)
+   ============================================================ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAKN3qsYIc3pel81vl8WEAH6Ob4oR-icAM",
+  authDomain: "jackeline-study-platform.firebaseapp.com",
+  projectId: "jackeline-study-platform",
+  storageBucket: "jackeline-study-platform.firebasestorage.app",
+  messagingSenderId: "574246127117",
+  appId: "1:574246127117:web:29eedab81ea4251b23f744"
+};
+
+let fb = { ok:false, auth:null, db:null };
+try {
+  const appFb = initializeApp(firebaseConfig);
+  fb.auth = getAuth(appFb);
+  fb.db = getFirestore(appFb);
+  fb.ok = true;
+} catch(e){ console.warn("Firebase indisponível, usando armazenamento local.", e); }
+
+const GATE_PASSWORD = "REVALIDA22528129";
+
+/* ---------- estado global ---------- */
+const State = {
+  uid:null, email:null, name:"Estudante", usingLocal:false,
+  data:{
+    checklists:{}, questions:{}, flashcards:{}, notes:{}, highlights:{}, favorites:[],
+    spaced:{}, dailySeed:null, dailyDone:{q:0,f:0},
+    surgeonProgress:{
+      currentPhase:1, cyclePercentage:0, completedStages:[], achievements:[],
+      studyStreak:0, lastStreakDay:null, questionsAnswered:0, correctAnswers:0,
+      flashcardsReviewed:0, completedModules:[], lastActivity:null, neuroPoints:0,
+      regionLevels:{}, studyDays:[], goals:{ daily:{q:20,f:15,h:2}, weekly:{mods:2}, monthly:{mods:8} }
+    }
+  }
+};
+const SP = () => State.data.surgeonProgress;
+
+/* ---------- persistência ---------- */
+function localKey(){ return "neuroresid_"+(State.uid||"anon"); }
+function saveLocal(){ try{ localStorage.setItem(localKey(), JSON.stringify(State.data)); }catch(e){} }
+function loadLocal(){ try{ const r=localStorage.getItem(localKey()); if(r) State.data=Object.assign(State.data, JSON.parse(r)); }catch(e){} }
+
+let saveTimer=null;
+async function persist(showFlag){
+  saveLocal();
+  if(fb.ok && State.uid && !State.usingLocal){
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(async ()=>{
+      try{
+        await setDoc(doc(fb.db,"users",State.uid),{ data:State.data, email:State.email, name:State.name, updated:Date.now() },{merge:true});
+        await setDoc(doc(fb.db,"surgeonProgress",State.uid), SP(), {merge:true});
+      }catch(e){ State.usingLocal=true; }
+    }, 700);
+  }
+  if(showFlag) markSaved();
+}
+async function loadCloud(){
+  if(fb.ok && State.uid && !State.usingLocal){
+    try{
+      const snap=await getDoc(doc(fb.db,"users",State.uid));
+      if(snap.exists() && snap.data().data){ State.data=Object.assign(State.data, snap.data().data); }
+    }catch(e){ State.usingLocal=true; loadLocal(); }
+  } else { loadLocal(); }
+}
+
+/* ---------- expor p/ inline handlers ---------- */
+window.NR = {};
+
+/* ============================================================
+   GATE + AUTH
+   ============================================================ */
+window.checkGate = function(){
+  const v=document.getElementById('gatePass').value.trim();
+  const m=document.getElementById('gateMsg');
+  if(v===GATE_PASSWORD){
+    sessionStorage.setItem("nr_gate","1");
+    document.getElementById('gate').classList.add('hidden');
+    document.getElementById('auth').classList.remove('hidden');
+  } else {
+    m.innerHTML='<div class="auth-msg err">Senha incorreta. Verifique e tente novamente.</div>';
+    document.getElementById('gatePass').value='';
+  }
+};
+
+let authMode='login';
+window.toggleAuth=function(){
+  authMode = authMode==='login'?'signup':'login';
+  document.getElementById('authTitle').textContent = authMode==='login'?'Bem-vinda de volta':'Criar conta';
+  document.getElementById('authSub').textContent = authMode==='login'?'Acesse sua conta para continuar seus estudos.':'Cadastre-se para salvar seu progresso na nuvem.';
+  document.getElementById('authBtn').textContent = authMode==='login'?'Entrar':'Cadastrar';
+  document.getElementById('nameField').style.display = authMode==='signup'?'block':'none';
+  document.getElementById('authSwitch').innerHTML = authMode==='login'
+    ? 'Ainda não tem conta? <b onclick="toggleAuth()">Cadastre-se</b>'
+    : 'Já tem conta? <b onclick="toggleAuth()">Entrar</b>';
+  document.getElementById('authMsg').innerHTML='';
+};
+
+function authErr(msg){ document.getElementById('authMsg').innerHTML='<div class="auth-msg err">'+msg+'</div>'; }
+
+window.doAuth=async function(){
+  const email=document.getElementById('aEmail').value.trim();
+  const pass=document.getElementById('aPass').value;
+  const name=document.getElementById('aName').value.trim();
+  if(!email||!pass){ authErr('Preencha e-mail e senha.'); return; }
+  if(pass.length<6){ authErr('A senha deve ter ao menos 6 caracteres.'); return; }
+  const btn=document.getElementById('authBtn'); btn.textContent='Aguarde…'; btn.disabled=true;
+
+  if(!fb.ok){ // fallback offline
+    State.usingLocal=true; State.uid="local_"+btoa(email).slice(0,12); State.email=email;
+    State.name=name||email.split('@')[0];
+    await afterLogin(); btn.disabled=false; return;
+  }
+  try{
+    if(authMode==='signup'){
+      const cred=await createUserWithEmailAndPassword(fb.auth,email,pass);
+      if(name) await updateProfile(cred.user,{displayName:name});
+    } else {
+      await signInWithEmailAndPassword(fb.auth,email,pass);
+    }
+  }catch(e){
+    btn.disabled=false; btn.textContent=authMode==='login'?'Entrar':'Cadastrar';
+    const map={'auth/invalid-credential':'E-mail ou senha incorretos.','auth/email-already-in-use':'E-mail já cadastrado. Faça login.','auth/invalid-email':'E-mail inválido.','auth/weak-password':'Senha muito fraca.','auth/network-request-failed':'Sem conexão. Tente novamente.'};
+    authErr(map[e.code]||('Erro: '+(e.code||e.message)));
+  }
+};
+
+window.doLogout=async function(){
+  if(fb.ok && !State.usingLocal){ try{ await signOut(fb.auth); }catch(e){} }
+  location.reload();
+};
+
+async function afterLogin(){
+  document.getElementById('auth').classList.add('hidden');
+  document.getElementById('gate').classList.add('hidden');
+  await loadCloud();
+  initStreak();
+  document.getElementById('app').style.display='block';
+  document.getElementById('userAvatar').textContent=(State.name[0]||'J').toUpperCase();
+  buildNav();
+  navigate(location.hash.replace('#','')||'dashboard');
+  updateNP();
+  persist();
+}
+
+if(fb.ok){
+  onAuthStateChanged(fb.auth, async (user)=>{
+    if(user && sessionStorage.getItem("nr_gate")==="1"){
+      State.uid=user.uid; State.email=user.email; State.name=user.displayName||user.email.split('@')[0];
+      await afterLogin();
+    }
+    document.getElementById('loader').style.display='none';
+  });
+} else {
+  document.getElementById('loader').style.display='none';
+}
+setTimeout(()=>{ document.getElementById('loader').style.display='none'; },2500);
+
+/* ============================================================
+   STREAK / NEUROPONTOS / TOAST
+   ============================================================ */
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function initStreak(){
+  const sp=SP(); const t=todayStr();
+  if(!sp.studyDays) sp.studyDays=[];
+  if(sp.lastStreakDay!==t){
+    const y=new Date(Date.now()-864e5).toISOString().slice(0,10);
+    sp.studyStreak = (sp.lastStreakDay===y) ? (sp.studyStreak||0)+1 : 1;
+    sp.lastStreakDay=t;
+    if(!sp.studyDays.includes(t)) sp.studyDays.push(t);
+  }
+}
+function registerActivity(){ const sp=SP(); sp.lastActivity=Date.now(); const t=todayStr(); if(!sp.studyDays.includes(t))sp.studyDays.push(t); }
+function addNP(n,reason){ const sp=SP(); sp.neuroPoints=(sp.neuroPoints||0)+n; updateNP(); if(reason)toast('⚡ +'+n+' NeuroPontos · '+reason,'gold'); checkAchievements(); }
+function updateNP(){ document.getElementById('sideNP').textContent=(SP().neuroPoints||0).toLocaleString('pt-BR'); }
+
+window.toast=function(msg,cls){
+  const w=document.getElementById('toasts'); const t=document.createElement('div');
+  t.className='toast '+(cls||''); t.innerHTML=msg; w.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(30px)';setTimeout(()=>t.remove(),350);},3200);
+};
+function markSaved(){ const el=document.getElementById('saveState'); if(el){el.textContent='✓ Salvo';el.classList.add('saved');setTimeout(()=>{el.textContent='';el.classList.remove('saved');},1800);} }
+
+/* ============================================================
+   THEME / SIDEBAR / SEARCH
+   ============================================================ */
+window.toggleTheme=function(){
+  const h=document.documentElement; const cur=h.getAttribute('data-theme');
+  const nx=cur==='dark'?'light':'dark'; h.setAttribute('data-theme',nx);
+  document.getElementById('themeBtn').textContent = nx==='dark'?'🌙':'☀️';
+  try{localStorage.setItem('nr_theme',nx);}catch(e){}
+};
+(function(){ try{const s=localStorage.getItem('nr_theme'); if(s){document.documentElement.setAttribute('data-theme',s);}}catch(e){} })();
+
+window.toggleSidebar=function(){
+  const sb=document.getElementById('sidebar');
+  if(window.innerWidth<=880){ sb.classList.toggle('open'); document.getElementById('scrim').classList.toggle('show'); }
+  else sb.classList.toggle('collapsed');
+};
+window.closeMobileSidebar=function(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('scrim').classList.remove('show'); };
+
+window.hideSearch=function(){ document.getElementById('searchResults').classList.add('hidden'); };
+window.doSearch=function(q){
+  const box=document.getElementById('searchResults'); q=q.trim().toLowerCase();
+  if(q.length<2){ box.classList.add('hidden'); return; }
+  const res=[];
+  MODULES.forEach(m=>{
+    if(m.title.toLowerCase().includes(q)||m.sub.toLowerCase().includes(q)) res.push({t:m.title,s:'Módulo · '+m.region,go:()=>openModule(m.id),ic:m.emoji});
+    (m.topics||[]).forEach(tp=>{ if(tp.toLowerCase().includes(q)) res.push({t:tp,s:'Tópico · '+m.title,go:()=>openModule(m.id),ic:'•'}); });
+  });
+  if(!res.length){ box.innerHTML='<div class="sr"><small>Nenhum resultado para “'+q+'”</small></div>'; }
+  else box.innerHTML=res.slice(0,9).map((r,i)=>'<div class="sr" data-i="'+i+'"><span>'+r.ic+'</span><div><div>'+r.t+'</div><small>'+r.s+'</small></div></div>').join('');
+  box.classList.remove('hidden');
+  box.querySelectorAll('.sr[data-i]').forEach((el,i)=>el.onclick=()=>{res[i].go();box.classList.add('hidden');document.getElementById('globalSearch').value='';});
+};
+
+/* ============================================================
+   CONTEÚDO — MÓDULOS DE NEUROLOGIA
+   Cada módulo: ensino "como professor", tabelas, fluxogramas
+   interativos, questões, flashcards, casos clínicos.
+   ============================================================ */
+const MODULES = [];
+
+/* ---------- 1. AVC ---------- */
+MODULES.push({
+  id:'avc', emoji:'🩸', region:'vascular', title:'Acidente Vascular Cerebral (AVC)',
+  sub:'Isquêmico, hemorrágico, AIT, NIHSS, trombólise e trombectomia',
+  prio:'altíssima', topics:['AVC isquêmico','AVC hemorrágico','AIT','NIHSS','Trombólise','Trombectomia','Escala ABCD2','Classificação TOAST'],
+  teach:`
+<h3>Antes de tudo: o que é um AVC?</h3>
+<p>Imagine o cérebro como uma cidade que <strong>só funciona com energia em tempo real</strong> — ele não tem reservas de oxigênio ou glicose. Quem entrega essa energia é o sangue. Quando uma "rua" (artéria) é bloqueada ou se rompe, o bairro que dependia dela começa a <strong>morrer em minutos</strong>. Isso é o AVC.</p>
+<p>Existem dois grandes tipos, e <strong>diferenciá-los é a primeira decisão da sua vida na prova e no plantão</strong>, porque o tratamento de um <em>mata</em> o paciente do outro:</p>
+<ul>
+<li><strong>AVC isquêmico (≈85%)</strong>: a artéria entope (trombo/êmbolo). Falta sangue → falta oxigênio.</li>
+<li><strong>AVC hemorrágico (≈15%)</strong>: a artéria se rompe → sangue extravasa e comprime o tecido.</li>
+</ul>
+<div class="callout fast"><b>Regra de ouro nº 1</b>Todo déficit neurológico focal de início súbito é AVC até prova em contrário. E a "prova em contrário" inicial é a <strong>TC de crânio sem contraste</strong> — barata, rápida e que serve para uma coisa essencial: <strong>excluir sangramento</strong> antes de pensar em trombolisar.</div>
+
+<h3>"Time is brain": por que correr?</h3>
+<p>A cada minuto de AVC isquêmico, perdem-se cerca de <strong>1,9 milhão de neurônios</strong>. Ao redor do núcleo morto existe a <strong>penumbra isquêmica</strong>: tecido "atordoado", ainda vivo, que <strong>pode ser salvo</strong> se reperfundirmos rápido. Todo o tratamento agudo gira em torno de salvar a penumbra.</p>
+
+<h3>AIT — o "aviso prévio"</h3>
+<p>O <strong>Ataque Isquêmico Transitório</strong> é um déficit focal que <strong>resolve completamente</strong>, classicamente em &lt;1h, <strong>sem infarto na imagem</strong> (definição tecidual moderna). É uma emergência: até 10% terão AVC em 48h. Estratifique o risco com o <strong>ABCD²</strong>.</p>
+<table class="med"><tr><th>ABCD² — fator</th><th>Pontos</th></tr>
+<tr><td><b>A</b>ge ≥60 anos</td><td>1</td></tr>
+<tr><td><b>B</b>lood pressure ≥140/90</td><td>1</td></tr>
+<tr><td><b>C</b>línica: fraqueza unilateral</td><td>2</td></tr>
+<tr><td>Clínica: distúrbio de fala sem fraqueza</td><td>1</td></tr>
+<tr><td><b>D</b>uração ≥60min / 10–59min</td><td>2 / 1</td></tr>
+<tr><td><b>D</b>iabetes</td><td>1</td></tr></table>
+<p>≥4 pontos = alto risco → internação e investigação rápida.</p>
+
+<h3>Avaliando a gravidade: a escala NIHSS</h3>
+<p>A <strong>NIH Stroke Scale</strong> (0 a 42) quantifica o déficit. Não decore item por item; entenda a lógica: ela mede nível de consciência, olhar, campos visuais, paralisia facial, força dos 4 membros, ataxia, sensibilidade, linguagem (afasia), disartria e extinção/negligência.</p>
+<table class="med"><tr><th>NIHSS</th><th>Gravidade</th></tr>
+<tr><td>0</td><td>Sem déficit</td></tr><tr><td>1–4</td><td>Leve</td></tr>
+<tr><td>5–15</td><td>Moderado</td></tr><tr><td>16–20</td><td>Moderado a grave</td></tr>
+<tr><td>21–42</td><td>Grave</td></tr></table>
+<div class="callout tip"><b>Pegadinha de prova</b>NIHSS <strong>subestima AVC de circulação posterior</strong> (tronco/cerebelo). Um paciente com vertigem intensa, ataxia e diplopia pode ter NIHSS baixo e mesmo assim um AVC grave. Não exclua trombólise só pelo número.</div>
+
+<h3>Tratamento agudo do AVC isquêmico — o passo a passo</h3>
+<p><strong>Passo 1 — Estabelecer o "horário zero".</strong> É o <strong>último horário em que o paciente foi visto bem</strong> (não o horário em que descobriram!). No "AVC do despertar", o zero é a hora de dormir.</p>
+<p><strong>Passo 2 — TC de crânio sem contraste.</strong> Se <strong>tem sangue</strong> → é hemorrágico, NÃO trombolisa. Se <strong>não tem sangue</strong> → isquêmico, candidato à reperfusão.</p>
+<p><strong>Passo 3 — Trombólise endovenosa (alteplase 0,9 mg/kg, máx 90 mg; ou tenecteplase 0,25 mg/kg).</strong> Janela: <strong>até 4,5 horas</strong> do início.</p>
+<table class="med"><tr><th>Contraindicações principais à trombólise</th></tr>
+<tr><td>Hemorragia na TC; AVC isquêmico ou TCE grave nos últimos 3 meses</td></tr>
+<tr><td>Cirurgia de grande porte recente; sangramento ativo; plaquetas &lt;100.000</td></tr>
+<tr><td>PA &gt; 185×110 mmHg refratária (precisa baixar ANTES)</td></tr>
+<tr><td>Glicemia &lt;50 mg/dL (corrigir e reavaliar) ; INR &gt;1,7 / uso de anticoagulante oral</td></tr>
+<tr><td>Endocardite, dissecção de aorta, neoplasia GI recente</td></tr></table>
+<div class="callout trap"><b>Erro clássico que derruba candidato</b>Confundir os alvos de pressão. <strong>Candidato à trombólise: PA &lt; 185×110.</strong> Já o paciente isquêmico <strong>que NÃO vai trombolisar</strong>: só tratar a PA se <strong>&gt; 220×120</strong> (hipertensão permissiva — a PA alta mantém a perfusão da penumbra).</div>
+<p><strong>Passo 4 — Trombectomia mecânica.</strong> Para <strong>oclusão de grande vaso</strong> (carótida, ACM proximal/M1). Janela: até <strong>6h</strong> de rotina, e <strong>6–24h em casos selecionados</strong> por imagem de perfusão/mismatch (estudos DAWN e DEFUSE-3). Pode ser feita <strong>junto</strong> com a trombólise (não são excludentes).</p>
+
+<h3>Classificação etiológica (TOAST) — porque cai muito</h3>
+<table class="med"><tr><th>Subtipo</th><th>Mecanismo</th><th>Pista</th></tr>
+<tr><td>Aterosclerose de grande artéria</td><td>Placa em carótida/intracraniana</td><td>Sopro carotídeo, estenose</td></tr>
+<tr><td>Cardioembólico</td><td>Êmbolo do coração</td><td><strong>Fibrilação atrial</strong>, IAM recente</td></tr>
+<tr><td>Lacunar (pequenos vasos)</td><td>Lipohialinose</td><td>HAS/DM; síndromes lacunares puras</td></tr>
+<tr><td>Outras determinadas</td><td>Dissecção, trombofilia</td><td>Jovem, trauma cervical</td></tr>
+<tr><td>Indeterminado</td><td>Sem causa / &gt;1 causa</td><td>"criptogênico"</td></tr></table>
+
+<h3>AVC hemorrágico — o outro lado</h3>
+<p>Dois grandes cenários: <strong>hemorragia intraparenquimatosa</strong> (geralmente HAS crônica → ruptura de pequenas artérias, sítio típico: <strong>putâmen/cápsula interna</strong>) e <strong>hemorragia subaracnóidea</strong> (aneurisma roto → "a pior cefaleia da vida", <em>thunderclap</em>).</p>
+<div class="callout warn"><b>Conduta na hemorragia</b>Controle <strong>agressivo</strong> da PA: alvo de PAS em torno de <strong>140 mmHg</strong> (evitar reduções abaixo de 130). Reverter anticoagulação. Avaliar neurocirurgia. Na HSA: angio-TC para achar o aneurisma + nimodipino para prevenir vasoespasmo.</div>
+
+<h3>📌 Revisão de véspera (ultra rápido)</h3>
+<ul>
+<li>Déficit focal súbito → <strong>TC sem contraste</strong> para excluir sangue.</li>
+<li>Isquêmico ≤4,5h → <strong>trombólise</strong>; grande vaso ≤6–24h → <strong>trombectomia</strong>.</li>
+<li>PA: trombólise &lt;185×110 · sem trombólise tratar só se &gt;220×120 · hemorrágico alvo ~140.</li>
+<li>FA → cardioembólico → anticoagular (após excluir transformação hemorrágica).</li>
+<li>HSA = thunderclap + rigidez de nuca; TC normal e suspeita alta → <strong>punção lombar</strong> (xantocromia).</li>
+</ul>
+<div class="callout mne"><b>Mnemônico — reconhecer AVC: "SAMU"</b><strong>S</strong>orriso torto · <strong>A</strong>braço (um braço cai) · <strong>M</strong>ensagem (fala enrolada) · <strong>U</strong>rgente, ligue 192. (Internacional: FAST — Face, Arm, Speech, Time.)</div>
+`,
+  flowDx:{ title:'Fluxograma diagnóstico do AVC agudo', start:'s1', nodes:{
+    s1:{q:'Déficit neurológico focal de início SÚBITO?',opts:[{t:'Sim',go:'s2'},{t:'Não / gradual',go:'r0'}]},
+    s2:{q:'TC de crânio sem contraste — há sangue (hiperdensidade)?',opts:[{t:'SIM, há sangue',go:'rHem'},{t:'NÃO há sangue',go:'s3'}]},
+    s3:{q:'Tempo desde o "último visto bem"?',opts:[{t:'≤ 4,5 h',go:'rTromb'},{t:'4,5–24 h',go:'s4'},{t:'> 24 h',go:'rTarde'}]},
+    s4:{q:'Oclusão de grande vaso + penumbra salvável (perfusão/mismatch)?',opts:[{t:'Sim',go:'rTrombec'},{t:'Não',go:'rTarde'}]}
+  }, results:{
+    r0:{title:'Reavaliar diagnóstico',body:'Início gradual ou não focal sugere outras causas (tumor, metabólico, enxaqueca com aura, crise). Investigue conforme a hipótese.'},
+    rHem:{title:'AVC HEMORRÁGICO',body:'NÃO trombolise. Controle PA (alvo PAS ~140), reverta anticoagulação, avalie neurocirurgia/HSA. Angio-TC se HSA.'},
+    rTromb:{title:'Candidato à TROMBÓLISE',body:'Checar contraindicações, PA <185×110, glicemia. Alteplase 0,9 mg/kg (ou tenecteplase). Avaliar grande vaso para trombectomia associada.'},
+    rTrombec:{title:'TROMBECTOMIA mecânica',body:'Janela estendida (6–24h) em grande vaso com mismatch favorável (DAWN/DEFUSE-3). Encaminhar a centro com hemodinâmica.'},
+    rTarde:{title:'Fora de janela de reperfusão',body:'Cuidado clínico: AAS, controle pressórico permissivo, estatina, prevenção de complicações, investigação etiológica (TOAST).'}
+  }},
+  flowMx:{ title:'Fluxograma de conduta inicial (ABCD do AVC)', steps:[
+    'Via aérea + O₂ se SatO₂ <94%; cabeceira a 30°; acesso venoso; monitorização.',
+    'Glicemia capilar imediata (hipo/hiper simula AVC). Corrigir hipoglicemia.',
+    'Escala NIHSS + horário do "último visto bem".',
+    'TC de crânio sem contraste de urgência (± angio-TC / TC perfusão).',
+    'Excluído sangue + dentro da janela → trombólise EV; grande vaso → trombectomia.',
+    'PA: <185×110 se trombólise; permissiva (tratar só >220×120) se não trombolisar.',
+    'Internar em unidade de AVC; investigar etiologia (ECG/Holter p/ FA, eco, doppler de carótidas); profilaxia e reabilitação precoce.'
+  ]},
+  questions:[
+    {stem:'Homem, 68 anos, hipertenso, há 2h com hemiparesia direita e afasia. PA 178×96, glicemia 110, NIHSS 12. TC de crânio sem sangramento. Qual a conduta?',
+     opts:['Aguardar 24h e repetir TC','Trombólise endovenosa com alteplase','Iniciar AAS e heparina plena imediatamente','Controlar PA até <140×90 antes de qualquer conduta'],
+     correct:1, expl:'<b>Alternativa B.</b> Paciente com AVC isquêmico (TC sem sangue) dentro da janela de 4,5h, NIHSS 12, sem contraindicações e com PA <185×110: indicação clássica de trombólise. AAS não substitui reperfusão na fase aguda e heparina plena não tem benefício rotineiro.'},
+    {stem:'Paciente trombolisado por AVC isquêmico. Qual o alvo pressórico nas primeiras 24h?',
+     opts:['<220×120 mmHg','<185×110 mmHg','<140×90 mmHg','Não controlar a PA'],
+     correct:2, expl:'<b>Alternativa C.</b> Antes/durante a trombólise: <185×110. Após trombolisar, mantém-se <strong>PA <180×105 (alvo prático <140×90 evitando hipotensão)</strong> por 24h para reduzir risco de transformação hemorrágica. Na questão, o melhor alvo entre as opções é o mais conservador pós-trombólise.'},
+    {stem:'Mulher, 55a, "a pior dor de cabeça da vida" de início súbito, vômitos e rigidez de nuca. TC de crânio inicial normal. Qual o próximo passo se a suspeita clínica permanece alta?',
+     opts:['Alta com analgésico','Punção lombar à procura de xantocromia','Iniciar triptano','Repetir TC em 7 dias'],
+     correct:1, expl:'<b>Alternativa B.</b> Quadro de HSA (thunderclap). TC pode ser normal em até 5–10% nas primeiras horas/após 6h. Suspeita persistente → punção lombar buscando xantocromia/hemácias. Triptano é contraindicado e perigoso aqui.'},
+    {stem:'Sobre o AIT, assinale a correta:',
+     opts:['Define-se apenas pela duração <24h independentemente da imagem','É benigno e não requer investigação','Pela definição tecidual, é déficit transitório SEM infarto na neuroimagem','Nunca precede um AVC'],
+     correct:2, expl:'<b>Alternativa C.</b> A definição moderna é tecidual: déficit focal transitório <strong>sem infarto</strong> à imagem. É emergência — risco elevado de AVC nos dias seguintes (estratificar com ABCD²).'},
+    {stem:'Qual achado clínico mais sugere etiologia cardioembólica do AVC?',
+     opts:['Síndrome lacunar pura','Fibrilação atrial','Sopro carotídeo','História de tabagismo'],
+     correct:1, expl:'<b>Alternativa B.</b> Fibrilação atrial é a principal fonte cardioembólica. Sopro carotídeo aponta para aterosclerose de grande vaso; síndromes lacunares puras, para doença de pequenos vasos.'},
+    {stem:'Indicação de trombectomia mecânica em janela estendida (6–24h) depende principalmente de:',
+     opts:['NIHSS <4','Idade <50 anos','Oclusão de grande vaso com mismatch de perfusão favorável','Ausência de hipertensão'],
+     correct:2, expl:'<b>Alternativa C.</b> Estudos DAWN/DEFUSE-3: o que habilita a janela estendida é a presença de <strong>grande vaso ocluído</strong> e tecido salvável (mismatch entre core e penumbra), não a idade isolada.'},
+    {stem:'AVC isquêmico que NÃO será trombolisado. A partir de que PA se deve tratar agudamente?',
+     opts:['>140×90','>160×100','>180×100','>220×120'],
+     correct:3, expl:'<b>Alternativa D.</b> Hipertensão permissiva: só tratar se PAS >220 ou PAD >120 (ou lesão de órgão-alvo), pois a PA elevada sustenta a perfusão da penumbra.'},
+    {stem:'Local mais típico de hemorragia intraparenquimatosa hipertensiva:',
+     opts:['Lobar frontal','Putâmen / cápsula interna','Espaço subaracnóideo','Cerebelo exclusivamente'],
+     correct:1, expl:'<b>Alternativa B.</b> A hemorragia hipertensiva clássica ocorre em estruturas profundas — putâmen/cápsula interna, tálamo, ponte e cerebelo —, por ruptura de microaneurismas de Charcot-Bouchard.'}
+  ],
+  cards:[
+    {tag:'Conceito',q:'Qual a primeira providência diagnóstica em todo déficit focal súbito?',a:'TC de crânio SEM contraste — para excluir hemorragia antes de qualquer reperfusão.'},
+    {tag:'Janela',q:'Janela da trombólise endovenosa no AVC isquêmico?',a:'Até 4,5 horas do "último visto bem".'},
+    {tag:'Janela',q:'Janela da trombectomia mecânica?',a:'Até 6h de rotina; 6–24h em grande vaso com mismatch favorável (DAWN/DEFUSE-3).'},
+    {tag:'PA',q:'Alvo pressórico para trombolisar?',a:'PA < 185×110 mmHg antes e durante a trombólise.'},
+    {tag:'PA',q:'Quando tratar PA no isquêmico que NÃO será trombolisado?',a:'Somente se > 220×120 (hipertensão permissiva).'},
+    {tag:'AIT',q:'O que é AIT pela definição tecidual?',a:'Déficit focal transitório SEM infarto na neuroimagem.'},
+    {tag:'AIT',q:'Para que serve o escore ABCD²?',a:'Estratificar risco de AVC após um AIT (≥4 = alto risco).'},
+    {tag:'Hemorrágico',q:'Alvo de PA na hemorragia intraparenquimatosa?',a:'PAS em torno de 140 mmHg (não reduzir abaixo de ~130).'},
+    {tag:'HSA',q:'Tríade da hemorragia subaracnóidea?',a:'Cefaleia thunderclap ("pior da vida") + rigidez de nuca + vômitos. Nimodipino previne vasoespasmo.'},
+    {tag:'Etiologia',q:'Principal fonte cardioembólica de AVC?',a:'Fibrilação atrial.'},
+    {tag:'Armadilha',q:'Por que NIHSS pode subestimar o AVC?',a:'Pontua mal a circulação posterior (tronco/cerebelo) — vertigem/ataxia podem dar NIHSS baixo.'}
+  ],
+  cases:[
+    {title:'Caso 1 — Hemiparesia aguda',
+     hist:'Homem, 72 anos, hipertenso e diabético. Familiares relatam que há 1h30 começou subitamente com fraqueza no braço e perna esquerdos e desvio da boca.',
+     exam:'PA 190×100, FC 88 irregular. Glasgow 15. Hemiparesia esquerda 3/5, paralisia facial central esquerda, disartria. NIHSS 9.',
+     labs:'Glicemia 142. ECG: fibrilação atrial. TC de crânio: sem sangramento, sinais precoces de isquemia em território de ACM direita.',
+     reason:'Déficit focal súbito + TC sem sangue = AVC isquêmico. Dentro da janela (1h30). FC irregular + FA no ECG sugerem mecanismo cardioembólico. PA precisa cair abaixo de 185×110 para trombolisar.',
+     dx:'AVC isquêmico em território de ACM direita, provável cardioembólico (FA).',
+     tx:'Reduzir PA a <185×110 (ex.: labetalol/esmolol), trombólise com alteplase, avaliar grande vaso para trombectomia. Após fase aguda e exclusão de transformação hemorrágica: anticoagulação oral pela FA (avaliar CHA₂DS₂-VASc).'},
+    {title:'Caso 2 — A pior cefaleia da vida',
+     hist:'Mulher, 49 anos, tabagista, durante esforço físico apresenta cefaleia explosiva occipital de intensidade máxima já no início, seguida de vômito e fotofobia.',
+     exam:'Sonolenta, rigidez de nuca presente, sem déficit motor focal. PA 168×98.',
+     labs:'TC de crânio: hiperdensidade no espaço subaracnóideo das cisternas da base.',
+     reason:'Thunderclap + meningismo + sangue subaracnóideo na TC = HSA, tipicamente por ruptura de aneurisma. Risco de ressangramento e vasoespasmo.',
+     dx:'Hemorragia subaracnóidea aneurismática.',
+     tx:'Repouso, controle de PA e dor, nimodipino para prevenir vasoespasmo, angio-TC/angiografia para localizar o aneurisma e tratamento (clipagem ou embolização endovascular).'},
+    {title:'Caso 3 — Déficit que sumiu',
+     hist:'Homem, 64 anos, hipertenso, episódio de 20 minutos de fraqueza no braço direito e dificuldade para falar, com recuperação completa há 3h.',
+     exam:'Exame neurológico normal no momento. PA 150×92.',
+     labs:'TC/RM sem infarto. ECG normal.',
+     reason:'Déficit focal transitório com resolução completa e sem infarto = AIT. ABCD²: idade (1) + PA (1) + fraqueza unilateral (2) + duração 10–59min (1) = 5 → alto risco.',
+     dx:'Ataque isquêmico transitório (AIT), alto risco.',
+     tx:'Internação/observação, antiagregação, estatina, controle pressórico, doppler de carótidas e investigação cardioembólica. AIT é "aviso" — prevenir o AVC iminente.'}
+  ]
+});
+
+/* ---------- 2. CEFALEIAS ---------- */
+MODULES.push({
+  id:'cefaleia', emoji:'🤕', region:'meningeal', title:'Cefaleias',
+  sub:'Enxaqueca, tensional, em salvas e cefaleias secundárias (red flags)',
+  prio:'alta', topics:['Enxaqueca','Cefaleia tensional','Cefaleia em salvas','Cefaleias secundárias','Red flags','Tratamento abortivo e profilático'],
+  teach:`
+<h3>O primeiro raciocínio: primária ou secundária?</h3>
+<p>Cefaleia é sintoma, não doença. Sua tarefa nº 1 é separar:</p>
+<ul>
+<li><strong>Primárias</strong> (a dor É a doença): enxaqueca, tensional, em salvas. São benignas.</li>
+<li><strong>Secundárias</strong> (a dor é sinal de algo grave): HSA, meningite, tumor, trombose venosa, arterite temporal, hipertensão intracraniana.</li>
+</ul>
+<div class="callout trap"><b>O que mais derruba candidato</b>Tratar uma cefaleia secundária como enxaqueca. Decore os <strong>sinais de alarme (red flags) — "SNNOOP"</strong> e, na presença deles, INVESTIGUE (neuroimagem ± punção).</div>
+<div class="callout mne"><b>Mnemônico das red flags — SNNOOP10 (resumido)</b>
+<strong>S</strong>intomas sistêmicos (febre, perda de peso) · <strong>N</strong>eoplasia/HIV · <strong>N</strong>eurológico (déficit focal, alteração de consciência) · <strong>O</strong>nset súbito (thunderclap) · <strong>O</strong>lder (início &gt;50 anos) · <strong>P</strong>adrão que muda / piora progressiva / piora com Valsalva / papiledema.</div>
+
+<h3>Enxaqueca (migrânea) — a rainha das provas</h3>
+<p>Mecanismo: hiperexcitabilidade neuronal + ativação do sistema trigeminovascular (papel do <strong>CGRP</strong>). Mais comum em <strong>mulheres jovens</strong>.</p>
+<table class="med"><tr><th>Característica</th><th>Enxaqueca</th></tr>
+<tr><td>Localização</td><td>Geralmente unilateral, pulsátil</td></tr>
+<tr><td>Intensidade</td><td>Moderada a forte; piora com atividade</td></tr>
+<tr><td>Duração</td><td>4 a 72 horas</td></tr>
+<tr><td>Acompanhantes</td><td>Náusea/vômito, foto e fonofobia</td></tr>
+<tr><td>Aura (em ~25%)</td><td>Sintomas neurológicos reversíveis (visual &gt; sensitivo), 5–60 min, ANTES da dor</td></tr></table>
+<p><strong>Tratamento abortivo (crise):</strong> AINEs/analgésicos nas leves; <strong>triptanos</strong> nas moderadas/graves (agonistas 5-HT1B/1D). Antieméticos ajudam. Novidades: gepantes (antagonistas do CGRP) e ditans.</p>
+<div class="callout warn"><b>Cuidado</b>Triptanos são <strong>contraindicados</strong> em doença coronariana, AVC prévio e na enxaqueca <strong>com aura de tronco/hemiplégica</strong>. E lembre: <strong>analgésico em excesso causa cefaleia por uso abusivo</strong> (rebote).</p></div>
+<p><strong>Profilaxia</strong> (se ≥4 crises/mês ou incapacitantes): betabloqueador (propranolol), <strong>topiramato</strong>, amitriptilina, candesartana, valproato; e anticorpos anti-CGRP (erenumabe etc.).</p>
+
+<h3>Cefaleia tensional — a mais comum</h3>
+<p>Dor <strong>bilateral, em peso/aperto ("faixa")</strong>, leve a moderada, <strong>NÃO pulsátil</strong>, <strong>não piora com esforço</strong>, sem náusea importante. Tratamento: analgésicos simples; profilaxia com amitriptilina se crônica.</p>
+
+<h3>Cefaleia em salvas (cluster) — a mais dolorosa</h3>
+<p>Homens jovens. Dor <strong>periorbitária unilateral</strong>, excruciante, em <strong>crises curtas (15–180 min)</strong>, várias vezes ao dia por semanas ("salvas"), com <strong>sintomas autonômicos ipsilaterais</strong>: lacrimejamento, hiperemia conjuntival, rinorreia, ptose/miose. O paciente fica <strong>agitado</strong> (diferente da enxaqueca, em que ele se aquieta no escuro).</p>
+<div class="callout fast"><b>Conduta na salva</b>Abortivo: <strong>O₂ a 100% (12–15 L/min)</strong> e <strong>triptano subcutâneo/nasal</strong>. Profilaxia: <strong>verapamil</strong>.</div>
+
+<table class="med"><tr><th>Comparativo</th><th>Enxaqueca</th><th>Tensional</th><th>Em salvas</th></tr>
+<tr><td>Sexo</td><td>Mulher</td><td>Ambos</td><td>Homem</td></tr>
+<tr><td>Lado</td><td>Uni (pulsátil)</td><td>Bilateral (aperto)</td><td>Uni periorbitária</td></tr>
+<tr><td>Duração</td><td>4–72h</td><td>30min–7d</td><td>15–180 min</td></tr>
+<tr><td>Comportamento</td><td>Quieto, no escuro</td><td>Funcional</td><td>Agitado</td></tr>
+<tr><td>Autonômico</td><td>Não</td><td>Não</td><td>Sim (ipsilateral)</td></tr>
+<tr><td>Abortivo</td><td>Triptano/AINE</td><td>AINE</td><td>O₂ + triptano SC</td></tr></table>
+
+<h3>Não esqueça: arterite temporal</h3>
+<p>Idoso &gt;50a, cefaleia temporal nova, claudicação de mandíbula, VHS muito elevado, risco de <strong>cegueira</strong>. <strong>Corticoide imediato</strong> (não espere a biópsia) + biópsia da temporal.</p>
+
+<h3>📌 Revisão de véspera</h3>
+<ul>
+<li>Sempre busque red flags (SNNOOP) antes de chamar de primária.</li>
+<li>Enxaqueca: uni, pulsátil, 4–72h, foto/fonofobia → triptano (cuidado coronariopata).</li>
+<li>Tensional: bilateral, aperto, sem piora ao esforço.</li>
+<li>Salvas: periorbitária, autonômica, agitado → O₂ + triptano SC; profilaxia verapamil.</li>
+<li>Thunderclap = HSA até prova em contrário (TC + punção).</li>
+</ul>
+`,
+  flowDx:{ title:'Fluxograma diagnóstico da cefaleia', start:'c1', nodes:{
+    c1:{q:'Há sinais de alarme (SNNOOP)? Início súbito/thunderclap, febre+rigidez, déficit focal, início >50a, papiledema, piora progressiva?',opts:[{t:'SIM',go:'rSec'},{t:'NÃO',go:'c2'}]},
+    c2:{q:'Características da dor?',opts:[{t:'Unilateral, pulsátil, foto/fonofobia, 4–72h',go:'rMig'},{t:'Bilateral, em aperto, sem náusea/esforço',go:'rTens'},{t:'Periorbitária, autonômica, crises curtas, agitação',go:'rClus'}]}
+  }, results:{
+    rSec:{title:'Cefaleia SECUNDÁRIA — investigar',body:'Neuroimagem (TC/RM) ± punção lombar. Pensar em HSA (thunderclap), meningite (febre+rigidez), tumor/HIC, trombose venosa, arterite temporal (idoso, VHS↑).'},
+    rMig:{title:'Enxaqueca (migrânea)',body:'Abortivo: AINE/triptano. Profilaxia se ≥4 crises/mês: propranolol, topiramato, amitriptilina, anti-CGRP.'},
+    rTens:{title:'Cefaleia tensional',body:'Analgésico simples; se crônica, profilaxia com amitriptilina e medidas comportamentais.'},
+    rClus:{title:'Cefaleia em salvas (cluster)',body:'Abortivo: O₂ 100% + triptano SC/nasal. Profilaxia: verapamil.'}
+  }},
+  flowMx:{ title:'Conduta na cefaleia aguda no PS', steps:[
+    'Sinais vitais + escala de dor + tempo de instalação.',
+    'Procurar red flags (SNNOOP): thunderclap, febre+rigidez, déficit, papiledema, idade >50a.',
+    'Com red flag → TC de crânio; se TC normal e suspeita de HSA/meningite → punção lombar.',
+    'Sem red flag → classificar como primária e tratar conforme o tipo.',
+    'Enxaqueca/tensional: AINE/triptano + antiemético. Salvas: O₂ + triptano SC.',
+    'Orientar diário de cefaleia, evitar uso abusivo de analgésico e definir profilaxia ambulatorial.'
+  ]},
+  questions:[
+    {stem:'Mulher, 28a, crises de cefaleia unilateral pulsátil, 12h de duração, com náusea e fotofobia, aliviada no escuro. Exame normal. Diagnóstico e abortivo de escolha em crise moderada/grave?',
+     opts:['Tensional — paracetamol','Enxaqueca — triptano','Em salvas — oxigênio','Secundária — TC urgente'],
+     correct:1, expl:'<b>B.</b> Quadro típico de enxaqueca sem aura. Em crise moderada/grave, o abortivo de escolha é o triptano (± antiemético).'},
+    {stem:'Qual achado é uma RED FLAG que obriga investigação de cefaleia secundária?',
+     opts:['Dor pulsátil unilateral','Fotofobia','Cefaleia thunderclap (pico instantâneo)','História familiar de enxaqueca'],
+     correct:2, expl:'<b>C.</b> Início súbito explosivo (thunderclap) sugere HSA e exige TC ± punção. Os demais são típicos de enxaqueca.'},
+    {stem:'Homem, 35a, crises de dor periorbitária direita intensíssima, 60 min, com lacrimejamento e rinorreia ipsilaterais, várias por dia há 3 semanas; fica agitado. Abortivo de escolha?',
+     opts:['Oxigênio 100% a 12 L/min','Paracetamol oral','Repouso no escuro','Corticoide em pulso'],
+     correct:0, expl:'<b>A.</b> Cefaleia em salvas. Abortivo: O₂ 100% em alto fluxo e/ou triptano subcutâneo/nasal. Profilaxia: verapamil.'},
+    {stem:'Sobre triptanos, é contraindicação importante:',
+     opts:['Enxaqueca com fotofobia','Doença arterial coronariana','Idade <40 anos','Sexo feminino'],
+     correct:1, expl:'<b>B.</b> Por seu efeito vasoconstritor, triptanos são contraindicados em coronariopatia, AVC prévio e enxaqueca hemiplégica/de tronco.'},
+    {stem:'Idoso de 72a com cefaleia temporal nova, claudicação de mandíbula e VHS de 95. Conduta imediata?',
+     opts:['Triptano','Corticoide imediato + biópsia de artéria temporal','TC e alta','Apenas AINE'],
+     correct:1, expl:'<b>B.</b> Arterite de células gigantes (temporal): risco de cegueira. Iniciar corticoide imediatamente, sem esperar a biópsia.'},
+    {stem:'Característica que define a cefaleia tensional:',
+     opts:['Unilateral e pulsátil','Bilateral, em aperto, sem piora ao esforço','Periorbitária com sintomas autonômicos','Sempre com aura visual'],
+     correct:1, expl:'<b>B.</b> Tensional: bilateral, em peso/aperto, leve-moderada, sem náusea importante e sem piora com atividade física.'}
+  ],
+  cards:[
+    {tag:'Triagem',q:'Primeira pergunta diante de uma cefaleia?',a:'É primária (benigna) ou secundária (sinal de doença grave)? Procure red flags (SNNOOP).'},
+    {tag:'Enxaqueca',q:'Critérios-chave da enxaqueca?',a:'Unilateral, pulsátil, 4–72h, moderada/forte, piora com atividade, náusea + foto/fonofobia.'},
+    {tag:'Aura',q:'Como é a aura migranosa?',a:'Sintoma neurológico reversível (visual > sensitivo), 5–60 min, geralmente antes da dor.'},
+    {tag:'Abortivo',q:'Abortivo da enxaqueca moderada/grave?',a:'Triptano (5-HT1B/1D), ± antiemético. Cuidado em coronariopata.'},
+    {tag:'Profilaxia',q:'Opções de profilaxia da enxaqueca?',a:'Propranolol, topiramato, amitriptilina, candesartana, valproato, anti-CGRP.'},
+    {tag:'Salvas',q:'Abortivo e profilaxia da cefaleia em salvas?',a:'Abortivo: O₂ 100% + triptano SC. Profilaxia: verapamil.'},
+    {tag:'Tensional',q:'Como diferenciar tensional de enxaqueca?',a:'Tensional: bilateral, aperto, sem náusea, sem piora ao esforço; enxaqueca: uni, pulsátil, com náusea.'},
+    {tag:'Red flag',q:'O que significa cefaleia "thunderclap"?',a:'Pico de intensidade quase instantâneo — HSA até prova em contrário (TC + punção).'},
+    {tag:'Idoso',q:'Cefaleia nova >50a + claudicação mandibular + VHS alto?',a:'Arterite temporal — corticoide imediato (risco de cegueira) + biópsia.'},
+    {tag:'Armadilha',q:'O que é cefaleia por uso abusivo de medicação?',a:'Cefaleia de rebote pelo uso excessivo de analgésicos/triptanos (>10–15 dias/mês).'}
+  ],
+  cases:[
+    {title:'Caso 1 — Crises recorrentes em jovem',
+     hist:'Mulher, 26 anos, há 3 anos com crises mensais de dor latejante do lado direito da cabeça, durando cerca de um dia, com enjoo e incômodo intenso com luz e som. Antes da dor, às vezes vê "luzes em zigue-zague" por 20 minutos.',
+     exam:'Exame neurológico normal entre as crises e durante.',
+     labs:'Não há red flags. Neuroimagem normal (solicitada por ansiedade, mas dispensável no quadro típico).',
+     reason:'Critérios de enxaqueca com aura visual típica: dor unilateral pulsátil, 4–72h, foto/fonofobia, aura reversível <60 min precedendo a dor.',
+     dx:'Enxaqueca com aura.',
+     tx:'Abortivo com triptano + antiemético; orientar diário de cefaleia e gatilhos; como há ≥4 crises/mês incapacitantes, iniciar profilaxia (ex.: topiramato ou propranolol).'},
+    {title:'Caso 2 — Dor explosiva',
+     hist:'Homem, 45 anos, durante atividade física, cefaleia occipital de intensidade máxima instantânea, "como um estouro", com vômito.',
+     exam:'Rigidez de nuca; sem déficit focal; sonolência leve.',
+     labs:'TC de crânio com sangue subaracnóideo.',
+     reason:'Thunderclap + meningismo + sangue na TC. Red flag clássica → cefaleia secundária grave (HSA).',
+     dx:'Hemorragia subaracnóidea (cefaleia secundária).',
+     tx:'Internação, controle de PA/dor, nimodipino, angiografia para o aneurisma e tratamento neurovascular. Jamais tratar como enxaqueca.'},
+    {title:'Caso 3 — Crises noturnas em série',
+     hist:'Homem, 33 anos, há 2 semanas com crises de dor lancinante ao redor do olho esquerdo, sempre por volta da mesma hora da madrugada, durando ~1h, levando-o a andar pela casa de tanta dor.',
+     exam:'Durante a crise: olho esquerdo lacrimejante e vermelho, narina entupida, leve queda da pálpebra.',
+     labs:'Exames normais.',
+     reason:'Dor periorbitária unilateral curta, recorrente em salvas, com sinais autonômicos ipsilaterais e agitação = cefaleia em salvas.',
+     dx:'Cefaleia em salvas (cluster).',
+     tx:'Abortivo: oxigênio 100% em alto fluxo + sumatriptano SC. Profilaxia da salva: verapamil (com ECG de controle).'}
+  ]
+});
+
+/* ---------- 3. EPILEPSIA ---------- */
+MODULES.push({
+  id:'epilepsia', emoji:'⚡', region:'temporal', title:'Epilepsia e Crises',
+  sub:'Classificação das crises, estado de mal epiléptico e antiepilépticos',
+  prio:'alta', topics:['Classificação das crises','Crise focal e generalizada','Estado de mal epiléptico','Antiepilépticos','Primeira crise'],
+  teach:`
+<h3>Conceitos que você precisa fixar primeiro</h3>
+<p>Uma <strong>crise epiléptica</strong> é uma descarga elétrica anormal e sincrônica de neurônios. Já <strong>epilepsia</strong> é a <em>doença</em>: tendência a crises recorrentes. A definição operacional diz que há epilepsia quando há <strong>≥2 crises não provocadas com &gt;24h de intervalo</strong>, OU 1 crise não provocada com alto risco de recorrência (lesão estrutural/EEG epileptiforme).</p>
+<div class="callout warn"><b>Provocada × não provocada</b>Crise <strong>provocada</strong> (sintomática aguda) tem um gatilho reversível: hipoglicemia, hiponatremia, abstinência alcoólica, febre na criança, drogas. Ela <strong>não é epilepsia</strong> — trate a causa! Não saia "iniciando antiepiléptico para a vida toda" numa crise por distúrbio metabólico.</div>
+
+<h3>Classificação ILAE (2017) — o esqueleto da prova</h3>
+<p>Pergunte sempre: <strong>onde a crise começa?</strong></p>
+<ul>
+<li><strong>Início focal</strong> (uma região): pode ser com <strong>perceptividade preservada</strong> ("focal perceptiva", antiga parcial simples) ou <strong>perceptividade prejudicada</strong> ("focal disperceptiva", antiga parcial complexa). Pode evoluir para <strong>tônico-clônica bilateral</strong>.</li>
+<li><strong>Início generalizado</strong> (redes bilaterais desde o início): tônico-clônica, ausência, mioclônica, atônica, tônica, clônica.</li>
+<li><strong>Início desconhecido.</strong></li>
+</ul>
+<table class="med"><tr><th>Tipo</th><th>Quadro típico</th><th>Pista</th></tr>
+<tr><td>Focal disperceptiva</td><td>Olhar parado, automatismos (mastigar, mexer mãos), confusão pós-ictal</td><td>Origem temporal frequente</td></tr>
+<tr><td>Tônico-clônica generalizada</td><td>Perda de consciência, rigidez (tônica) → abalos (clônica), mordedura lateral de língua, liberação esfincteriana, sonolência pós-ictal</td><td>Pós-ictal prolongado</td></tr>
+<tr><td>Ausência</td><td>Criança, "desligamentos" de segundos, sem pós-ictal, EEG ponta-onda 3 Hz</td><td>Provocada por hiperventilação</td></tr>
+<tr><td>Mioclônica</td><td>Abalos rápidos, sobretudo ao acordar (epilepsia mioclônica juvenil)</td><td>Adolescente</td></tr></table>
+<div class="callout trap"><b>Diferencial que derruba: crise × síncope × crise psicogênica</b>Síncope: pródromo de "escurecer a vista", recuperação <strong>rápida</strong>, sem pós-ictal/confusão. Crise: pode ter aura, <strong>mordedura lateral</strong> da língua, confusão pós-ictal. Crise psicogênica não epiléptica: movimentos assíncronos, olhos fechados resistindo à abertura, EEG ictal normal.</div>
+
+<h3>Primeira crise não provocada — investigar</h3>
+<p>Solicite <strong>glicemia/eletrólitos</strong>, considere <strong>neuroimagem (RM preferível)</strong> e <strong>EEG</strong>. A decisão de iniciar antiepiléptico depende do risco de recorrência (lesão, EEG alterado).</p>
+
+<h3>Antiepilépticos — lógica de escolha</h3>
+<table class="med"><tr><th>Situação</th><th>Opções</th></tr>
+<tr><td>Crise focal</td><td>Carbamazepina, oxcarbazepina, lamotrigina, levetiracetam</td></tr>
+<tr><td>Generalizada (amplo espectro)</td><td>Ácido valproico, levetiracetam, lamotrigina</td></tr>
+<tr><td>Ausência</td><td>Etossuximida (ou valproato)</td></tr>
+<tr><td>Mioclônica juvenil</td><td>Valproato (evitar carbamazepina — piora!)</td></tr></table>
+<div class="callout warn"><b>Atenção em mulheres em idade fértil</b>O <strong>valproato é teratogênico</strong> (defeitos de tubo neural, déficit cognitivo). Evite na gestante/planejando engravidar — prefira lamotrigina/levetiracetam. <strong>Carbamazepina piora crises de ausência e mioclônicas.</strong></div>
+
+<h3>Estado de mal epiléptico (EME) — EMERGÊNCIA</h3>
+<p>Definição operacional: crise tônico-clônica que dura <strong>≥5 minutos</strong> OU crises sem recuperação da consciência entre elas. Quanto mais tempo, mais difícil de parar e mais lesão neuronal.</p>
+<div class="callout fast"><b>Escada do tratamento do EME (passo a passo)</b>
+<strong>0–5 min (estabilizar):</strong> ABC, O₂, acesso, glicemia (tiamina antes da glicose no etilista), monitorizar.<br>
+<strong>5–20 min (1ª linha — benzodiazepínico):</strong> diazepam EV ou <strong>midazolam IM</strong> (se sem acesso) ou lorazepam EV.<br>
+<strong>20–40 min (2ª linha):</strong> <strong>fenitoína</strong> (ou fosfenitoína), <strong>valproato</strong> ou <strong>levetiracetam</strong> EV.<br>
+<strong>&gt;40 min (refratário):</strong> intubação + anestésico contínuo (midazolam, propofol) em UTI com EEG.</div>
+<div class="callout trap"><b>Erro comum</b>Repetir benzodiazepínico indefinidamente sem partir para a 2ª linha. Após a dose adequada de BZD, se a crise persiste, vá para a fenitoína/valproato/levetiracetam — não fique só "empurrando diazepam".</div>
+
+<h3>📌 Revisão de véspera</h3>
+<ul>
+<li>Crise provocada ≠ epilepsia: trate a causa (glicose, sódio, abstinência).</li>
+<li>Classifique pelo início: focal × generalizado.</li>
+<li>EME = ≥5 min → BZD → fenitoína/valproato/levetiracetam → anestésico/UTI.</li>
+<li>Valproato: ótimo amplo espectro, mas teratogênico. Carbamazepina piora ausência/mioclonia.</li>
+<li>Mordedura lateral de língua + confusão pós-ictal ⇒ a favor de crise (vs. síncope).</li>
+</ul>
+`,
+  flowDx:{ title:'Fluxograma: abordagem da crise', start:'e1', nodes:{
+    e1:{q:'A crise foi PROVOCADA (febre, hipoglicemia, hipoNa, abstinência, droga)?',opts:[{t:'Sim',go:'rProv'},{t:'Não',go:'e2'}]},
+    e2:{q:'É a primeira crise não provocada?',opts:[{t:'Sim, primeira',go:'rPrim'},{t:'Não — recorrente',go:'e3'}]},
+    e3:{q:'A crise está durando ≥5 min ou sem recuperar consciência entre crises?',opts:[{t:'Sim',go:'rEME'},{t:'Não',go:'rEpi'}]}
+  }, results:{
+    rProv:{title:'Crise sintomática aguda (provocada)',body:'NÃO é epilepsia. Corrija a causa (glicose, sódio, abstinência, droga). Em geral não inicia antiepiléptico crônico.'},
+    rPrim:{title:'Primeira crise não provocada',body:'Investigar: glicemia/eletrólitos, RM de crânio, EEG. Iniciar antiepiléptico se alto risco de recorrência (lesão estrutural/EEG epileptiforme).'},
+    rEME:{title:'ESTADO DE MAL EPILÉPTICO',body:'Emergência! ABC + glicemia → benzodiazepínico → fenitoína/valproato/levetiracetam → anestésico em UTI se refratário.'},
+    rEpi:{title:'Epilepsia em acompanhamento',body:'Classificar tipo, otimizar/ajustar antiepiléptico, checar adesão e gatilhos. Revisar fármaco conforme tipo de crise e perfil (gestação).'}
+  }},
+  flowMx:{ title:'Conduta no estado de mal epiléptico (tempo-dependente)', steps:[
+    '0–5 min: ABC, O₂, decúbito lateral, acesso venoso, glicemia capilar (tiamina antes da glicose no etilista).',
+    '5–20 min: benzodiazepínico — diazepam/lorazepam EV ou midazolam IM se sem acesso.',
+    '20–40 min: 2ª linha EV — fenitoína/fosfenitoína OU valproato OU levetiracetam.',
+    '>40 min (refratário): intubação + infusão de anestésico (midazolam/propofol) em UTI.',
+    'Monitorização com EEG contínuo no refratário; investigar e tratar a causa de base.'
+  ]},
+  questions:[
+    {stem:'Paciente trazido em crise tônico-clônica contínua há 8 minutos. Após ABC e glicemia normal, qual a 1ª linha medicamentosa?',
+     opts:['Fenitoína EV','Benzodiazepínico (diazepam/lorazepam EV ou midazolam IM)','Propofol em infusão','Levetiracetam oral'],
+     correct:1, expl:'<b>B.</b> EME (≥5 min). Primeira linha é benzodiazepínico. Fenitoína/valproato/levetiracetam são 2ª linha; anestésicos ficam para o refratário.'},
+    {stem:'Mulher de 22a com epilepsia mioclônica juvenil, planejando engravidar. Qual fármaco EVITAR?',
+     opts:['Lamotrigina','Levetiracetam','Ácido valproico','Clonazepam'],
+     correct:2, expl:'<b>C.</b> Valproato é teratogênico e associa-se a déficit cognitivo no feto — evitar em mulheres em idade fértil/gestantes. Prefira lamotrigina ou levetiracetam.'},
+    {stem:'Criança com "desligamentos" de poucos segundos, sem pós-ictal, desencadeados por hiperventilação; EEG com ponta-onda 3 Hz. Diagnóstico?',
+     opts:['Crise focal disperceptiva','Crise de ausência','Síncope','Crise psicogênica'],
+     correct:1, expl:'<b>B.</b> Ausência típica da infância: episódios breves, sem confusão pós-ictal, EEG 3 Hz, provocados por hiperventilação. Tratamento: etossuximida (ou valproato).'},
+    {stem:'Qual achado favorece crise epiléptica em vez de síncope?',
+     opts:['Recuperação imediata e lúcida','Pródromo de "escurecimento" visual','Confusão pós-ictal e mordedura lateral da língua','Palidez e sudorese antes do evento'],
+     correct:2, expl:'<b>C.</b> Confusão pós-ictal prolongada e mordedura lateral da língua apontam para crise. Recuperação rápida e pródromos vasovagais sugerem síncope.'},
+    {stem:'Homem chega ao PS com crise por abstinência alcoólica; glicemia 70, Na 138. Conduta sobre antiepiléptico crônico?',
+     opts:['Iniciar carbamazepina para sempre','Tratar a abstinência (benzodiazepínico) sem antiepiléptico crônico de rotina','Iniciar valproato vitalício','Iniciar fenitoína profilática vitalícia'],
+     correct:1, expl:'<b>B.</b> Crise provocada (sintomática aguda) por abstinência: trata-se a causa com benzodiazepínico; não há indicação de antiepiléptico crônico de rotina.'},
+    {stem:'Antiepiléptico que pode PIORAR crises de ausência e mioclônicas:',
+     opts:['Etossuximida','Valproato','Carbamazepina','Levetiracetam'],
+     correct:2, expl:'<b>C.</b> Carbamazepina pode agravar ausências e mioclonias — por isso é preferida em crises focais, não em síndromes generalizadas idiopáticas.'}
+  ],
+  cards:[
+    {tag:'Definição',q:'Quando dizemos que há epilepsia?',a:'≥2 crises não provocadas (>24h de intervalo) ou 1 crise com alto risco de recorrência.'},
+    {tag:'Provocada',q:'Crise provocada é epilepsia?',a:'Não. Tem causa aguda reversível (hipoglicemia, hipoNa, abstinência, febre) — trate a causa.'},
+    {tag:'Classificação',q:'Como a ILAE 2017 classifica o início das crises?',a:'Focal, generalizado ou desconhecido.'},
+    {tag:'Focal',q:'Como é uma crise focal disperceptiva?',a:'Olhar parado + automatismos (mastigar/mexer mãos) + confusão pós-ictal; origem temporal frequente.'},
+    {tag:'Ausência',q:'EEG típico da ausência?',a:'Ponta-onda generalizada a 3 Hz; episódios breves sem pós-ictal, provocados por hiperventilação.'},
+    {tag:'EME',q:'Definição operacional de estado de mal?',a:'Crise ≥5 min ou crises sem recuperar consciência entre elas.'},
+    {tag:'EME',q:'Sequência de tratamento do EME?',a:'BZD (1ª linha) → fenitoína/valproato/levetiracetam (2ª) → anestésico em UTI (refratário).'},
+    {tag:'Fármaco',q:'Antiepiléptico de escolha na gestante?',a:'Lamotrigina ou levetiracetam (evitar valproato — teratogênico).'},
+    {tag:'Fármaco',q:'O que carbamazepina pode piorar?',a:'Crises de ausência e mioclônicas.'},
+    {tag:'Diferencial',q:'Como diferenciar crise de síncope?',a:'Crise: pós-ictal/confusão e mordedura lateral de língua. Síncope: recuperação rápida e lúcida, pródromo vasovagal.'}
+  ],
+  cases:[
+    {title:'Caso 1 — Crise prolongada no PS',
+     hist:'Homem, 40 anos, epiléptico, parou a medicação. Trazido em crise tônico-clônica contínua, já com 10 minutos de duração na chegada.',
+     exam:'Inconsciente, abalos generalizados, sialorreia, cianose leve. Glasgow não avaliável durante a crise.',
+     labs:'Glicemia capilar 96; eletrólitos normais.',
+     reason:'Crise ≥5 min = estado de mal epiléptico. Prioridade: estabilizar via aérea/oxigenação e cessar a crise rapidamente para evitar lesão neuronal.',
+     dx:'Estado de mal epiléptico (provável por má adesão medicamentosa).',
+     tx:'ABC + O₂ + acesso; benzodiazepínico EV; se persistir após dose adequada → fenitoína/valproato/levetiracetam EV; refratário → anestésico em UTI com EEG. Reintroduzir/ajustar antiepiléptico de base e reforçar adesão.'},
+    {title:'Caso 2 — Primeira crise no adulto',
+     hist:'Mulher, 30 anos, sem comorbidades, primeira crise tônico-clônica presenciada, com confusão por ~20 min depois.',
+     exam:'Pós-ictal lúcida ao exame; sem déficit focal; mordedura na borda lateral da língua.',
+     labs:'Glicemia e eletrólitos normais. RM de crânio sem lesão; EEG sem atividade epileptiforme.',
+     reason:'Primeira crise não provocada, sem fator metabólico, exame e investigação sem lesão/EEG alterado → baixo risco de recorrência imediato.',
+     dx:'Primeira crise não provocada, sem alto risco de recorrência.',
+     tx:'Em geral, observação e orientação sem iniciar antiepiléptico de imediato, com seguimento; iniciar fármaco se surgirem novas crises ou achados de alto risco. Orientar sono adequado e evitar gatilhos.'},
+    {title:'Caso 3 — Abalos ao acordar',
+     hist:'Adolescente, 16 anos, há meses com abalos súbitos dos braços ao acordar, derrubando objetos; recentemente uma crise tônico-clônica matinal.',
+     exam:'Neurológico normal.',
+     labs:'EEG com polipontas generalizadas; RM normal.',
+     reason:'Mioclonias matinais + crise generalizada + EEG com polipontas em adolescente = epilepsia mioclônica juvenil.',
+     dx:'Epilepsia mioclônica juvenil.',
+     tx:'Valproato é clássico, mas em mulher jovem prefira levetiracetam/lamotrigina. EVITAR carbamazepina (piora mioclonia). Higiene do sono e evitar privação/álcool.'}
+  ]
+});
+
+/* ---------- 4. MENINGITES E ENCEFALITES ---------- */
+MODULES.push({
+  id:'meningite', emoji:'🦠', region:'meningeal', title:'Meningites e Encefalites',
+  sub:'Bacteriana, viral, análise do líquor e encefalite herpética',
+  prio:'alta', topics:['Meningite bacteriana','Meningite viral','Análise do líquor','Encefalite herpética','Antibioticoterapia empírica'],
+  teach:`
+<h3>A grande divisão: meninge × parênquima</h3>
+<p><strong>Meningite</strong> = inflamação das meninges (sinais meníngeos predominam). <strong>Encefalite</strong> = inflamação do parênquima cerebral (predominam alteração de comportamento, consciência, convulsões e déficits focais). Os dois podem coexistir (meningoencefalite).</p>
+<div class="callout fast"><b>Tríade clássica da meningite</b>Febre + cefaleia + rigidez de nuca. Some alteração do nível de consciência e você tem a "tétrade". Mas atenção: idosos e imunossuprimidos podem ter apresentação frustra.</div>
+<p>Sinais de irritação meníngea: <strong>Kernig</strong> (resistência/dor ao estender o joelho com quadril fletido) e <strong>Brudzinski</strong> (flexão involuntária dos joelhos ao fletir o pescoço).</p>
+
+<h3>Conduta inicial — a sequência que cai em prova</h3>
+<div class="callout trap"><b>A pegadinha nº 1: NÃO atrase o antibiótico esperando a punção/TC</b>Se há suspeita de meningite bacteriana, a ordem prática é: <strong>hemoculturas → (corticoide +) antibiótico empírico IMEDIATO → punção lombar</strong>. Se houver indicação de TC antes da punção (déficit focal, papiledema, rebaixamento, imunossupressão, crise recente), <strong>colha hemocultura e já comece o ATB antes da TC</strong> — não espere a imagem para tratar.</div>
+
+<h3>Análise do líquor (LCR) — o mapa do diagnóstico</h3>
+<table class="med"><tr><th>Parâmetro</th><th>Normal</th><th>Bacteriana</th><th>Viral</th><th>Fúngica/TB</th></tr>
+<tr><td>Aspecto</td><td>Límpido</td><td>Turvo/purulento</td><td>Límpido</td><td>Límpido/opalescente</td></tr>
+<tr><td>Células</td><td>&lt;5</td><td>↑↑ centenas-milhares, <strong>neutrófilos</strong></td><td>↑ dezenas-centenas, <strong>linfócitos</strong></td><td>↑ linfócitos</td></tr>
+<tr><td>Proteína</td><td>15–45</td><td>↑↑ muito alta</td><td>Normal/leve ↑</td><td>↑ alta</td></tr>
+<tr><td>Glicose (LCR/sangue)</td><td>Normal (≈2/3)</td><td><strong>↓↓ baixa</strong></td><td>Normal</td><td><strong>↓ baixa</strong></td></tr></table>
+<div class="callout mne"><b>Macete da glicose</b>Bactéria e fungo/TB "comem açúcar" → glicose <strong>baixa</strong>. Vírus não → glicose <strong>normal</strong>. Predomínio de <strong>neutrófilo</strong> = bacteriana; <strong>linfócito</strong> = viral/TB/fúngica.</div>
+
+<h3>Tratamento empírico da meningite bacteriana</h3>
+<table class="med"><tr><th>Faixa/contexto</th><th>Agentes prováveis</th><th>Empírico</th></tr>
+<tr><td>Adulto (até ~50a)</td><td>Pneumococo, meningococo</td><td><strong>Ceftriaxona</strong> (+ vancomicina onde há resistência do pneumococo)</td></tr>
+<tr><td>&gt;50a / imunossuprimido / gestante</td><td>+ <strong>Listeria</strong></td><td>Adicionar <strong>ampicilina</strong></td></tr>
+<tr><td>RN</td><td>Strep B, E. coli, Listeria</td><td>Ampicilina + cefotaxima</td></tr></table>
+<div class="callout tip"><b>Corticoide (dexametasona)</b>Na suspeita de meningite bacteriana do adulto (sobretudo pneumocócica), <strong>dexametasona antes/junto da 1ª dose de antibiótico</strong> reduz sequelas (especialmente surdez). Não adianta começar depois do ATB já instalado.</div>
+
+<h3>Meningococcemia — o sinal que não pode passar</h3>
+<p><strong>Rash petequial/purpúrico</strong> que não desaparece à digitopressão (purpura) em paciente febril com sinais meníngeos = meningococo até prova em contrário → ATB <strong>imediato</strong>, isolamento respiratório e <strong>profilaxia dos contatos</strong> (rifampicina/ceftriaxona/ciprofloxacino).</p>
+
+<h3>Encefalite herpética (HSV) — não perca tempo</h3>
+<p>Encefalite + febre + alteração de comportamento/personalidade + crises + acometimento de <strong>lobos temporais</strong> (RM). O LCR costuma ser linfocítico, às vezes com hemácias. Diagnóstico: <strong>PCR para HSV no líquor</strong>.</p>
+<div class="callout warn"><b>Regra de ouro</b>Suspeitou de encefalite herpética? <strong>Inicie aciclovir EV imediatamente</strong>, antes mesmo do resultado da PCR. A demora aumenta mortalidade e sequelas. Aciclovir empírico não "atrapalha" — tratar precocemente salva.</div>
+
+<h3>📌 Revisão de véspera</h3>
+<ul>
+<li>Suspeita de meningite bacteriana → hemocultura + dexametasona + ATB <strong>já</strong>, depois punção (TC antes só se indicado).</li>
+<li>LCR: neutrófilo + glicose baixa = bacteriana; linfócito + glicose normal = viral.</li>
+<li>Empírico do adulto: ceftriaxona (± vanco); &gt;50a/imuno/gestante: + ampicilina (Listeria).</li>
+<li>Petéquias/púrpura + febre = meningococo → ATB + profilaxia de contatos.</li>
+<li>Comportamento estranho + febre + temporal na RM = encefalite herpética → <strong>aciclovir já</strong>.</li>
+</ul>
+`,
+  flowDx:{ title:'Fluxograma: suspeita de meningite', start:'m1', nodes:{
+    m1:{q:'Febre + cefaleia + rigidez de nuca (± rebaixamento)?',opts:[{t:'Sim — suspeita de meningite',go:'m2'},{t:'Sintomas encefálicos (comportamento, crises, foco)',go:'rEnc'}]},
+    m2:{q:'Há indicação de TC ANTES da punção? (déficit focal, papiledema, rebaixamento, imunossupressão, crise recente)',opts:[{t:'Sim',go:'rATBtc'},{t:'Não',go:'m3'}]},
+    m3:{q:'Resultado do líquor:',opts:[{t:'Neutrófilos + glicose baixa + proteína alta',go:'rBact'},{t:'Linfócitos + glicose normal',go:'rViral'}]}
+  }, results:{
+    rEnc:{title:'Suspeita de ENCEFALITE',body:'RM (lobos temporais no HSV), PCR HSV no líquor. Iniciar ACICLOVIR EV empírico imediatamente, sem esperar a PCR.'},
+    rATBtc:{title:'Colher hemocultura + ATB empírico ANTES da TC',body:'Não atrase o antibiótico! Dexametasona + ceftriaxona (± vanco; ± ampicilina se >50a/imuno) e depois TC → punção.'},
+    rBact:{title:'Meningite BACTERIANA',body:'Manter dexametasona + ceftriaxona (± vancomicina; + ampicilina se Listeria provável). Notificação compulsória; profilaxia de contatos se meningococo.'},
+    rViral:{title:'Meningite VIRAL',body:'Geralmente benigna/autolimitada; suporte e analgesia. Reavaliar se piora (descartar herpética → aciclovir).'}
+  }},
+  flowMx:{ title:'Conduta na meningite bacteriana aguda', steps:[
+    'Reconhecer a tríade e estabilizar (ABC, acesso, sinais vitais).',
+    'Colher hemoculturas imediatamente.',
+    'Dexametasona + antibiótico empírico SEM atraso (ceftriaxona ± vancomicina; + ampicilina se >50a/imuno/gestante).',
+    'Punção lombar para análise do líquor (após TC apenas se houver indicação formal — sem atrasar o ATB).',
+    'Ajustar antibiótico pela cultura/antibiograma; tempo conforme agente.',
+    'Notificação compulsória; isolamento e profilaxia de contatos se meningococo (rifampicina/ceftriaxona/ciprofloxacino).'
+  ]},
+  questions:[
+    {stem:'Adulto de 40a com febre, cefaleia intensa, rigidez de nuca e sonolência. Sem déficit focal. Conduta imediata mais correta?',
+     opts:['Aguardar TC e só então iniciar antibiótico','Colher hemocultura + dexametasona + ceftriaxona, depois punção lombar','Iniciar aciclovir e alta','Apenas analgesia e observação'],
+     correct:1, expl:'<b>B.</b> Sem indicação de TC pré-punção, mas o princípio essencial é não atrasar o ATB: hemocultura + dexametasona + ceftriaxona empírica, seguidos da punção.'},
+    {stem:'Líquor: 2.500 células com predomínio de neutrófilos, proteína muito elevada e glicose baixa. Padrão de qual meningite?',
+     opts:['Viral','Bacteriana','Fúngica apenas','Normal'],
+     correct:1, expl:'<b>B.</b> Pleocitose neutrofílica + hiperproteinorraquia + hipoglicorraquia = padrão bacteriano clássico.'},
+    {stem:'Homem de 62a, diabético, com quadro meníngeo. Qual ajuste no esquema empírico em relação a um jovem hígido?',
+     opts:['Retirar a ceftriaxona','Adicionar ampicilina (cobertura de Listeria)','Adicionar apenas antiviral','Nenhum ajuste'],
+     correct:1, expl:'<b>B.</b> >50 anos, imunossuprimidos e gestantes têm risco de Listeria monocytogenes → acrescentar ampicilina ao esquema.'},
+    {stem:'Paciente febril com confusão, crises e RM mostrando alteração em lobos temporais. Conduta?',
+     opts:['Ceftriaxona isolada','Aciclovir EV empírico imediato + PCR HSV no líquor','Antifúngico','Aguardar PCR para tratar'],
+     correct:1, expl:'<b>B.</b> Encefalite herpética: iniciar aciclovir EV imediatamente, sem esperar a PCR, pela alta morbimortalidade do atraso.'},
+    {stem:'Adolescente febril com sinais meníngeos e rash purpúrico que não some à digitopressão. Além do antibiótico, qual medida de saúde pública?',
+     opts:['Nenhuma','Profilaxia dos contatos próximos','Quarentena de 30 dias do paciente','Vacinar toda a cidade no mesmo dia'],
+     correct:1, expl:'<b>B.</b> Quadro de meningococcemia: ATB imediato + isolamento respiratório + quimioprofilaxia dos contatos próximos (rifampicina/ceftriaxona/ciprofloxacino) e notificação.'},
+    {stem:'Sobre a dexametasona na meningite bacteriana do adulto:',
+     opts:['Deve ser dada vários dias após o antibiótico','Deve ser dada antes/junto da 1ª dose de antibiótico para reduzir sequelas','Está contraindicada em qualquer caso','Substitui o antibiótico'],
+     correct:1, expl:'<b>B.</b> O benefício (redução de sequelas, sobretudo auditivas na pneumocócica) ocorre quando o corticoide é administrado antes ou junto da primeira dose do antibiótico.'}
+  ],
+  cards:[
+    {tag:'Clínica',q:'Tríade clássica da meningite?',a:'Febre + cefaleia + rigidez de nuca (± alteração da consciência).'},
+    {tag:'Conduta',q:'O que NÃO atrasar na suspeita de meningite bacteriana?',a:'O antibiótico! Hemocultura + dexametasona + ATB empírico antes da punção/TC.'},
+    {tag:'Líquor',q:'Padrão de líquor da bacteriana?',a:'Neutrófilos ↑↑, proteína ↑↑, glicose ↓↓, aspecto turvo.'},
+    {tag:'Líquor',q:'Padrão de líquor da viral?',a:'Linfócitos ↑, proteína normal/leve↑, glicose normal, límpido.'},
+    {tag:'Empírico',q:'Antibiótico empírico no adulto jovem?',a:'Ceftriaxona (± vancomicina se resistência pneumocócica).'},
+    {tag:'Empírico',q:'O que adicionar em >50a/imunossuprimido/gestante?',a:'Ampicilina (cobertura de Listeria).'},
+    {tag:'Corticoide',q:'Quando dar dexametasona?',a:'Antes ou junto da 1ª dose de antibiótico — reduz sequelas (surdez na pneumocócica).'},
+    {tag:'Meningococo',q:'Sinal cutâneo da meningococcemia e medida adicional?',a:'Rash petequial/purpúrico que não some à digitopressão; profilaxia dos contatos + notificação.'},
+    {tag:'Herpes',q:'Conduta na suspeita de encefalite herpética?',a:'Aciclovir EV empírico imediato + PCR HSV no líquor; RM mostra lobos temporais.'},
+    {tag:'Macete',q:'Como a glicose ajuda no diagnóstico?',a:'Baixa = bactéria/fungo/TB; normal = vírus.'}
+  ],
+  cases:[
+    {title:'Caso 1 — Quadro meníngeo agudo',
+     hist:'Homem, 38 anos, há 1 dia com febre alta, cefaleia holocraniana intensa, vômitos e sonolência progressiva.',
+     exam:'Temp 39,2°C, rigidez de nuca, Brudzinski positivo, sem déficit focal, Glasgow 14.',
+     labs:'Sem indicação de TC pré-punção. Líquor turvo: 3.200 células (90% neutrófilos), proteína 280, glicose 22 (sangue 110).',
+     reason:'Tríade meníngea + líquor neutrofílico com hipoglicorraquia = meningite bacteriana. Não se deve atrasar o antibiótico.',
+     dx:'Meningite bacteriana aguda (provável pneumococo/meningococo).',
+     tx:'Hemocultura + dexametasona + ceftriaxona empírica imediatas (já antes do resultado completo). Ajustar pela cultura. Notificação compulsória; profilaxia de contatos se meningococo confirmado.'},
+    {title:'Caso 2 — Comportamento estranho com febre',
+     hist:'Mulher, 52 anos, há 3 dias com febre, confusão, fala desconexa e uma crise convulsiva.',
+     exam:'Desorientada, afasia intermitente, sem rigidez de nuca marcante.',
+     labs:'RM: hipersinal em lobo temporal medial. Líquor: 80 células linfocíticas, glicose normal, algumas hemácias. PCR HSV pendente.',
+     reason:'Encefalite (parênquima) com acometimento temporal + crise + líquor linfocítico = encefalite herpética até prova em contrário. Atraso aumenta sequelas.',
+     dx:'Encefalite herpética (HSV).',
+     tx:'Iniciar ACICLOVIR EV imediatamente, sem aguardar a PCR. Suporte, controle de crises e monitorização neurológica.'},
+    {title:'Caso 3 — Febre e manchas na pele',
+     hist:'Adolescente, 17 anos, febre súbita, cefaleia, mialgia e prostração há horas; surgimento de manchas na pele.',
+     exam:'Toxemiado, rigidez de nuca, lesões petequiais/purpúricas em tronco e membros que não desaparecem à digitopressão; hipotensão.',
+     labs:'Suspeita clínica forte; coletar hemocultura e líquor após estabilização — sem atrasar ATB.',
+     reason:'Quadro fulminante com púrpura = meningococcemia. Emergência: choque + risco de CIVD. Saúde pública: contatos.',
+     dx:'Doença meningocócica (meningococcemia ± meningite).',
+     tx:'Ressuscitação volêmica, antibiótico (ceftriaxona) imediato, isolamento respiratório, notificação compulsória e quimioprofilaxia dos contatos próximos.'}
+  ]
+});
+
+/* ---------- 5. TCE ---------- */
+MODULES.push({
+  id:'tce', emoji:'🚑', region:'ventricular', title:'Traumatismo Cranioencefálico (TCE)',
+  sub:'Glasgow, hematomas, lesão axonal difusa e hipertensão intracraniana',
+  prio:'alta', topics:['Escala de Glasgow','Classificação leve/moderado/grave','Lesão primária e secundária','Hematoma epidural','Hematoma subdural','Lesão axonal difusa','Hipertensão intracraniana','Indicações de TC'],
+  teach:`
+<h3>A grande ideia: salvar o cérebro DEPOIS do trauma</h3>
+<p>No TCE existem duas lesões. A <strong>lesão primária</strong> acontece no instante do impacto — não dá para desfazer. O que mata o paciente nas horas seguintes é a <strong>lesão secundária</strong>: hipóxia, hipotensão, hipertensão intracraniana, edema e convulsões. <strong>Todo o manejo existe para prevenir a lesão secundária.</strong></p>
+<div class="callout fast"><b>Os dois vilões que você precisa evitar a todo custo</b><strong>Hipóxia</strong> (SatO₂ &lt;90%) e <strong>hipotensão</strong> (PAS &lt;90) dobram a mortalidade no TCE grave. "Cérebro precisa de pressão e oxigênio."</div>
+
+<h3>Escala de Coma de Glasgow (ECG)</h3>
+<table class="med"><tr><th>Resposta</th><th>Pontos</th></tr>
+<tr><td><strong>Ocular (1–4):</strong> espontânea 4 · à voz 3 · à dor 2 · ausente 1</td><td>máx 4</td></tr>
+<tr><td><strong>Verbal (1–5):</strong> orientada 5 · confusa 4 · palavras 3 · sons 2 · ausente 1</td><td>máx 5</td></tr>
+<tr><td><strong>Motora (1–6):</strong> obedece 6 · localiza dor 5 · retira 4 · flexão anormal 3 · extensão 2 · ausente 1</td><td>máx 6</td></tr></table>
+<p>Total: 3 (pior) a 15 (melhor). Adicione a resposta <strong>pupilar</strong> (ECG-P).</p>
+<table class="med"><tr><th>Glasgow</th><th>Classificação do TCE</th></tr>
+<tr><td>13–15</td><td>Leve</td></tr><tr><td>9–12</td><td>Moderado</td></tr><tr><td>≤ 8</td><td><strong>Grave → considerar intubação (proteção de via aérea)</strong></td></tr></table>
+<div class="callout mne"><b>Macete</b>"<strong>Glasgow ≤ 8, intuba</strong>." É a frase que você precisa lembrar no plantão e na prova.</div>
+
+<h3>Os hematomas — diferenciar é cair certo na prova</h3>
+<table class="med"><tr><th></th><th>Epidural</th><th>Subdural agudo</th></tr>
+<tr><td>Vaso</td><td><strong>Artéria meníngea média</strong></td><td><strong>Veias-ponte</strong></td></tr>
+<tr><td>Forma na TC</td><td><strong>Biconvexa (lente)</strong>, não cruza suturas</td><td><strong>Crescente (côncava)</strong>, cruza suturas</td></tr>
+<tr><td>Clínica clássica</td><td><strong>Intervalo lúcido</strong> → deterioração</td><td>Rebaixamento desde o início</td></tr>
+<tr><td>Associação</td><td>Fratura temporal, jovem</td><td>Idoso, alcoolista, anticoagulado</td></tr>
+<tr><td>Prognóstico</td><td>Bom se drenado a tempo</td><td>Pior</td></tr></table>
+<div class="callout trap"><b>Pegadinha clássica</b>Jovem que bate a cabeça, "melhora" (intervalo lúcido) e depois rebaixa → pense em <strong>hematoma epidural</strong> (lente biconvexa). Idoso anticoagulado com confusão dias após uma queda → <strong>subdural</strong> (crescente).</div>
+<p><strong>Hematoma subdural crônico:</strong> idoso, semanas após trauma trivial; cefaleia, confusão, alteração de marcha. <strong>Lesão axonal difusa (LAD):</strong> mecanismo de desaceleração; coma profundo com TC inicial pouco expressiva (RM mostra microlesões).</p>
+
+<h3>Hipertensão intracraniana (HIC)</h3>
+<p>Doutrina de <strong>Monro-Kellie</strong>: o crânio é uma caixa rígida com cérebro + sangue + liquor. Se um aumenta (hematoma, edema), os outros precisam diminuir; esgotada a compensação, a <strong>PIC dispara</strong>.</p>
+<p>Mantenha a <strong>PPC (pressão de perfusão cerebral) = PAM − PIC</strong>, alvo ~60–70 mmHg. Sinais de HIC: cefaleia, vômitos, papiledema, rebaixamento e a <strong>tríade de Cushing</strong> (hipertensão + bradicardia + respiração irregular) — sinal tardio e grave de herniação iminente.</p>
+<div class="callout fast"><b>Medidas para baixar a PIC (escalonadas)</b>Cabeceira a 30° e cabeça neutra · normoxia e <strong>normocapnia (PaCO₂ 35–38)</strong> · sedação/analgesia · <strong>salina hipertônica ou manitol</strong> · drenagem liquórica · craniectomia descompressiva. <em>Hiperventilação só como resgate temporário</em> (vasoconstrição reduz fluxo).</div>
+
+<h3>Quando pedir TC no TCE? (regras tipo Canadian CT Head)</h3>
+<ul>
+<li>Glasgow &lt; 15 duas horas após o trauma;</li>
+<li>Suspeita de fratura aberta/afundamento;</li>
+<li>Sinais de fratura de base do crânio: <strong>otorragia/otoliquorreia, hematoma periorbital ("olhos de guaxinim"), sinal de Battle (equimose retroauricular), hemotímpano</strong>;</li>
+<li>≥ 2 episódios de vômito; idade ≥ 65 anos;</li>
+<li>Mecanismo perigoso, amnésia &gt; 30 min, coagulopatia/anticoagulação.</li>
+</ul>
+
+<h3>📌 Revisão de véspera</h3>
+<ul>
+<li>Evite hipóxia e hipotensão (matam mais que a lesão primária).</li>
+<li>Glasgow: leve 13–15 · moderado 9–12 · grave ≤8 → intuba.</li>
+<li>Epidural = lente biconvexa + intervalo lúcido + meníngea média; Subdural = crescente + veias-ponte + idoso.</li>
+<li>HIC: cabeceira 30°, normocapnia, salina/manitol; Cushing = herniação iminente.</li>
+<li>Sinais de fratura de base (guaxinim/Battle/otorragia) → TC obrigatória.</li>
+</ul>
+`,
+  flowDx:{ title:'Fluxograma: TCE na emergência', start:'t1', nodes:{
+    t1:{q:'Escala de Glasgow do paciente?',opts:[{t:'≤ 8 (grave)',go:'rGrave'},{t:'9–12 (moderado)',go:'rMod'},{t:'13–15 (leve)',go:'t2'}]},
+    t2:{q:'Há critérios para TC? (GCS<15 2h após, vômitos ≥2, ≥65a, sinais de fratura de base, anticoagulação, mecanismo grave)',opts:[{t:'Sim',go:'rTC'},{t:'Não',go:'rObs'}]}
+  }, results:{
+    rGrave:{title:'TCE GRAVE',body:'Proteger via aérea (intubação), evitar hipóxia/hipotensão, TC de urgência, monitorar PIC, manejar HIC e neurocirurgia conforme achados.'},
+    rMod:{title:'TCE MODERADO',body:'TC de crânio obrigatória, observação rigorosa, reavaliações seriadas do Glasgow; intervir se deterioração.'},
+    rTC:{title:'TCE leve com critério de TC',body:'Solicitar TC de crânio sem contraste. Observar; tratar achados (hematoma → avaliar neurocirurgia).'},
+    rObs:{title:'TCE leve sem critério de TC',body:'Observação clínica e orientação de sinais de alarme para retorno (vômitos, sonolência excessiva, déficit, piora da dor).'}
+  }},
+  flowMx:{ title:'Manejo inicial do TCE grave (princípios ATLS + neuro)', steps:[
+    'A/B: via aérea definitiva se Glasgow ≤8; O₂ para evitar hipóxia (SatO₂ ≥94%, PaO₂ adequada).',
+    'C: evitar e tratar hipotensão (PAS ≥100–110); reposição volêmica; controlar hemorragias.',
+    'D: Glasgow + pupilas; TC de crânio de urgência.',
+    'Medidas anti-HIC: cabeceira 30°, cabeça neutra, normocapnia (PaCO₂ 35–38), sedação/analgesia.',
+    'PIC elevada: salina hipertônica/manitol; drenagem liquórica; considerar craniectomia descompressiva.',
+    'Lesão cirúrgica (epidural/subdural/afundamento) → neurocirurgia. Profilaxia de crise precoce conforme indicação.'
+  ]},
+  questions:[
+    {stem:'Vítima de acidente com Glasgow 7. Qual a primeira prioridade?',
+     opts:['TC imediata antes de tudo','Garantir via aérea definitiva (intubação) e oxigenação','Manitol em bolus','Punção lombar'],
+     correct:1, expl:'<b>B.</b> Glasgow ≤8 = incapacidade de proteger a via aérea → intubação. Evitar hipóxia/hipotensão precede a investigação por imagem (que vem logo após estabilizar A-B-C).'},
+    {stem:'Jovem bate a cabeça, fica lúcido por 1h e depois rebaixa rapidamente; TC com coleção biconvexa temporal. Diagnóstico?',
+     opts:['Hematoma subdural agudo','Hematoma epidural','Lesão axonal difusa','Hemorragia subaracnóidea'],
+     correct:1, expl:'<b>B.</b> Intervalo lúcido + imagem biconvexa (lente) + fratura temporal = hematoma epidural (artéria meníngea média).'},
+    {stem:'Idoso anticoagulado, queda há 10 dias, agora confuso. TC com coleção em crescente que acompanha a convexidade. Diagnóstico mais provável?',
+     opts:['Hematoma epidural','Hematoma subdural (veias-ponte)','Meningioma','AVC isquêmico'],
+     correct:1, expl:'<b>B.</b> Forma crescente (côncava), idoso, anticoagulado, trauma prévio = hematoma subdural (ruptura de veias-ponte).'},
+    {stem:'Paciente com TCE grave evolui com hipertensão arterial, bradicardia e respiração irregular. O que isso indica?',
+     opts:['Choque hipovolêmico','Tríade de Cushing — hipertensão intracraniana/herniação iminente','Reação vagal benigna','Hipotermia'],
+     correct:1, expl:'<b>B.</b> Tríade de Cushing sinaliza HIC grave com herniação iminente — medida urgente para reduzir a PIC.'},
+    {stem:'Qual NÃO é medida de primeira linha para reduzir a PIC?',
+     opts:['Cabeceira a 30° com cabeça neutra','Normocapnia (PaCO₂ 35–38)','Salina hipertônica ou manitol','Hiperventilação profilástica mantida'],
+     correct:3, expl:'<b>D.</b> Hiperventilação agressiva e mantida causa vasoconstrição e isquemia; só é usada como resgate temporário em herniação. As demais são corretas.'},
+    {stem:'Achado que indica fratura de base do crânio:',
+     opts:['Cefaleia leve','Sinal de Battle (equimose retroauricular) e otorragia','Glasgow 15','Pupilas isocóricas'],
+     correct:1, expl:'<b>B.</b> Sinal de Battle, "olhos de guaxinim", otoliquorreia/otorragia e hemotímpano sugerem fratura de base e indicam TC.'}
+  ],
+  cards:[
+    {tag:'Conceito',q:'Diferença entre lesão primária e secundária no TCE?',a:'Primária: no impacto (irreversível). Secundária: hipóxia/hipotensão/HIC/edema — prevenível e foco do tratamento.'},
+    {tag:'Glasgow',q:'Pontuação máxima de cada componente do Glasgow?',a:'Ocular 4, Verbal 5, Motora 6 (total 3–15).'},
+    {tag:'Glasgow',q:'Glasgow que indica intubação?',a:'≤ 8 ("Glasgow 8, intuba").'},
+    {tag:'Hematoma',q:'Características do epidural?',a:'Artéria meníngea média, lente biconvexa, intervalo lúcido, fratura temporal.'},
+    {tag:'Hematoma',q:'Características do subdural agudo?',a:'Veias-ponte, formato em crescente, idoso/alcoolista/anticoagulado, pior prognóstico.'},
+    {tag:'HIC',q:'O que é a tríade de Cushing?',a:'Hipertensão + bradicardia + respiração irregular = herniação iminente.'},
+    {tag:'HIC',q:'Fórmula da pressão de perfusão cerebral?',a:'PPC = PAM − PIC (alvo ~60–70 mmHg).'},
+    {tag:'HIC',q:'Medidas para baixar a PIC?',a:'Cabeceira 30°, normocapnia, sedação, salina hipertônica/manitol, drenagem, craniectomia.'},
+    {tag:'Vilões',q:'Quais dois fatores aumentam muito a mortalidade no TCE?',a:'Hipóxia e hipotensão.'},
+    {tag:'TC',q:'Sinais de fratura de base que indicam TC?',a:'Olhos de guaxinim, sinal de Battle, otorragia/otoliquorreia, hemotímpano.'}
+  ],
+  cases:[
+    {title:'Caso 1 — Intervalo lúcido',
+     hist:'Homem, 24 anos, colisão de moto, bateu a têmpora. Inicialmente consciente, conversando; após cerca de 1 hora, evolui com sonolência rápida e vômitos.',
+     exam:'Glasgow caindo de 14 para 9, anisocoria (pupila direita dilatada), hemiparesia esquerda.',
+     labs:'TC: coleção hiperdensa biconvexa temporal direita com efeito de massa; fratura temporal.',
+     reason:'Trauma temporal + intervalo lúcido + lente biconvexa + anisocoria = hematoma epidural com herniação iminente. Emergência neurocirúrgica.',
+     dx:'Hematoma epidural agudo com efeito de massa.',
+     tx:'Estabilizar via aérea (Glasgow caindo), medidas anti-HIC, drenagem neurocirúrgica urgente (craniotomia). Tempo é cérebro.'},
+    {title:'Caso 2 — Confusão no idoso',
+     hist:'Mulher, 78 anos, em uso de varfarina, queda da própria altura há 2 semanas. Familiares notam confusão progressiva e desequilíbrio.',
+     exam:'Glasgow 14, leve hemiparesia, sem febre.',
+     labs:'TC: coleção em crescente sobre a convexidade, hipo/isodensa (subaguda/crônica), desvio de linha média leve.',
+     reason:'Idoso anticoagulado + trauma trivial + coleção em crescente + sintomas tardios = hematoma subdural (veias-ponte).',
+     dx:'Hematoma subdural crônico/subagudo.',
+     tx:'Reverter anticoagulação, avaliar drenagem cirúrgica (trepanação) conforme tamanho/sintomas, controle clínico e reabilitação.'},
+    {title:'Caso 3 — Coma após desaceleração',
+     hist:'Homem, 30 anos, ejetado em acidente de alta velocidade, em coma desde o local.',
+     exam:'Glasgow 5, sem lesão focal expansiva evidente, pupilas pouco reativas.',
+     labs:'TC inicial com edema difuso e pequenas lesões puntiformes; RM evidencia microlesões na substância branca.',
+     reason:'Coma profundo desproporcional aos achados da TC + mecanismo de desaceleração = lesão axonal difusa.',
+     dx:'Lesão axonal difusa (LAD).',
+     tx:'Suporte intensivo, proteção de via aérea, evitar lesão secundária (normoxia, normotensão, normocapnia), controle da PIC e neuroprognóstico em UTI.'}
+  ]
+});
+
+window.MODULES = MODULES;
+
+/* ============================================================
+   GAMIFICAÇÃO — cálculo de progresso e regiões
+   ============================================================ */
+const REGION_INFO = {
+  frontal:{name:'Lobo Frontal',msg:'Funções executivas ativadas.',color:'#38BDF8',represents:'Neuroanatomia, cognição, demências'},
+  parietal:{name:'Lobo Parietal',msg:'Processamento sensorial desbloqueado.',color:'#22D3EE',represents:'Sensibilidade, síndromes corticais'},
+  temporal:{name:'Lobo Temporal',msg:'Rede da memória ativada.',color:'#A78BFA',represents:'Epilepsia, memória, linguagem'},
+  occipital:{name:'Lobo Occipital',msg:'Sistema visual restaurado.',color:'#818CF8',represents:'Vias visuais, campos visuais'},
+  cerebellum:{name:'Cerebelo',msg:'Coordenação motora restaurada.',color:'#34D399',represents:'Ataxias, tremores'},
+  brainstem:{name:'Tronco Encefálico',msg:'Centros vitais ativados.',color:'#FB7185',represents:'Nervos cranianos, coma, emergências'},
+  basal:{name:'Gânglios da Base',msg:'Circuitos motores profundos ativados.',color:'#F59E0B',represents:'Parkinson, distonias, coreias'},
+  spinal:{name:'Medula Espinhal',msg:'Conexões corporais estabelecidas.',color:'#2DD4BF',represents:'Síndromes medulares, TRM'},
+  pns:{name:'Sistema Nervoso Periférico',msg:'Rede periférica conectada.',color:'#10B981',represents:'Neuropatias, plexopatias'},
+  nmj:{name:'Junção Neuromuscular',msg:'Transmissão neural otimizada.',color:'#F472B6',represents:'Miastenia, Lambert-Eaton'},
+  vascular:{name:'Sistema Vascular Cerebral',msg:'Fluxo cerebral restabelecido.',color:'#F87171',represents:'AVC, AIT, trombólise'},
+  meningeal:{name:'Sistema Meníngeo',msg:'Barreiras de proteção ativadas.',color:'#FBBF24',represents:'Meningites, cefaleias, neuroinfecções'},
+  ventricular:{name:'Sistema Ventricular',msg:'Circulação liquórica normalizada.',color:'#60A5FA',represents:'Hidrocefalia, HIC, TCE'}
+};
+const LEVELS=['Bloqueado','Descoberta','Ativação','Conexão Neural','Alta Performance','Domínio Neurológico'];
+
+function moduleProgress(m){
+  const cl=(State.data.checklists[m.id]||[]).filter(Boolean).length, clR=cl/5;
+  const qd=State.data.questions[m.id]||{}; const ans=Object.keys(qd).length;
+  const corr=Object.values(qd).filter(x=>x.correct).length; const qtot=(m.questions||[]).length||1;
+  const qR=ans?Math.min(ans/qtot,1)*(corr/ans):0;
+  const fd=State.data.flashcards[m.id]||{}; const rev=Object.keys(fd).length; const ftot=(m.cards||[]).length||1;
+  const fR=Math.min(rev/ftot,1);
+  return Math.min(100,Math.round(clR*40+qR*30+fR*30));
+}
+function regionProgress(region){
+  const mods=MODULES.filter(m=>m.region===region);
+  if(!mods.length) return 0;
+  return Math.round(mods.reduce((s,m)=>s+moduleProgress(m),0)/mods.length);
+}
+function globalProgress(){
+  if(!MODULES.length) return 0;
+  return Math.round(MODULES.reduce((s,m)=>s+moduleProgress(m),0)/MODULES.length);
+}
+function regionLevel(p){ if(p>=90)return 5; if(p>=70)return 4; if(p>=45)return 3; if(p>=20)return 2; if(p>0)return 1; return 0; }
+
+function refreshProgress(){
+  const sp=SP();
+  sp.cyclePercentage=globalProgress();
+  sp.completedModules=MODULES.filter(m=>moduleProgress(m)>=80).map(m=>m.id);
+  sp.questionsAnswered=MODULES.reduce((s,m)=>s+Object.keys(State.data.questions[m.id]||{}).length,0);
+  sp.correctAnswers=MODULES.reduce((s,m)=>s+Object.values(State.data.questions[m.id]||{}).filter(x=>x.correct).length,0);
+  sp.flashcardsReviewed=MODULES.reduce((s,m)=>s+Object.keys(State.data.flashcards[m.id]||{}).length,0);
+  registerActivity();
+}
+
+/* ============================================================
+   ACHIEVEMENTS
+   ============================================================ */
+const ACHIEVEMENTS=[
+  {id:'first',name:'Primeiros Passos',medal:'🌱',desc:'Responda sua primeira questão',check:sp=>sp.questionsAnswered>=1},
+  {id:'avc',name:'Mestre do AVC',medal:'🩸',desc:'80% no módulo de AVC',check:()=>moduleProgress(byId('avc'))>=80},
+  {id:'epi',name:'Senhor das Epilepsias',medal:'⚡',desc:'80% no módulo de Epilepsia',check:()=>moduleProgress(byId('epilepsia'))>=80},
+  {id:'cef',name:'Domador das Cefaleias',medal:'🤕',desc:'80% no módulo de Cefaleias',check:()=>moduleProgress(byId('cefaleia'))>=80},
+  {id:'inf',name:'Guardião das Meninges',medal:'🦠',desc:'80% em Meningites/Encefalites',check:()=>moduleProgress(byId('meningite'))>=80},
+  {id:'emerg',name:'Rei das Emergências',medal:'🚑',desc:'80% no módulo de TCE',check:()=>moduleProgress(byId('tce'))>=80},
+  {id:'streak3',name:'Constância',medal:'🔥',desc:'3 dias seguidos de estudo',check:sp=>sp.studyStreak>=3},
+  {id:'streak7',name:'Disciplina de Aço',medal:'💎',desc:'7 dias seguidos',check:sp=>sp.studyStreak>=7},
+  {id:'q50',name:'Maratonista',medal:'🏃',desc:'50 questões respondidas',check:sp=>sp.questionsAnswered>=50},
+  {id:'fc100',name:'Memória de Elefante',medal:'🧠',desc:'100 flashcards revisados',check:sp=>sp.flashcardsReviewed>=100},
+  {id:'supreme',name:'NEUROLOGISTA SUPREMO',medal:'👑',desc:'Todas as áreas ≥80%',check:sp=>MODULES.length>0 && MODULES.every(m=>moduleProgress(m)>=80)}
+];
+function byId(id){ return MODULES.find(m=>m.id===id)||{questions:[],cards:[]}; }
+function checkAchievements(){
+  const sp=SP(); if(!sp.achievements)sp.achievements=[];
+  ACHIEVEMENTS.forEach(a=>{ if(!sp.achievements.includes(a.id) && a.check(sp)){ sp.achievements.push(a.id); toast(a.medal+' Conquista: <b>'+a.name+'</b>','gold'); } });
+}
+
+/* ============================================================
+   NAVEGAÇÃO / SIDEBAR
+   ============================================================ */
+const NAV=[
+  {sec:'Principal'},
+  {id:'dashboard',ic:'🏠',label:'Dashboard'},
+  {id:'estudos',ic:'📅',label:'Estudos do Dia'},
+  {id:'jornada',ic:'🗺️',label:'Minha Jornada'},
+  {id:'metas',ic:'🎯',label:'Metas'},
+  {sec:'Conteúdo'},
+  {id:'temas',ic:'📊',label:'Temas Mais Cobrados'},
+  {id:'favoritos',ic:'⭐',label:'Favoritos'},
+  {id:'anotacoes',ic:'📝',label:'Minhas Anotações'},
+  {id:'revisao',ic:'🔁',label:'Revisão Espaçada'},
+  {id:'modulos',ic:'📚',label:'Módulos'},
+  {sec:'Progresso'},
+  {id:'brain',ic:'🧠',label:'Mapa Cerebral'},
+  {id:'conquistas',ic:'🏆',label:'Conquistas'}
+];
+function buildNav(){
+  const nav=document.getElementById('nav');
+  nav.innerHTML=NAV.map(n=> n.sec
+    ? '<div class="nav-section">'+n.sec+'</div>'
+    : '<div class="nav-item" data-view="'+n.id+'" onclick="navigate(\''+n.id+'\')"><span class="nav-ico">'+n.ic+'</span><span class="nav-label">'+n.label+'</span></div>'
+  ).join('');
+}
+function setActiveNav(view){
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.toggle('active', el.dataset.view===view));
+}
+
+let currentView='dashboard';
+window.navigate=function(view){
+  if(view && view.indexOf('mod:')===0){ openModule(view.slice(4)); return; }
+  currentView=view; location.hash=view; setActiveNav(view);
+  closeMobileSidebar();
+  const c=document.getElementById('content'); c.scrollTop=0;
+  const R={dashboard:renderDashboard,estudos:renderEstudos,jornada:renderJornada,metas:renderMetas,
+    temas:renderTemas,favoritos:renderFavoritos,anotacoes:renderAnotacoes,revisao:renderRevisao,
+    modulos:renderModulos,brain:renderBrain,conquistas:renderConquistas};
+  if(R[view]){ c.innerHTML='<div class="view">'+R[view]()+'</div>'; if(view==='brain')wireBrain(); if(view==='temas')wireTemas(); }
+  else c.innerHTML='<div class="view"><p>Em breve.</p></div>';
+  persist();
+};
+window.addEventListener('hashchange',()=>{ const h=location.hash.replace('#',''); if(h && h!==currentView && !h.startsWith('mod:')) navigate(h); });
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+function renderDashboard(){
+  refreshProgress(); const sp=SP(); const g=globalProgress();
+  const accuracy=sp.questionsAnswered?Math.round(sp.correctAnswers/sp.questionsAnswered*100):0;
+  return `
+  <div class="page-head">
+    <div class="crumb">Início</div>
+    <h1>Olá, ${esc(State.name)} 👋</h1>
+    <p>Sua plataforma de Neurologia para ENARE, Revalida, SUS-SP, PSU-MG, SES-PE e SES-RJ. Bons estudos!</p>
+    <div style="margin-top:12px"><span class="credit"><span class="spark">✦</span> Desenvolvido por <b>Jackeline Delfini</b></span></div>
+  </div>
+  <div class="grid g-4">
+    ${statCard('🧠',g+'%','Cérebro ativado')}
+    ${statCard('🔥',(sp.studyStreak||0)+' dias','Sequência de estudo')}
+    ${statCard('✅',accuracy+'%','Acerto em questões')}
+    ${statCard('⚡',(sp.neuroPoints||0),'NeuroPontos')}
+  </div>
+  <div class="grid g-2" style="margin-top:16px">
+    <div class="card glass">
+      <h3 style="font-size:1.1rem;margin-bottom:6px">Progresso do Cérebro</h3>
+      <p style="color:var(--text-soft);font-size:.85rem;margin-bottom:10px">Some o progresso de TODOS os módulos para iluminar o cérebro inteiro.</p>
+      <div class="progress"><i style="width:${g}%"></i></div>
+      <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:.78rem;color:var(--text-dim)">
+        <span>${sp.completedModules.length}/${MODULES.length} módulos dominados</span><span class="mono">${g}%</span></div>
+      <button class="btn btn-ghost btn-sm" style="margin-top:14px" onclick="navigate('brain')">Ver Mapa Cerebral 🧠</button>
+    </div>
+    <div class="card glass">
+      <h3 style="font-size:1.1rem;margin-bottom:6px">Atalhos de estudo</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+        <button class="btn btn-primary" onclick="navigate('estudos')">📅 Estudo do dia</button>
+        <button class="btn btn-ghost" onclick="navigate('modulos')">📚 Escolher um módulo</button>
+        <button class="btn btn-ghost" onclick="navigate('revisao')">🔁 Revisar pendências</button>
+      </div>
+    </div>
+  </div>
+  <h3 style="font-family:var(--font-display);margin:24px 0 12px">Continue de onde parou</h3>
+  <div class="grid g-3">${MODULES.map(modCardHTML).join('')}</div>
+  `;
+}
+function statCard(ic,v,l){ return `<div class="card glass hover stat"><div class="ico">${ic}</div><div class="v">${v}</div><div class="l">${l}</div></div>`; }
+function modCardHTML(m){
+  const p=moduleProgress(m); const fav=State.data.favorites.includes(m.id);
+  return `<div class="card glass hover mod-card" onclick="openModule('${m.id}')">
+    <div style="display:flex;justify-content:space-between;align-items:start">
+      <div class="mod-emoji">${m.emoji}</div>
+      <span onclick="event.stopPropagation();toggleFav('${m.id}')" style="cursor:pointer;font-size:1.1rem">${fav?'⭐':'☆'}</span>
+    </div>
+    <h3>${m.title}</h3>
+    <p>${m.sub}</p>
+    <div class="mod-meta"><span class="tag">${(m.questions||[]).length} questões</span><span class="tag">${(m.cards||[]).length} flashcards</span><span class="tag">${(m.cases||[]).length} casos</span></div>
+    <div class="progress"><i style="width:${p}%"></i></div>
+    <div style="text-align:right;font-size:.74rem;color:var(--text-dim);margin-top:5px" class="mono">${p}% · ${LEVELS[regionLevel(p)]}</div>
+  </div>`;
+}
+window.toggleFav=function(id){ const f=State.data.favorites; const i=f.indexOf(id); if(i>=0)f.splice(i,1); else {f.push(id);toast('⭐ Adicionado aos favoritos');} persist(); navigate(currentView); };
+
+/* ============================================================
+   MÓDULOS (lista)
+   ============================================================ */
+function renderModulos(){
+  return `<div class="page-head"><div class="crumb">Conteúdo</div><h1>Módulos de Neurologia</h1>
+    <p>Cada módulo ensina do zero, como um professor, com tabelas, fluxogramas interativos, questões estilo ENARE/Revalida, flashcards, casos clínicos e checklist de domínio.</p></div>
+    <div class="grid g-3">${MODULES.map(modCardHTML).join('')}</div>
+    <div class="card glass" style="margin-top:18px;border-style:dashed">
+      <h3 style="font-size:1rem">🚧 Mais módulos chegando</h3>
+      <p style="color:var(--text-soft);font-size:.86rem;margin-top:6px">Esta versão traz os 5 temas de maior peso totalmente desenvolvidos (AVC, Cefaleias, Epilepsia, Meningites/Encefalites e TCE). Em construção: Demências, Parkinson e distúrbios do movimento, Esclerose Múltipla, Neuropatias (Guillain-Barré), Miastenia, Doenças Medulares/TRM, Vestibulares, Neuroinfecções, Coma e Morte Encefálica, e Semiologia.</p>
+    </div>`;
+}
+
+/* ============================================================
+   MÓDULO — detalhe com abas
+   ============================================================ */
+let curMod=null, curTab='ensino';
+window.openModule=function(id){
+  curMod=byId(id); curTab='ensino'; location.hash='mod:'+id; setActiveNav('modulos');
+  renderModule();
+};
+function renderModule(){
+  const m=curMod; const p=moduleProgress(m);
+  const tabs=[['ensino','📖 Aula'],['fluxo','🔀 Fluxogramas'],['questoes','❓ Questões'],['flashcards','🎴 Flashcards'],['casos','🩺 Casos'],['dominio','✅ Domínio'],['notas','📝 Anotações']];
+  document.getElementById('content').innerHTML=`<div class="view">
+    <div class="page-head">
+      <div class="crumb"><span style="cursor:pointer" onclick="navigate('modulos')">Módulos</span> › ${m.region}</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
+        <h1>${m.emoji} ${m.title}</h1>
+        <button class="btn btn-ghost btn-sm" onclick="toggleFav('${m.id}');renderModule()">${State.data.favorites.includes(m.id)?'⭐ Favorito':'☆ Favoritar'}</button>
+      </div>
+      <p>${m.sub}</p>
+      <div class="progress" style="margin-top:10px"><i style="width:${p}%"></i></div>
+      <div class="mono" style="text-align:right;font-size:.74rem;color:var(--text-dim);margin-top:4px">${p}% · ${LEVELS[regionLevel(p)]}</div>
+    </div>
+    <div class="tabs">${tabs.map(t=>`<div class="tab ${curTab===t[0]?'active':''}" onclick="setTab('${t[0]}')">${t[1]}</div>`).join('')}</div>
+    <div id="modBody"></div>
+  </div>`;
+  renderTab();
+}
+window.setTab=function(t){ curTab=t; renderModule(); };
+function renderTab(){
+  const m=curMod; const b=document.getElementById('modBody'); if(!b)return;
+  if(curTab==='ensino'){ b.innerHTML=`<div class="card glass"><div class="teach">${m.teach}</div></div>`; }
+  else if(curTab==='fluxo'){ b.innerHTML=renderFlow(m); }
+  else if(curTab==='questoes'){ b.innerHTML=renderQuestions(m); }
+  else if(curTab==='flashcards'){ b.innerHTML=renderFlashcards(m); }
+  else if(curTab==='casos'){ b.innerHTML=renderCases(m); }
+  else if(curTab==='dominio'){ b.innerHTML=renderChecklist(m); }
+  else if(curTab==='notas'){ b.innerHTML=renderNotes(m); }
+}
+
+/* ---- Fluxogramas interativos ---- */
+let flowState={};
+function renderFlow(m){
+  flowState[m.id]=flowState[m.id]||{dx:m.flowDx?m.flowDx.start:null};
+  let h='<div class="card glass"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:4px">🔀 '+(m.flowDx?m.flowDx.title:'Fluxograma diagnóstico')+'</h3>';
+  h+='<p style="color:var(--text-soft);font-size:.85rem;margin-bottom:12px">Clique nas respostas para percorrer o raciocínio.</p>';
+  h+=renderFlowNode(m)+'</div>';
+  if(m.flowMx){
+    h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:10px">🧭 '+m.flowMx.title+'</h3><div class="flow">';
+    m.flowMx.steps.forEach((s,i)=>{ h+='<div class="flow-step"><div class="n">'+(i+1)+'</div><div class="flow-node" style="flex:1">'+s+'</div></div>'; if(i<m.flowMx.steps.length-1)h+='<div class="flow-arrow">↓</div>'; });
+    h+='</div></div>';
+  }
+  return h;
+}
+function renderFlowNode(m){
+  const cur=flowState[m.id].dx; if(!m.flowDx||!cur) return '<p>—</p>';
+  if(m.flowDx.nodes[cur]){
+    const node=m.flowDx.nodes[cur];
+    return '<div class="flow-node q"><b>'+node.q+'</b><div class="flow-opts">'+node.opts.map(o=>'<button class="btn-sm" onclick="flowGo(\''+m.id+'\',\''+o.go+'\')">'+o.t+'</button>').join('')+'</div></div>';
+  }
+  const r=m.flowDx.results[cur];
+  return '<div class="flow-node"><div class="flow-result"><b style="color:var(--teal);font-size:1.05rem">'+r.title+'</b><p style="color:var(--text-soft);margin-top:6px;font-size:.9rem">'+r.body+'</p></div><button class="btn-sm btn-ghost" style="margin-top:12px" onclick="flowReset(\''+m.id+'\')">↺ Recomeçar</button></div>';
+}
+window.flowGo=function(id,go){ flowState[id].dx=go; renderTab(); addNP(2); };
+window.flowReset=function(id){ flowState[id].dx=byId(id).flowDx.start; renderTab(); };
+
+/* ---- Questões ---- */
+function renderQuestions(m){
+  const qd=State.data.questions[m.id]||{};
+  let h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px"><span class="pill teal">Estilo ENARE / Revalida</span><span class="pill">'+Object.keys(qd).length+'/'+m.questions.length+' respondidas</span></div>';
+  m.questions.forEach((q,i)=>{
+    const ans=qd[i]; const letters=['A','B','C','D','E'];
+    h+='<div class="q-card glass"><div class="q-stem"><span class="qn">Q'+(i+1)+'.</span>'+q.stem+'</div>';
+    q.opts.forEach((o,j)=>{
+      let cls=''; if(ans){ if(j===q.correct)cls='correct'; else if(j===ans.chosen)cls='wrong'; cls+=' disabled'; }
+      h+='<div class="q-opt '+cls+'" '+(ans?'':'onclick="answerQ(\''+m.id+'\','+i+','+j+')"')+'><span class="letter">'+letters[j]+'</span><span>'+o+'</span></div>';
+    });
+    h+='<div class="q-expl '+(ans?'show':'')+'" id="expl-'+m.id+'-'+i+'"><b>Comentário:</b> '+q.expl+'</div></div>';
+  });
+  return h;
+}
+window.answerQ=function(id,i,j){
+  const m=byId(id); const correct=(j===m.questions[i].correct);
+  State.data.questions[id]=State.data.questions[id]||{}; State.data.questions[id][i]={chosen:j,correct};
+  bumpDaily('q'); addNP(correct?10:3, correct?'questão certa!':null); if(correct)toast('✅ Resposta correta!','');
+  refreshProgress(); persist(); renderTab();
+};
+
+/* ---- Flashcards ---- */
+let fc={mod:null,idx:0,flip:false};
+function renderFlashcards(m){
+  if(fc.mod!==m.id){ fc={mod:m.id,idx:0,flip:false}; }
+  const card=m.cards[fc.idx]; const fd=State.data.flashcards[m.id]||{};
+  return `<div class="card glass">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+      <span class="pill violet">🎴 Flashcards</span><span class="pill">${Object.keys(fd).length}/${m.cards.length} revisados</span></div>
+    <div class="fc-stage"><div class="fc ${fc.flip?'flip':''}" id="fcCard" onclick="fcFlip()">
+      <div class="fc-face fc-front"><span class="tagm">${card.tag} · pergunta</span><div class="fc-q">${card.q}</div><span class="fc-hint">clique para ver a resposta</span></div>
+      <div class="fc-face fc-back"><span class="tagm">resposta</span><div class="fc-a">${card.a}</div><span class="fc-hint">clique para voltar</span></div>
+    </div></div>
+    <div class="fc-rate"><button class="btn-sm rate-hard" onclick="fcRate('hard')">😓 Difícil</button><button class="btn-sm rate-med" onclick="fcRate('med')">🤔 Médio</button><button class="btn-sm rate-easy" onclick="fcRate('easy')">😎 Fácil</button></div>
+    <div class="fc-controls"><button class="btn-sm btn-ghost" onclick="fcNav(-1)">← Anterior</button><button class="btn-sm btn-ghost" onclick="fcNav(1)">Próximo →</button></div>
+    <div class="fc-counter">Cartão ${fc.idx+1} de ${m.cards.length}</div>
+  </div>`;
+}
+window.fcFlip=function(){ fc.flip=!fc.flip; const el=document.getElementById('fcCard'); if(el)el.classList.toggle('flip',fc.flip); };
+window.fcNav=function(d){ const m=curMod; fc.idx=(fc.idx+d+m.cards.length)%m.cards.length; fc.flip=false; renderTab(); };
+window.fcRate=function(r){ const m=curMod; State.data.flashcards[m.id]=State.data.flashcards[m.id]||{}; State.data.flashcards[m.id][fc.idx]=r;
+  bumpDaily('f'); addNP(r==='easy'?6:r==='med'?5:4); scheduleSpaced(m.id,r); refreshProgress(); persist();
+  toast('🎴 Desempenho registrado','');
+  if(fc.idx<m.cards.length-1){ fc.idx++; fc.flip=false; } renderTab();
+};
+
+/* ---- Casos clínicos ---- */
+function renderCases(m){
+  let h='<div style="margin-bottom:12px"><span class="pill rose">🩺 Raciocínio clínico passo a passo</span></div>';
+  m.cases.forEach(c=>{
+    h+='<div class="case glass"><div class="case-tag">Caso clínico</div><h4>'+c.title+'</h4>';
+    h+='<div class="case-block"><div class="lbl">História</div><p>'+c.hist+'</p></div>';
+    h+='<div class="case-block"><div class="lbl">Exame físico</div><p>'+c.exam+'</p></div>';
+    h+='<div class="case-block"><div class="lbl">Exames complementares</div><p>'+c.labs+'</p></div>';
+    h+='<details class="case-reveal"><summary>Mostrar raciocínio clínico</summary><div class="case-block"><div class="lbl">Raciocínio</div><p>'+c.reason+'</p></div>'
+      +'<div class="case-block"><div class="lbl">Diagnóstico</div><p><b style="color:var(--teal)">'+c.dx+'</b></p></div>'
+      +'<div class="case-block"><div class="lbl">Conduta / Tratamento</div><p>'+c.tx+'</p></div></details></div>';
+  });
+  return h;
+}
+
+/* ---- Checklist de domínio ---- */
+const CHECK_ITEMS=['Sei diagnosticar','Sei tratar','Sei diferenciar','Sei resolver questões','Dominei o tema'];
+function renderChecklist(m){
+  const cl=State.data.checklists[m.id]||[false,false,false,false,false];
+  let h='<div class="card glass"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:4px">✅ Checklist de domínio</h3>'
+    +'<p style="color:var(--text-soft);font-size:.85rem;margin-bottom:12px">Marque conforme dominar cada competência. Cada item soma no progresso do cérebro.</p><div class="checklist">';
+  CHECK_ITEMS.forEach((it,i)=>{ h+='<div class="check '+(cl[i]?'done':'')+'" onclick="toggleCheck(\''+m.id+'\','+i+')"><div class="box">✓</div><span>'+it+'</span></div>'; });
+  h+='</div></div>';
+  return h;
+}
+window.toggleCheck=function(id,i){ const cl=State.data.checklists[id]||[false,false,false,false,false]; cl[i]=!cl[i]; State.data.checklists[id]=cl;
+  if(cl[i])addNP(8,'domínio +1'); refreshProgress(); persist(); renderTab(); };
+
+/* ---- Notas por módulo ---- */
+function renderNotes(m){
+  const val=esc(State.data.notes[m.id]||'');
+  return `<div class="card glass"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><h3 style="font-family:var(--font-display);font-size:1.15rem">📝 Anotações — ${m.title}</h3><span class="save-state" id="saveState"></span></div>
+    <textarea class="note-area" id="noteArea" placeholder="Escreva aqui suas anotações, macetes e dúvidas sobre ${m.title}…" oninput="saveNote('${m.id}',this.value)">${val}</textarea></div>`;
+}
+let noteTimer=null;
+window.saveNote=function(id,v){ State.data.notes[id]=v; clearTimeout(noteTimer); noteTimer=setTimeout(()=>{persist(true);},600); };
+
+/* ============================================================
+   ESTUDOS DO DIA
+   ============================================================ */
+function seededRandom(seed){ let x=Math.sin(seed)*10000; return x-Math.floor(x); }
+function dailyPicks(){
+  const today=todayStr(); const seed=parseInt(today.replace(/-/g,''),10);
+  const allQ=[]; MODULES.forEach(m=>m.questions.forEach((q,i)=>allQ.push({mod:m.id,i,q,title:m.title,emoji:m.emoji})));
+  const allF=[]; MODULES.forEach(m=>m.cards.forEach((c,i)=>allF.push({mod:m.id,i,c,title:m.title})));
+  const pick=(arr,n,s)=>{ const a=[...arr]; const out=[]; for(let k=0;k<n&&a.length;k++){ const idx=Math.floor(seededRandom(s+k*7)*a.length); out.push(a.splice(idx,1)[0]); } return out; };
+  return { q:pick(allQ,5,seed), f:pick(allF,5,seed+99), challenge:pick(allQ,3,seed+555) };
+}
+function renderEstudos(){
+  const d=dailyPicks(); const sp=SP();
+  let h=`<div class="page-head"><div class="crumb">Rotina · ${new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})}</div>
+    <h1>📅 Estudos do Dia</h1><p>Conjunto novo todos os dias: questões e flashcards aleatórios, desafio e revisões pendentes.</p></div>`;
+  h+='<div class="grid g-3">'+statCard('🔥',(sp.studyStreak||0)+'d','Sequência')+statCard('❓',d.q.length,'Questões de hoje')+statCard('🎴',d.f.length,'Flashcards de hoje')+'</div>';
+  h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:10px">❓ Questões do dia</h3>';
+  d.q.forEach(x=>{ const ans=(State.data.questions[x.mod]||{})[x.i];
+    h+='<div class="flow-node q" onclick="openModule(\''+x.mod+'\');setTimeout(()=>setTab(\'questoes\'),60)"><b>'+x.emoji+' '+x.title+'</b><p style="color:var(--text-soft);font-size:.86rem;margin-top:4px">'+x.q.stem.slice(0,120)+'…</p>'+(ans?'<span class="pill teal" style="margin-top:6px">'+(ans.correct?'✓ Acertou':'✗ Errou')+'</span>':'<span class="pill" style="margin-top:6px">pendente</span>')+'</div>'; });
+  h+='</div>';
+  h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:10px">🎴 Flashcards do dia</h3>';
+  d.f.forEach(x=>{ h+='<div class="flow-node q" onclick="openModule(\''+x.mod+'\');setTimeout(()=>setTab(\'flashcards\'),60)"><b>'+x.title+'</b><p style="color:var(--text-soft);font-size:.86rem;margin-top:4px">'+x.c.q+'</p></div>'; });
+  h+='</div>';
+  h+='<div class="card glass" style="margin-top:16px;border-color:rgba(245,196,81,.4)"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:6px">🏅 Desafio do dia</h3><p style="color:var(--text-soft);font-size:.88rem">Resolva 3 questões mistas valendo NeuroPontos em dobro. Clique para ir ao módulo correspondente.</p><div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">';
+  d.challenge.forEach(x=>{ h+='<button class="btn btn-ghost btn-sm" style="justify-content:flex-start" onclick="openModule(\''+x.mod+'\');setTimeout(()=>setTab(\'questoes\'),60)">'+x.emoji+' '+x.title+'</button>'; });
+  h+='</div></div>';
+  const pend=MODULES.filter(m=>moduleProgress(m)<50);
+  h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:6px">📌 Temas pendentes</h3>'
+    +(pend.length?'<div class="grid g-3" style="margin-top:8px">'+pend.map(modCardHTML).join('')+'</div>':'<p style="color:var(--text-soft)">Nenhum tema crítico pendente. Excelente! 🎉</p>')+'</div>';
+  return h;
+}
+function bumpDaily(type){ const sp=SP(); const t=todayStr(); sp.dailyStats=sp.dailyStats||{}; sp.dailyStats[t]=sp.dailyStats[t]||{q:0,f:0}; sp.dailyStats[t][type]++; }
+
+/* ============================================================
+   MINHA JORNADA
+   ============================================================ */
+function renderJornada(){
+  refreshProgress(); const g=globalProgress();
+  let h=`<div class="page-head"><div class="crumb">Progresso</div><h1>🗺️ Minha Jornada</h1><p>Acompanhe sua evolução em cada módulo e o despertar do cérebro.</p></div>`;
+  h+='<div class="card glass"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><b>Progresso global da Neurologia</b><span class="mono" style="color:var(--accent)">'+g+'%</span></div><div class="progress"><i style="width:'+g+'%"></i></div></div>';
+  h+='<h3 style="font-family:var(--font-display);margin:22px 0 10px">Evolução por módulo</h3>';
+  MODULES.forEach(m=>{ const p=moduleProgress(m);
+    h+='<div class="card glass" style="margin-bottom:10px;cursor:pointer" onclick="openModule(\''+m.id+'\')"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><b>'+m.emoji+' '+m.title+'</b><span class="pill '+(p>=80?'teal':'')+'">'+LEVELS[regionLevel(p)]+'</span></div><div class="progress"><i style="width:'+p+'%"></i></div><div class="mono" style="text-align:right;font-size:.72rem;color:var(--text-dim);margin-top:4px">'+p+'%</div></div>'; });
+  return h;
+}
+
+/* ============================================================
+   METAS
+   ============================================================ */
+function renderMetas(){
+  const sp=SP(); const goals=sp.goals; const t=todayStr(); const ds=(sp.dailyStats||{})[t]||{q:0,f:0};
+  const modsDone=sp.completedModules.length;
+  let h=`<div class="page-head"><div class="crumb">Rotina</div><h1>🎯 Metas</h1><p>Defina suas metas e acompanhe o progresso com barras animadas e calendário de estudo.</p></div>`;
+  h+='<div class="grid g-3">';
+  h+=goalCard('Questões / dia',ds.q,goals.daily.q,'q');
+  h+=goalCard('Flashcards / dia',ds.f,goals.daily.f,'f');
+  h+=goalCard('Módulos dominados (mês)',modsDone,goals.monthly.mods,'m');
+  h+='</div>';
+  h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px">⚙️ Editar metas diárias</h3><div class="grid g-3">'
+    +metaInput('Questões/dia','gq',goals.daily.q)+metaInput('Flashcards/dia','gf',goals.daily.f)+metaInput('Horas/dia','gh',goals.daily.h)+'</div>'
+    +'<button class="btn btn-primary btn-sm" style="margin-top:12px" onclick="saveGoals()">Salvar metas</button></div>';
+  h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:6px">📆 Calendário de desempenho</h3>'+calendarHTML()+'</div>';
+  return h;
+}
+function goalCard(label,val,goal,t){ const pct=Math.min(100,Math.round(val/(goal||1)*100));
+  return '<div class="card glass"><div class="l" style="font-weight:700;margin-bottom:8px">'+label+'</div><div class="mono" style="font-size:1.5rem">'+val+' <span style="color:var(--text-dim);font-size:1rem">/ '+goal+'</span></div><div class="progress" style="margin-top:8px"><i style="width:'+pct+'%"></i></div></div>'; }
+function metaInput(label,id,v){ return '<div class="field"><label>'+label+'</label><input class="input" type="number" id="'+id+'" value="'+v+'" min="0"></div>'; }
+window.saveGoals=function(){ const sp=SP(); sp.goals.daily.q=+document.getElementById('gq').value||0; sp.goals.daily.f=+document.getElementById('gf').value||0; sp.goals.daily.h=+document.getElementById('gh').value||0; persist(true); toast('🎯 Metas atualizadas','gold'); navigate('metas'); };
+function calendarHTML(){ const sp=SP(); const days=sp.studyDays||[]; const now=new Date(); const y=now.getFullYear(),mo=now.getMonth();
+  const first=new Date(y,mo,1).getDay(); const total=new Date(y,mo+1,0).getDate(); const tStr=todayStr();
+  let h='<div class="cal">'; ['D','S','T','Q','Q','S','S'].forEach(d=>h+='<div style="font-size:.66rem;color:var(--text-dim);text-align:center;font-weight:700">'+d+'</div>');
+  for(let i=0;i<first;i++)h+='<div></div>';
+  for(let d=1;d<=total;d++){ const ds=y+'-'+String(mo+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'); const on=days.includes(ds); h+='<div class="d '+(on?'on':'')+' '+(ds===tStr?'today':'')+'">'+d+'</div>'; }
+  h+='</div>'; return h;
+}
+
+/* ============================================================
+   TEMAS MAIS COBRADOS
+   ============================================================ */
+const INCIDENCE={
+  ENARE:[['AVC',92],['Epilepsia / EME',74],['Meningites',70],['Cefaleias',58],['TCE',55],['Demências',40],['Parkinson',34],['Miastenia',28]],
+  REVALIDA:[['AVC',88],['Meningites',78],['Cefaleias',64],['Epilepsia / EME',60],['TCE',58],['Vestibular (VPPB)',38],['Neuropatias (GBS)',34]],
+  'SUS-SP':[['AVC',90],['Epilepsia / EME',68],['TCE',64],['Meningites',60],['Cefaleias',50],['Coma / Morte encefálica',40]],
+  'SES-RJ':[['AVC',86],['Meningites',66],['Epilepsia / EME',62],['Cefaleias',54],['TCE',52],['Esclerose múltipla',30]],
+  'SES-PE':[['AVC',84],['Neuroinfecções',64],['Epilepsia / EME',60],['Meningites',58],['Cefaleias',48],['TCE',46]],
+  'PSU-MG':[['AVC',88],['Epilepsia / EME',66],['Cefaleias',56],['Meningites',56],['TCE',50],['Distúrbios do movimento',30]]
+};
+function renderTemas(){
+  let h=`<div class="page-head"><div class="crumb">Inteligência de prova</div><h1>📊 Temas Mais Cobrados</h1>
+    <p>Incidência estimada por banca, para você priorizar o estudo. <span style="color:var(--text-dim)">(Estimativas didáticas baseadas em padrões históricos — confira sempre os editais e provas mais recentes.)</span></p></div>`;
+  h+='<div class="card glass"><div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px" id="bancaBtns">'
+    +Object.keys(INCIDENCE).map((b,i)=>'<button class="btn btn-sm '+(i===0?'btn-primary':'btn-ghost')+'" data-banca="'+b+'">'+b+'</button>').join('')+'</div>'
+    +'<div id="bancaChart"></div></div>';
+  h+='<div class="callout tip" style="max-width:none"><b>Como usar</b>Comece pelos temas de prioridade altíssima (barras maiores). Eles oferecem o maior retorno por hora estudada. No seu caso, AVC, Epilepsia e Meningites dominam quase todas as bancas.</div>';
+  return h;
+}
+function wireTemas(){ const def=Object.keys(INCIDENCE)[0]; drawBanca(def);
+  document.querySelectorAll('#bancaBtns [data-banca]').forEach(b=>b.onclick=()=>{ document.querySelectorAll('#bancaBtns [data-banca]').forEach(x=>{x.classList.remove('btn-primary');x.classList.add('btn-ghost')}); b.classList.add('btn-primary');b.classList.remove('btn-ghost'); drawBanca(b.dataset.banca); }); }
+function drawBanca(b){ const data=INCIDENCE[b]; const el=document.getElementById('bancaChart'); if(!el)return;
+  el.innerHTML=data.map(d=>'<div class="bar-row"><div class="blbl">'+d[0]+'</div><div class="bar-track"><div class="bar-fill" style="width:0%">'+d[1]+'%</div></div></div>').join('');
+  requestAnimationFrame(()=>{ el.querySelectorAll('.bar-fill').forEach((f,i)=>{ f.style.width=data[i][1]+'%'; }); });
+}
+
+/* ============================================================
+   FAVORITOS / ANOTAÇÕES / REVISÃO
+   ============================================================ */
+function renderFavoritos(){
+  const favs=MODULES.filter(m=>State.data.favorites.includes(m.id));
+  let h=`<div class="page-head"><div class="crumb">Conteúdo</div><h1>⭐ Favoritos</h1><p>Seus módulos marcados para acesso rápido.</p></div>`;
+  h+= favs.length? '<div class="grid g-3">'+favs.map(modCardHTML).join('')+'</div>'
+    : '<div class="card glass" style="text-align:center;padding:40px"><div style="font-size:2.4rem">☆</div><p style="color:var(--text-soft);margin-top:8px">Nenhum favorito ainda. Toque na estrela de um módulo para salvá-lo aqui.</p><button class="btn btn-ghost btn-sm" style="margin-top:12px" onclick="navigate(\'modulos\')">Ver módulos</button></div>';
+  return h;
+}
+function renderAnotacoes(){
+  let h=`<div class="page-head"><div class="crumb">Conteúdo</div><h1>📝 Minhas Anotações</h1><p>Tudo o que você escreveu, organizado por módulo. Salva automaticamente.</p></div>`;
+  let any=false;
+  MODULES.forEach(m=>{ const n=State.data.notes[m.id]; if(n&&n.trim()){ any=true;
+    h+='<div class="card glass" style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b>'+m.emoji+' '+m.title+'</b><button class="btn btn-ghost btn-sm" onclick="openModule(\''+m.id+'\');setTimeout(()=>setTab(\'notas\'),60)">Editar</button></div><p style="color:var(--text-soft);white-space:pre-wrap;font-size:.9rem">'+esc(n)+'</p></div>'; } });
+  const gv=esc(State.data.notes['_global']||'');
+  h+='<div class="card glass"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b>📔 Bloco geral</b><span class="save-state" id="saveState"></span></div><textarea class="note-area" placeholder="Anotações gerais, plano de estudo, dúvidas avulsas…" oninput="saveNote(\'_global\',this.value)">'+gv+'</textarea></div>';
+  if(!any) h='<div class="page-head"><div class="crumb">Conteúdo</div><h1>📝 Minhas Anotações</h1></div>'+h;
+  return h;
+}
+function scheduleSpaced(id,rating){ const sp=SP(); const intervals={hard:1,med:3,easy:7}; const sd=State.data.spaced; sd[id]=sd[id]||{interval:1,reps:0};
+  sd[id].reps++; sd[id].interval = rating==='easy'? Math.min(35,(sd[id].interval||1)*2+1) : intervals[rating];
+  sd[id].due=new Date(Date.now()+sd[id].interval*864e5).toISOString().slice(0,10); }
+function renderRevisao(){
+  const t=todayStr(); const sd=State.data.spaced;
+  const due=MODULES.filter(m=>{ const s=sd[m.id]; return !s || (s.due && s.due<=t); });
+  let h=`<div class="page-head"><div class="crumb">Memória de longo prazo</div><h1>🔁 Revisão Espaçada</h1><p>O sistema agenda revisões com intervalos crescentes (1 → 3 → 7 → 16 → 35 dias) conforme seu desempenho nos flashcards.</p></div>`;
+  h+='<div class="grid g-3">'+statCard('📌',due.length,'Para revisar hoje')+statCard('🗂️',MODULES.length,'Módulos no ciclo')+statCard('🎴',SP().flashcardsReviewed||0,'Revisões totais')+'</div>';
+  h+='<h3 style="font-family:var(--font-display);margin:20px 0 10px">Pendentes de revisão</h3>';
+  if(due.length){ h+='<div class="grid g-2">'; due.forEach(m=>{ const s=sd[m.id]; h+='<div class="card glass" style="cursor:pointer" onclick="openModule(\''+m.id+'\');setTimeout(()=>setTab(\'flashcards\'),60)"><div style="display:flex;justify-content:space-between"><b>'+m.emoji+' '+m.title+'</b><span class="pill rose">revisar</span></div><p style="color:var(--text-soft);font-size:.84rem;margin-top:6px">'+(s?('Intervalo atual: '+s.interval+'d · revisões: '+s.reps):'Nunca revisado — comece o ciclo')+'</p></div>'; }); h+='</div>'; }
+  else h+='<div class="card glass" style="text-align:center;padding:30px"><div style="font-size:2rem">✅</div><p style="color:var(--text-soft);margin-top:6px">Tudo revisado por hoje! Volte amanhã.</p></div>';
+  return h;
+}
+
+/* ============================================================
+   CONQUISTAS
+   ============================================================ */
+function renderConquistas(){
+  const sp=SP(); checkAchievements();
+  const unlocked=sp.achievements||[];
+  let h=`<div class="page-head"><div class="crumb">Gamificação</div><h1>🏆 Conquistas</h1><p>Desbloqueie medalhas estudando e dominando os temas. ${unlocked.length}/${ACHIEVEMENTS.length} conquistadas.</p></div>`;
+  h+='<div class="grid g-4">'+ACHIEVEMENTS.map(a=>{ const on=unlocked.includes(a.id);
+    return '<div class="ach '+(on?'unlocked':'locked')+'"><div class="medal">'+a.medal+'</div><h4>'+a.name+'</h4><p>'+a.desc+'</p>'+(on?'<span class="pill gold" style="margin-top:8px">Conquistada</span>':'<span class="pill" style="margin-top:8px">Bloqueada</span>')+'</div>'; }).join('')+'</div>';
+  return h;
+}
+
+/* ============================================================
+   MAPA CEREBRAL (gamificação visual)
+   ============================================================ */
+function shade(p){ if(p<=0)return '#2a3142'; const t=Math.min(1,p/100); const c1=[42,49,66],c2=[45,212,191]; const r=Math.round(c1[0]+(c2[0]-c1[0])*t),g=Math.round(c1[1]+(c2[1]-c1[1])*t),b=Math.round(c1[2]+(c2[2]-c1[2])*t); return 'rgb('+r+','+g+','+b+')'; }
+function renderBrain(){
+  refreshProgress(); const g=globalProgress(); const sp=SP();
+  const lobes=['frontal','parietal','temporal','occipital','cerebellum','brainstem'];
+  const supreme=MODULES.length&&MODULES.every(m=>moduleProgress(m)>=80);
+  let svg=`<svg viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg" id="brainSVG">
+    <defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <!-- frontal -->
+    <path class="region ${regionProgress('frontal')>=80?'mastered':''}" data-region="frontal" d="M70 180 Q60 110 130 90 Q180 78 210 110 L210 200 L120 215 Q80 210 70 180 Z" fill="${shade(regionProgress('frontal'))}" stroke="#0a0e18" stroke-width="2" style="color:${REGION_INFO.frontal.color}"/>
+    <!-- parietal -->
+    <path class="region ${regionProgress('parietal')>=80?'mastered':''}" data-region="parietal" d="M210 110 Q260 80 320 100 L330 170 L215 195 L210 110 Z" fill="${shade(regionProgress('parietal'))}" stroke="#0a0e18" stroke-width="2" style="color:${REGION_INFO.parietal.color}"/>
+    <!-- occipital -->
+    <path class="region ${regionProgress('occipital')>=80?'mastered':''}" data-region="occipital" d="M320 100 Q400 105 405 175 Q405 205 350 210 L330 170 L320 100 Z" fill="${shade(regionProgress('occipital'))}" stroke="#0a0e18" stroke-width="2" style="color:${REGION_INFO.occipital.color}"/>
+    <!-- temporal -->
+    <path class="region ${regionProgress('temporal')>=80?'mastered':''}" data-region="temporal" d="M120 215 L215 200 L340 210 Q330 270 250 280 Q160 285 125 250 Q115 232 120 215 Z" fill="${shade(regionProgress('temporal'))}" stroke="#0a0e18" stroke-width="2" style="color:${REGION_INFO.temporal.color}"/>
+    <!-- cerebellum -->
+    <path class="region ${regionProgress('cerebellum')>=80?'mastered':''}" data-region="cerebellum" d="M340 210 Q400 210 405 250 Q400 300 340 300 Q300 295 295 265 Q320 250 340 210 Z" fill="${shade(regionProgress('cerebellum'))}" stroke="#0a0e18" stroke-width="2" style="color:${REGION_INFO.cerebellum.color}"/>
+    <!-- brainstem -->
+    <path class="region ${regionProgress('brainstem')>=80?'mastered':''}" data-region="brainstem" d="M250 280 Q270 290 280 340 L255 370 L235 340 Q240 295 250 280 Z" fill="${shade(regionProgress('brainstem'))}" stroke="#0a0e18" stroke-width="2" style="color:${REGION_INFO.brainstem.color}"/>
+    <text x="260" y="405" text-anchor="middle" fill="${supreme?'#F5C451':'#6B7795'}" font-size="13" font-family="Spline Sans Mono" font-weight="600">${supreme?'👑 NEUROLOGISTA SUPREMO':g+'% ativado'}</text>
+  </svg>`;
+  const allRegions=Object.keys(REGION_INFO);
+  let h=`<div class="page-head"><div class="crumb">Gamificação</div><h1>🧠 Mapa Cerebral</h1>
+    <p>O cérebro acende conforme você domina TODOS os módulos. Estudar um só assunto nunca completa 100% — o progresso é a média de toda a Neurologia.</p></div>
+    <div class="brain-wrap">
+      <div class="brain-stage glass">${svg}</div>
+      <div class="brain-info glass">
+        <h3 style="font-family:var(--font-display);font-size:1.2rem">Energia Neural</h3>
+        <div style="display:flex;gap:16px;margin:10px 0 4px"><div><div class="mono" style="font-size:1.6rem;color:var(--gold)">${sp.neuroPoints||0}</div><small style="color:var(--text-dim)">NeuroPontos</small></div>
+        <div><div class="mono" style="font-size:1.6rem;color:var(--teal)">${g}%</div><small style="color:var(--text-dim)">Cérebro ativo</small></div></div>
+        <div class="progress" style="margin:8px 0"><i style="width:${g}%"></i></div>
+        <div id="regionDetail" style="margin-top:10px;font-size:.86rem;color:var(--text-soft)">Clique numa região do cérebro para ver detalhes.</div>
+        <h4 style="font-family:var(--font-display);margin:18px 0 6px;font-size:1rem">Todas as regiões</h4>
+        <div>${allRegions.map(r=>{ const p=regionProgress(r); return '<div class="region-row" data-region="'+r+'"><span class="rdot" style="background:'+(p>0?REGION_INFO[r].color:'#2a3142')+'"></span><span class="rname">'+REGION_INFO[r].name+'</span><span class="rpct">'+p+'%</span></div>'; }).join('')}</div>
+      </div>
+    </div>`;
+  return h;
+}
+function wireBrain(){
+  function show(r){ const info=REGION_INFO[r]; const p=regionProgress(r); const lvl=regionLevel(p); const el=document.getElementById('regionDetail');
+    const mods=MODULES.filter(m=>m.region===r);
+    el.innerHTML='<b style="color:'+info.color+'">'+info.name+' · '+p+'%</b><div style="margin:4px 0"><span class="pill">Nível '+lvl+' · '+LEVELS[lvl]+'</span></div>'
+      +'<p style="margin:6px 0"><i>"'+(p>0?info.msg:'Região adormecida — estude para ativá-la.')+'"</i></p>'
+      +'<p><b>Representa:</b> '+info.represents+'</p>'
+      +(mods.length?'<p style="margin-top:6px"><b>Módulos:</b> '+mods.map(m=>'<a style="cursor:pointer" onclick="openModule(\''+m.id+'\')">'+m.title+' ('+moduleProgress(m)+'%)</a>').join(', ')+'</p>':'<p style="margin-top:6px;color:var(--text-dim)">Conteúdo em construção.</p>');
+  }
+  document.querySelectorAll('.region[data-region],.region-row[data-region]').forEach(el=>el.onclick=()=>show(el.dataset.region));
+}
+
+/* ============================================================
+   UTIL
+   ============================================================ */
+function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+</script>
+</body>
+</html>
