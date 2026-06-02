@@ -17,15 +17,15 @@
   --font-body:'Manrope', system-ui, sans-serif;
   --font-mono:'Spline Sans Mono', ui-monospace, monospace;
 
-  /* DARK (default) */
-  --bg:#0A0E18;
-  --bg-grad-1:#0c1424;
-  --bg-grad-2:#0a0e18;
-  --surface:rgba(22,29,46,0.72);
-  --surface-solid:#151b2b;
-  --surface-2:rgba(30,39,61,0.6);
-  --border:rgba(120,140,190,0.16);
-  --border-strong:rgba(120,140,190,0.30);
+  /* DARK (default) — premium feminino, ameixa/violeta */
+  --bg:#1B1230;
+  --bg-grad-1:#2c1d44;
+  --bg-grad-2:#160f26;
+  --surface:rgba(48,33,72,0.62);
+  --surface-solid:#271a3d;
+  --surface-2:rgba(62,44,90,0.52);
+  --border:rgba(196,168,224,0.16);
+  --border-strong:rgba(206,178,232,0.32);
   --text:#EAF0FF;
   --text-soft:#A7B3CE;
   --text-dim:#6B7795;
@@ -50,18 +50,17 @@
   --ease:cubic-bezier(.22,.61,.36,1);
 }
 [data-theme="light"]{
-  --bg:#F4F6FC;
-  --bg-grad-1:#eef1fb;
-  --bg-grad-2:#f7f8fe;
-  --surface:rgba(255,255,255,0.78);
+  --bg:#FBF5FB;
+  --bg-grad-1:#f5ebf6;
+  --bg-grad-2:#fdf8fc;
+  --surface:rgba(255,255,255,0.84);
   --surface-solid:#ffffff;
-  --surface-2:rgba(245,247,253,0.85);
-  --border:rgba(40,60,110,0.12);
-  --border-strong:rgba(40,60,110,0.22);
-  --text:#16203A;
-  --text-soft:#4A5878;
-  --text-dim:#8А96B4;
-  --text-dim:#8a96b4;
+  --surface-2:rgba(250,242,250,0.88);
+  --border:rgba(120,72,134,0.14);
+  --border-strong:rgba(120,72,134,0.26);
+  --text:#2A1B36;
+  --text-soft:#6B5878;
+  --text-dim:#9a86a8;
   --teal:#0EA89A;
   --cyan:#0284C7;
   --rose:#E11D74;
@@ -80,10 +79,11 @@ body{
   color:var(--text);
   background:var(--bg);
   background-image:
-    radial-gradient(1200px 700px at 85% -10%, rgba(56,189,248,.10), transparent 60%),
-    radial-gradient(900px 600px at -5% 110%, rgba(167,139,250,.10), transparent 55%),
-    radial-gradient(700px 500px at 50% 50%, rgba(45,212,191,.05), transparent 60%),
-    linear-gradient(160deg,var(--bg-grad-1),var(--bg-grad-2));
+    radial-gradient(1100px 720px at 88% -8%, rgba(167,139,250,.22), transparent 58%),
+    radial-gradient(950px 680px at -8% 6%, rgba(244,114,182,.18), transparent 55%),
+    radial-gradient(820px 620px at 50% 116%, rgba(45,212,191,.12), transparent 60%),
+    radial-gradient(600px 500px at 25% 60%, rgba(129,140,248,.10), transparent 60%),
+    linear-gradient(155deg,var(--bg-grad-1),var(--bg-grad-2));
   background-attachment:fixed;
   -webkit-font-smoothing:antialiased;
   line-height:1.55;
@@ -114,7 +114,7 @@ a{color:var(--accent);text-decoration:none}
 
 /* ============== GATE / AUTH ============== */
 .veil{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;
-  background:radial-gradient(900px 600px at 50% -10%, rgba(56,189,248,.14), transparent 60%), linear-gradient(160deg,#0a0e18,#0c1424);}
+  background:radial-gradient(900px 620px at 50% -10%, rgba(167,139,250,.26), transparent 60%), radial-gradient(700px 500px at 10% 110%, rgba(244,114,182,.20), transparent 55%), linear-gradient(155deg,#2c1d44,#160f26);}
 .auth-card{width:100%;max-width:430px;padding:38px 34px;border-radius:24px;position:relative;overflow:hidden}
 .auth-card::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(45,212,191,.07),transparent 40%);pointer-events:none}
 .brand-mark{display:flex;align-items:center;gap:12px;margin-bottom:18px}
@@ -221,6 +221,28 @@ a{color:var(--accent);text-decoration:none}
 .tab{white-space:nowrap;padding:9px 15px;border-radius:10px;cursor:pointer;font-weight:700;font-size:.84rem;color:var(--text-soft);border:1px solid transparent;transition:.18s}
 .tab:hover{color:var(--text)}
 .tab.active{background:linear-gradient(100deg,rgba(45,212,191,.18),rgba(56,189,248,.08));color:var(--text);border-color:rgba(45,212,191,.3)}
+/* sub-navegação de subtópicos */
+.subnav{display:flex;gap:8px;overflow-x:auto;padding:10px;border-radius:14px;margin-bottom:16px;border:1px solid var(--border);background:var(--surface);backdrop-filter:blur(14px);position:sticky;top:64px;z-index:20}
+.subnav::-webkit-scrollbar{height:6px}
+.subchip{white-space:nowrap;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:700;font-size:.82rem;color:var(--text-soft);border:1px solid var(--border);background:var(--surface-2);transition:.18s var(--ease);font-family:var(--font-body)}
+.subchip:hover{color:var(--text);border-color:var(--accent)}
+.subchip.active{background:linear-gradient(100deg,var(--rose),var(--violet));color:#fff;border-color:transparent;box-shadow:0 6px 18px -8px rgba(167,139,250,.6)}
+.sub-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)}
+.sub-foot .btn[disabled]{opacity:.35;pointer-events:none}
+/* mapa mental / diagrama visual */
+.mindmap{display:flex;flex-direction:column;align-items:center;margin:20px 0}
+.mm-center{padding:13px 28px;border-radius:16px;font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:#fff;background:linear-gradient(120deg,var(--rose),var(--violet));box-shadow:0 12px 34px -12px rgba(167,139,250,.7);text-align:center}
+.mm-trunk{width:2px;height:24px;background:var(--border-strong)}
+.mm-branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;width:100%}
+.mm-branch{border:1px solid var(--border);border-radius:14px;padding:14px;background:var(--surface-2);border-top:3px solid var(--accent)}
+.mm-branch b{display:block;color:var(--accent-2);font-size:.92rem;margin-bottom:6px;font-family:var(--font-display)}
+.mm-branch ul{margin:0;padding-left:15px;font-size:.83rem;color:var(--text-soft)}
+.mm-branch li{margin:3px 0}
+.diagram{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;margin:16px 0}
+.dg-step{flex:1;min-width:130px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;font-size:.84rem;position:relative}
+.dg-step b{display:block;color:var(--accent-2);font-size:.8rem;margin-bottom:4px}
+.dg-arrow{display:flex;align-items:center;color:var(--accent);font-size:1.3rem;padding:0 6px}
+@media(max-width:640px){.dg-arrow{transform:rotate(90deg);width:100%;justify-content:center}.dg-step{min-width:100%}}
 
 /* teaching content */
 .teach{font-size:.97rem;color:var(--text)}
@@ -477,14 +499,12 @@ table.med tr:hover td{background:var(--surface-2)}
 
 <script type="module">
 /* ============================================================
-   FIREBASE + DATA LAYER  (com fallback localStorage)
+   FIREBASE + DATA LAYER  (carregamento DINÂMICO + fallback local)
+   Importante: o Firebase é carregado dinamicamente para que a
+   interface NUNCA trave caso a CDN/rede falhe ou o arquivo seja
+   aberto localmente. Todas as funções de UI são definidas mesmo
+   sem Firebase.
    ============================================================ */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 const firebaseConfig = {
   apiKey: "AIzaSyAKN3qsYIc3pel81vl8WEAH6Ob4oR-icAM",
   authDomain: "jackeline-study-platform.firebaseapp.com",
@@ -493,14 +513,40 @@ const firebaseConfig = {
   messagingSenderId: "574246127117",
   appId: "1:574246127117:web:29eedab81ea4251b23f744"
 };
+// Identificador desta plataforma — separa os dados de outras plataformas suas
+const PLATFORM_ID = "neuroresidencia";
 
-let fb = { ok:false, auth:null, db:null };
-try {
-  const appFb = initializeApp(firebaseConfig);
-  fb.auth = getAuth(appFb);
-  fb.db = getFirestore(appFb);
-  fb.ok = true;
-} catch(e){ console.warn("Firebase indisponível, usando armazenamento local.", e); }
+let fb = { ok:false, auth:null, db:null, fns:{} };
+async function initFirebase(){
+  try{
+    const appMod  = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+    const authMod = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js");
+    const fsMod   = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+    const appFb = appMod.initializeApp(firebaseConfig);
+    fb.auth = authMod.getAuth(appFb);
+    fb.db = fsMod.getFirestore(appFb);
+    fb.fns = {
+      createUser: authMod.createUserWithEmailAndPassword,
+      signIn: authMod.signInWithEmailAndPassword,
+      signOut: authMod.signOut,
+      onAuth: authMod.onAuthStateChanged,
+      updateProfile: authMod.updateProfile,
+      doc: fsMod.doc, getDoc: fsMod.getDoc, setDoc: fsMod.setDoc
+    };
+    fb.ok = true;
+    fb.fns.onAuth(fb.auth, async (user)=>{
+      if(user && sessionStorage.getItem("nr_gate")==="1"){
+        State.uid=user.uid; State.email=user.email; State.name=user.displayName||user.email.split('@')[0];
+        await afterLogin();
+      }
+      document.getElementById('loader').style.display='none';
+    });
+  }catch(e){
+    console.warn("Firebase indisponível — usando armazenamento local.", e);
+    fb.ok=false;
+  }
+  document.getElementById('loader').style.display='none';
+}
 
 const GATE_PASSWORD = "REVALIDA22528129";
 
@@ -521,7 +567,7 @@ const State = {
 const SP = () => State.data.surgeonProgress;
 
 /* ---------- persistência ---------- */
-function localKey(){ return "neuroresid_"+(State.uid||"anon"); }
+function localKey(){ return "neuroresid_"+PLATFORM_ID+"_"+(State.uid||"anon"); }
 function saveLocal(){ try{ localStorage.setItem(localKey(), JSON.stringify(State.data)); }catch(e){} }
 function loadLocal(){ try{ const r=localStorage.getItem(localKey()); if(r) State.data=Object.assign(State.data, JSON.parse(r)); }catch(e){} }
 
@@ -532,8 +578,8 @@ async function persist(showFlag){
     clearTimeout(saveTimer);
     saveTimer=setTimeout(async ()=>{
       try{
-        await setDoc(doc(fb.db,"users",State.uid),{ data:State.data, email:State.email, name:State.name, updated:Date.now() },{merge:true});
-        await setDoc(doc(fb.db,"surgeonProgress",State.uid), SP(), {merge:true});
+        await fb.fns.setDoc(fb.fns.doc(fb.db,"users",State.uid,"platforms",PLATFORM_ID,"data","main"),{ data:State.data, email:State.email, name:State.name, platform:PLATFORM_ID, updated:Date.now() },{merge:true});
+        await fb.fns.setDoc(fb.fns.doc(fb.db,"users",State.uid,"platforms",PLATFORM_ID,"surgeonProgress","main"), SP(), {merge:true});
       }catch(e){ State.usingLocal=true; }
     }, 700);
   }
@@ -542,7 +588,7 @@ async function persist(showFlag){
 async function loadCloud(){
   if(fb.ok && State.uid && !State.usingLocal){
     try{
-      const snap=await getDoc(doc(fb.db,"users",State.uid));
+      const snap=await fb.fns.getDoc(fb.fns.doc(fb.db,"users",State.uid,"platforms",PLATFORM_ID,"data","main"));
       if(snap.exists() && snap.data().data){ State.data=Object.assign(State.data, snap.data().data); }
     }catch(e){ State.usingLocal=true; loadLocal(); }
   } else { loadLocal(); }
@@ -597,10 +643,10 @@ window.doAuth=async function(){
   }
   try{
     if(authMode==='signup'){
-      const cred=await createUserWithEmailAndPassword(fb.auth,email,pass);
-      if(name) await updateProfile(cred.user,{displayName:name});
+      const cred=await fb.fns.createUser(fb.auth,email,pass);
+      if(name) await fb.fns.updateProfile(cred.user,{displayName:name});
     } else {
-      await signInWithEmailAndPassword(fb.auth,email,pass);
+      await fb.fns.signIn(fb.auth,email,pass);
     }
   }catch(e){
     btn.disabled=false; btn.textContent=authMode==='login'?'Entrar':'Cadastrar';
@@ -610,7 +656,7 @@ window.doAuth=async function(){
 };
 
 window.doLogout=async function(){
-  if(fb.ok && !State.usingLocal){ try{ await signOut(fb.auth); }catch(e){} }
+  if(fb.ok && !State.usingLocal){ try{ await fb.fns.signOut(fb.auth); }catch(e){} }
   location.reload();
 };
 
@@ -627,17 +673,7 @@ async function afterLogin(){
   persist();
 }
 
-if(fb.ok){
-  onAuthStateChanged(fb.auth, async (user)=>{
-    if(user && sessionStorage.getItem("nr_gate")==="1"){
-      State.uid=user.uid; State.email=user.email; State.name=user.displayName||user.email.split('@')[0];
-      await afterLogin();
-    }
-    document.getElementById('loader').style.display='none';
-  });
-} else {
-  document.getElementById('loader').style.display='none';
-}
+initFirebase();
 setTimeout(()=>{ document.getElementById('loader').style.display='none'; },2500);
 
 /* ============================================================
@@ -710,21 +746,43 @@ MODULES.push({
   id:'avc', emoji:'🩸', region:'vascular', title:'Acidente Vascular Cerebral (AVC)',
   sub:'Isquêmico, hemorrágico, AIT, NIHSS, trombólise e trombectomia',
   prio:'altíssima', topics:['AVC isquêmico','AVC hemorrágico','AIT','NIHSS','Trombólise','Trombectomia','Escala ABCD2','Classificação TOAST'],
-  teach:`
-<h3>Antes de tudo: o que é um AVC?</h3>
+  subtopics:[
+  {label:'Visão geral',html:`
+<h3>O que é um AVC?</h3>
 <p>Imagine o cérebro como uma cidade que <strong>só funciona com energia em tempo real</strong> — ele não tem reservas de oxigênio ou glicose. Quem entrega essa energia é o sangue. Quando uma "rua" (artéria) é bloqueada ou se rompe, o bairro que dependia dela começa a <strong>morrer em minutos</strong>. Isso é o AVC.</p>
-<p>Existem dois grandes tipos, e <strong>diferenciá-los é a primeira decisão da sua vida na prova e no plantão</strong>, porque o tratamento de um <em>mata</em> o paciente do outro:</p>
-<ul>
-<li><strong>AVC isquêmico (≈85%)</strong>: a artéria entope (trombo/êmbolo). Falta sangue → falta oxigênio.</li>
-<li><strong>AVC hemorrágico (≈15%)</strong>: a artéria se rompe → sangue extravasa e comprime o tecido.</li>
-</ul>
+<p>São dois grandes tipos, e <strong>diferenciá-los é a primeira decisão</strong>, porque o tratamento de um <em>mata</em> o paciente do outro:</p>
+<ul><li><strong>AVC isquêmico (≈85%)</strong>: a artéria entope (trombo/êmbolo). Falta sangue → falta oxigênio.</li>
+<li><strong>AVC hemorrágico (≈15%)</strong>: a artéria se rompe → sangue extravasa e comprime o tecido.</li></ul>
 <div class="callout fast"><b>Regra de ouro nº 1</b>Todo déficit neurológico focal de início súbito é AVC até prova em contrário. E a "prova em contrário" inicial é a <strong>TC de crânio sem contraste</strong> — barata, rápida e que serve para uma coisa essencial: <strong>excluir sangramento</strong> antes de pensar em trombolisar.</div>
-
-<h3>"Time is brain": por que correr?</h3>
+<h4>"Time is brain": por que correr?</h4>
 <p>A cada minuto de AVC isquêmico, perdem-se cerca de <strong>1,9 milhão de neurônios</strong>. Ao redor do núcleo morto existe a <strong>penumbra isquêmica</strong>: tecido "atordoado", ainda vivo, que <strong>pode ser salvo</strong> se reperfundirmos rápido. Todo o tratamento agudo gira em torno de salvar a penumbra.</p>
+<div class="callout mne"><b>Mnemônico — reconhecer AVC: "SAMU"</b><strong>S</strong>orriso torto · <strong>A</strong>braço (um braço cai) · <strong>M</strong>ensagem (fala enrolada) · <strong>U</strong>rgente, ligue 192. (Internacional: FAST — Face, Arm, Speech, Time.)</div>`},
 
-<h3>AIT — o "aviso prévio"</h3>
-<p>O <strong>Ataque Isquêmico Transitório</strong> é um déficit focal que <strong>resolve completamente</strong>, classicamente em &lt;1h, <strong>sem infarto na imagem</strong> (definição tecidual moderna). É uma emergência: até 10% terão AVC em 48h. Estratifique o risco com o <strong>ABCD²</strong>.</p>
+  {label:'AVC Isquêmico',html:`
+<h3>🩸 AVC Isquêmico</h3>
+<p>Representa cerca de <strong>85%</strong> dos AVCs. A artéria entope por <strong>trombo</strong> (forma no próprio local, sobre uma placa de aterosclerose) ou por <strong>êmbolo</strong> (um coágulo que viaja de longe — clássico do coração na fibrilação atrial). Sem fluxo, o núcleo isquêmico morre e ao redor fica a penumbra, que é o alvo do tratamento.</p>
+<h4>Classificação etiológica (TOAST) — porque cai muito</h4>
+<table class="med"><tr><th>Subtipo</th><th>Mecanismo</th><th>Pista</th></tr>
+<tr><td>Aterosclerose de grande artéria</td><td>Placa em carótida/intracraniana</td><td>Sopro carotídeo, estenose</td></tr>
+<tr><td>Cardioembólico</td><td>Êmbolo do coração</td><td><strong>Fibrilação atrial</strong>, IAM recente</td></tr>
+<tr><td>Lacunar (pequenos vasos)</td><td>Lipohialinose</td><td>HAS/DM; síndromes lacunares puras</td></tr>
+<tr><td>Outras determinadas</td><td>Dissecção, trombofilia</td><td>Jovem, trauma cervical</td></tr>
+<tr><td>Indeterminado</td><td>Sem causa / mais de uma causa</td><td>"criptogênico"</td></tr></table>
+<div class="callout tip"><b>Por que a etiologia importa?</b>Ela define a prevenção secundária: cardioembólico (FA) → <strong>anticoagulação</strong>; grande vaso → antiagregação + estatina (± endarterectomia/stent); lacunar → controle rigoroso de HAS e DM.</div>`},
+
+  {label:'AVC Hemorrágico',html:`
+<h3>🧨 AVC Hemorrágico</h3>
+<p>Cerca de <strong>15%</strong> dos casos. Aqui o vaso se rompe e o sangue agride e comprime o tecido. Dois grandes cenários:</p>
+<h4>1) Hemorragia intraparenquimatosa</h4>
+<p>Geralmente por <strong>HAS crônica</strong>, que enfraquece pequenas artérias (microaneurismas de Charcot-Bouchard) até a ruptura. Sítio clássico: <strong>putâmen/cápsula interna</strong>, além de tálamo, ponte e cerebelo.</p>
+<h4>2) Hemorragia subaracnóidea (HSA)</h4>
+<p>Tipicamente por <strong>ruptura de aneurisma</strong>. Quadro: "<strong>a pior cefaleia da vida</strong>" de início súbito (<em>thunderclap</em>), rigidez de nuca e vômitos. A TC pode ser normal nas primeiras horas — se a suspeita for alta, faça <strong>punção lombar</strong> à procura de xantocromia.</p>
+<div class="callout warn"><b>Conduta na hemorragia</b>Controle <strong>agressivo</strong> da PA: alvo de PAS em torno de <strong>140 mmHg</strong> (evitar quedas abaixo de ~130). Reverter anticoagulação. Avaliar neurocirurgia. Na HSA: angio-TC para localizar o aneurisma + <strong>nimodipino</strong> para prevenir vasoespasmo.</div>
+<div class="callout trap"><b>Pegadinha mortal</b>NUNCA trombolise um AVC hemorrágico. É exatamente por isso que a <strong>TC sem contraste vem ANTES</strong> de qualquer reperfusão.</div>`},
+
+  {label:'AIT',html:`
+<h3>⏳ AIT — o "aviso prévio"</h3>
+<p>O <strong>Ataque Isquêmico Transitório</strong> é um déficit focal que <strong>resolve completamente</strong> (classicamente em &lt;1h) e <strong>sem infarto na imagem</strong> — essa é a definição tecidual moderna. É uma emergência: até 10% terão AVC em 48h. Estratifique com o <strong>ABCD²</strong>.</p>
 <table class="med"><tr><th>ABCD² — fator</th><th>Pontos</th></tr>
 <tr><td><b>A</b>ge ≥60 anos</td><td>1</td></tr>
 <tr><td><b>B</b>lood pressure ≥140/90</td><td>1</td></tr>
@@ -732,41 +790,39 @@ MODULES.push({
 <tr><td>Clínica: distúrbio de fala sem fraqueza</td><td>1</td></tr>
 <tr><td><b>D</b>uração ≥60min / 10–59min</td><td>2 / 1</td></tr>
 <tr><td><b>D</b>iabetes</td><td>1</td></tr></table>
-<p>≥4 pontos = alto risco → internação e investigação rápida.</p>
+<p>≥4 pontos = alto risco → internação e investigação rápida. Encare o AIT como uma chance de <strong>prevenir o AVC iminente</strong>.</p>`},
 
-<h3>Avaliando a gravidade: a escala NIHSS</h3>
-<p>A <strong>NIH Stroke Scale</strong> (0 a 42) quantifica o déficit. Não decore item por item; entenda a lógica: ela mede nível de consciência, olhar, campos visuais, paralisia facial, força dos 4 membros, ataxia, sensibilidade, linguagem (afasia), disartria e extinção/negligência.</p>
+  {label:'NIHSS',html:`
+<h3>📏 NIHSS — medindo a gravidade</h3>
+<p>A <strong>NIH Stroke Scale</strong> (0 a 42) quantifica o déficit. Não decore item por item; entenda a lógica: mede nível de consciência, olhar, campos visuais, paralisia facial, força dos 4 membros, ataxia, sensibilidade, linguagem (afasia), disartria e extinção/negligência.</p>
 <table class="med"><tr><th>NIHSS</th><th>Gravidade</th></tr>
 <tr><td>0</td><td>Sem déficit</td></tr><tr><td>1–4</td><td>Leve</td></tr>
 <tr><td>5–15</td><td>Moderado</td></tr><tr><td>16–20</td><td>Moderado a grave</td></tr>
 <tr><td>21–42</td><td>Grave</td></tr></table>
-<div class="callout tip"><b>Pegadinha de prova</b>NIHSS <strong>subestima AVC de circulação posterior</strong> (tronco/cerebelo). Um paciente com vertigem intensa, ataxia e diplopia pode ter NIHSS baixo e mesmo assim um AVC grave. Não exclua trombólise só pelo número.</div>
+<div class="callout tip"><b>Pegadinha de prova</b>A NIHSS <strong>subestima o AVC de circulação posterior</strong> (tronco/cerebelo). Vertigem intensa, ataxia e diplopia podem dar NIHSS baixo e ainda assim ser um AVC grave. Não exclua reperfusão só pelo número.</div>`},
 
-<h3>Tratamento agudo do AVC isquêmico — o passo a passo</h3>
+  {label:'Trombólise',html:`
+<h3>💉 Trombólise endovenosa</h3>
 <p><strong>Passo 1 — Estabelecer o "horário zero".</strong> É o <strong>último horário em que o paciente foi visto bem</strong> (não o horário em que descobriram!). No "AVC do despertar", o zero é a hora de dormir.</p>
-<p><strong>Passo 2 — TC de crânio sem contraste.</strong> Se <strong>tem sangue</strong> → é hemorrágico, NÃO trombolisa. Se <strong>não tem sangue</strong> → isquêmico, candidato à reperfusão.</p>
-<p><strong>Passo 3 — Trombólise endovenosa (alteplase 0,9 mg/kg, máx 90 mg; ou tenecteplase 0,25 mg/kg).</strong> Janela: <strong>até 4,5 horas</strong> do início.</p>
+<p><strong>Passo 2 — TC de crânio sem contraste.</strong> Tem sangue → hemorrágico, NÃO trombolisa. Sem sangue → isquêmico, candidato à reperfusão.</p>
+<p><strong>Passo 3 — Trombolítico.</strong> Alteplase 0,9 mg/kg (máx 90 mg) ou tenecteplase 0,25 mg/kg. Janela: <strong>até 4,5 horas</strong> do início.</p>
 <table class="med"><tr><th>Contraindicações principais à trombólise</th></tr>
 <tr><td>Hemorragia na TC; AVC isquêmico ou TCE grave nos últimos 3 meses</td></tr>
 <tr><td>Cirurgia de grande porte recente; sangramento ativo; plaquetas &lt;100.000</td></tr>
 <tr><td>PA &gt; 185×110 mmHg refratária (precisa baixar ANTES)</td></tr>
-<tr><td>Glicemia &lt;50 mg/dL (corrigir e reavaliar) ; INR &gt;1,7 / uso de anticoagulante oral</td></tr>
+<tr><td>Glicemia &lt;50 mg/dL (corrigir e reavaliar); INR &gt;1,7 / anticoagulante oral</td></tr>
 <tr><td>Endocardite, dissecção de aorta, neoplasia GI recente</td></tr></table>
-<div class="callout trap"><b>Erro clássico que derruba candidato</b>Confundir os alvos de pressão. <strong>Candidato à trombólise: PA &lt; 185×110.</strong> Já o paciente isquêmico <strong>que NÃO vai trombolisar</strong>: só tratar a PA se <strong>&gt; 220×120</strong> (hipertensão permissiva — a PA alta mantém a perfusão da penumbra).</div>
-<p><strong>Passo 4 — Trombectomia mecânica.</strong> Para <strong>oclusão de grande vaso</strong> (carótida, ACM proximal/M1). Janela: até <strong>6h</strong> de rotina, e <strong>6–24h em casos selecionados</strong> por imagem de perfusão/mismatch (estudos DAWN e DEFUSE-3). Pode ser feita <strong>junto</strong> com a trombólise (não são excludentes).</p>
+<div class="callout trap"><b>Erro clássico que derruba candidato</b>Confundir os alvos de pressão. <strong>Candidato à trombólise: PA &lt; 185×110.</strong> Já o paciente isquêmico <strong>que NÃO vai trombolisar</strong>: só tratar a PA se <strong>&gt; 220×120</strong> (hipertensão permissiva — a PA alta mantém a perfusão da penumbra).</div>`},
 
-<h3>Classificação etiológica (TOAST) — porque cai muito</h3>
-<table class="med"><tr><th>Subtipo</th><th>Mecanismo</th><th>Pista</th></tr>
-<tr><td>Aterosclerose de grande artéria</td><td>Placa em carótida/intracraniana</td><td>Sopro carotídeo, estenose</td></tr>
-<tr><td>Cardioembólico</td><td>Êmbolo do coração</td><td><strong>Fibrilação atrial</strong>, IAM recente</td></tr>
-<tr><td>Lacunar (pequenos vasos)</td><td>Lipohialinose</td><td>HAS/DM; síndromes lacunares puras</td></tr>
-<tr><td>Outras determinadas</td><td>Dissecção, trombofilia</td><td>Jovem, trauma cervical</td></tr>
-<tr><td>Indeterminado</td><td>Sem causa / &gt;1 causa</td><td>"criptogênico"</td></tr></table>
+  {label:'Trombectomia',html:`
+<h3>🧲 Trombectomia mecânica</h3>
+<p>É a retirada física do trombo por cateter. Indicada para <strong>oclusão de grande vaso</strong> (carótida, ACM proximal/M1).</p>
+<ul><li><strong>Janela de rotina:</strong> até <strong>6 horas</strong>.</li>
+<li><strong>Janela estendida:</strong> <strong>6–24 horas</strong> em casos selecionados por imagem de perfusão/<em>mismatch</em> (estudos <strong>DAWN</strong> e <strong>DEFUSE-3</strong>).</li>
+<li>Pode ser feita <strong>junto</strong> com a trombólise — não são excludentes.</li></ul>
+<div class="callout tip"><b>Chave da janela estendida</b>O que habilita tratar entre 6 e 24h é a presença de <strong>grande vaso ocluído</strong> + tecido ainda salvável (mismatch entre core e penumbra), e não a idade isolada.</div>`},
 
-<h3>AVC hemorrágico — o outro lado</h3>
-<p>Dois grandes cenários: <strong>hemorragia intraparenquimatosa</strong> (geralmente HAS crônica → ruptura de pequenas artérias, sítio típico: <strong>putâmen/cápsula interna</strong>) e <strong>hemorragia subaracnóidea</strong> (aneurisma roto → "a pior cefaleia da vida", <em>thunderclap</em>).</p>
-<div class="callout warn"><b>Conduta na hemorragia</b>Controle <strong>agressivo</strong> da PA: alvo de PAS em torno de <strong>140 mmHg</strong> (evitar reduções abaixo de 130). Reverter anticoagulação. Avaliar neurocirurgia. Na HSA: angio-TC para achar o aneurisma + nimodipino para prevenir vasoespasmo.</div>
-
+  {label:'Revisão de véspera',html:`
 <h3>📌 Revisão de véspera (ultra rápido)</h3>
 <ul>
 <li>Déficit focal súbito → <strong>TC sem contraste</strong> para excluir sangue.</li>
@@ -775,8 +831,8 @@ MODULES.push({
 <li>FA → cardioembólico → anticoagular (após excluir transformação hemorrágica).</li>
 <li>HSA = thunderclap + rigidez de nuca; TC normal e suspeita alta → <strong>punção lombar</strong> (xantocromia).</li>
 </ul>
-<div class="callout mne"><b>Mnemônico — reconhecer AVC: "SAMU"</b><strong>S</strong>orriso torto · <strong>A</strong>braço (um braço cai) · <strong>M</strong>ensagem (fala enrolada) · <strong>U</strong>rgente, ligue 192. (Internacional: FAST — Face, Arm, Speech, Time.)</div>
-`,
+<div class="callout mne"><b>SAMU / FAST</b>Sorriso torto · Abraço (braço cai) · Mensagem (fala enrolada) · Urgente (192).</div>`}
+  ],
   flowDx:{ title:'Fluxograma diagnóstico do AVC agudo', start:'s1', nodes:{
     s1:{q:'Déficit neurológico focal de início SÚBITO?',opts:[{t:'Sim',go:'s2'},{t:'Não / gradual',go:'r0'}]},
     s2:{q:'TC de crânio sem contraste — há sangue (hiperdensidade)?',opts:[{t:'SIM, há sangue',go:'rHem'},{t:'NÃO há sangue',go:'s3'}]},
@@ -867,56 +923,133 @@ MODULES.push({
   id:'cefaleia', emoji:'🤕', region:'meningeal', title:'Cefaleias',
   sub:'Enxaqueca, tensional, em salvas e cefaleias secundárias (red flags)',
   prio:'alta', topics:['Enxaqueca','Cefaleia tensional','Cefaleia em salvas','Cefaleias secundárias','Red flags','Tratamento abortivo e profilático'],
-  teach:`
+  subtopics:[
+  {label:'Visão geral & Red flags',html:`
 <h3>O primeiro raciocínio: primária ou secundária?</h3>
-<p>Cefaleia é sintoma, não doença. Sua tarefa nº 1 é separar:</p>
-<ul>
-<li><strong>Primárias</strong> (a dor É a doença): enxaqueca, tensional, em salvas. São benignas.</li>
-<li><strong>Secundárias</strong> (a dor é sinal de algo grave): HSA, meningite, tumor, trombose venosa, arterite temporal, hipertensão intracraniana.</li>
-</ul>
-<div class="callout trap"><b>O que mais derruba candidato</b>Tratar uma cefaleia secundária como enxaqueca. Decore os <strong>sinais de alarme (red flags) — "SNNOOP"</strong> e, na presença deles, INVESTIGUE (neuroimagem ± punção).</div>
-<div class="callout mne"><b>Mnemônico das red flags — SNNOOP10 (resumido)</b>
-<strong>S</strong>intomas sistêmicos (febre, perda de peso) · <strong>N</strong>eoplasia/HIV · <strong>N</strong>eurológico (déficit focal, alteração de consciência) · <strong>O</strong>nset súbito (thunderclap) · <strong>O</strong>lder (início &gt;50 anos) · <strong>P</strong>adrão que muda / piora progressiva / piora com Valsalva / papiledema.</div>
+<p>Cefaleia é sintoma, não doença. Sua tarefa nº 1 é separar duas categorias:</p>
+<ul><li><strong>Primárias</strong> (a dor É a doença): enxaqueca, tensional, em salvas. Benignas.</li>
+<li><strong>Secundárias</strong> (a dor é sinal de algo grave): HSA, meningite, tumor, trombose venosa cerebral, arterite temporal, hipertensão intracraniana.</li></ul>
+<div class="diagram">
+<div class="dg-step"><b>1</b>Cefaleia</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>2</b>Tem RED FLAG?</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>SIM</b>Investigar (TC ± punção)</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>NÃO</b>Classificar primária e tratar</div></div>
+<div class="callout trap"><b>O que mais derruba candidato</b>Tratar uma cefaleia secundária como enxaqueca. Decore os sinais de alarme e, na presença deles, INVESTIGUE antes de medicar.</div>
+<h4>Red flags — mnemônico SNNOOP10</h4>
+<table class="med"><tr><th>Sinal de alarme</th><th>Pensar em</th></tr>
+<tr><td><b>S</b>istêmico (febre, perda de peso, neoplasia, HIV)</td><td>Infecção, metástase</td></tr>
+<tr><td><b>N</b>eurológico (déficit focal, rebaixamento, papiledema)</td><td>Lesão expansiva, AVC</td></tr>
+<tr><td><b>O</b>nset súbito (thunderclap, pico instantâneo)</td><td><strong>HSA</strong></td></tr>
+<tr><td><b>O</b>lder — início após os 50 anos</td><td>Arterite temporal, tumor</td></tr>
+<tr><td><b>P</b>adrão: muda, progride, piora à Valsalva/decúbito</td><td>Hipertensão intracraniana</td></tr>
+<tr><td>Gestação/puerpério, papiledema, dor que acorda à noite</td><td>Trombose venosa, HIC</td></tr></table>`},
 
+  {label:'Enxaqueca',html:`
 <h3>Enxaqueca (migrânea) — a rainha das provas</h3>
-<p>Mecanismo: hiperexcitabilidade neuronal + ativação do sistema trigeminovascular (papel do <strong>CGRP</strong>). Mais comum em <strong>mulheres jovens</strong>.</p>
+<p><strong>Fisiopatologia:</strong> hiperexcitabilidade neuronal + ativação do sistema trigeminovascular, com papel central do <strong>CGRP</strong> (peptídeo relacionado ao gene da calcitonina). Predomina em <strong>mulheres jovens</strong>; há componente hormonal (enxaqueca menstrual).</p>
+<h4>Critérios diagnósticos (resumo prático)</h4>
 <table class="med"><tr><th>Característica</th><th>Enxaqueca</th></tr>
 <tr><td>Localização</td><td>Geralmente unilateral, pulsátil</td></tr>
-<tr><td>Intensidade</td><td>Moderada a forte; piora com atividade</td></tr>
+<tr><td>Intensidade</td><td>Moderada a forte; piora com atividade física</td></tr>
 <tr><td>Duração</td><td>4 a 72 horas</td></tr>
-<tr><td>Acompanhantes</td><td>Náusea/vômito, foto e fonofobia</td></tr>
-<tr><td>Aura (em ~25%)</td><td>Sintomas neurológicos reversíveis (visual &gt; sensitivo), 5–60 min, ANTES da dor</td></tr></table>
-<p><strong>Tratamento abortivo (crise):</strong> AINEs/analgésicos nas leves; <strong>triptanos</strong> nas moderadas/graves (agonistas 5-HT1B/1D). Antieméticos ajudam. Novidades: gepantes (antagonistas do CGRP) e ditans.</p>
-<div class="callout warn"><b>Cuidado</b>Triptanos são <strong>contraindicados</strong> em doença coronariana, AVC prévio e na enxaqueca <strong>com aura de tronco/hemiplégica</strong>. E lembre: <strong>analgésico em excesso causa cefaleia por uso abusivo</strong> (rebote).</p></div>
-<p><strong>Profilaxia</strong> (se ≥4 crises/mês ou incapacitantes): betabloqueador (propranolol), <strong>topiramato</strong>, amitriptilina, candesartana, valproato; e anticorpos anti-CGRP (erenumabe etc.).</p>
+<tr><td>Acompanhantes</td><td>Náusea/vômito + foto e fonofobia</td></tr>
+<tr><td>Aura (~25%)</td><td>Sintomas neurológicos reversíveis (visual &gt; sensitivo &gt; fala), 5–60 min, em geral ANTES da dor</td></tr></table>
+<h4>Tratamento ABORTIVO (escada) — protocolo atual</h4>
+<div class="diagram">
+<div class="dg-step"><b>Leve/moderada</b>AINE (naproxeno, ibuprofeno) ou AAS ± antiemético</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>Moderada/grave</b>Triptano (5-HT1B/1D) — usar cedo na crise</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>Refratária</b>Triptano + AINE; gepantes/ditans; antiemético EV</div></div>
+<p>Antieméticos (metoclopramida) tratam a náusea e melhoram a absorção. Novas classes: <strong>gepantes</strong> (antagonistas do CGRP) e <strong>ditans</strong> (lasmiditan) — úteis quando triptano é contraindicado.</p>
+<div class="callout warn"><b>Cuidado com triptanos</b>Contraindicados em <strong>doença coronariana, AVC prévio, HAS não controlada</strong> e na <strong>enxaqueca com aura de tronco ou hemiplégica</strong> (risco de vasoconstrição). E lembre: analgésico/triptano em excesso (&gt;10–15 dias/mês) causa <strong>cefaleia por uso abusivo de medicação</strong> (rebote).</div>
+<h4>Tratamento PROFILÁTICO (≥4 crises/mês ou crises incapacitantes)</h4>
+<table class="med"><tr><th>Classe</th><th>Exemplos</th><th>Observação</th></tr>
+<tr><td>Betabloqueador</td><td>Propranolol</td><td>1ª linha; evitar em asma/bradicardia</td></tr>
+<tr><td>Anticonvulsivante</td><td><strong>Topiramato</strong>, valproato</td><td>Valproato é teratogênico — evitar em mulher fértil</td></tr>
+<tr><td>Antidepressivo</td><td>Amitriptilina</td><td>Bom se insônia/dor associada</td></tr>
+<tr><td>Anti-hipertensivo</td><td>Candesartana</td><td>Opção bem tolerada</td></tr>
+<tr><td>Anti-CGRP</td><td>Erenumabe, galcanezumabe</td><td>Profilaxia moderna, casos refratários</td></tr></table>`},
 
+  {label:'Cefaleia Tensional',html:`
 <h3>Cefaleia tensional — a mais comum</h3>
-<p>Dor <strong>bilateral, em peso/aperto ("faixa")</strong>, leve a moderada, <strong>NÃO pulsátil</strong>, <strong>não piora com esforço</strong>, sem náusea importante. Tratamento: analgésicos simples; profilaxia com amitriptilina se crônica.</p>
+<p>Dor <strong>bilateral, em peso/aperto</strong> ("faixa ao redor da cabeça"), intensidade leve a moderada, <strong>NÃO pulsátil</strong>, <strong>não piora com esforço</strong>, sem náusea importante (pode haver leve foto OU fonofobia, nunca as duas marcantes como na enxaqueca).</p>
+<div class="callout tip"><b>Conduta</b>Episódica: analgésico simples (paracetamol/AINE) e medidas comportamentais (sono, postura, estresse). Crônica (≥15 dias/mês): profilaxia com <strong>amitriptilina</strong>. Evitar uso abusivo de analgésico.</div>
+<table class="med"><tr><th></th><th>Tensional</th><th>Enxaqueca</th></tr>
+<tr><td>Lado</td><td>Bilateral</td><td>Unilateral</td></tr>
+<tr><td>Tipo</td><td>Aperto/peso</td><td>Pulsátil</td></tr>
+<tr><td>Esforço</td><td>Não piora</td><td>Piora</td></tr>
+<tr><td>Náusea</td><td>Ausente/leve</td><td>Presente</td></tr></table>`},
 
+  {label:'Cefaleia em Salvas',html:`
 <h3>Cefaleia em salvas (cluster) — a mais dolorosa</h3>
-<p>Homens jovens. Dor <strong>periorbitária unilateral</strong>, excruciante, em <strong>crises curtas (15–180 min)</strong>, várias vezes ao dia por semanas ("salvas"), com <strong>sintomas autonômicos ipsilaterais</strong>: lacrimejamento, hiperemia conjuntival, rinorreia, ptose/miose. O paciente fica <strong>agitado</strong> (diferente da enxaqueca, em que ele se aquieta no escuro).</p>
-<div class="callout fast"><b>Conduta na salva</b>Abortivo: <strong>O₂ a 100% (12–15 L/min)</strong> e <strong>triptano subcutâneo/nasal</strong>. Profilaxia: <strong>verapamil</strong>.</div>
+<p>Predomina em <strong>homens jovens</strong>. Dor <strong>periorbitária unilateral excruciante</strong>, em <strong>crises curtas (15–180 min)</strong>, várias vezes ao dia por semanas ("salvas"), frequentemente em horário fixo/noturno. Acompanha <strong>sintomas autonômicos ipsilaterais</strong>: lacrimejamento, hiperemia conjuntival, rinorreia, ptose/miose. O paciente fica <strong>agitado</strong> (anda pela casa) — o oposto da enxaqueca, em que ele se aquieta no escuro.</p>
+<h4>Conduta — protocolo atual</h4>
+<div class="diagram">
+<div class="dg-step"><b>Abortivo</b>O₂ 100% a 12–15 L/min (máscara) + sumatriptano SC/nasal</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>Transição</b>Corticoide curto ou bloqueio do nervo occipital</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>Profilaxia</b>Verapamil (1ª linha) — ECG de controle</div></div>
+<div class="callout fast"><b>Decoreba de prova</b>Salva = <strong>O₂ + triptano SC</strong> para abortar; <strong>verapamil</strong> para prevenir. Oxigênio NÃO funciona em enxaqueca — funciona na salva.</div>`},
 
-<table class="med"><tr><th>Comparativo</th><th>Enxaqueca</th><th>Tensional</th><th>Em salvas</th></tr>
+  {label:'Cefaleias Secundárias',html:`
+<h3>Cefaleias secundárias — o que não pode passar</h3>
+<table class="med"><tr><th>Causa</th><th>Pista clínica</th><th>Conduta</th></tr>
+<tr><td><strong>HSA</strong></td><td>Thunderclap + rigidez de nuca</td><td>TC; se normal e suspeita alta → punção (xantocromia)</td></tr>
+<tr><td><strong>Meningite</strong></td><td>Febre + rigidez + rebaixamento</td><td>Hemocultura + ATB empírico imediato + punção</td></tr>
+<tr><td><strong>Arterite temporal</strong></td><td>&gt;50a, dor temporal, claudicação de mandíbula, VHS↑</td><td><strong>Corticoide imediato</strong> + biópsia (risco de cegueira)</td></tr>
+<tr><td><strong>Trombose venosa cerebral</strong></td><td>Puérpera/uso de ACO, cefaleia progressiva, crises, papiledema</td><td>Angio-RM venosa; anticoagulação</td></tr>
+<tr><td><strong>HIC idiopática</strong></td><td>Mulher jovem obesa, papiledema, zumbido pulsátil, diplopia (VI par)</td><td>Punção (PIC alta), acetazolamida, perda de peso</td></tr>
+<tr><td><strong>Tumor / lesão expansiva</strong></td><td>Dor progressiva, pior pela manhã/Valsalva, déficit focal</td><td>Neuroimagem</td></tr></table>
+<div class="callout warn"><b>Arterite de células gigantes</b>Idoso com cefaleia temporal nova + VHS muito elevado: inicie <strong>corticoide ANTES da biópsia</strong>. Esperar a biópsia pode custar a visão.</div>`},
+
+  {label:'Comparativo & Diferenciais',html:`
+<h3>Tabela comparativa das primárias</h3>
+<table class="med"><tr><th>Item</th><th>Enxaqueca</th><th>Tensional</th><th>Em salvas</th></tr>
 <tr><td>Sexo</td><td>Mulher</td><td>Ambos</td><td>Homem</td></tr>
 <tr><td>Lado</td><td>Uni (pulsátil)</td><td>Bilateral (aperto)</td><td>Uni periorbitária</td></tr>
 <tr><td>Duração</td><td>4–72h</td><td>30min–7d</td><td>15–180 min</td></tr>
 <tr><td>Comportamento</td><td>Quieto, no escuro</td><td>Funcional</td><td>Agitado</td></tr>
 <tr><td>Autonômico</td><td>Não</td><td>Não</td><td>Sim (ipsilateral)</td></tr>
-<tr><td>Abortivo</td><td>Triptano/AINE</td><td>AINE</td><td>O₂ + triptano SC</td></tr></table>
+<tr><td>Abortivo</td><td>Triptano/AINE</td><td>AINE</td><td>O₂ + triptano SC</td></tr>
+<tr><td>Profilaxia</td><td>Propranolol/topiramato</td><td>Amitriptilina</td><td>Verapamil</td></tr></table>
+<h3>Diagnósticos diferenciais por gatilho</h3>
+<ul><li><strong>Dor súbita máxima</strong> → HSA, dissecção, trombose venosa.</li>
+<li><strong>Dor + febre + rigidez</strong> → meningite.</li>
+<li><strong>Dor + olho vermelho/duro + midríase</strong> → glaucoma agudo (não é neuro!).</li>
+<li><strong>Dor + claudicação de mandíbula no idoso</strong> → arterite temporal.</li>
+<li><strong>Dor pós-punção, melhora deitado</strong> → cefaleia pós-punção lombar.</li></ul>`},
 
-<h3>Não esqueça: arterite temporal</h3>
-<p>Idoso &gt;50a, cefaleia temporal nova, claudicação de mandíbula, VHS muito elevado, risco de <strong>cegueira</strong>. <strong>Corticoide imediato</strong> (não espere a biópsia) + biópsia da temporal.</p>
+  {label:'Mapa Mental',html:`
+<h3>🧠 Mapa mental — Cefaleias</h3>
+<div class="mindmap"><div class="mm-center">CEFALEIA</div><div class="mm-trunk"></div>
+<div class="mm-branches">
+<div class="mm-branch"><b>① Triagem</b><ul><li>Primária × secundária</li><li>Red flags: SNNOOP10</li><li>Thunderclap = HSA</li></ul></div>
+<div class="mm-branch"><b>② Enxaqueca</b><ul><li>Uni, pulsátil, 4–72h</li><li>Foto/fonofobia, náusea</li><li>Abortivo: triptano</li><li>Profilaxia: propranolol/topiramato</li></ul></div>
+<div class="mm-branch"><b>③ Tensional</b><ul><li>Bilateral, aperto</li><li>Não piora ao esforço</li><li>Amitriptilina se crônica</li></ul></div>
+<div class="mm-branch"><b>④ Salvas</b><ul><li>Periorbitária, autonômica</li><li>Agitação</li><li>O₂ + triptano SC</li><li>Profilaxia: verapamil</li></ul></div>
+<div class="mm-branch"><b>⑤ Secundárias</b><ul><li>HSA, meningite</li><li>Arterite temporal (idoso)</li><li>Trombose venosa, HIC</li></ul></div>
+</div></div>`},
 
+  {label:'Resumo, Dicas & Erros',html:`
+<h3>⚡ Resumo ultra rápido</h3>
+<ul><li>Sempre cheque red flags (SNNOOP) antes de chamar de primária.</li>
+<li>Enxaqueca: uni, pulsátil, 4–72h, náusea + foto/fonofobia → triptano (cuidado coronariopata).</li>
+<li>Tensional: bilateral, aperto, sem piora ao esforço → AINE; crônica → amitriptilina.</li>
+<li>Salvas: periorbitária + autonômica + agitação → O₂ + triptano SC; profilaxia verapamil.</li>
+<li>Thunderclap = HSA até prova em contrário (TC + punção).</li></ul>
+<div class="callout fast"><b>📝 Dicas de prova</b>① O₂ aborta SALVA (não enxaqueca). ② Idoso + cefaleia nova + VHS alto = arterite → corticoide JÁ. ③ Mulher jovem obesa + papiledema = HIC idiopática. ④ Puérpera com cefaleia progressiva + crise = trombose venosa.</div>
+<div class="callout trap"><b>🎯 Pegadinhas clássicas</b>① Dar triptano em coronariopata. ② Confundir aura (reversível, &lt;60 min) com AIT. ③ Achar que TC normal exclui HSA (não exclui nas primeiras horas → punção). ④ Tratar arterite temporal só depois da biópsia.</div>
+<div class="callout warn"><b>❌ Erros que mais derrubam</b>① Não investigar red flags. ② Manter analgésico diário (gera cefaleia de rebote). ③ Esquecer profilaxia em quem tem ≥4 crises/mês. ④ Usar valproato em mulher que pode engravidar.</div>
+<div class="callout mne"><b>🧩 Macetes</b>"<strong>POUND</strong>" para enxaqueca: <strong>P</strong>ulsátil · dura<strong>O</strong> 4–72h (One day) · <strong>U</strong>nilateral · <strong>N</strong>áusea · <strong>D</strong>isabling (incapacitante). 3–4 critérios = alta probabilidade de enxaqueca.</div>`},
+
+  {label:'Revisão de véspera',html:`
 <h3>📌 Revisão de véspera</h3>
-<ul>
-<li>Sempre busque red flags (SNNOOP) antes de chamar de primária.</li>
-<li>Enxaqueca: uni, pulsátil, 4–72h, foto/fonofobia → triptano (cuidado coronariopata).</li>
-<li>Tensional: bilateral, aperto, sem piora ao esforço.</li>
-<li>Salvas: periorbitária, autonômica, agitado → O₂ + triptano SC; profilaxia verapamil.</li>
-<li>Thunderclap = HSA até prova em contrário (TC + punção).</li>
-</ul>
-`,
+<table class="med"><tr><th>Situação</th><th>Resposta rápida</th></tr>
+<tr><td>Pior dor da vida, súbita</td><td>HSA → TC ± punção</td></tr>
+<tr><td>Uni pulsátil + náusea + fotofobia</td><td>Enxaqueca → triptano</td></tr>
+<tr><td>Bilateral em aperto</td><td>Tensional → AINE</td></tr>
+<tr><td>Periorbitária + lacrimejamento + agitação</td><td>Salva → O₂ + triptano SC; verapamil</td></tr>
+<tr><td>Idoso + temporal + VHS alto</td><td>Arterite → corticoide imediato</td></tr>
+<tr><td>≥4 crises/mês</td><td>Iniciar profilaxia</td></tr></table>`}
+],
   flowDx:{ title:'Fluxograma diagnóstico da cefaleia', start:'c1', nodes:{
     c1:{q:'Há sinais de alarme (SNNOOP)? Início súbito/thunderclap, febre+rigidez, déficit focal, início >50a, papiledema, piora progressiva?',opts:[{t:'SIM',go:'rSec'},{t:'NÃO',go:'c2'}]},
     c2:{q:'Características da dor?',opts:[{t:'Unilateral, pulsátil, foto/fonofobia, 4–72h',go:'rMig'},{t:'Bilateral, em aperto, sem náusea/esforço',go:'rTens'},{t:'Periorbitária, autonômica, crises curtas, agitação',go:'rClus'}]}
@@ -937,22 +1070,34 @@ MODULES.push({
   questions:[
     {stem:'Mulher, 28a, crises de cefaleia unilateral pulsátil, 12h de duração, com náusea e fotofobia, aliviada no escuro. Exame normal. Diagnóstico e abortivo de escolha em crise moderada/grave?',
      opts:['Tensional — paracetamol','Enxaqueca — triptano','Em salvas — oxigênio','Secundária — TC urgente'],
-     correct:1, expl:'<b>B.</b> Quadro típico de enxaqueca sem aura. Em crise moderada/grave, o abortivo de escolha é o triptano (± antiemético).'},
+     correct:1, expl:'<b>B.</b> Quadro típico de enxaqueca sem aura. Em crise moderada/grave, o abortivo de escolha é o triptano (agonista 5-HT1B/1D), idealmente usado cedo na crise, ± antiemético.'},
     {stem:'Qual achado é uma RED FLAG que obriga investigação de cefaleia secundária?',
-     opts:['Dor pulsátil unilateral','Fotofobia','Cefaleia thunderclap (pico instantâneo)','História familiar de enxaqueca'],
-     correct:2, expl:'<b>C.</b> Início súbito explosivo (thunderclap) sugere HSA e exige TC ± punção. Os demais são típicos de enxaqueca.'},
-    {stem:'Homem, 35a, crises de dor periorbitária direita intensíssima, 60 min, com lacrimejamento e rinorreia ipsilaterais, várias por dia há 3 semanas; fica agitado. Abortivo de escolha?',
-     opts:['Oxigênio 100% a 12 L/min','Paracetamol oral','Repouso no escuro','Corticoide em pulso'],
-     correct:0, expl:'<b>A.</b> Cefaleia em salvas. Abortivo: O₂ 100% em alto fluxo e/ou triptano subcutâneo/nasal. Profilaxia: verapamil.'},
-    {stem:'Sobre triptanos, é contraindicação importante:',
-     opts:['Enxaqueca com fotofobia','Doença arterial coronariana','Idade <40 anos','Sexo feminino'],
-     correct:1, expl:'<b>B.</b> Por seu efeito vasoconstritor, triptanos são contraindicados em coronariopatia, AVC prévio e enxaqueca hemiplégica/de tronco.'},
-    {stem:'Idoso de 72a com cefaleia temporal nova, claudicação de mandíbula e VHS de 95. Conduta imediata?',
-     opts:['Triptano','Corticoide imediato + biópsia de artéria temporal','TC e alta','Apenas AINE'],
-     correct:1, expl:'<b>B.</b> Arterite de células gigantes (temporal): risco de cegueira. Iniciar corticoide imediatamente, sem esperar a biópsia.'},
-    {stem:'Característica que define a cefaleia tensional:',
-     opts:['Unilateral e pulsátil','Bilateral, em aperto, sem piora ao esforço','Periorbitária com sintomas autonômicos','Sempre com aura visual'],
-     correct:1, expl:'<b>B.</b> Tensional: bilateral, em peso/aperto, leve-moderada, sem náusea importante e sem piora com atividade física.'}
+     opts:['Dor pulsátil unilateral','Fotofobia isolada','Cefaleia thunderclap (pico instantâneo)','História familiar de enxaqueca'],
+     correct:2, expl:'<b>C.</b> Início súbito explosivo (thunderclap) sugere HSA e exige TC ± punção lombar. Os demais são típicos de enxaqueca, sem alarme.'},
+    {stem:'Homem, 35a, crises de dor periorbitária direita intensíssima, ~60 min, com lacrimejamento e rinorreia ipsilaterais, várias por dia há 3 semanas; fica agitado andando pela casa. Abortivo de escolha?',
+     opts:['Oxigênio 100% a 12 L/min (± triptano SC)','Paracetamol oral','Repouso no escuro','Corticoide em pulso isolado'],
+     correct:0, expl:'<b>A.</b> Cefaleia em salvas: abortivo é O₂ 100% em alto fluxo e/ou sumatriptano subcutâneo. Profilaxia da salva: verapamil.'},
+    {stem:'Sobre triptanos, assinale a contraindicação importante:',
+     opts:['Enxaqueca com fotofobia','Doença arterial coronariana','Idade inferior a 40 anos','Sexo feminino'],
+     correct:1, expl:'<b>B.</b> Por seu efeito vasoconstritor, triptanos são contraindicados em coronariopatia, AVC prévio, HAS não controlada e enxaqueca hemiplégica/de tronco.'},
+    {stem:'Idoso de 72a com cefaleia temporal nova, claudicação de mandíbula e VHS de 95. Conduta imediata mais correta?',
+     opts:['Triptano','Corticoide imediato e, depois, biópsia de artéria temporal','TC e alta','Apenas AINE e reavaliação em 30 dias'],
+     correct:1, expl:'<b>B.</b> Arterite de células gigantes (temporal) tem risco de cegueira irreversível. Inicia-se corticoide imediatamente, SEM aguardar a biópsia (que confirma o diagnóstico depois).'},
+    {stem:'Característica que melhor define a cefaleia tensional:',
+     opts:['Unilateral e pulsátil','Bilateral, em aperto, sem piora ao esforço','Periorbitária com sintomas autonômicos','Sempre acompanhada de aura visual'],
+     correct:1, expl:'<b>B.</b> Tensional: bilateral, em peso/aperto, leve a moderada, sem náusea importante e sem piora com atividade física.'},
+    {stem:'Paciente com enxaqueca tem 6 crises incapacitantes por mês, usando triptano em quase todas. Qual a melhor conduta adicional?',
+     opts:['Manter apenas o abortivo','Iniciar profilaxia (ex.: propranolol ou topiramato)','Aumentar a dose de triptano diariamente','Prescrever opioide de uso contínuo'],
+     correct:1, expl:'<b>B.</b> ≥4 crises/mês ou crises incapacitantes indicam profilaxia (propranolol, topiramato, amitriptilina, candesartana ou anti-CGRP). Uso frequente de abortivo gera cefaleia por uso abusivo.'},
+    {stem:'Mulher, 22a, obesa, com cefaleia diária progressiva, episódios de diplopia, zumbido pulsátil e papiledema bilateral; TC sem lesão. Diagnóstico mais provável?',
+     opts:['Enxaqueca crônica','Hipertensão intracraniana idiopática','Cefaleia tensional','Sinusite'],
+     correct:1, expl:'<b>B.</b> Mulher jovem obesa + papiledema + diplopia (paresia do VI par) + zumbido pulsátil = HIC idiopática (pseudotumor cerebri). Punção mostra PIC elevada; tratamento com acetazolamida e perda de peso.'},
+    {stem:'Puérpera de 10 dias com cefaleia progressiva, uma crise convulsiva e papiledema. Qual hipótese deve ser priorizada?',
+     opts:['Enxaqueca pós-parto','Trombose venosa cerebral','Cefaleia tensional','Cefaleia em salvas'],
+     correct:1, expl:'<b>B.</b> Puerpério é estado pró-trombótico; cefaleia progressiva + crise + papiledema sugere trombose venosa cerebral. Investigar com angio-RM/venografia e anticoagular.'},
+    {stem:'Sobre a aura migranosa típica, é correto afirmar que:',
+     opts:['Dura horas e deixa déficit permanente','É reversível, dura 5–60 minutos e costuma preceder a dor','É idêntica a um AIT e exige trombólise','Ocorre apenas após a fase de dor'],
+     correct:1, expl:'<b>B.</b> A aura é um sintoma neurológico totalmente reversível (mais comum o visual em zigue-zague), com 5–60 minutos de duração, geralmente antecedendo a cefaleia. Não se confunde com AIT (que não tem essa marcha característica e não é reversível por definição tecidual com infarto).'}
   ],
   cards:[
     {tag:'Triagem',q:'Primeira pergunta diante de uma cefaleia?',a:'É primária (benigna) ou secundária (sinal de doença grave)? Procure red flags (SNNOOP).'},
@@ -996,54 +1141,107 @@ MODULES.push({
   id:'epilepsia', emoji:'⚡', region:'temporal', title:'Epilepsia e Crises',
   sub:'Classificação das crises, estado de mal epiléptico e antiepilépticos',
   prio:'alta', topics:['Classificação das crises','Crise focal e generalizada','Estado de mal epiléptico','Antiepilépticos','Primeira crise'],
-  teach:`
+  subtopics:[
+  {label:'Conceitos',html:`
 <h3>Conceitos que você precisa fixar primeiro</h3>
-<p>Uma <strong>crise epiléptica</strong> é uma descarga elétrica anormal e sincrônica de neurônios. Já <strong>epilepsia</strong> é a <em>doença</em>: tendência a crises recorrentes. A definição operacional diz que há epilepsia quando há <strong>≥2 crises não provocadas com &gt;24h de intervalo</strong>, OU 1 crise não provocada com alto risco de recorrência (lesão estrutural/EEG epileptiforme).</p>
-<div class="callout warn"><b>Provocada × não provocada</b>Crise <strong>provocada</strong> (sintomática aguda) tem um gatilho reversível: hipoglicemia, hiponatremia, abstinência alcoólica, febre na criança, drogas. Ela <strong>não é epilepsia</strong> — trate a causa! Não saia "iniciando antiepiléptico para a vida toda" numa crise por distúrbio metabólico.</div>
+<p>Uma <strong>crise epiléptica</strong> é uma descarga elétrica anormal e sincrônica de neurônios. Já <strong>epilepsia</strong> é a <em>doença</em>: tendência a crises recorrentes.</p>
+<h4>Quando há epilepsia? (definição operacional ILAE)</h4>
+<ul><li><strong>≥2 crises não provocadas</strong> com mais de 24h de intervalo; OU</li>
+<li><strong>1 crise não provocada</strong> + alto risco de recorrência (lesão estrutural ou EEG epileptiforme); OU</li>
+<li>diagnóstico de uma síndrome epiléptica.</li></ul>
+<div class="callout warn"><b>Provocada × não provocada — chave da prova</b>Crise <strong>provocada</strong> (sintomática aguda) tem gatilho reversível: hipoglicemia, hiponatremia, abstinência alcoólica, febre na criança, drogas, eclâmpsia. Ela <strong>NÃO é epilepsia</strong> — trate a causa, não saia iniciando antiepiléptico crônico.</div>`},
 
+  {label:'Classificação',html:`
 <h3>Classificação ILAE (2017) — o esqueleto da prova</h3>
 <p>Pergunte sempre: <strong>onde a crise começa?</strong></p>
-<ul>
-<li><strong>Início focal</strong> (uma região): pode ser com <strong>perceptividade preservada</strong> ("focal perceptiva", antiga parcial simples) ou <strong>perceptividade prejudicada</strong> ("focal disperceptiva", antiga parcial complexa). Pode evoluir para <strong>tônico-clônica bilateral</strong>.</li>
-<li><strong>Início generalizado</strong> (redes bilaterais desde o início): tônico-clônica, ausência, mioclônica, atônica, tônica, clônica.</li>
-<li><strong>Início desconhecido.</strong></li>
-</ul>
+<div class="diagram">
+<div class="dg-step"><b>Início FOCAL</b>uma região do cérebro</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>Início GENERALIZADO</b>redes bilaterais desde o começo</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>Início DESCONHECIDO</b>não testemunhado</div></div>
+<p>A crise <strong>focal</strong> subdivide-se em <strong>perceptiva</strong> (consciência preservada — antiga "parcial simples") e <strong>disperceptiva</strong> (consciência prejudicada — antiga "parcial complexa"), e pode evoluir para <strong>tônico-clônica bilateral</strong>.</p>
 <table class="med"><tr><th>Tipo</th><th>Quadro típico</th><th>Pista</th></tr>
 <tr><td>Focal disperceptiva</td><td>Olhar parado, automatismos (mastigar, mexer mãos), confusão pós-ictal</td><td>Origem temporal frequente</td></tr>
-<tr><td>Tônico-clônica generalizada</td><td>Perda de consciência, rigidez (tônica) → abalos (clônica), mordedura lateral de língua, liberação esfincteriana, sonolência pós-ictal</td><td>Pós-ictal prolongado</td></tr>
-<tr><td>Ausência</td><td>Criança, "desligamentos" de segundos, sem pós-ictal, EEG ponta-onda 3 Hz</td><td>Provocada por hiperventilação</td></tr>
-<tr><td>Mioclônica</td><td>Abalos rápidos, sobretudo ao acordar (epilepsia mioclônica juvenil)</td><td>Adolescente</td></tr></table>
-<div class="callout trap"><b>Diferencial que derruba: crise × síncope × crise psicogênica</b>Síncope: pródromo de "escurecer a vista", recuperação <strong>rápida</strong>, sem pós-ictal/confusão. Crise: pode ter aura, <strong>mordedura lateral</strong> da língua, confusão pós-ictal. Crise psicogênica não epiléptica: movimentos assíncronos, olhos fechados resistindo à abertura, EEG ictal normal.</div>
+<tr><td>Tônico-clônica generalizada</td><td>Perda de consciência, fase tônica (rigidez) → clônica (abalos), mordedura lateral da língua, liberação esfincteriana, sonolência pós-ictal</td><td>Pós-ictal prolongado</td></tr>
+<tr><td>Ausência</td><td>Criança, "desligamentos" de segundos, sem pós-ictal</td><td>EEG ponta-onda 3 Hz; piora à hiperventilação</td></tr>
+<tr><td>Mioclônica</td><td>Abalos rápidos, sobretudo ao acordar</td><td>Epilepsia mioclônica juvenil</td></tr>
+<tr><td>Atônica</td><td>Perda súbita do tônus ("drop attack")</td><td>Síndromes encefalopáticas</td></tr></table>`},
 
-<h3>Primeira crise não provocada — investigar</h3>
-<p>Solicite <strong>glicemia/eletrólitos</strong>, considere <strong>neuroimagem (RM preferível)</strong> e <strong>EEG</strong>. A decisão de iniciar antiepiléptico depende do risco de recorrência (lesão, EEG alterado).</p>
+  {label:'Primeira crise',html:`
+<h3>Primeira crise não provocada — o que fazer</h3>
+<div class="diagram">
+<div class="dg-step"><b>1</b>Excluir crise provocada (glicemia, eletrólitos, tóxicos)</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>2</b>Neuroimagem (RM &gt; TC) + EEG</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>3</b>Estimar risco de recorrência</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>4</b>Tratar se alto risco</div></div>
+<p>Iniciar antiepiléptico após a <strong>primeira</strong> crise quando há <strong>alto risco de recorrência</strong>: lesão estrutural na imagem, EEG com atividade epileptiforme, crise durante o sono ou exame neurológico alterado. Sem esses fatores, muitas vezes opta-se por observar.</p>
+<div class="callout tip"><b>Orientações sempre</b>Higiene do sono, evitar privação e álcool, restrições temporárias (direção, natação, altura) conforme legislação local.</div>`},
 
+  {label:'Antiepilépticos',html:`
 <h3>Antiepilépticos — lógica de escolha</h3>
-<table class="med"><tr><th>Situação</th><th>Opções</th></tr>
-<tr><td>Crise focal</td><td>Carbamazepina, oxcarbazepina, lamotrigina, levetiracetam</td></tr>
+<table class="med"><tr><th>Situação</th><th>Opções de escolha</th></tr>
+<tr><td>Crise focal</td><td>Carbamazepina, oxcarbazepina, <strong>lamotrigina</strong>, levetiracetam</td></tr>
 <tr><td>Generalizada (amplo espectro)</td><td>Ácido valproico, levetiracetam, lamotrigina</td></tr>
-<tr><td>Ausência</td><td>Etossuximida (ou valproato)</td></tr>
+<tr><td>Ausência</td><td><strong>Etossuximida</strong> (ou valproato)</td></tr>
 <tr><td>Mioclônica juvenil</td><td>Valproato (evitar carbamazepina — piora!)</td></tr></table>
-<div class="callout warn"><b>Atenção em mulheres em idade fértil</b>O <strong>valproato é teratogênico</strong> (defeitos de tubo neural, déficit cognitivo). Evite na gestante/planejando engravidar — prefira lamotrigina/levetiracetam. <strong>Carbamazepina piora crises de ausência e mioclônicas.</strong></div>
+<div class="callout warn"><b>Mulher em idade fértil / gestante</b>O <strong>valproato é teratogênico</strong> (defeitos de tubo neural, déficit cognitivo) — evite. Prefira <strong>lamotrigina ou levetiracetam</strong>. Suplementar ácido fólico. Lembre que <strong>carbamazepina e fenitoína são indutores enzimáticos</strong> (reduzem eficácia de anticoncepcionais e outros fármacos).</div>
+<div class="callout trap"><b>Pegadinha de fármaco</b><strong>Carbamazepina pode PIORAR ausência e mioclonias</strong> — por isso é usada em crise focal, não em síndromes generalizadas idiopáticas.</div>`},
 
+  {label:'Estado de Mal (EME)',html:`
 <h3>Estado de mal epiléptico (EME) — EMERGÊNCIA</h3>
-<p>Definição operacional: crise tônico-clônica que dura <strong>≥5 minutos</strong> OU crises sem recuperação da consciência entre elas. Quanto mais tempo, mais difícil de parar e mais lesão neuronal.</p>
-<div class="callout fast"><b>Escada do tratamento do EME (passo a passo)</b>
-<strong>0–5 min (estabilizar):</strong> ABC, O₂, acesso, glicemia (tiamina antes da glicose no etilista), monitorizar.<br>
-<strong>5–20 min (1ª linha — benzodiazepínico):</strong> diazepam EV ou <strong>midazolam IM</strong> (se sem acesso) ou lorazepam EV.<br>
-<strong>20–40 min (2ª linha):</strong> <strong>fenitoína</strong> (ou fosfenitoína), <strong>valproato</strong> ou <strong>levetiracetam</strong> EV.<br>
-<strong>&gt;40 min (refratário):</strong> intubação + anestésico contínuo (midazolam, propofol) em UTI com EEG.</div>
-<div class="callout trap"><b>Erro comum</b>Repetir benzodiazepínico indefinidamente sem partir para a 2ª linha. Após a dose adequada de BZD, se a crise persiste, vá para a fenitoína/valproato/levetiracetam — não fique só "empurrando diazepam".</div>
+<p>Definição operacional: crise tônico-clônica que dura <strong>≥5 minutos</strong> OU crises sem recuperação da consciência entre elas. Quanto mais tempo, mais difícil parar e mais lesão neuronal — o tratamento é <strong>tempo-dependente</strong>.</p>
+<h4>Escada de tratamento (protocolo atual)</h4>
+<table class="med"><tr><th>Tempo</th><th>Fase</th><th>Conduta</th></tr>
+<tr><td>0–5 min</td><td>Estabilizar</td><td>ABC, O₂, acesso venoso, monitorização, glicemia capilar (no etilista, <strong>tiamina antes da glicose</strong>)</td></tr>
+<tr><td>5–20 min</td><td>1ª linha — benzodiazepínico</td><td><strong>Diazepam ou lorazepam EV</strong>; sem acesso → <strong>midazolam IM</strong></td></tr>
+<tr><td>20–40 min</td><td>2ª linha</td><td><strong>Fenitoína/fosfenitoína</strong> OU <strong>valproato</strong> OU <strong>levetiracetam</strong> EV</td></tr>
+<tr><td>&gt;40 min</td><td>Refratário</td><td>Intubação + anestésico contínuo (midazolam, propofol) em UTI, EEG contínuo</td></tr></table>
+<div class="callout trap"><b>Erro que mais derruba</b>Repetir benzodiazepínico indefinidamente sem partir para a 2ª linha. Após a dose adequada de BZD, se a crise persiste, vá para fenitoína/valproato/levetiracetam — não fique só "empurrando diazepam".</div>
+<div class="callout fast"><b>Decoreba</b>EME = ≥5 min → <strong>BZD → fenitoína/valproato/levetiracetam → anestésico/UTI</strong>.</div>`},
 
-<h3>📌 Revisão de véspera</h3>
-<ul>
-<li>Crise provocada ≠ epilepsia: trate a causa (glicose, sódio, abstinência).</li>
+  {label:'Diferenciais & Comparativo',html:`
+<h3>Diferenciais: crise × síncope × crise psicogênica</h3>
+<table class="med"><tr><th>Item</th><th>Crise epiléptica</th><th>Síncope</th><th>Crise psicogênica (PNES)</th></tr>
+<tr><td>Pródromo</td><td>Aura</td><td>Visão escurece, sudorese</td><td>Variável, situacional</td></tr>
+<tr><td>Movimentos</td><td>Tônico-clônicos sincrônicos</td><td>Mioclonias breves</td><td>Assíncronos, pélvicos, cabeça lado a lado</td></tr>
+<tr><td>Olhos</td><td>Abertos/desviados</td><td>Variável</td><td>Fechados, resistindo à abertura</td></tr>
+<tr><td>Mordedura</td><td><strong>Lateral</strong> da língua</td><td>Rara</td><td>Ponta da língua/lábio</td></tr>
+<tr><td>Pós-ictal</td><td>Confusão prolongada</td><td>Recuperação rápida e lúcida</td><td>Recuperação variável, sem confusão real</td></tr>
+<tr><td>EEG ictal</td><td>Alterado</td><td>Normal</td><td>Normal</td></tr></table>
+<div class="callout tip"><b>Dica</b>Mordedura <strong>lateral</strong> da língua + confusão pós-ictal pesam fortemente a favor de crise epiléptica.</div>`},
+
+  {label:'Mapa Mental',html:`
+<h3>🧠 Mapa mental — Epilepsia</h3>
+<div class="mindmap"><div class="mm-center">CRISE / EPILEPSIA</div><div class="mm-trunk"></div>
+<div class="mm-branches">
+<div class="mm-branch"><b>① Provocada?</b><ul><li>Glicemia, Na, abstinência</li><li>SIM → tratar a causa</li><li>NÃO → seguir investigação</li></ul></div>
+<div class="mm-branch"><b>② Classificar</b><ul><li>Focal (perceptiva/dispercep.)</li><li>Generalizada (TCG, ausência, mioclônica)</li></ul></div>
+<div class="mm-branch"><b>③ Tratar</b><ul><li>Focal: carbamazepina/lamotrigina</li><li>Generalizada: valproato/levetiracetam</li><li>Gestante: evitar valproato</li></ul></div>
+<div class="mm-branch"><b>④ EME (≥5 min)</b><ul><li>BZD</li><li>Fenitoína/valproato/leveti</li><li>Anestésico/UTI</li></ul></div>
+<div class="mm-branch"><b>⑤ Diferenciais</b><ul><li>Síncope</li><li>PNES</li></ul></div>
+</div></div>`},
+
+  {label:'Resumo, Dicas & Erros',html:`
+<h3>⚡ Resumo ultra rápido</h3>
+<ul><li>Crise provocada ≠ epilepsia → trate a causa (glicose, sódio, abstinência).</li>
 <li>Classifique pelo início: focal × generalizado.</li>
 <li>EME = ≥5 min → BZD → fenitoína/valproato/levetiracetam → anestésico/UTI.</li>
-<li>Valproato: ótimo amplo espectro, mas teratogênico. Carbamazepina piora ausência/mioclonia.</li>
-<li>Mordedura lateral de língua + confusão pós-ictal ⇒ a favor de crise (vs. síncope).</li>
-</ul>
-`,
+<li>Valproato: ótimo amplo espectro, mas teratogênico; carbamazepina piora ausência/mioclonia.</li>
+<li>Mordedura lateral de língua + confusão pós-ictal ⇒ a favor de crise.</li></ul>
+<div class="callout fast"><b>📝 Dicas de prova</b>① No etilista, tiamina ANTES da glicose. ② Sem acesso venoso no EME → midazolam IM. ③ Ausência: EEG 3 Hz, provocada por hiperventilação, etossuximida. ④ Mioclônica juvenil em mulher → levetiracetam/lamotrigina.</div>
+<div class="callout trap"><b>🎯 Pegadinhas clássicas</b>① Carbamazepina em mioclônica/ausência (piora). ② Iniciar antiepiléptico vitalício após crise provocada. ③ Ficar repetindo BZD sem 2ª linha no EME. ④ Valproato em gestante.</div>
+<div class="callout warn"><b>❌ Erros que mais derrubam</b>① Não checar glicemia/eletrólitos. ② Esquecer que EME já começa em 5 min (não esperar). ③ Confundir PNES com crise verdadeira (olhos fechados, movimentos assíncronos).</div>
+<div class="callout mne"><b>🧩 Macete EME</b>"<strong>BZD primeiro, FENITOÍNA/VPA/LEV depois, ANESTÉSICO por último</strong>" — sempre subindo a escada conforme o relógio.</div>`},
+
+  {label:'Revisão de véspera',html:`
+<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta rápida</th></tr>
+<tr><td>Crise em etilista com abstinência</td><td>Provocada → benzodiazepínico, tratar causa</td></tr>
+<tr><td>Crise ≥5 min</td><td>EME → BZD → fenitoína/VPA/LEV → UTI</td></tr>
+<tr><td>Criança com "desligamentos" + EEG 3 Hz</td><td>Ausência → etossuximida/valproato</td></tr>
+<tr><td>Adolescente com abalos matinais</td><td>Mioclônica juvenil → valproato (mulher: LEV/lamotrigina)</td></tr>
+<tr><td>Gestante epiléptica</td><td>Lamotrigina/levetiracetam; evitar valproato</td></tr>
+<tr><td>Crise focal disperceptiva</td><td>Carbamazepina/lamotrigina/levetiracetam</td></tr></table>`}
+],
   flowDx:{ title:'Fluxograma: abordagem da crise', start:'e1', nodes:{
     e1:{q:'A crise foi PROVOCADA (febre, hipoglicemia, hipoNa, abstinência, droga)?',opts:[{t:'Sim',go:'rProv'},{t:'Não',go:'e2'}]},
     e2:{q:'É a primeira crise não provocada?',opts:[{t:'Sim, primeira',go:'rPrim'},{t:'Não — recorrente',go:'e3'}]},
@@ -1064,22 +1262,34 @@ MODULES.push({
   questions:[
     {stem:'Paciente trazido em crise tônico-clônica contínua há 8 minutos. Após ABC e glicemia normal, qual a 1ª linha medicamentosa?',
      opts:['Fenitoína EV','Benzodiazepínico (diazepam/lorazepam EV ou midazolam IM)','Propofol em infusão','Levetiracetam oral'],
-     correct:1, expl:'<b>B.</b> EME (≥5 min). Primeira linha é benzodiazepínico. Fenitoína/valproato/levetiracetam são 2ª linha; anestésicos ficam para o refratário.'},
+     correct:1, expl:'<b>B.</b> Crise ≥5 min = estado de mal epiléptico. A primeira linha é benzodiazepínico. Fenitoína/valproato/levetiracetam são 2ª linha; anestésicos ficam para o EME refratário.'},
     {stem:'Mulher de 22a com epilepsia mioclônica juvenil, planejando engravidar. Qual fármaco EVITAR?',
      opts:['Lamotrigina','Levetiracetam','Ácido valproico','Clonazepam'],
-     correct:2, expl:'<b>C.</b> Valproato é teratogênico e associa-se a déficit cognitivo no feto — evitar em mulheres em idade fértil/gestantes. Prefira lamotrigina ou levetiracetam.'},
-    {stem:'Criança com "desligamentos" de poucos segundos, sem pós-ictal, desencadeados por hiperventilação; EEG com ponta-onda 3 Hz. Diagnóstico?',
-     opts:['Crise focal disperceptiva','Crise de ausência','Síncope','Crise psicogênica'],
-     correct:1, expl:'<b>B.</b> Ausência típica da infância: episódios breves, sem confusão pós-ictal, EEG 3 Hz, provocados por hiperventilação. Tratamento: etossuximida (ou valproato).'},
+     correct:2, expl:'<b>C.</b> Valproato é teratogênico e associa-se a déficit cognitivo no feto — evitar em mulheres em idade fértil/gestantes. Prefira lamotrigina ou levetiracetam, com ácido fólico.'},
+    {stem:'Criança com "desligamentos" de poucos segundos, sem pós-ictal, desencadeados por hiperventilação; EEG com ponta-onda 3 Hz. Diagnóstico e fármaco de escolha?',
+     opts:['Focal disperceptiva — carbamazepina','Ausência — etossuximida','Síncope — nenhum','Mioclônica — fenitoína'],
+     correct:1, expl:'<b>B.</b> Ausência típica da infância: episódios breves sem confusão pós-ictal, EEG 3 Hz, provocados por hiperventilação. Fármaco de escolha: etossuximida (ou valproato).'},
     {stem:'Qual achado favorece crise epiléptica em vez de síncope?',
-     opts:['Recuperação imediata e lúcida','Pródromo de "escurecimento" visual','Confusão pós-ictal e mordedura lateral da língua','Palidez e sudorese antes do evento'],
+     opts:['Recuperação imediata e lúcida','Pródromo de escurecimento visual e sudorese','Confusão pós-ictal e mordedura lateral da língua','Palidez antes do evento'],
      correct:2, expl:'<b>C.</b> Confusão pós-ictal prolongada e mordedura lateral da língua apontam para crise. Recuperação rápida e pródromos vasovagais sugerem síncope.'},
-    {stem:'Homem chega ao PS com crise por abstinência alcoólica; glicemia 70, Na 138. Conduta sobre antiepiléptico crônico?',
+    {stem:'Homem chega ao PS com crise por abstinência alcoólica; glicemia 70, Na 138. Conduta quanto ao antiepiléptico crônico?',
      opts:['Iniciar carbamazepina para sempre','Tratar a abstinência (benzodiazepínico) sem antiepiléptico crônico de rotina','Iniciar valproato vitalício','Iniciar fenitoína profilática vitalícia'],
      correct:1, expl:'<b>B.</b> Crise provocada (sintomática aguda) por abstinência: trata-se a causa com benzodiazepínico; não há indicação de antiepiléptico crônico de rotina.'},
     {stem:'Antiepiléptico que pode PIORAR crises de ausência e mioclônicas:',
      opts:['Etossuximida','Valproato','Carbamazepina','Levetiracetam'],
-     correct:2, expl:'<b>C.</b> Carbamazepina pode agravar ausências e mioclonias — por isso é preferida em crises focais, não em síndromes generalizadas idiopáticas.'}
+     correct:2, expl:'<b>C.</b> Carbamazepina pode agravar ausências e mioclonias — por isso é preferida em crises focais, não em síndromes generalizadas idiopáticas.'},
+    {stem:'No estado de mal epiléptico de um paciente etilista SEM acesso venoso, qual a melhor conduta inicial?',
+     opts:['Aguardar acesso venoso para diazepam','Midazolam intramuscular','Fenitoína intramuscular','Glicose EV imediata sem tiamina'],
+     correct:1, expl:'<b>B.</b> Sem acesso venoso, o benzodiazepínico de escolha é o midazolam IM (eficaz e rápido). Fenitoína IM não deve ser usada (absorção errática/lesão tecidual). No etilista, a tiamina precede a glicose.'},
+    {stem:'Paciente em EME persiste com crises após dose adequada de benzodiazepínico. Próximo passo?',
+     opts:['Repetir benzodiazepínico mais 3 vezes','Iniciar 2ª linha: fenitoína, valproato ou levetiracetam EV','Alta com orientação','Punção lombar antes de qualquer fármaco'],
+     correct:1, expl:'<b>B.</b> Após dose adequada de BZD sem resposta, avança-se imediatamente para a 2ª linha (fenitoína/valproato/levetiracetam). Insistir só em BZD é erro clássico.'},
+    {stem:'Sobre a definição de epilepsia, está correto:',
+     opts:['Toda primeira crise já define epilepsia','Basta uma crise provocada por hipoglicemia','≥2 crises não provocadas (>24h) ou 1 crise com alto risco de recorrência','Só há epilepsia com EEG sempre alterado'],
+     correct:2, expl:'<b>C.</b> A definição operacional inclui ≥2 crises não provocadas separadas por mais de 24h, OU 1 crise não provocada com alto risco de recorrência (lesão/EEG epileptiforme), OU uma síndrome epiléptica.'},
+    {stem:'Adolescente com abalos súbitos dos braços ao acordar e uma crise tônico-clônica matinal; EEG com polipontas generalizadas. Conduta sobre o fármaco em uma paciente do sexo feminino?',
+     opts:['Carbamazepina','Valproato é clássico, mas em mulher fértil prefira levetiracetam/lamotrigina','Fenitoína','Etossuximida isolada'],
+     correct:1, expl:'<b>B.</b> Epilepsia mioclônica juvenil. O valproato é muito eficaz, porém teratogênico; em mulher em idade fértil prefira levetiracetam ou lamotrigina. Carbamazepina está contraindicada (piora mioclonia).'}
   ],
   cards:[
     {tag:'Definição',q:'Quando dizemos que há epilepsia?',a:'≥2 crises não provocadas (>24h de intervalo) ou 1 crise com alto risco de recorrência.'},
@@ -1123,46 +1333,108 @@ MODULES.push({
   id:'meningite', emoji:'🦠', region:'meningeal', title:'Meningites e Encefalites',
   sub:'Bacteriana, viral, análise do líquor e encefalite herpética',
   prio:'alta', topics:['Meningite bacteriana','Meningite viral','Análise do líquor','Encefalite herpética','Antibioticoterapia empírica'],
-  teach:`
+  subtopics:[
+  {label:'Visão geral',html:`
 <h3>A grande divisão: meninge × parênquima</h3>
-<p><strong>Meningite</strong> = inflamação das meninges (sinais meníngeos predominam). <strong>Encefalite</strong> = inflamação do parênquima cerebral (predominam alteração de comportamento, consciência, convulsões e déficits focais). Os dois podem coexistir (meningoencefalite).</p>
-<div class="callout fast"><b>Tríade clássica da meningite</b>Febre + cefaleia + rigidez de nuca. Some alteração do nível de consciência e você tem a "tétrade". Mas atenção: idosos e imunossuprimidos podem ter apresentação frustra.</div>
-<p>Sinais de irritação meníngea: <strong>Kernig</strong> (resistência/dor ao estender o joelho com quadril fletido) e <strong>Brudzinski</strong> (flexão involuntária dos joelhos ao fletir o pescoço).</p>
+<p><strong>Meningite</strong> = inflamação das meninges (predominam sinais meníngeos). <strong>Encefalite</strong> = inflamação do parênquima cerebral (predominam alteração de comportamento, consciência, crises e déficits focais). Os dois podem coexistir (meningoencefalite).</p>
+<div class="callout fast"><b>Tríade clássica da meningite</b>Febre + cefaleia + rigidez de nuca. Somando alteração da consciência, vira a "tétrade". Idosos e imunossuprimidos podem ter apresentação frustra (só confusão ou febre).</div>
+<p>Sinais de irritação meníngea: <strong>Kernig</strong> (dor/resistência ao estender o joelho com o quadril fletido) e <strong>Brudzinski</strong> (flexão involuntária dos joelhos ao fletir o pescoço).</p>`},
 
+  {label:'Conduta inicial',html:`
 <h3>Conduta inicial — a sequência que cai em prova</h3>
-<div class="callout trap"><b>A pegadinha nº 1: NÃO atrase o antibiótico esperando a punção/TC</b>Se há suspeita de meningite bacteriana, a ordem prática é: <strong>hemoculturas → (corticoide +) antibiótico empírico IMEDIATO → punção lombar</strong>. Se houver indicação de TC antes da punção (déficit focal, papiledema, rebaixamento, imunossupressão, crise recente), <strong>colha hemocultura e já comece o ATB antes da TC</strong> — não espere a imagem para tratar.</div>
+<div class="diagram">
+<div class="dg-step"><b>1</b>Suspeita clínica + estabilizar (ABC)</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>2</b>Hemoculturas</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>3</b>Dexametasona + ATB empírico JÁ</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>4</b>Punção lombar (TC antes só se indicado)</div></div>
+<div class="callout trap"><b>A pegadinha nº 1: NÃO atrase o antibiótico</b>Se há suspeita de meningite bacteriana e indicação de TC antes da punção (déficit focal, papiledema, rebaixamento, imunossupressão, crise recente), <strong>colha hemocultura e já comece o ATB antes da TC</strong>. Nunca espere a imagem ou a punção para tratar.</div>
+<div class="callout tip"><b>Quando TC antes da punção?</b>Déficit focal, papiledema, rebaixamento importante, imunossupressão, crise convulsiva recente, idade avançada. Sem esses, pode puncionar direto (após avaliar coagulação).</div>`},
 
+  {label:'Análise do Líquor',html:`
 <h3>Análise do líquor (LCR) — o mapa do diagnóstico</h3>
 <table class="med"><tr><th>Parâmetro</th><th>Normal</th><th>Bacteriana</th><th>Viral</th><th>Fúngica/TB</th></tr>
 <tr><td>Aspecto</td><td>Límpido</td><td>Turvo/purulento</td><td>Límpido</td><td>Límpido/opalescente</td></tr>
 <tr><td>Células</td><td>&lt;5</td><td>↑↑ centenas-milhares, <strong>neutrófilos</strong></td><td>↑ dezenas-centenas, <strong>linfócitos</strong></td><td>↑ linfócitos</td></tr>
 <tr><td>Proteína</td><td>15–45</td><td>↑↑ muito alta</td><td>Normal/leve ↑</td><td>↑ alta</td></tr>
-<tr><td>Glicose (LCR/sangue)</td><td>Normal (≈2/3)</td><td><strong>↓↓ baixa</strong></td><td>Normal</td><td><strong>↓ baixa</strong></td></tr></table>
-<div class="callout mne"><b>Macete da glicose</b>Bactéria e fungo/TB "comem açúcar" → glicose <strong>baixa</strong>. Vírus não → glicose <strong>normal</strong>. Predomínio de <strong>neutrófilo</strong> = bacteriana; <strong>linfócito</strong> = viral/TB/fúngica.</div>
+<tr><td>Glicose (LCR/sangue)</td><td>≈2/3 do sangue</td><td><strong>↓↓ baixa</strong></td><td>Normal</td><td><strong>↓ baixa</strong></td></tr></table>
+<div class="callout mne"><b>Macete da glicose</b>Bactéria e fungo/TB "comem açúcar" → glicose <strong>baixa</strong>. Vírus não → glicose <strong>normal</strong>. Predomínio de <strong>neutrófilo</strong> = bacteriana; <strong>linfócito</strong> = viral/TB/fúngica.</div>`},
 
+  {label:'Meningite Bacteriana',html:`
 <h3>Tratamento empírico da meningite bacteriana</h3>
 <table class="med"><tr><th>Faixa/contexto</th><th>Agentes prováveis</th><th>Empírico</th></tr>
 <tr><td>Adulto (até ~50a)</td><td>Pneumococo, meningococo</td><td><strong>Ceftriaxona</strong> (+ vancomicina onde há resistência do pneumococo)</td></tr>
 <tr><td>&gt;50a / imunossuprimido / gestante</td><td>+ <strong>Listeria</strong></td><td>Adicionar <strong>ampicilina</strong></td></tr>
-<tr><td>RN</td><td>Strep B, E. coli, Listeria</td><td>Ampicilina + cefotaxima</td></tr></table>
-<div class="callout tip"><b>Corticoide (dexametasona)</b>Na suspeita de meningite bacteriana do adulto (sobretudo pneumocócica), <strong>dexametasona antes/junto da 1ª dose de antibiótico</strong> reduz sequelas (especialmente surdez). Não adianta começar depois do ATB já instalado.</div>
+<tr><td>RN</td><td>Strep B, E. coli, Listeria</td><td>Ampicilina + cefotaxima</td></tr>
+<tr><td>Pós-neurocirurgia/TCE</td><td>Staph, Gram-negativos</td><td>Vancomicina + cefepime/meropenem</td></tr></table>
+<div class="callout tip"><b>Corticoide (dexametasona)</b>Na suspeita de meningite bacteriana do adulto (sobretudo pneumocócica), <strong>dexametasona antes ou junto da 1ª dose de antibiótico</strong> reduz sequelas (especialmente surdez). Dar depois do ATB já instalado não traz o mesmo benefício.</div>
+<div class="callout fast"><b>Não esquecer</b>Meningite bacteriana é <strong>notificação compulsória</strong>.</div>`},
 
+  {label:'Meningococcemia',html:`
 <h3>Meningococcemia — o sinal que não pode passar</h3>
-<p><strong>Rash petequial/purpúrico</strong> que não desaparece à digitopressão (purpura) em paciente febril com sinais meníngeos = meningococo até prova em contrário → ATB <strong>imediato</strong>, isolamento respiratório e <strong>profilaxia dos contatos</strong> (rifampicina/ceftriaxona/ciprofloxacino).</p>
+<p><strong>Rash petequial/purpúrico</strong> que NÃO desaparece à digitopressão, em paciente febril com sinais meníngeos e toxemia = meningococo até prova em contrário. Pode evoluir com choque e CIVD (síndrome de Waterhouse-Friderichsen).</p>
+<div class="diagram">
+<div class="dg-step"><b>1</b>Ressuscitação + ATB (ceftriaxona) imediato</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>2</b>Isolamento respiratório (gotículas)</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>3</b>Notificação compulsória</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>4</b>Quimioprofilaxia dos contatos próximos</div></div>
+<div class="callout warn"><b>Profilaxia de contatos</b>Contatos próximos recebem <strong>rifampicina, ceftriaxona ou ciprofloxacino</strong>. Inclui contatos domiciliares e quem teve contato com secreções respiratórias.</div>`},
 
+  {label:'Meningite Viral',html:`
+<h3>Meningite viral — geralmente benigna</h3>
+<p>Causa mais comum de meningite asséptica (enterovírus). Quadro de febre, cefaleia e rigidez, mas com bom estado geral e <strong>líquor linfocítico com glicose normal</strong>. Curso autolimitado.</p>
+<div class="callout tip"><b>Conduta</b>Suporte, hidratação e analgesia. Reavaliar se houver piora ou sinais encefálicos → descartar <strong>encefalite herpética</strong> (que exige aciclovir).</div>`},
+
+  {label:'Encefalite Herpética',html:`
 <h3>Encefalite herpética (HSV) — não perca tempo</h3>
-<p>Encefalite + febre + alteração de comportamento/personalidade + crises + acometimento de <strong>lobos temporais</strong> (RM). O LCR costuma ser linfocítico, às vezes com hemácias. Diagnóstico: <strong>PCR para HSV no líquor</strong>.</p>
-<div class="callout warn"><b>Regra de ouro</b>Suspeitou de encefalite herpética? <strong>Inicie aciclovir EV imediatamente</strong>, antes mesmo do resultado da PCR. A demora aumenta mortalidade e sequelas. Aciclovir empírico não "atrapalha" — tratar precocemente salva.</div>
+<p>Encefalite + febre + <strong>alteração de comportamento/personalidade</strong> + crises + acometimento dos <strong>lobos temporais</strong> (RM). LCR costuma ser linfocítico, por vezes com hemácias. Diagnóstico de confirmação: <strong>PCR para HSV no líquor</strong>.</p>
+<div class="callout warn"><b>Regra de ouro</b>Suspeitou de encefalite herpética? <strong>Inicie aciclovir EV imediatamente</strong>, antes mesmo do resultado da PCR. A demora aumenta mortalidade e sequelas — tratar empiricamente é o certo.</div>`},
 
-<h3>📌 Revisão de véspera</h3>
-<ul>
-<li>Suspeita de meningite bacteriana → hemocultura + dexametasona + ATB <strong>já</strong>, depois punção (TC antes só se indicado).</li>
+  {label:'Comparativo & Diferenciais',html:`
+<h3>Tabela comparativa rápida</h3>
+<table class="med"><tr><th>Cenário</th><th>Pista</th><th>Conduta-chave</th></tr>
+<tr><td>Bacteriana</td><td>Neutrófilo + glicose baixa + turvo</td><td>Dexametasona + ceftriaxona (± vanco; ± ampicilina)</td></tr>
+<tr><td>Viral</td><td>Linfócito + glicose normal + bom estado</td><td>Suporte</td></tr>
+<tr><td>TB/fúngica</td><td>Linfócito + glicose baixa + subaguda</td><td>Tratamento específico (RIPE / antifúngico)</td></tr>
+<tr><td>Encefalite herpética</td><td>Comportamento + temporal na RM</td><td>Aciclovir EV já</td></tr>
+<tr><td>Meningococcemia</td><td>Púrpura + choque</td><td>ATB + profilaxia de contatos</td></tr></table>
+<h3>Diferenciais</h3>
+<ul><li>HSA (thunderclap, sangue na TC) pode dar rigidez de nuca — mas sem febre inicial.</li>
+<li>Abscesso cerebral: febre + déficit focal + lesão com realce anelar na imagem.</li>
+<li>Neurocisticercose/toxoplasmose em imunossuprimido.</li></ul>`},
+
+  {label:'Mapa Mental',html:`
+<h3>🧠 Mapa mental — Meningites/Encefalites</h3>
+<div class="mindmap"><div class="mm-center">MENINGITE / ENCEFALITE</div><div class="mm-trunk"></div>
+<div class="mm-branches">
+<div class="mm-branch"><b>① Reconhecer</b><ul><li>Tríade: febre+cefaleia+rigidez</li><li>Encefalite: comportamento, crises</li></ul></div>
+<div class="mm-branch"><b>② Agir rápido</b><ul><li>Hemocultura + dexa + ATB JÁ</li><li>TC antes só se indicado</li></ul></div>
+<div class="mm-branch"><b>③ Líquor</b><ul><li>Neutrófilo + glicose baixa = bact.</li><li>Linfócito + glicose normal = viral</li></ul></div>
+<div class="mm-branch"><b>④ Empírico</b><ul><li>Adulto: ceftriaxona (±vanco)</li><li>&gt;50a/imuno: + ampicilina</li></ul></div>
+<div class="mm-branch"><b>⑤ Alertas</b><ul><li>Púrpura → meningococo + profilaxia</li><li>Temporal/comportamento → aciclovir</li></ul></div>
+</div></div>`},
+
+  {label:'Resumo, Dicas & Erros',html:`
+<h3>⚡ Resumo ultra rápido</h3>
+<ul><li>Suspeita de bacteriana → hemocultura + dexametasona + ATB <strong>já</strong>, depois punção.</li>
 <li>LCR: neutrófilo + glicose baixa = bacteriana; linfócito + glicose normal = viral.</li>
 <li>Empírico do adulto: ceftriaxona (± vanco); &gt;50a/imuno/gestante: + ampicilina (Listeria).</li>
 <li>Petéquias/púrpura + febre = meningococo → ATB + profilaxia de contatos.</li>
-<li>Comportamento estranho + febre + temporal na RM = encefalite herpética → <strong>aciclovir já</strong>.</li>
-</ul>
-`,
+<li>Comportamento estranho + febre + temporal na RM = encefalite herpética → <strong>aciclovir já</strong>.</li></ul>
+<div class="callout fast"><b>📝 Dicas de prova</b>① Dexametasona ANTES/junto do ATB. ② TC antes da punção só em casos específicos — sem atrasar ATB. ③ Glicose baixa também na TB/fúngica. ④ Notificação compulsória sempre.</div>
+<div class="callout trap"><b>🎯 Pegadinhas clássicas</b>① Esperar a punção/TC para iniciar o antibiótico. ② Dar corticoide depois do ATB e achar que protege. ③ Esquecer ampicilina no &gt;50a/imuno. ④ Não pensar em herpes diante de "psiquiátrico + febre".</div>
+<div class="callout warn"><b>❌ Erros que mais derrubam</b>① Atraso no antibiótico. ② Não fazer profilaxia dos contatos no meningococo. ③ Tratar encefalite herpética só após PCR. ④ Confundir glicose baixa (bact/TB) com viral.</div>
+<div class="callout mne"><b>🧩 Macete empírico</b>"<strong>CEFtriaxona para todo adulto; some VANCO (resistência) e AMPI (velho/imuno = Listeria)</strong>".</div>`},
+
+  {label:'Revisão de véspera',html:`
+<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta rápida</th></tr>
+<tr><td>Tríade meníngea sem foco</td><td>Hemocultura + dexa + ceftriaxona → punção</td></tr>
+<tr><td>Líquor neutrofílico, glicose baixa</td><td>Bacteriana → manter ceftriaxona (±vanco/ampi)</td></tr>
+<tr><td>&gt;50a / imunossuprimido</td><td>Adicionar ampicilina (Listeria)</td></tr>
+<tr><td>Púrpura + febre + choque</td><td>Meningococcemia → ATB + profilaxia contatos</td></tr>
+<tr><td>Febre + comportamento + temporal RM</td><td>Encefalite herpética → aciclovir EV já</td></tr>
+<tr><td>Líquor linfocítico, glicose normal</td><td>Viral → suporte</td></tr></table>`}
+],
   flowDx:{ title:'Fluxograma: suspeita de meningite', start:'m1', nodes:{
     m1:{q:'Febre + cefaleia + rigidez de nuca (± rebaixamento)?',opts:[{t:'Sim — suspeita de meningite',go:'m2'},{t:'Sintomas encefálicos (comportamento, crises, foco)',go:'rEnc'}]},
     m2:{q:'Há indicação de TC ANTES da punção? (déficit focal, papiledema, rebaixamento, imunossupressão, crise recente)',opts:[{t:'Sim',go:'rATBtc'},{t:'Não',go:'m3'}]},
@@ -1182,24 +1454,36 @@ MODULES.push({
     'Notificação compulsória; isolamento e profilaxia de contatos se meningococo (rifampicina/ceftriaxona/ciprofloxacino).'
   ]},
   questions:[
-    {stem:'Adulto de 40a com febre, cefaleia intensa, rigidez de nuca e sonolência. Sem déficit focal. Conduta imediata mais correta?',
-     opts:['Aguardar TC e só então iniciar antibiótico','Colher hemocultura + dexametasona + ceftriaxona, depois punção lombar','Iniciar aciclovir e alta','Apenas analgesia e observação'],
-     correct:1, expl:'<b>B.</b> Sem indicação de TC pré-punção, mas o princípio essencial é não atrasar o ATB: hemocultura + dexametasona + ceftriaxona empírica, seguidos da punção.'},
-    {stem:'Líquor: 2.500 células com predomínio de neutrófilos, proteína muito elevada e glicose baixa. Padrão de qual meningite?',
-     opts:['Viral','Bacteriana','Fúngica apenas','Normal'],
+    {stem:'Adulto de 40a com febre, cefaleia intensa, rigidez de nuca e sonolência. Sem déficit focal nem papiledema. Conduta imediata mais correta?',
+     opts:['Aguardar TC e só então iniciar antibiótico','Colher hemocultura + dexametasona + ceftriaxona e, em seguida, punção lombar','Iniciar aciclovir e dar alta','Apenas analgesia e observação'],
+     correct:1, expl:'<b>B.</b> Sem indicação de TC pré-punção, o princípio essencial é não atrasar o ATB: hemocultura + dexametasona + ceftriaxona empírica, seguidos da punção.'},
+    {stem:'Líquor: 2.500 células com predomínio de neutrófilos, proteína muito elevada e glicose 20 (glicemia 110). Padrão de qual meningite?',
+     opts:['Viral','Bacteriana','Apenas fúngica','Normal'],
      correct:1, expl:'<b>B.</b> Pleocitose neutrofílica + hiperproteinorraquia + hipoglicorraquia = padrão bacteriano clássico.'},
-    {stem:'Homem de 62a, diabético, com quadro meníngeo. Qual ajuste no esquema empírico em relação a um jovem hígido?',
+    {stem:'Homem de 62a, diabético, com quadro meníngeo. Qual ajuste no esquema empírico em relação a um adulto jovem hígido?',
      opts:['Retirar a ceftriaxona','Adicionar ampicilina (cobertura de Listeria)','Adicionar apenas antiviral','Nenhum ajuste'],
      correct:1, expl:'<b>B.</b> >50 anos, imunossuprimidos e gestantes têm risco de Listeria monocytogenes → acrescentar ampicilina ao esquema.'},
     {stem:'Paciente febril com confusão, crises e RM mostrando alteração em lobos temporais. Conduta?',
-     opts:['Ceftriaxona isolada','Aciclovir EV empírico imediato + PCR HSV no líquor','Antifúngico','Aguardar PCR para tratar'],
-     correct:1, expl:'<b>B.</b> Encefalite herpética: iniciar aciclovir EV imediatamente, sem esperar a PCR, pela alta morbimortalidade do atraso.'},
+     opts:['Ceftriaxona isolada','Aciclovir EV empírico imediato + PCR HSV no líquor','Antifúngico empírico','Aguardar a PCR para então tratar'],
+     correct:1, expl:'<b>B.</b> Encefalite herpética: iniciar aciclovir EV imediatamente, sem esperar a PCR, dada a alta morbimortalidade do atraso.'},
     {stem:'Adolescente febril com sinais meníngeos e rash purpúrico que não some à digitopressão. Além do antibiótico, qual medida de saúde pública?',
-     opts:['Nenhuma','Profilaxia dos contatos próximos','Quarentena de 30 dias do paciente','Vacinar toda a cidade no mesmo dia'],
-     correct:1, expl:'<b>B.</b> Quadro de meningococcemia: ATB imediato + isolamento respiratório + quimioprofilaxia dos contatos próximos (rifampicina/ceftriaxona/ciprofloxacino) e notificação.'},
-    {stem:'Sobre a dexametasona na meningite bacteriana do adulto:',
-     opts:['Deve ser dada vários dias após o antibiótico','Deve ser dada antes/junto da 1ª dose de antibiótico para reduzir sequelas','Está contraindicada em qualquer caso','Substitui o antibiótico'],
-     correct:1, expl:'<b>B.</b> O benefício (redução de sequelas, sobretudo auditivas na pneumocócica) ocorre quando o corticoide é administrado antes ou junto da primeira dose do antibiótico.'}
+     opts:['Nenhuma','Quimioprofilaxia dos contatos próximos e notificação','Quarentena de 30 dias do paciente','Vacinar toda a cidade no mesmo dia'],
+     correct:1, expl:'<b>B.</b> Quadro de meningococcemia: ATB imediato + isolamento respiratório + quimioprofilaxia dos contatos próximos (rifampicina/ceftriaxona/ciprofloxacino) e notificação compulsória.'},
+    {stem:'Sobre a dexametasona na meningite bacteriana do adulto, é correto:',
+     opts:['Deve ser dada vários dias após o antibiótico','Antes ou junto da 1ª dose de antibiótico, para reduzir sequelas','Está contraindicada em qualquer caso','Substitui o antibiótico'],
+     correct:1, expl:'<b>B.</b> O benefício (redução de sequelas, sobretudo auditivas na pneumocócica) ocorre quando o corticoide é administrado antes ou junto da primeira dose do antibiótico.'},
+    {stem:'Em qual situação a TC de crânio deve preceder a punção lombar na suspeita de meningite?',
+     opts:['Sempre, em todos os pacientes','Apenas em crianças','Déficit focal, papiledema, rebaixamento, imunossupressão ou crise recente','Nunca é necessária'],
+     correct:2, expl:'<b>C.</b> A TC antes da punção fica reservada a quem tem risco de lesão expansiva/herniação. Mesmo assim, o antibiótico não deve ser atrasado: colhe-se hemocultura e inicia-se o ATB antes da TC.'},
+    {stem:'Líquor com pleocitose linfocítica, glicose baixa e proteína alta, em quadro subagudo. Qual a principal hipótese?',
+     opts:['Meningite viral','Meningite tuberculosa','Meningite meningocócica','Líquor normal'],
+     correct:1, expl:'<b>B.</b> Linfócitos + glicose baixa + curso subagudo sugerem meningite tuberculosa (ou fúngica). A viral cursa com glicose normal.'},
+    {stem:'Recém-nascido com sepse e suspeita de meningite. Esquema empírico mais adequado?',
+     opts:['Ceftriaxona isolada','Ampicilina + cefotaxima','Vancomicina isolada','Aciclovir isolado'],
+     correct:1, expl:'<b>B.</b> No neonato, os agentes são Streptococcus do grupo B, E. coli e Listeria → ampicilina + cefotaxima (ceftriaxona é evitada no RN por risco de hiperbilirrubinemia).'},
+    {stem:'Qual é o agente mais comum da meningite asséptica (viral) e sua conduta?',
+     opts:['Enterovírus — suporte','Pneumococo — ceftriaxona','HSV — aciclovir sempre','Listeria — ampicilina'],
+     correct:0, expl:'<b>A.</b> Os enterovírus são a causa mais frequente de meningite viral, de curso benigno e autolimitado; a conduta é suporte. Atenção para diferenciar de encefalite herpética, que exige aciclovir.'}
   ],
   cards:[
     {tag:'Clínica',q:'Tríade clássica da meningite?',a:'Febre + cefaleia + rigidez de nuca (± alteração da consciência).'},
@@ -1243,21 +1527,24 @@ MODULES.push({
   id:'tce', emoji:'🚑', region:'ventricular', title:'Traumatismo Cranioencefálico (TCE)',
   sub:'Glasgow, hematomas, lesão axonal difusa e hipertensão intracraniana',
   prio:'alta', topics:['Escala de Glasgow','Classificação leve/moderado/grave','Lesão primária e secundária','Hematoma epidural','Hematoma subdural','Lesão axonal difusa','Hipertensão intracraniana','Indicações de TC'],
-  teach:`
+  subtopics:[
+  {label:'Visão geral',html:`
 <h3>A grande ideia: salvar o cérebro DEPOIS do trauma</h3>
 <p>No TCE existem duas lesões. A <strong>lesão primária</strong> acontece no instante do impacto — não dá para desfazer. O que mata o paciente nas horas seguintes é a <strong>lesão secundária</strong>: hipóxia, hipotensão, hipertensão intracraniana, edema e convulsões. <strong>Todo o manejo existe para prevenir a lesão secundária.</strong></p>
-<div class="callout fast"><b>Os dois vilões que você precisa evitar a todo custo</b><strong>Hipóxia</strong> (SatO₂ &lt;90%) e <strong>hipotensão</strong> (PAS &lt;90) dobram a mortalidade no TCE grave. "Cérebro precisa de pressão e oxigênio."</div>
+<div class="callout fast"><b>Os dois vilões que você precisa evitar a todo custo</b><strong>Hipóxia</strong> (SatO₂ &lt;90%) e <strong>hipotensão</strong> (PAS &lt;90) dobram a mortalidade no TCE grave. "Cérebro precisa de pressão e oxigênio."</div>`},
 
+  {label:'Glasgow & Classificação',html:`
 <h3>Escala de Coma de Glasgow (ECG)</h3>
 <table class="med"><tr><th>Resposta</th><th>Pontos</th></tr>
 <tr><td><strong>Ocular (1–4):</strong> espontânea 4 · à voz 3 · à dor 2 · ausente 1</td><td>máx 4</td></tr>
 <tr><td><strong>Verbal (1–5):</strong> orientada 5 · confusa 4 · palavras 3 · sons 2 · ausente 1</td><td>máx 5</td></tr>
-<tr><td><strong>Motora (1–6):</strong> obedece 6 · localiza dor 5 · retira 4 · flexão anormal 3 · extensão 2 · ausente 1</td><td>máx 6</td></tr></table>
-<p>Total: 3 (pior) a 15 (melhor). Adicione a resposta <strong>pupilar</strong> (ECG-P).</p>
+<tr><td><strong>Motora (1–6):</strong> obedece 6 · localiza 5 · retira 4 · flexão anormal 3 · extensão 2 · ausente 1</td><td>máx 6</td></tr></table>
+<p>Total: 3 (pior) a 15 (melhor). Some a resposta <strong>pupilar</strong> (ECG-P) no trauma grave.</p>
 <table class="med"><tr><th>Glasgow</th><th>Classificação do TCE</th></tr>
-<tr><td>13–15</td><td>Leve</td></tr><tr><td>9–12</td><td>Moderado</td></tr><tr><td>≤ 8</td><td><strong>Grave → considerar intubação (proteção de via aérea)</strong></td></tr></table>
-<div class="callout mne"><b>Macete</b>"<strong>Glasgow ≤ 8, intuba</strong>." É a frase que você precisa lembrar no plantão e na prova.</div>
+<tr><td>13–15</td><td>Leve</td></tr><tr><td>9–12</td><td>Moderado</td></tr><tr><td>≤ 8</td><td><strong>Grave → via aérea definitiva (intubação)</strong></td></tr></table>
+<div class="callout mne"><b>Macete</b>"<strong>Glasgow ≤ 8, intuba.</strong>" É a frase que salva no plantão e na prova.</div>`},
 
+  {label:'Hematomas',html:`
 <h3>Os hematomas — diferenciar é cair certo na prova</h3>
 <table class="med"><tr><th></th><th>Epidural</th><th>Subdural agudo</th></tr>
 <tr><td>Vaso</td><td><strong>Artéria meníngea média</strong></td><td><strong>Veias-ponte</strong></td></tr>
@@ -1265,32 +1552,76 @@ MODULES.push({
 <tr><td>Clínica clássica</td><td><strong>Intervalo lúcido</strong> → deterioração</td><td>Rebaixamento desde o início</td></tr>
 <tr><td>Associação</td><td>Fratura temporal, jovem</td><td>Idoso, alcoolista, anticoagulado</td></tr>
 <tr><td>Prognóstico</td><td>Bom se drenado a tempo</td><td>Pior</td></tr></table>
-<div class="callout trap"><b>Pegadinha clássica</b>Jovem que bate a cabeça, "melhora" (intervalo lúcido) e depois rebaixa → pense em <strong>hematoma epidural</strong> (lente biconvexa). Idoso anticoagulado com confusão dias após uma queda → <strong>subdural</strong> (crescente).</div>
-<p><strong>Hematoma subdural crônico:</strong> idoso, semanas após trauma trivial; cefaleia, confusão, alteração de marcha. <strong>Lesão axonal difusa (LAD):</strong> mecanismo de desaceleração; coma profundo com TC inicial pouco expressiva (RM mostra microlesões).</p>
+<div class="callout trap"><b>Pegadinha clássica</b>Jovem que bate a cabeça, "melhora" (intervalo lúcido) e depois rebaixa → pense em <strong>hematoma epidural</strong> (lente biconvexa). Idoso anticoagulado com confusão dias após uma queda → <strong>subdural</strong> (crescente).</div>`},
 
+  {label:'LAD & Subdural Crônico',html:`
+<h3>Lesão axonal difusa (LAD)</h3>
+<p>Mecanismo de <strong>desaceleração/rotação</strong> (acidentes de alta energia). Causa <strong>coma profundo</strong> com TC inicial pouco expressiva (a RM revela microlesões na substância branca). Prognóstico reservado.</p>
+<h3>Hematoma subdural crônico</h3>
+<p>Idoso, semanas após trauma trivial; cefaleia, confusão, alteração de marcha e flutuação do nível de consciência. Reverter anticoagulação e avaliar drenagem (trepanação) conforme sintomas e volume.</p>`},
+
+  {label:'Hipertensão Intracraniana',html:`
 <h3>Hipertensão intracraniana (HIC)</h3>
-<p>Doutrina de <strong>Monro-Kellie</strong>: o crânio é uma caixa rígida com cérebro + sangue + liquor. Se um aumenta (hematoma, edema), os outros precisam diminuir; esgotada a compensação, a <strong>PIC dispara</strong>.</p>
+<p>Doutrina de <strong>Monro-Kellie</strong>: o crânio é uma caixa rígida com cérebro + sangue + liquor. Se um aumenta (hematoma, edema), os outros devem diminuir; esgotada a compensação, a <strong>PIC dispara</strong>.</p>
 <p>Mantenha a <strong>PPC (pressão de perfusão cerebral) = PAM − PIC</strong>, alvo ~60–70 mmHg. Sinais de HIC: cefaleia, vômitos, papiledema, rebaixamento e a <strong>tríade de Cushing</strong> (hipertensão + bradicardia + respiração irregular) — sinal tardio e grave de herniação iminente.</p>
-<div class="callout fast"><b>Medidas para baixar a PIC (escalonadas)</b>Cabeceira a 30° e cabeça neutra · normoxia e <strong>normocapnia (PaCO₂ 35–38)</strong> · sedação/analgesia · <strong>salina hipertônica ou manitol</strong> · drenagem liquórica · craniectomia descompressiva. <em>Hiperventilação só como resgate temporário</em> (vasoconstrição reduz fluxo).</div>
+<div class="diagram">
+<div class="dg-step"><b>1</b>Cabeceira 30°, cabeça neutra</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>2</b>Normoxia + normocapnia (PaCO₂ 35–38)</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>3</b>Sedação/analgesia</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>4</b>Salina hipertônica/manitol; drenagem; craniectomia</div></div>
+<div class="callout warn"><b>Atenção</b><em>Hiperventilação só como resgate temporário</em> em herniação — vasoconstrição mantida reduz o fluxo e piora a isquemia.</div>`},
 
+  {label:'Indicações de TC',html:`
 <h3>Quando pedir TC no TCE? (regras tipo Canadian CT Head)</h3>
-<ul>
-<li>Glasgow &lt; 15 duas horas após o trauma;</li>
+<ul><li>Glasgow &lt; 15 duas horas após o trauma;</li>
 <li>Suspeita de fratura aberta/afundamento;</li>
-<li>Sinais de fratura de base do crânio: <strong>otorragia/otoliquorreia, hematoma periorbital ("olhos de guaxinim"), sinal de Battle (equimose retroauricular), hemotímpano</strong>;</li>
+<li>Sinais de fratura de base: <strong>otorragia/otoliquorreia, hematoma periorbital ("olhos de guaxinim"), sinal de Battle (equimose retroauricular), hemotímpano</strong>;</li>
 <li>≥ 2 episódios de vômito; idade ≥ 65 anos;</li>
-<li>Mecanismo perigoso, amnésia &gt; 30 min, coagulopatia/anticoagulação.</li>
-</ul>
+<li>Mecanismo perigoso, amnésia &gt; 30 min, coagulopatia/anticoagulação.</li></ul>
+<div class="callout tip"><b>Resumo</b>TCE leve sem nenhum desses critérios → observação e orientação de retorno. Com qualquer critério → TC sem contraste.</div>`},
 
-<h3>📌 Revisão de véspera</h3>
-<ul>
-<li>Evite hipóxia e hipotensão (matam mais que a lesão primária).</li>
+  {label:'Manejo Inicial',html:`
+<h3>Manejo inicial do TCE grave (ATLS + neuro)</h3>
+<div class="diagram">
+<div class="dg-step"><b>A/B</b>Via aérea definitiva se Glasgow ≤8; O₂ (evitar hipóxia)</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>C</b>Evitar/tratar hipotensão (PAS ≥100–110)</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>D</b>Glasgow + pupilas; TC de urgência</div><div class="dg-arrow">→</div>
+<div class="dg-step"><b>E</b>Medidas anti-HIC + neurocirurgia se lesão</div></div>
+<div class="callout fast"><b>Conduta cirúrgica</b>Hematoma epidural/subdural com efeito de massa, afundamento e algumas fraturas → <strong>neurocirurgia</strong>. Epidural com herniação = emergência (drenagem urgente).</div>`},
+
+  {label:'Mapa Mental',html:`
+<h3>🧠 Mapa mental — TCE</h3>
+<div class="mindmap"><div class="mm-center">TCE</div><div class="mm-trunk"></div>
+<div class="mm-branches">
+<div class="mm-branch"><b>① Princípio</b><ul><li>Evitar lesão secundária</li><li>Sem hipóxia/hipotensão</li></ul></div>
+<div class="mm-branch"><b>② Glasgow</b><ul><li>Leve 13–15</li><li>Moderado 9–12</li><li>Grave ≤8 → intuba</li></ul></div>
+<div class="mm-branch"><b>③ Hematomas</b><ul><li>Epidural: lente + intervalo lúcido</li><li>Subdural: crescente + idoso</li><li>LAD: coma, TC pobre</li></ul></div>
+<div class="mm-branch"><b>④ HIC</b><ul><li>PPC = PAM − PIC (60–70)</li><li>Cabeceira 30°, normocapnia</li><li>Salina/manitol; Cushing = herniação</li></ul></div>
+<div class="mm-branch"><b>⑤ TC quando</b><ul><li>Glasgow&lt;15, vômitos, ≥65a</li><li>Sinais de fratura de base</li></ul></div>
+</div></div>`},
+
+  {label:'Resumo, Dicas & Erros',html:`
+<h3>⚡ Resumo ultra rápido</h3>
+<ul><li>Evite hipóxia e hipotensão (matam mais que a lesão primária).</li>
 <li>Glasgow: leve 13–15 · moderado 9–12 · grave ≤8 → intuba.</li>
 <li>Epidural = lente biconvexa + intervalo lúcido + meníngea média; Subdural = crescente + veias-ponte + idoso.</li>
 <li>HIC: cabeceira 30°, normocapnia, salina/manitol; Cushing = herniação iminente.</li>
-<li>Sinais de fratura de base (guaxinim/Battle/otorragia) → TC obrigatória.</li>
-</ul>
-`,
+<li>Sinais de fratura de base (guaxinim/Battle/otorragia) → TC obrigatória.</li></ul>
+<div class="callout fast"><b>📝 Dicas de prova</b>① "Glasgow 8, intuba". ② PPC = PAM − PIC. ③ Intervalo lúcido = epidural. ④ Cushing (HAS + bradicardia + resp. irregular) = sinal tardio de herniação.</div>
+<div class="callout trap"><b>🎯 Pegadinhas clássicas</b>① Hiperventilar de rotina (só resgate). ② Confundir epidural (biconvexa) com subdural (crescente). ③ Liberar TCE leve com sinais de fratura de base sem TC. ④ Não tratar hipotensão por focar só na cabeça.</div>
+<div class="callout warn"><b>❌ Erros que mais derrubam</b>① Atrasar a via aérea no Glasgow ≤8. ② Permitir SatO₂ baixa/hipotensão. ③ Esquecer reverter anticoagulação no subdural. ④ Demorar a drenar epidural com herniação.</div>
+<div class="callout mne"><b>🧩 Macete dos sinais de fratura de base</b>"<strong>Guaxinim + Battle + líquor pelo ouvido/nariz + hemotímpano</strong>" → pense base de crânio → TC.</div>`},
+
+  {label:'Revisão de véspera',html:`
+<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta rápida</th></tr>
+<tr><td>Glasgow ≤ 8</td><td>Intubar (via aérea definitiva)</td></tr>
+<tr><td>Intervalo lúcido + lente biconvexa</td><td>Epidural → drenagem urgente</td></tr>
+<tr><td>Idoso anticoagulado + crescente</td><td>Subdural → reverter ACO + avaliar drenagem</td></tr>
+<tr><td>HAS + bradicardia + resp. irregular</td><td>Cushing → reduzir PIC já</td></tr>
+<tr><td>Coma + TC pobre + desaceleração</td><td>Lesão axonal difusa</td></tr>
+<tr><td>Olhos de guaxinim / sinal de Battle</td><td>Fratura de base → TC</td></tr></table>`}
+],
   flowDx:{ title:'Fluxograma: TCE na emergência', start:'t1', nodes:{
     t1:{q:'Escala de Glasgow do paciente?',opts:[{t:'≤ 8 (grave)',go:'rGrave'},{t:'9–12 (moderado)',go:'rMod'},{t:'13–15 (leve)',go:'t2'}]},
     t2:{q:'Há critérios para TC? (GCS<15 2h após, vômitos ≥2, ≥65a, sinais de fratura de base, anticoagulação, mecanismo grave)',opts:[{t:'Sim',go:'rTC'},{t:'Não',go:'rObs'}]}
@@ -1310,23 +1641,35 @@ MODULES.push({
   ]},
   questions:[
     {stem:'Vítima de acidente com Glasgow 7. Qual a primeira prioridade?',
-     opts:['TC imediata antes de tudo','Garantir via aérea definitiva (intubação) e oxigenação','Manitol em bolus','Punção lombar'],
+     opts:['TC imediata antes de tudo','Garantir via aérea definitiva (intubação) e oxigenação','Manitol em bolus de imediato','Punção lombar'],
      correct:1, expl:'<b>B.</b> Glasgow ≤8 = incapacidade de proteger a via aérea → intubação. Evitar hipóxia/hipotensão precede a investigação por imagem (que vem logo após estabilizar A-B-C).'},
     {stem:'Jovem bate a cabeça, fica lúcido por 1h e depois rebaixa rapidamente; TC com coleção biconvexa temporal. Diagnóstico?',
      opts:['Hematoma subdural agudo','Hematoma epidural','Lesão axonal difusa','Hemorragia subaracnóidea'],
      correct:1, expl:'<b>B.</b> Intervalo lúcido + imagem biconvexa (lente) + fratura temporal = hematoma epidural (artéria meníngea média).'},
-    {stem:'Idoso anticoagulado, queda há 10 dias, agora confuso. TC com coleção em crescente que acompanha a convexidade. Diagnóstico mais provável?',
+    {stem:'Idoso anticoagulado, queda há 10 dias, agora confuso. TC com coleção em crescente acompanhando a convexidade. Diagnóstico mais provável?',
      opts:['Hematoma epidural','Hematoma subdural (veias-ponte)','Meningioma','AVC isquêmico'],
      correct:1, expl:'<b>B.</b> Forma crescente (côncava), idoso, anticoagulado, trauma prévio = hematoma subdural (ruptura de veias-ponte).'},
-    {stem:'Paciente com TCE grave evolui com hipertensão arterial, bradicardia e respiração irregular. O que isso indica?',
-     opts:['Choque hipovolêmico','Tríade de Cushing — hipertensão intracraniana/herniação iminente','Reação vagal benigna','Hipotermia'],
-     correct:1, expl:'<b>B.</b> Tríade de Cushing sinaliza HIC grave com herniação iminente — medida urgente para reduzir a PIC.'},
+    {stem:'TCE grave evolui com hipertensão arterial, bradicardia e respiração irregular. O que isso indica?',
+     opts:['Choque hipovolêmico','Tríade de Cushing — HIC/herniação iminente','Reação vagal benigna','Hipotermia'],
+     correct:1, expl:'<b>B.</b> Tríade de Cushing sinaliza HIC grave com herniação iminente — exige medidas urgentes para reduzir a PIC.'},
     {stem:'Qual NÃO é medida de primeira linha para reduzir a PIC?',
-     opts:['Cabeceira a 30° com cabeça neutra','Normocapnia (PaCO₂ 35–38)','Salina hipertônica ou manitol','Hiperventilação profilástica mantida'],
+     opts:['Cabeceira a 30° com cabeça neutra','Normocapnia (PaCO₂ 35–38)','Salina hipertônica ou manitol','Hiperventilação profilática mantida'],
      correct:3, expl:'<b>D.</b> Hiperventilação agressiva e mantida causa vasoconstrição e isquemia; só é usada como resgate temporário em herniação. As demais são corretas.'},
     {stem:'Achado que indica fratura de base do crânio:',
-     opts:['Cefaleia leve','Sinal de Battle (equimose retroauricular) e otorragia','Glasgow 15','Pupilas isocóricas'],
-     correct:1, expl:'<b>B.</b> Sinal de Battle, "olhos de guaxinim", otoliquorreia/otorragia e hemotímpano sugerem fratura de base e indicam TC.'}
+     opts:['Cefaleia leve','Sinal de Battle (equimose retroauricular) e otorragia','Glasgow 15','Pupilas isocóricas e fotorreagentes'],
+     correct:1, expl:'<b>B.</b> Sinal de Battle, "olhos de guaxinim", otoliquorreia/otorragia e hemotímpano sugerem fratura de base e indicam TC.'},
+    {stem:'Sobre a pressão de perfusão cerebral (PPC), é correto:',
+     opts:['PPC = PIC − PAM','PPC = PAM − PIC, com alvo aproximado de 60–70 mmHg','PPC depende só da frequência cardíaca','PPC não importa no TCE'],
+     correct:1, expl:'<b>B.</b> PPC = PAM − PIC; o alvo terapêutico fica em torno de 60–70 mmHg. Por isso evitar hipotensão (cai a PAM) e tratar a HIC (sobe a PIC) são essenciais.'},
+    {stem:'Paciente em coma profundo após acidente de alta velocidade, TC inicial com pouco achado focal e RM com microlesões na substância branca. Diagnóstico?',
+     opts:['Hematoma epidural','Lesão axonal difusa','Hemorragia subaracnóidea isolada','Concussão simples'],
+     correct:1, expl:'<b>B.</b> Coma desproporcional aos achados de TC + mecanismo de desaceleração + microlesões na RM = lesão axonal difusa.'},
+    {stem:'TCE leve (Glasgow 15) em adulto jovem, sem vômitos, sem sinais de fratura de base, sem anticoagulação, exame normal. Conduta?',
+     opts:['TC obrigatória para todos','Observação clínica com orientação de sinais de alarme para retorno','Internação em UTI','Manitol profilático'],
+     correct:1, expl:'<b>B.</b> Sem critérios de risco (regras tipo Canadian CT Head), pode-se observar e orientar retorno. A TC é reservada a quem preenche critérios.'},
+    {stem:'Qual conduta reduz a mortalidade no TCE grave por atuar sobre a lesão secundária?',
+     opts:['Permitir hipotensão para "poupar" o coração','Manter normoxia e normotensão, evitando hipóxia e hipotensão','Hiperventilar continuamente','Atrasar a via aérea'],
+     correct:1, expl:'<b>B.</b> A prevenção da lesão secundária — evitando hipóxia e hipotensão — é o que mais impacta a sobrevida no TCE grave.'}
   ],
   cards:[
     {tag:'Conceito',q:'Diferença entre lesão primária e secundária no TCE?',a:'Primária: no impacto (irreversível). Secundária: hipóxia/hipotensão/HIC/edema — prevenível e foco do tratamento.'},
@@ -1585,7 +1928,7 @@ function renderModule(){
 window.setTab=function(t){ curTab=t; renderModule(); };
 function renderTab(){
   const m=curMod; const b=document.getElementById('modBody'); if(!b)return;
-  if(curTab==='ensino'){ b.innerHTML=`<div class="card glass"><div class="teach">${m.teach}</div></div>`; }
+  if(curTab==='ensino'){ b.innerHTML=renderEnsino(m); }
   else if(curTab==='fluxo'){ b.innerHTML=renderFlow(m); }
   else if(curTab==='questoes'){ b.innerHTML=renderQuestions(m); }
   else if(curTab==='flashcards'){ b.innerHTML=renderFlashcards(m); }
@@ -1593,6 +1936,26 @@ function renderTab(){
   else if(curTab==='dominio'){ b.innerHTML=renderChecklist(m); }
   else if(curTab==='notas'){ b.innerHTML=renderNotes(m); }
 }
+
+/* ---- Subtópicos separados (aula) ---- */
+let subState={};
+function stripTags(s){ return (s||'').replace(/<[^>]*>/g,'').trim(); }
+function autoSplit(html){
+  const parts=(html||'').split(/(?=<h3)/).filter(s=>s.trim());
+  if(!parts.length) return [{label:'Conteúdo',html:html||''}];
+  return parts.map(p=>{ const t=(p.match(/<h3[^>]*>([\s\S]*?)<\/h3>/)||[])[1]||'Seção'; let lbl=stripTags(t); if(lbl.length>34)lbl=lbl.slice(0,32)+'…'; return {label:lbl,html:p}; });
+}
+function renderEnsino(m){
+  const subs=(m.subtopics&&m.subtopics.length)?m.subtopics:autoSplit(m.teach);
+  let idx=subState[m.id]||0; if(idx>subs.length-1)idx=0;
+  const nav=subs.map((s,i)=>'<button class="subchip '+(i===idx?'active':'')+'" onclick="setSub(\''+m.id+'\','+i+')">'+(s.label||s.title||('Parte '+(i+1)))+'</button>').join('');
+  return '<div class="subnav">'+nav+'</div>'
+    +'<div class="card glass"><div class="teach">'+subs[idx].html+'</div>'
+    +'<div class="sub-foot"><button class="btn btn-ghost btn-sm" '+(idx===0?'disabled':'')+' onclick="setSub(\''+m.id+'\','+(idx-1)+')">← Anterior</button>'
+    +'<span class="mono" style="color:var(--text-dim);font-size:.78rem">'+(idx+1)+' / '+subs.length+'</span>'
+    +'<button class="btn btn-ghost btn-sm" '+(idx===subs.length-1?'disabled':'')+' onclick="setSub(\''+m.id+'\','+(idx+1)+')">Próximo →</button></div></div>';
+}
+window.setSub=function(id,i){ subState[id]=i; renderTab(); document.getElementById('modBody').scrollIntoView({behavior:'smooth',block:'start'}); };
 
 /* ---- Fluxogramas interativos ---- */
 let flowState={};
