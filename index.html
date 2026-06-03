@@ -510,13 +510,17 @@ table.med tr:hover td{background:var(--surface-2)}
 
 <div class="toast-wrap" id="toasts"></div>
 
-<script type="module">
+<!-- Firebase SDK (compat) — scripts clássicos, carregam de forma confiável no GitHub Pages -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
 /* ============================================================
-   FIREBASE + DATA LAYER  (carregamento DINÂMICO + fallback local)
-   Importante: o Firebase é carregado dinamicamente para que a
-   interface NUNCA trave caso a CDN/rede falhe ou o arquivo seja
-   aberto localmente. Todas as funções de UI são definidas mesmo
-   sem Firebase.
+   FIREBASE + DATA LAYER  (SDK compat via <script> + fallback local)
+   O Firebase é carregado por scripts clássicos acima. Se eles não
+   carregarem (sem rede), a interface continua funcionando com
+   armazenamento local.
    ============================================================ */
 const firebaseConfig = {
   apiKey: "AIzaSyAKN3qsYIc3pel81vl8WEAH6Ob4oR-icAM",
@@ -529,27 +533,17 @@ const firebaseConfig = {
 // Identificador desta plataforma — separa os dados de outras plataformas suas
 const PLATFORM_ID = "neuroresidencia";
 
-let fb = { ok:false, auth:null, db:null, fns:{} };
-async function initFirebase(){
+let fb = { ok:false, auth:null, db:null };
+function initFirebase(){
   try{
-    const appMod  = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
-    const authMod = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js");
-    const fsMod   = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
-    const appFb = appMod.initializeApp(firebaseConfig);
-    fb.auth = authMod.getAuth(appFb);
-    fb.db = fsMod.getFirestore(appFb);
-    fb.fns = {
-      createUser: authMod.createUserWithEmailAndPassword,
-      signIn: authMod.signInWithEmailAndPassword,
-      signOut: authMod.signOut,
-      onAuth: authMod.onAuthStateChanged,
-      updateProfile: authMod.updateProfile,
-      doc: fsMod.doc, getDoc: fsMod.getDoc, setDoc: fsMod.setDoc
-    };
+    if(typeof firebase==='undefined' || !firebase.initializeApp) throw new Error('SDK do Firebase não carregou');
+    if(!firebase.apps || !firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    fb.auth = firebase.auth();
+    fb.db = firebase.firestore();
     fb.ok = true;
-    fb.fns.onAuth(fb.auth, async (user)=>{
+    fb.auth.onAuthStateChanged(async (user)=>{
       if(user && sessionStorage.getItem("nr_gate")==="1"){
-        State.uid=user.uid; State.email=user.email; State.name=user.displayName||user.email.split('@')[0];
+        State.uid=user.uid; State.email=user.email; State.name=user.displayName||(user.email?user.email.split('@')[0]:'Estudante');
         await afterLogin();
       }
       document.getElementById('loader').style.display='none';
@@ -591,8 +585,9 @@ async function persist(showFlag){
     clearTimeout(saveTimer);
     saveTimer=setTimeout(async ()=>{
       try{
-        await fb.fns.setDoc(fb.fns.doc(fb.db,"users",State.uid,"platforms",PLATFORM_ID,"data","main"),{ data:State.data, email:State.email, name:State.name, platform:PLATFORM_ID, updated:Date.now() },{merge:true});
-        await fb.fns.setDoc(fb.fns.doc(fb.db,"users",State.uid,"platforms",PLATFORM_ID,"surgeonProgress","main"), SP(), {merge:true});
+        const base=fb.db.collection("users").doc(State.uid).collection("platforms").doc(PLATFORM_ID);
+        await base.collection("data").doc("main").set({ data:State.data, email:State.email, name:State.name, platform:PLATFORM_ID, updated:Date.now() },{merge:true});
+        await base.collection("surgeonProgress").doc("main").set(SP(),{merge:true});
       }catch(e){ State.usingLocal=true; }
     }, 700);
   }
@@ -601,8 +596,8 @@ async function persist(showFlag){
 async function loadCloud(){
   if(fb.ok && State.uid && !State.usingLocal){
     try{
-      const snap=await fb.fns.getDoc(fb.fns.doc(fb.db,"users",State.uid,"platforms",PLATFORM_ID,"data","main"));
-      if(snap.exists() && snap.data().data){ State.data=Object.assign(State.data, snap.data().data); }
+      const snap=await fb.db.collection("users").doc(State.uid).collection("platforms").doc(PLATFORM_ID).collection("data").doc("main").get();
+      if(snap.exists && snap.data().data){ State.data=Object.assign(State.data, snap.data().data); }
     }catch(e){ State.usingLocal=true; loadLocal(); }
   } else { loadLocal(); }
 }
@@ -656,10 +651,10 @@ window.doAuth=async function(){
   }
   try{
     if(authMode==='signup'){
-      const cred=await fb.fns.createUser(fb.auth,email,pass);
-      if(name) await fb.fns.updateProfile(cred.user,{displayName:name});
+      const cred=await fb.auth.createUserWithEmailAndPassword(email,pass);
+      if(name && cred.user) await cred.user.updateProfile({displayName:name});
     } else {
-      await fb.fns.signIn(fb.auth,email,pass);
+      await fb.auth.signInWithEmailAndPassword(email,pass);
     }
   }catch(e){
     btn.disabled=false; btn.textContent=authMode==='login'?'Entrar':'Cadastrar';
@@ -669,7 +664,7 @@ window.doAuth=async function(){
 };
 
 window.doLogout=async function(){
-  if(fb.ok && !State.usingLocal){ try{ await fb.fns.signOut(fb.auth); }catch(e){} }
+  if(fb.ok && !State.usingLocal){ try{ await fb.auth.signOut(); }catch(e){} }
   location.reload();
 };
 
@@ -961,222 +956,147 @@ MODULES.push({
   ]
 });
 
-/* ---------- 2. CEFALEIAS ---------- */
+/* ---------- CEFALEIAS — matérias separadas ---------- */
 MODULES.push({
-  id:'cefaleia', tema:'Cefaleias', emoji:'🤕', region:'meningeal', title:'Cefaleias',
-  sub:'Enxaqueca, tensional, em salvas e cefaleias secundárias (red flags)',
-  prio:'alta', topics:['Enxaqueca','Cefaleia tensional','Cefaleia em salvas','Cefaleias secundárias','Red flags','Tratamento abortivo e profilático'],
+  id:'enxaqueca', emoji:'🌗', region:'meningeal', tema:'Cefaleias',
+  title:'Enxaqueca (Migrânea)', sub:'Critérios, aura, tratamento abortivo e profilático',
+  prio:'alta', topics:['Enxaqueca','Aura','Triptanos','Profilaxia'],
   subtopics:[
-  {label:'Visão geral & Red flags',html:`
-<h3>O primeiro raciocínio: primária ou secundária?</h3>
-<p>Cefaleia é sintoma, não doença. Sua tarefa nº 1 é separar duas categorias:</p>
-<ul><li><strong>Primárias</strong> (a dor É a doença): enxaqueca, tensional, em salvas. Benignas.</li>
-<li><strong>Secundárias</strong> (a dor é sinal de algo grave): HSA, meningite, tumor, trombose venosa cerebral, arterite temporal, hipertensão intracraniana.</li></ul>
-<div class="diagram">
-<div class="dg-step"><b>1</b>Cefaleia</div><div class="dg-arrow">→</div>
-<div class="dg-step"><b>2</b>Tem RED FLAG?</div><div class="dg-arrow">→</div>
-<div class="dg-step"><b>SIM</b>Investigar (TC ± punção)</div><div class="dg-arrow">→</div>
-<div class="dg-step"><b>NÃO</b>Classificar primária e tratar</div></div>
-<div class="callout trap"><b>O que mais derruba candidato</b>Tratar uma cefaleia secundária como enxaqueca. Decore os sinais de alarme e, na presença deles, INVESTIGUE antes de medicar.</div>
-<h4>Red flags — mnemônico SNNOOP10</h4>
-<table class="med"><tr><th>Sinal de alarme</th><th>Pensar em</th></tr>
-<tr><td><b>S</b>istêmico (febre, perda de peso, neoplasia, HIV)</td><td>Infecção, metástase</td></tr>
-<tr><td><b>N</b>eurológico (déficit focal, rebaixamento, papiledema)</td><td>Lesão expansiva, AVC</td></tr>
-<tr><td><b>O</b>nset súbito (thunderclap, pico instantâneo)</td><td><strong>HSA</strong></td></tr>
-<tr><td><b>O</b>lder — início após os 50 anos</td><td>Arterite temporal, tumor</td></tr>
-<tr><td><b>P</b>adrão: muda, progride, piora à Valsalva/decúbito</td><td>Hipertensão intracraniana</td></tr>
-<tr><td>Gestação/puerpério, papiledema, dor que acorda à noite</td><td>Trombose venosa, HIC</td></tr></table>`},
-
-  {label:'Enxaqueca',html:`
-<h3>Enxaqueca (migrânea) — a rainha das provas</h3>
-<p><strong>Fisiopatologia:</strong> hiperexcitabilidade neuronal + ativação do sistema trigeminovascular, com papel central do <strong>CGRP</strong> (peptídeo relacionado ao gene da calcitonina). Predomina em <strong>mulheres jovens</strong>; há componente hormonal (enxaqueca menstrual).</p>
-<h4>Critérios diagnósticos (resumo prático)</h4>
-<table class="med"><tr><th>Característica</th><th>Enxaqueca</th></tr>
-<tr><td>Localização</td><td>Geralmente unilateral, pulsátil</td></tr>
-<tr><td>Intensidade</td><td>Moderada a forte; piora com atividade física</td></tr>
-<tr><td>Duração</td><td>4 a 72 horas</td></tr>
-<tr><td>Acompanhantes</td><td>Náusea/vômito + foto e fonofobia</td></tr>
-<tr><td>Aura (~25%)</td><td>Sintomas neurológicos reversíveis (visual &gt; sensitivo &gt; fala), 5–60 min, em geral ANTES da dor</td></tr></table>
-<h4>Tratamento ABORTIVO (escada) — protocolo atual</h4>
-<div class="diagram">
-<div class="dg-step"><b>Leve/moderada</b>AINE (naproxeno, ibuprofeno) ou AAS ± antiemético</div><div class="dg-arrow">→</div>
-<div class="dg-step"><b>Moderada/grave</b>Triptano (5-HT1B/1D) — usar cedo na crise</div><div class="dg-arrow">→</div>
-<div class="dg-step"><b>Refratária</b>Triptano + AINE; gepantes/ditans; antiemético EV</div></div>
-<p>Antieméticos (metoclopramida) tratam a náusea e melhoram a absorção. Novas classes: <strong>gepantes</strong> (antagonistas do CGRP) e <strong>ditans</strong> (lasmiditan) — úteis quando triptano é contraindicado.</p>
-<div class="callout warn"><b>Cuidado com triptanos</b>Contraindicados em <strong>doença coronariana, AVC prévio, HAS não controlada</strong> e na <strong>enxaqueca com aura de tronco ou hemiplégica</strong> (risco de vasoconstrição). E lembre: analgésico/triptano em excesso (&gt;10–15 dias/mês) causa <strong>cefaleia por uso abusivo de medicação</strong> (rebote).</div>
-<h4>Tratamento PROFILÁTICO (≥4 crises/mês ou crises incapacitantes)</h4>
-<table class="med"><tr><th>Classe</th><th>Exemplos</th><th>Observação</th></tr>
-<tr><td>Betabloqueador</td><td>Propranolol</td><td>1ª linha; evitar em asma/bradicardia</td></tr>
-<tr><td>Anticonvulsivante</td><td><strong>Topiramato</strong>, valproato</td><td>Valproato é teratogênico — evitar em mulher fértil</td></tr>
-<tr><td>Antidepressivo</td><td>Amitriptilina</td><td>Bom se insônia/dor associada</td></tr>
-<tr><td>Anti-hipertensivo</td><td>Candesartana</td><td>Opção bem tolerada</td></tr>
-<tr><td>Anti-CGRP</td><td>Erenumabe, galcanezumabe</td><td>Profilaxia moderna, casos refratários</td></tr></table>`},
-
-  {label:'Cefaleia Tensional',html:`
-<h3>Cefaleia tensional — a mais comum</h3>
-<p>Dor <strong>bilateral, em peso/aperto</strong> ("faixa ao redor da cabeça"), intensidade leve a moderada, <strong>NÃO pulsátil</strong>, <strong>não piora com esforço</strong>, sem náusea importante (pode haver leve foto OU fonofobia, nunca as duas marcantes como na enxaqueca).</p>
-<div class="callout tip"><b>Conduta</b>Episódica: analgésico simples (paracetamol/AINE) e medidas comportamentais (sono, postura, estresse). Crônica (≥15 dias/mês): profilaxia com <strong>amitriptilina</strong>. Evitar uso abusivo de analgésico.</div>
-<table class="med"><tr><th></th><th>Tensional</th><th>Enxaqueca</th></tr>
-<tr><td>Lado</td><td>Bilateral</td><td>Unilateral</td></tr>
-<tr><td>Tipo</td><td>Aperto/peso</td><td>Pulsátil</td></tr>
-<tr><td>Esforço</td><td>Não piora</td><td>Piora</td></tr>
-<tr><td>Náusea</td><td>Ausente/leve</td><td>Presente</td></tr></table>`},
-
-  {label:'Cefaleia em Salvas',html:`
-<h3>Cefaleia em salvas (cluster) — a mais dolorosa</h3>
-<p>Predomina em <strong>homens jovens</strong>. Dor <strong>periorbitária unilateral excruciante</strong>, em <strong>crises curtas (15–180 min)</strong>, várias vezes ao dia por semanas ("salvas"), frequentemente em horário fixo/noturno. Acompanha <strong>sintomas autonômicos ipsilaterais</strong>: lacrimejamento, hiperemia conjuntival, rinorreia, ptose/miose. O paciente fica <strong>agitado</strong> (anda pela casa) — o oposto da enxaqueca, em que ele se aquieta no escuro.</p>
-<h4>Conduta — protocolo atual</h4>
-<div class="diagram">
-<div class="dg-step"><b>Abortivo</b>O₂ 100% a 12–15 L/min (máscara) + sumatriptano SC/nasal</div><div class="dg-arrow">→</div>
-<div class="dg-step"><b>Transição</b>Corticoide curto ou bloqueio do nervo occipital</div><div class="dg-arrow">→</div>
-<div class="dg-step"><b>Profilaxia</b>Verapamil (1ª linha) — ECG de controle</div></div>
-<div class="callout fast"><b>Decoreba de prova</b>Salva = <strong>O₂ + triptano SC</strong> para abortar; <strong>verapamil</strong> para prevenir. Oxigênio NÃO funciona em enxaqueca — funciona na salva.</div>`},
-
-  {label:'Cefaleias Secundárias',html:`
-<h3>Cefaleias secundárias — o que não pode passar</h3>
-<table class="med"><tr><th>Causa</th><th>Pista clínica</th><th>Conduta</th></tr>
-<tr><td><strong>HSA</strong></td><td>Thunderclap + rigidez de nuca</td><td>TC; se normal e suspeita alta → punção (xantocromia)</td></tr>
-<tr><td><strong>Meningite</strong></td><td>Febre + rigidez + rebaixamento</td><td>Hemocultura + ATB empírico imediato + punção</td></tr>
-<tr><td><strong>Arterite temporal</strong></td><td>&gt;50a, dor temporal, claudicação de mandíbula, VHS↑</td><td><strong>Corticoide imediato</strong> + biópsia (risco de cegueira)</td></tr>
-<tr><td><strong>Trombose venosa cerebral</strong></td><td>Puérpera/uso de ACO, cefaleia progressiva, crises, papiledema</td><td>Angio-RM venosa; anticoagulação</td></tr>
-<tr><td><strong>HIC idiopática</strong></td><td>Mulher jovem obesa, papiledema, zumbido pulsátil, diplopia (VI par)</td><td>Punção (PIC alta), acetazolamida, perda de peso</td></tr>
-<tr><td><strong>Tumor / lesão expansiva</strong></td><td>Dor progressiva, pior pela manhã/Valsalva, déficit focal</td><td>Neuroimagem</td></tr></table>
-<div class="callout warn"><b>Arterite de células gigantes</b>Idoso com cefaleia temporal nova + VHS muito elevado: inicie <strong>corticoide ANTES da biópsia</strong>. Esperar a biópsia pode custar a visão.</div>`},
-
-  {label:'Comparativo & Diferenciais',html:`
-<h3>Tabela comparativa das primárias</h3>
-<table class="med"><tr><th>Item</th><th>Enxaqueca</th><th>Tensional</th><th>Em salvas</th></tr>
-<tr><td>Sexo</td><td>Mulher</td><td>Ambos</td><td>Homem</td></tr>
-<tr><td>Lado</td><td>Uni (pulsátil)</td><td>Bilateral (aperto)</td><td>Uni periorbitária</td></tr>
-<tr><td>Duração</td><td>4–72h</td><td>30min–7d</td><td>15–180 min</td></tr>
-<tr><td>Comportamento</td><td>Quieto, no escuro</td><td>Funcional</td><td>Agitado</td></tr>
-<tr><td>Autonômico</td><td>Não</td><td>Não</td><td>Sim (ipsilateral)</td></tr>
-<tr><td>Abortivo</td><td>Triptano/AINE</td><td>AINE</td><td>O₂ + triptano SC</td></tr>
-<tr><td>Profilaxia</td><td>Propranolol/topiramato</td><td>Amitriptilina</td><td>Verapamil</td></tr></table>
-<h3>Diagnósticos diferenciais por gatilho</h3>
-<ul><li><strong>Dor súbita máxima</strong> → HSA, dissecção, trombose venosa.</li>
-<li><strong>Dor + febre + rigidez</strong> → meningite.</li>
-<li><strong>Dor + olho vermelho/duro + midríase</strong> → glaucoma agudo (não é neuro!).</li>
-<li><strong>Dor + claudicação de mandíbula no idoso</strong> → arterite temporal.</li>
-<li><strong>Dor pós-punção, melhora deitado</strong> → cefaleia pós-punção lombar.</li></ul>`},
-
-  {label:'Mapa Mental',html:`
-<h3>🧠 Mapa mental — Cefaleias</h3>
-<div class="mindmap"><div class="mm-center">CEFALEIA</div><div class="mm-trunk"></div>
-<div class="mm-branches">
-<div class="mm-branch"><b>① Triagem</b><ul><li>Primária × secundária</li><li>Red flags: SNNOOP10</li><li>Thunderclap = HSA</li></ul></div>
-<div class="mm-branch"><b>② Enxaqueca</b><ul><li>Uni, pulsátil, 4–72h</li><li>Foto/fonofobia, náusea</li><li>Abortivo: triptano</li><li>Profilaxia: propranolol/topiramato</li></ul></div>
-<div class="mm-branch"><b>③ Tensional</b><ul><li>Bilateral, aperto</li><li>Não piora ao esforço</li><li>Amitriptilina se crônica</li></ul></div>
-<div class="mm-branch"><b>④ Salvas</b><ul><li>Periorbitária, autonômica</li><li>Agitação</li><li>O₂ + triptano SC</li><li>Profilaxia: verapamil</li></ul></div>
-<div class="mm-branch"><b>⑤ Secundárias</b><ul><li>HSA, meningite</li><li>Arterite temporal (idoso)</li><li>Trombose venosa, HIC</li></ul></div>
-</div></div>`},
-
-  {label:'Resumo, Dicas & Erros',html:`
-<h3>⚡ Resumo ultra rápido</h3>
-<ul><li>Sempre cheque red flags (SNNOOP) antes de chamar de primária.</li>
-<li>Enxaqueca: uni, pulsátil, 4–72h, náusea + foto/fonofobia → triptano (cuidado coronariopata).</li>
-<li>Tensional: bilateral, aperto, sem piora ao esforço → AINE; crônica → amitriptilina.</li>
-<li>Salvas: periorbitária + autonômica + agitação → O₂ + triptano SC; profilaxia verapamil.</li>
-<li>Thunderclap = HSA até prova em contrário (TC + punção).</li></ul>
-<div class="callout fast"><b>📝 Dicas de prova</b>① O₂ aborta SALVA (não enxaqueca). ② Idoso + cefaleia nova + VHS alto = arterite → corticoide JÁ. ③ Mulher jovem obesa + papiledema = HIC idiopática. ④ Puérpera com cefaleia progressiva + crise = trombose venosa.</div>
-<div class="callout trap"><b>🎯 Pegadinhas clássicas</b>① Dar triptano em coronariopata. ② Confundir aura (reversível, &lt;60 min) com AIT. ③ Achar que TC normal exclui HSA (não exclui nas primeiras horas → punção). ④ Tratar arterite temporal só depois da biópsia.</div>
-<div class="callout warn"><b>❌ Erros que mais derrubam</b>① Não investigar red flags. ② Manter analgésico diário (gera cefaleia de rebote). ③ Esquecer profilaxia em quem tem ≥4 crises/mês. ④ Usar valproato em mulher que pode engravidar.</div>
-<div class="callout mne"><b>🧩 Macetes</b>"<strong>POUND</strong>" para enxaqueca: <strong>P</strong>ulsátil · dura<strong>O</strong> 4–72h (One day) · <strong>U</strong>nilateral · <strong>N</strong>áusea · <strong>D</strong>isabling (incapacitante). 3–4 critérios = alta probabilidade de enxaqueca.</div>`},
-
-  {label:'Revisão de véspera',html:`
-<h3>📌 Revisão de véspera</h3>
-<table class="med"><tr><th>Situação</th><th>Resposta rápida</th></tr>
-<tr><td>Pior dor da vida, súbita</td><td>HSA → TC ± punção</td></tr>
-<tr><td>Uni pulsátil + náusea + fotofobia</td><td>Enxaqueca → triptano</td></tr>
-<tr><td>Bilateral em aperto</td><td>Tensional → AINE</td></tr>
-<tr><td>Periorbitária + lacrimejamento + agitação</td><td>Salva → O₂ + triptano SC; verapamil</td></tr>
-<tr><td>Idoso + temporal + VHS alto</td><td>Arterite → corticoide imediato</td></tr>
-<tr><td>≥4 crises/mês</td><td>Iniciar profilaxia</td></tr></table>`}
-],
-  flowDx:{ title:'Fluxograma diagnóstico da cefaleia', start:'c1', nodes:{
-    c1:{q:'Há sinais de alarme (SNNOOP)? Início súbito/thunderclap, febre+rigidez, déficit focal, início >50a, papiledema, piora progressiva?',opts:[{t:'SIM',go:'rSec'},{t:'NÃO',go:'c2'}]},
-    c2:{q:'Características da dor?',opts:[{t:'Unilateral, pulsátil, foto/fonofobia, 4–72h',go:'rMig'},{t:'Bilateral, em aperto, sem náusea/esforço',go:'rTens'},{t:'Periorbitária, autonômica, crises curtas, agitação',go:'rClus'}]}
-  }, results:{
-    rSec:{title:'Cefaleia SECUNDÁRIA — investigar',body:'Neuroimagem (TC/RM) ± punção lombar. Pensar em HSA (thunderclap), meningite (febre+rigidez), tumor/HIC, trombose venosa, arterite temporal (idoso, VHS↑).'},
-    rMig:{title:'Enxaqueca (migrânea)',body:'Abortivo: AINE/triptano. Profilaxia se ≥4 crises/mês: propranolol, topiramato, amitriptilina, anti-CGRP.'},
-    rTens:{title:'Cefaleia tensional',body:'Analgésico simples; se crônica, profilaxia com amitriptilina e medidas comportamentais.'},
-    rClus:{title:'Cefaleia em salvas (cluster)',body:'Abortivo: O₂ 100% + triptano SC/nasal. Profilaxia: verapamil.'}
-  }},
-  flowMx:{ title:'Conduta na cefaleia aguda no PS', steps:[
-    'Sinais vitais + escala de dor + tempo de instalação.',
-    'Procurar red flags (SNNOOP): thunderclap, febre+rigidez, déficit, papiledema, idade >50a.',
-    'Com red flag → TC de crânio; se TC normal e suspeita de HSA/meningite → punção lombar.',
-    'Sem red flag → classificar como primária e tratar conforme o tipo.',
-    'Enxaqueca/tensional: AINE/triptano + antiemético. Salvas: O₂ + triptano SC.',
-    'Orientar diário de cefaleia, evitar uso abusivo de analgésico e definir profilaxia ambulatorial.'
-  ]},
+   {label:'Critérios & aura',html:`<h3>🌗 Enxaqueca</h3>
+<p>Hiperexcitabilidade neuronal + sistema trigeminovascular (papel do <strong>CGRP</strong>). Mais comum em <strong>mulheres jovens</strong>.</p>
+<table class="med"><tr><th>Característica</th><th>Enxaqueca</th></tr><tr><td>Localização</td><td>Unilateral, pulsátil</td></tr><tr><td>Intensidade</td><td>Mod-forte; piora com atividade</td></tr><tr><td>Duração</td><td>4–72h</td></tr><tr><td>Acompanhantes</td><td>Náusea + foto/fonofobia</td></tr><tr><td>Aura (~25%)</td><td>Neurológico reversível, 5–60min, antes da dor</td></tr></table>
+<div class="callout mne"><b>POUND</b>Pulsátil · dura<strong>O</strong> 4–72h · <strong>U</strong>nilateral · <strong>N</strong>áusea · <strong>D</strong>isabling.</div>`},
+   {label:'Tratamento abortivo',html:`<h3>Abortivo (escada)</h3>
+<div class="diagram"><div class="dg-step"><b>Leve</b>AINE/AAS ± antiemético</div><div class="dg-arrow">→</div><div class="dg-step"><b>Mod/grave</b>Triptano (cedo na crise)</div><div class="dg-arrow">→</div><div class="dg-step"><b>Refratária</b>Triptano+AINE; gepantes/ditans</div></div>
+<div class="callout warn"><b>Cuidado com triptanos</b>Contraindicados em coronariopatia, AVC prévio, HAS não controlada e enxaqueca hemiplégica/de tronco. Uso abusivo de analgésico → cefaleia de rebote.</div>`},
+   {label:'Profilaxia',html:`<h3>Profilaxia (≥4 crises/mês ou incapacitante)</h3>
+<table class="med"><tr><th>Classe</th><th>Exemplos</th></tr><tr><td>Betabloqueador</td><td>Propranolol (1ª linha)</td></tr><tr><td>Anticonvulsivante</td><td>Topiramato, valproato (evitar em fértil)</td></tr><tr><td>Antidepressivo</td><td>Amitriptilina</td></tr><tr><td>Anti-CGRP</td><td>Erenumabe (refratários)</td></tr></table>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Enxaqueca</h3><div class="mindmap"><div class="mm-center">ENXAQUECA</div><div class="mm-trunk"></div><div class="mm-branches"><div class="mm-branch"><b>Critérios</b><ul><li>Uni, pulsátil, 4–72h</li><li>Náusea, foto/fonofobia</li></ul></div><div class="mm-branch"><b>Abortivo</b><ul><li>Triptano</li><li>Evitar em coronariopata</li></ul></div><div class="mm-branch"><b>Profilaxia</b><ul><li>Propranolol/topiramato</li><li>Anti-CGRP</li></ul></div></div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão</h3><table class="med"><tr><th>Situação</th><th>Resposta</th></tr><tr><td>Uni pulsátil + náusea/fotofobia</td><td>Enxaqueca → triptano</td></tr><tr><td>Aura</td><td>Reversível, 5–60min, antes da dor</td></tr><tr><td>≥4 crises/mês</td><td>Profilaxia</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<div class="callout fast"><b>Dicas</b>① Triptano cedo na crise. ② POUND ≥3 = alta probabilidade. ③ Anti-CGRP para refratários.</div><div class="callout trap"><b>Pegadinhas</b>① Triptano em coronariopata. ② Confundir aura com AIT. ③ Manter analgésico diário (rebote).</div>`}
+  ],
+  flowMx:{title:'Conduta na crise de enxaqueca',steps:['Avaliar intensidade e excluir red flags.','Leve: AINE/AAS + antiemético.','Moderada/grave: triptano (cedo) ± AINE.','Náusea: metoclopramida.','≥4 crises/mês ou incapacitante: iniciar profilaxia.']},
   questions:[
-    {stem:'Mulher, 28a, crises de cefaleia unilateral pulsátil, 12h de duração, com náusea e fotofobia, aliviada no escuro. Exame normal. Diagnóstico e abortivo de escolha em crise moderada/grave?',
-     opts:['Tensional — paracetamol','Enxaqueca — triptano','Em salvas — oxigênio','Secundária — TC urgente'],
-     correct:1, expl:'<b>B.</b> Quadro típico de enxaqueca sem aura. Em crise moderada/grave, o abortivo de escolha é o triptano (agonista 5-HT1B/1D), idealmente usado cedo na crise, ± antiemético.'},
-    {stem:'Qual achado é uma RED FLAG que obriga investigação de cefaleia secundária?',
-     opts:['Dor pulsátil unilateral','Fotofobia isolada','Cefaleia thunderclap (pico instantâneo)','História familiar de enxaqueca'],
-     correct:2, expl:'<b>C.</b> Início súbito explosivo (thunderclap) sugere HSA e exige TC ± punção lombar. Os demais são típicos de enxaqueca, sem alarme.'},
-    {stem:'Homem, 35a, crises de dor periorbitária direita intensíssima, ~60 min, com lacrimejamento e rinorreia ipsilaterais, várias por dia há 3 semanas; fica agitado andando pela casa. Abortivo de escolha?',
-     opts:['Oxigênio 100% a 12 L/min (± triptano SC)','Paracetamol oral','Repouso no escuro','Corticoide em pulso isolado'],
-     correct:0, expl:'<b>A.</b> Cefaleia em salvas: abortivo é O₂ 100% em alto fluxo e/ou sumatriptano subcutâneo. Profilaxia da salva: verapamil.'},
-    {stem:'Sobre triptanos, assinale a contraindicação importante:',
-     opts:['Enxaqueca com fotofobia','Doença arterial coronariana','Idade inferior a 40 anos','Sexo feminino'],
-     correct:1, expl:'<b>B.</b> Por seu efeito vasoconstritor, triptanos são contraindicados em coronariopatia, AVC prévio, HAS não controlada e enxaqueca hemiplégica/de tronco.'},
-    {stem:'Idoso de 72a com cefaleia temporal nova, claudicação de mandíbula e VHS de 95. Conduta imediata mais correta?',
-     opts:['Triptano','Corticoide imediato e, depois, biópsia de artéria temporal','TC e alta','Apenas AINE e reavaliação em 30 dias'],
-     correct:1, expl:'<b>B.</b> Arterite de células gigantes (temporal) tem risco de cegueira irreversível. Inicia-se corticoide imediatamente, SEM aguardar a biópsia (que confirma o diagnóstico depois).'},
-    {stem:'Característica que melhor define a cefaleia tensional:',
-     opts:['Unilateral e pulsátil','Bilateral, em aperto, sem piora ao esforço','Periorbitária com sintomas autonômicos','Sempre acompanhada de aura visual'],
-     correct:1, expl:'<b>B.</b> Tensional: bilateral, em peso/aperto, leve a moderada, sem náusea importante e sem piora com atividade física.'},
-    {stem:'Paciente com enxaqueca tem 6 crises incapacitantes por mês, usando triptano em quase todas. Qual a melhor conduta adicional?',
-     opts:['Manter apenas o abortivo','Iniciar profilaxia (ex.: propranolol ou topiramato)','Aumentar a dose de triptano diariamente','Prescrever opioide de uso contínuo'],
-     correct:1, expl:'<b>B.</b> ≥4 crises/mês ou crises incapacitantes indicam profilaxia (propranolol, topiramato, amitriptilina, candesartana ou anti-CGRP). Uso frequente de abortivo gera cefaleia por uso abusivo.'},
-    {stem:'Mulher, 22a, obesa, com cefaleia diária progressiva, episódios de diplopia, zumbido pulsátil e papiledema bilateral; TC sem lesão. Diagnóstico mais provável?',
-     opts:['Enxaqueca crônica','Hipertensão intracraniana idiopática','Cefaleia tensional','Sinusite'],
-     correct:1, expl:'<b>B.</b> Mulher jovem obesa + papiledema + diplopia (paresia do VI par) + zumbido pulsátil = HIC idiopática (pseudotumor cerebri). Punção mostra PIC elevada; tratamento com acetazolamida e perda de peso.'},
-    {stem:'Puérpera de 10 dias com cefaleia progressiva, uma crise convulsiva e papiledema. Qual hipótese deve ser priorizada?',
-     opts:['Enxaqueca pós-parto','Trombose venosa cerebral','Cefaleia tensional','Cefaleia em salvas'],
-     correct:1, expl:'<b>B.</b> Puerpério é estado pró-trombótico; cefaleia progressiva + crise + papiledema sugere trombose venosa cerebral. Investigar com angio-RM/venografia e anticoagular.'},
-    {stem:'Sobre a aura migranosa típica, é correto afirmar que:',
-     opts:['Dura horas e deixa déficit permanente','É reversível, dura 5–60 minutos e costuma preceder a dor','É idêntica a um AIT e exige trombólise','Ocorre apenas após a fase de dor'],
-     correct:1, expl:'<b>B.</b> A aura é um sintoma neurológico totalmente reversível (mais comum o visual em zigue-zague), com 5–60 minutos de duração, geralmente antecedendo a cefaleia. Não se confunde com AIT (que não tem essa marcha característica e não é reversível por definição tecidual com infarto).'}
+    {stem:'Mulher, 28a, cefaleia unilateral pulsátil de 12h com náusea e fotofobia, aliviada no escuro, exame normal. Abortivo de escolha em crise moderada/grave?',opts:['Paracetamol','Triptano','Oxigênio','TC urgente'],correct:1,expl:'<b>B.</b> Enxaqueca sem aura; abortivo de escolha é triptano (± antiemético), usado cedo.'},
+    {stem:'Contraindicação importante aos triptanos:',opts:['Fotofobia','Doença arterial coronariana','Idade <40a','Sexo feminino'],correct:1,expl:'<b>B.</b> Efeito vasoconstritor → contraindicados em coronariopatia, AVC prévio e enxaqueca hemiplégica/de tronco.'},
+    {stem:'Paciente com 6 crises incapacitantes/mês usando triptano em quase todas. Conduta adicional?',opts:['Manter só abortivo','Iniciar profilaxia (propranolol/topiramato)','Aumentar triptano diário','Opioide contínuo'],correct:1,expl:'<b>B.</b> ≥4 crises/mês indica profilaxia. Uso frequente de abortivo gera cefaleia por uso abusivo.'},
+    {stem:'Sobre a aura migranosa típica:',opts:['Dura horas e deixa déficit','Reversível, 5–60 min, costuma preceder a dor','Idêntica a AIT, exige trombólise','Ocorre só após a dor'],correct:1,expl:'<b>B.</b> Sintoma neurológico reversível (visual em zigue-zague), 5–60 min, antes da cefaleia.'},
+    {stem:'Profilático a EVITAR em mulher que pode engravidar:',opts:['Propranolol','Amitriptilina','Valproato','Candesartana'],correct:2,expl:'<b>C.</b> Valproato é teratogênico — preferir propranolol, topiramato (com cautela), amitriptilina ou anti-CGRP.'}
   ],
   cards:[
-    {tag:'Triagem',q:'Primeira pergunta diante de uma cefaleia?',a:'É primária (benigna) ou secundária (sinal de doença grave)? Procure red flags (SNNOOP).'},
-    {tag:'Enxaqueca',q:'Critérios-chave da enxaqueca?',a:'Unilateral, pulsátil, 4–72h, moderada/forte, piora com atividade, náusea + foto/fonofobia.'},
-    {tag:'Aura',q:'Como é a aura migranosa?',a:'Sintoma neurológico reversível (visual > sensitivo), 5–60 min, geralmente antes da dor.'},
-    {tag:'Abortivo',q:'Abortivo da enxaqueca moderada/grave?',a:'Triptano (5-HT1B/1D), ± antiemético. Cuidado em coronariopata.'},
-    {tag:'Profilaxia',q:'Opções de profilaxia da enxaqueca?',a:'Propranolol, topiramato, amitriptilina, candesartana, valproato, anti-CGRP.'},
-    {tag:'Salvas',q:'Abortivo e profilaxia da cefaleia em salvas?',a:'Abortivo: O₂ 100% + triptano SC. Profilaxia: verapamil.'},
-    {tag:'Tensional',q:'Como diferenciar tensional de enxaqueca?',a:'Tensional: bilateral, aperto, sem náusea, sem piora ao esforço; enxaqueca: uni, pulsátil, com náusea.'},
-    {tag:'Red flag',q:'O que significa cefaleia "thunderclap"?',a:'Pico de intensidade quase instantâneo — HSA até prova em contrário (TC + punção).'},
-    {tag:'Idoso',q:'Cefaleia nova >50a + claudicação mandibular + VHS alto?',a:'Arterite temporal — corticoide imediato (risco de cegueira) + biópsia.'},
-    {tag:'Armadilha',q:'O que é cefaleia por uso abusivo de medicação?',a:'Cefaleia de rebote pelo uso excessivo de analgésicos/triptanos (>10–15 dias/mês).'}
+    {tag:'Critérios',q:'Critérios-chave da enxaqueca?',a:'Uni, pulsátil, 4–72h, mod/forte, náusea + foto/fonofobia.'},
+    {tag:'Aura',q:'Como é a aura?',a:'Neurológica reversível (visual>sensitivo), 5–60 min, antes da dor.'},
+    {tag:'Abortivo',q:'Abortivo de moderada/grave?',a:'Triptano (cuidado em coronariopata).'},
+    {tag:'Profilaxia',q:'Quando e com o quê?',a:'≥4 crises/mês: propranolol, topiramato, amitriptilina, anti-CGRP.'},
+    {tag:'Rebote',q:'O que é cefaleia por uso abusivo?',a:'Rebote pelo uso excessivo de analgésico/triptano (>10–15 dias/mês).'},
+    {tag:'Macete',q:'O que é POUND?',a:'Pulsátil, 4–72h, Unilateral, Náusea, Disabling — 3–4 = provável enxaqueca.'}
   ],
-  cases:[
-    {title:'Caso 1 — Crises recorrentes em jovem',
-     hist:'Mulher, 26 anos, há 3 anos com crises mensais de dor latejante do lado direito da cabeça, durando cerca de um dia, com enjoo e incômodo intenso com luz e som. Antes da dor, às vezes vê "luzes em zigue-zague" por 20 minutos.',
-     exam:'Exame neurológico normal entre as crises e durante.',
-     labs:'Não há red flags. Neuroimagem normal (solicitada por ansiedade, mas dispensável no quadro típico).',
-     reason:'Critérios de enxaqueca com aura visual típica: dor unilateral pulsátil, 4–72h, foto/fonofobia, aura reversível <60 min precedendo a dor.',
-     dx:'Enxaqueca com aura.',
-     tx:'Abortivo com triptano + antiemético; orientar diário de cefaleia e gatilhos; como há ≥4 crises/mês incapacitantes, iniciar profilaxia (ex.: topiramato ou propranolol).'},
-    {title:'Caso 2 — Dor explosiva',
-     hist:'Homem, 45 anos, durante atividade física, cefaleia occipital de intensidade máxima instantânea, "como um estouro", com vômito.',
-     exam:'Rigidez de nuca; sem déficit focal; sonolência leve.',
-     labs:'TC de crânio com sangue subaracnóideo.',
-     reason:'Thunderclap + meningismo + sangue na TC. Red flag clássica → cefaleia secundária grave (HSA).',
-     dx:'Hemorragia subaracnóidea (cefaleia secundária).',
-     tx:'Internação, controle de PA/dor, nimodipino, angiografia para o aneurisma e tratamento neurovascular. Jamais tratar como enxaqueca.'},
-    {title:'Caso 3 — Crises noturnas em série',
-     hist:'Homem, 33 anos, há 2 semanas com crises de dor lancinante ao redor do olho esquerdo, sempre por volta da mesma hora da madrugada, durando ~1h, levando-o a andar pela casa de tanta dor.',
-     exam:'Durante a crise: olho esquerdo lacrimejante e vermelho, narina entupida, leve queda da pálpebra.',
-     labs:'Exames normais.',
-     reason:'Dor periorbitária unilateral curta, recorrente em salvas, com sinais autonômicos ipsilaterais e agitação = cefaleia em salvas.',
-     dx:'Cefaleia em salvas (cluster).',
-     tx:'Abortivo: oxigênio 100% em alto fluxo + sumatriptano SC. Profilaxia da salva: verapamil (com ECG de controle).'}
-  ]
+  cases:[{title:'Caso — Crises recorrentes em jovem',hist:'Mulher, 26a, crises mensais de dor latejante à direita, ~1 dia, com enjoo e fotofobia; às vezes "luzes em zigue-zague" por 20 min antes.',exam:'Neurológico normal.',labs:'Sem red flags; imagem normal (dispensável no quadro típico).',reason:'Critérios de enxaqueca com aura visual típica.',dx:'Enxaqueca com aura.',tx:'Triptano + antiemético; diário de gatilhos; profilaxia (topiramato/propranolol) por ≥4 crises/mês.'}]
+});
+
+MODULES.push({
+  id:'tensional', emoji:'🎗️', region:'meningeal', tema:'Cefaleias',
+  title:'Cefaleia Tensional', sub:'A mais comum: bilateral, em aperto',
+  prio:'média', topics:['Cefaleia tensional'],
+  subtopics:[
+   {label:'Teoria',html:`<h3>🎗️ Cefaleia tensional</h3>
+<p>Dor <strong>bilateral, em peso/aperto</strong> ("faixa"), leve a moderada, <strong>NÃO pulsátil</strong>, <strong>não piora ao esforço</strong>, sem náusea importante.</p>
+<table class="med"><tr><th></th><th>Tensional</th><th>Enxaqueca</th></tr><tr><td>Lado</td><td>Bilateral</td><td>Unilateral</td></tr><tr><td>Tipo</td><td>Aperto</td><td>Pulsátil</td></tr><tr><td>Esforço</td><td>Não piora</td><td>Piora</td></tr><tr><td>Náusea</td><td>Ausente/leve</td><td>Presente</td></tr></table>
+<div class="callout tip"><b>Conduta</b>Episódica: analgésico simples + medidas comportamentais. Crônica (≥15 dias/mês): amitriptilina.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental</h3><div class="mindmap"><div class="mm-center">TENSIONAL</div><div class="mm-trunk"></div><div class="mm-branches"><div class="mm-branch"><b>Clínica</b><ul><li>Bilateral, aperto</li><li>Sem náusea, sem piora ao esforço</li></ul></div><div class="mm-branch"><b>Tratamento</b><ul><li>AINE/paracetamol</li><li>Crônica: amitriptilina</li></ul></div></div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão</h3><p>Bilateral, em aperto, sem náusea e sem piora ao esforço → tensional. Crônica → amitriptilina. Evitar uso abusivo de analgésico.</p>`},
+   {label:'Dicas & Pegadinhas',html:`<div class="callout fast"><b>Dica</b>O que separa de enxaqueca: ausência de pulsação, náusea e de piora ao esforço.</div><div class="callout trap"><b>Pegadinha</b>Tensional crônica que vira diária por abuso de analgésico (rebote).</div>`}
+  ],
+  flowMx:{title:'Conduta na cefaleia tensional',steps:['Excluir red flags.','Episódica: paracetamol/AINE.','Medidas: sono, postura, manejo do estresse.','Crônica (≥15 dias/mês): profilaxia com amitriptilina.','Evitar uso abusivo de analgésico.']},
+  questions:[
+    {stem:'Característica que define a cefaleia tensional:',opts:['Unilateral e pulsátil','Bilateral, em aperto, sem piora ao esforço','Periorbitária com sintomas autonômicos','Sempre com aura'],correct:1,expl:'<b>B.</b> Tensional: bilateral, peso/aperto, sem náusea importante e sem piora à atividade física.'},
+    {stem:'Profilaxia de escolha na cefaleia tensional crônica:',opts:['Verapamil','Amitriptilina','Oxigênio','Triptano diário'],correct:1,expl:'<b>B.</b> Amitriptilina é a profilaxia de escolha na forma crônica; verapamil é para salvas e triptano não é profilático.'},
+    {stem:'Paciente com cefaleia diária há meses usando analgésico quase todo dia. Além de tratar, o que considerar?',opts:['Aumentar o analgésico','Cefaleia por uso abusivo de medicação (rebote)','Trombólise','TC seriada semanal'],correct:1,expl:'<b>B.</b> Uso de analgésico/triptano >10–15 dias/mês causa cefaleia de rebote; a conduta inclui desmame e profilaxia.'}
+  ],
+  cards:[
+    {tag:'Clínica',q:'Como é a tensional?',a:'Bilateral, em aperto, sem náusea importante, não piora ao esforço.'},
+    {tag:'Diferencial',q:'O que separa de enxaqueca?',a:'Ausência de pulsação, náusea e de piora à atividade.'},
+    {tag:'Tratamento',q:'Episódica × crônica?',a:'Episódica: analgésico simples. Crônica: amitriptilina.'},
+    {tag:'Rebote',q:'Risco do uso diário de analgésico?',a:'Cefaleia por uso abusivo (rebote).'},
+    {tag:'Medidas',q:'Não farmacológicas?',a:'Sono, postura, manejo do estresse.'}
+  ],
+  cases:[{title:'Caso — Peso na cabeça no fim do dia',hist:'Homem, 34a, dor bilateral em aperto no fim de dias estressantes, leve, sem náusea, sem piora ao subir escadas.',exam:'Normal.',labs:'Sem red flags.',reason:'Bilateral, aperto, sem náusea e sem piora ao esforço = tensional episódica.',dx:'Cefaleia tensional episódica.',tx:'Analgésico simples, higiene do sono e manejo do estresse; se cronificar, amitriptilina.'}]
+});
+
+MODULES.push({
+  id:'salvas', emoji:'⚡', region:'meningeal', tema:'Cefaleias',
+  title:'Cefaleia em Salvas (Cluster)', sub:'A mais dolorosa: periorbitária e autonômica',
+  prio:'média', topics:['Cefaleia em salvas'],
+  subtopics:[
+   {label:'Teoria',html:`<h3>⚡ Cefaleia em salvas</h3>
+<p>Homens jovens. Dor <strong>periorbitária unilateral excruciante</strong>, crises <strong>15–180 min</strong>, várias por dia em "salvas", muitas vezes noturnas, com <strong>sintomas autonômicos ipsilaterais</strong> (lacrimejamento, hiperemia, rinorreia, ptose/miose). Paciente <strong>agitado</strong> (oposto da enxaqueca).</p>`},
+   {label:'Conduta',html:`<h3>Conduta atual</h3>
+<div class="diagram"><div class="dg-step"><b>Abortivo</b>O₂ 100% 12–15 L/min + sumatriptano SC/nasal</div><div class="dg-arrow">→</div><div class="dg-step"><b>Transição</b>Corticoide curto / bloqueio occipital</div><div class="dg-arrow">→</div><div class="dg-step"><b>Profilaxia</b>Verapamil (ECG de controle)</div></div>
+<div class="callout fast"><b>Decoreba</b>O₂ + triptano SC para abortar; verapamil para prevenir. O₂ NÃO funciona em enxaqueca.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental</h3><div class="mindmap"><div class="mm-center">SALVAS</div><div class="mm-trunk"></div><div class="mm-branches"><div class="mm-branch"><b>Clínica</b><ul><li>Periorbitária, autonômica</li><li>Agitação, crises curtas</li></ul></div><div class="mm-branch"><b>Abortivo</b><ul><li>O₂ 100%</li><li>Triptano SC</li></ul></div><div class="mm-branch"><b>Profilaxia</b><ul><li>Verapamil</li></ul></div></div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão</h3><p>Periorbitária + autonômica + agitação → salvas. Abortar com O₂ + triptano SC; prevenir com verapamil.</p>`},
+   {label:'Dicas & Pegadinhas',html:`<div class="callout fast"><b>Dica</b>Sinais autonômicos IPSILATERAIS são a marca.</div><div class="callout trap"><b>Pegadinha</b>Tentar O₂ na enxaqueca (não funciona) ou usar triptano oral (lento demais para a salva → usar SC).</div>`}
+  ],
+  flowMx:{title:'Conduta na cefaleia em salvas',steps:['Confirmar padrão: periorbitária, autonômica, curta, em salvas.','Abortivo: O₂ 100% alto fluxo + sumatriptano SC/nasal.','Transição: corticoide curto ou bloqueio do nervo occipital.','Profilaxia: verapamil (com ECG).','Evitar gatilhos (álcool) durante a salva.']},
+  questions:[
+    {stem:'Homem, 35a, dor periorbitária direita intensíssima, ~60 min, com lacrimejamento e rinorreia ipsilaterais, várias/dia há 3 semanas; fica agitado. Abortivo?',opts:['O₂ 100% 12 L/min (± triptano SC)','Paracetamol oral','Repouso no escuro','Corticoide isolado'],correct:0,expl:'<b>A.</b> Salvas: O₂ alto fluxo e/ou sumatriptano SC. Profilaxia: verapamil.'},
+    {stem:'Profilaxia de escolha na cefaleia em salvas:',opts:['Verapamil','Propranolol','Amitriptilina','Topiramato'],correct:0,expl:'<b>A.</b> Verapamil é a 1ª linha profilática (com controle de ECG).'},
+    {stem:'O que diferencia a salva da enxaqueca no comportamento do paciente?',opts:['Fica quieto no escuro','Fica agitado, anda pela casa','Dorme durante a crise','Não tem dor'],correct:1,expl:'<b>B.</b> Na salva o paciente fica agitado; na enxaqueca, busca quietude no escuro.'}
+  ],
+  cards:[
+    {tag:'Clínica',q:'Tríade da salva?',a:'Periorbitária unilateral + autonômica ipsilateral + agitação.'},
+    {tag:'Abortivo',q:'Abortivo da salva?',a:'O₂ 100% alto fluxo + sumatriptano SC.'},
+    {tag:'Profilaxia',q:'Profilaxia da salva?',a:'Verapamil.'},
+    {tag:'Diferencial',q:'O₂ funciona em enxaqueca?',a:'Não — funciona na salva.'},
+    {tag:'Duração',q:'Duração das crises?',a:'15–180 min, várias por dia, em salvas.'}
+  ],
+  cases:[{title:'Caso — Crises noturnas em série',hist:'Homem, 33a, há 2 semanas crises de dor ao redor do olho esquerdo na madrugada, ~1h, andando pela casa de dor.',exam:'Olho esquerdo lacrimejante e vermelho, narina entupida, leve ptose.',labs:'Exames normais.',reason:'Periorbitária curta, recorrente, autonômica, com agitação = salvas.',dx:'Cefaleia em salvas.',tx:'O₂ 100% + sumatriptano SC; profilaxia com verapamil.'}]
+});
+
+MODULES.push({
+  id:'cef_sec', emoji:'🚨', region:'meningeal', tema:'Cefaleias',
+  title:'Cefaleias Secundárias & Red Flags', sub:'HSA, arterite, HIC, trombose venosa — o que não pode passar',
+  prio:'alta', topics:['Red flags','HSA','Arterite temporal','HIC idiopática','Trombose venosa'],
+  subtopics:[
+   {label:'Red flags (SNNOOP)',html:`<h3>🚨 Quando investigar</h3>
+<table class="med"><tr><th>Sinal de alarme</th><th>Pensar em</th></tr><tr><td>Onset súbito (thunderclap)</td><td>HSA</td></tr><tr><td>Sistêmico (febre, perda de peso, HIV, câncer)</td><td>Infecção, metástase</td></tr><tr><td>Neurológico (déficit, rebaixamento, papiledema)</td><td>Lesão expansiva, AVC</td></tr><tr><td>Older (&gt;50a)</td><td>Arterite temporal, tumor</td></tr><tr><td>Padrão progressivo / Valsalva / decúbito</td><td>HIC</td></tr></table>
+<div class="callout trap"><b>O que mais derruba</b>Tratar uma secundária como enxaqueca. Red flag → neuroimagem ± punção.</div>`},
+   {label:'Principais causas',html:`<h3>Causas e conduta</h3>
+<table class="med"><tr><th>Causa</th><th>Pista</th><th>Conduta</th></tr>
+<tr><td>HSA</td><td>Thunderclap + rigidez de nuca</td><td>TC; se normal e suspeita alta → punção (xantocromia)</td></tr>
+<tr><td>Arterite temporal</td><td>&gt;50a, claudicação de mandíbula, VHS↑</td><td>Corticoide imediato + biópsia (risco de cegueira)</td></tr>
+<tr><td>Trombose venosa cerebral</td><td>Puérpera/ACO, progressiva, crises, papiledema</td><td>Angio-RM venosa; anticoagular</td></tr>
+<tr><td>HIC idiopática</td><td>Mulher jovem obesa, papiledema, diplopia (VI par)</td><td>Punção, acetazolamida, perda de peso</td></tr></table>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental</h3><div class="mindmap"><div class="mm-center">SECUNDÁRIAS</div><div class="mm-trunk"></div><div class="mm-branches"><div class="mm-branch"><b>Vascular</b><ul><li>HSA (thunderclap)</li><li>Trombose venosa</li></ul></div><div class="mm-branch"><b>Idoso</b><ul><li>Arterite temporal → corticoide já</li></ul></div><div class="mm-branch"><b>Pressão</b><ul><li>HIC idiopática</li><li>Tumor</li></ul></div></div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão</h3><table class="med"><tr><th>Situação</th><th>Resposta</th></tr><tr><td>Pior dor súbita</td><td>HSA → TC ± punção</td></tr><tr><td>Idoso + temporal + VHS↑</td><td>Arterite → corticoide já</td></tr><tr><td>Mulher obesa + papiledema</td><td>HIC idiopática</td></tr><tr><td>Puérpera + cefaleia + crise</td><td>Trombose venosa</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<div class="callout fast"><b>Dicas</b>① Thunderclap = HSA até prova em contrário. ② TC normal não exclui HSA → punção. ③ Arterite: corticoide antes da biópsia.</div><div class="callout trap"><b>Pegadinhas</b>① Dar triptano numa HSA. ② Esperar biópsia para tratar arterite. ③ Esquecer trombose venosa na puérpera.</div>`}
+  ],
+  flowDx:{title:'Cefaleia com red flag — investigação',start:'r1',nodes:{
+    r1:{q:'Há red flag? (thunderclap, febre+rigidez, déficit, >50a+VHS↑, papiledema)',opts:[{t:'Não',go:'rPrim'},{t:'Thunderclap',go:'rHSA'},{t:'Febre + rigidez',go:'rMen'},{t:'>50a + temporal + VHS↑',go:'rArt'},{t:'Papiledema / progressiva',go:'rHIC'}]}
+  },results:{
+    rPrim:{title:'Provável cefaleia primária',body:'Sem alarme: classificar (enxaqueca/tensional/salvas) e tratar.'},
+    rHSA:{title:'HSA',body:'TC; se normal e suspeita alta → punção (xantocromia). Nimodipino; angio para aneurisma.'},
+    rMen:{title:'Meningite',body:'Hemocultura + dexametasona + antibiótico empírico imediato + punção.'},
+    rArt:{title:'Arterite temporal',body:'Corticoide imediato (risco de cegueira) + biópsia da temporal.'},
+    rHIC:{title:'Hipertensão intracraniana',body:'Neuroimagem (± venografia para trombose venosa); punção; tratar causa (HIC idiopática: acetazolamida, perda de peso).'}
+  }},
+  flowMx:{title:'Conduta diante de red flag',steps:['Sinais vitais + tempo de instalação + exame neurológico.','Identificar a red flag predominante.','Neuroimagem (TC/RM); punção se HSA/meningite suspeitas.','Tratar a causa específica sem atraso (ATB, corticoide, anticoagulação, etc.).','Internar/observar conforme gravidade.']},
+  questions:[
+    {stem:'Mulher, 55a, "pior dor de cabeça da vida" súbita, vômitos e rigidez de nuca; TC inicial normal. Próximo passo se suspeita permanece alta?',opts:['Alta com analgésico','Punção lombar (xantocromia)','Triptano','Repetir TC em 7 dias'],correct:1,expl:'<b>B.</b> HSA com TC possivelmente normal nas primeiras horas → punção. Triptano é perigoso aqui.'},
+    {stem:'Idoso, 72a, cefaleia temporal nova, claudicação de mandíbula e VHS 95. Conduta imediata?',opts:['Triptano','Corticoide imediato + biópsia da temporal','TC e alta','Apenas AINE'],correct:1,expl:'<b>B.</b> Arterite de células gigantes: risco de cegueira → corticoide imediato, sem esperar a biópsia.'},
+    {stem:'Mulher, 22a, obesa, cefaleia progressiva, diplopia, zumbido pulsátil, papiledema; TC sem lesão. Diagnóstico?',opts:['Enxaqueca crônica','Hipertensão intracraniana idiopática','Tensional','Sinusite'],correct:1,expl:'<b>B.</b> HIC idiopática (pseudotumor): punção com PIC alta; acetazolamida e perda de peso.'},
+    {stem:'Puérpera de 10 dias, cefaleia progressiva, uma crise convulsiva e papiledema. Hipótese prioritária?',opts:['Enxaqueca pós-parto','Trombose venosa cerebral','Tensional','Salvas'],correct:1,expl:'<b>B.</b> Puerpério é pró-trombótico; investigar com angio-RM venosa e anticoagular.'},
+    {stem:'Qual achado é uma red flag que obriga investigação?',opts:['Dor pulsátil unilateral','Fotofobia isolada','Cefaleia thunderclap (pico instantâneo)','História familiar de enxaqueca'],correct:2,expl:'<b>C.</b> Thunderclap sugere HSA → TC ± punção. Os demais são típicos de enxaqueca.'}
+  ],
+  cards:[
+    {tag:'Triagem',q:'O que fazer diante de red flag?',a:'Neuroimagem (TC/RM) ± punção; tratar a causa específica.'},
+    {tag:'HSA',q:'TC normal exclui HSA?',a:'Não nas primeiras horas → punção (xantocromia).'},
+    {tag:'Arterite',q:'Idoso + temporal + VHS↑?',a:'Arterite → corticoide imediato (risco de cegueira) + biópsia.'},
+    {tag:'HIC',q:'Mulher jovem obesa + papiledema?',a:'HIC idiopática → acetazolamida + perda de peso.'},
+    {tag:'Trombose',q:'Puérpera com cefaleia progressiva e crise?',a:'Trombose venosa cerebral → anticoagular.'},
+    {tag:'Thunderclap',q:'O que significa?',a:'Pico de dor instantâneo — HSA até prova em contrário.'}
+  ],
+  cases:[{title:'Caso — Dor explosiva',hist:'Homem, 45a, durante esforço, cefaleia occipital de intensidade máxima instantânea, com vômito.',exam:'Rigidez de nuca, sem déficit focal, sonolência leve.',labs:'TC com sangue subaracnóideo.',reason:'Thunderclap + meningismo + sangue na TC = HSA (cefaleia secundária grave).',dx:'Hemorragia subaracnóidea.',tx:'Internação, controle de PA/dor, nimodipino, angiografia e tratamento do aneurisma. Jamais tratar como enxaqueca.'}]
 });
 
 /* ---------- 3. EPILEPSIA ---------- */
@@ -1810,7 +1730,7 @@ const ACHIEVEMENTS=[
   {id:'first',name:'Primeiros Passos',medal:'🌱',desc:'Responda sua primeira questão',check:sp=>sp.questionsAnswered>=1},
   {id:'avc',name:'Mestre do AVC',medal:'🩸',desc:'80% em toda a doença cerebrovascular',check:()=>['ave_isq','ave_hem','ait'].every(x=>moduleProgress(byId(x))>=80)},
   {id:'epi',name:'Senhor das Epilepsias',medal:'⚡',desc:'80% no módulo de Epilepsia',check:()=>moduleProgress(byId('epilepsia'))>=80},
-  {id:'cef',name:'Domador das Cefaleias',medal:'🤕',desc:'80% no módulo de Cefaleias',check:()=>moduleProgress(byId('cefaleia'))>=80},
+  {id:'cef',name:'Domador das Cefaleias',medal:'🤕',desc:'80% em todas as cefaleias',check:()=>['enxaqueca','tensional','salvas','cef_sec'].every(x=>moduleProgress(byId(x))>=80)},
   {id:'inf',name:'Guardião das Meninges',medal:'🦠',desc:'80% em Meningites/Encefalites',check:()=>moduleProgress(byId('meningite'))>=80},
   {id:'emerg',name:'Rei das Emergências',medal:'🚑',desc:'80% no módulo de TCE',check:()=>moduleProgress(byId('tce'))>=80},
   {id:'streak3',name:'Constância',medal:'🔥',desc:'3 dias seguidos de estudo',check:sp=>sp.studyStreak>=3},
@@ -1963,9 +1883,8 @@ const SCORES = {
   ait:`<h3>🎯 ABCD² — risco após AIT</h3>
 <table class="med"><tr><th>Fator</th><th>Pontos</th></tr><tr><td>Age ≥60</td><td>1</td></tr><tr><td>PA ≥140/90</td><td>1</td></tr><tr><td>Fraqueza unilateral</td><td>2</td></tr><tr><td>Fala alterada sem fraqueza</td><td>1</td></tr><tr><td>Duração ≥60 / 10–59 min</td><td>2 / 1</td></tr><tr><td>Diabetes</td><td>1</td></tr></table>
 <div class="callout fast"><b>Interpretação</b>≥4 pontos = alto risco → internação e investigação rápida.</div>`,
-  cefaleia:`<h3>🎯 Critérios e alarmes</h3>
-<div class="callout mne"><b>POUND (enxaqueca)</b>Pulsátil · dura<strong>O</strong> 4–72h · <strong>U</strong>nilateral · <strong>N</strong>áusea · <strong>D</strong>isabling. 3–4 = alta probabilidade.</div>
-<table class="med"><tr><th>Red flag (SNNOOP)</th><th>Pensar em</th></tr><tr><td>Onset súbito (thunderclap)</td><td>HSA</td></tr><tr><td>Idade &gt;50a + temporal + VHS↑</td><td>Arterite temporal</td></tr><tr><td>Febre + rigidez</td><td>Meningite</td></tr><tr><td>Papiledema/Valsalva</td><td>HIC</td></tr></table>`,
+  enxaqueca:`<h3>🎯 POUND — probabilidade de enxaqueca</h3><div class="callout mne"><b>POUND</b>Pulsátil · dura<strong>O</strong> 4–72h · <strong>U</strong>nilateral · <strong>N</strong>áusea · <strong>D</strong>isabling. 3–4 critérios = alta probabilidade.</div>`,
+  cef_sec:`<h3>🎯 Red flags — SNNOOP</h3><table class="med"><tr><th>Sinal</th><th>Pensar em</th></tr><tr><td>Onset súbito (thunderclap)</td><td>HSA</td></tr><tr><td>&gt;50a + temporal + VHS↑</td><td>Arterite temporal</td></tr><tr><td>Febre + rigidez</td><td>Meningite</td></tr><tr><td>Papiledema/Valsalva</td><td>HIC</td></tr></table>`,
   epilepsia:`<h3>🎯 Classificação e definições</h3>
 <table class="med"><tr><th>Início</th><th>Tipos</th></tr><tr><td>Focal</td><td>Perceptiva / disperceptiva / → TCG bilateral</td></tr><tr><td>Generalizado</td><td>TCG, ausência, mioclônica, atônica, tônica</td></tr></table>
 <div class="callout fast"><b>Definições-chave</b>Epilepsia = ≥2 crises não provocadas (&gt;24h) ou 1 + alto risco. <strong>EME</strong> = crise ≥5 min ou sem recuperar consciência.</div>`,
