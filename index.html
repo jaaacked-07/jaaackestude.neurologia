@@ -243,6 +243,19 @@ a{color:var(--accent);text-decoration:none}
 .dg-step b{display:block;color:var(--accent-2);font-size:.8rem;margin-bottom:4px}
 .dg-arrow{display:flex;align-items:center;color:var(--accent);font-size:1.3rem;padding:0 6px}
 @media(max-width:640px){.dg-arrow{transform:rotate(90deg);width:100%;justify-content:center}.dg-step{min-width:100%}}
+/* fluxograma visual — árvore de decisão (sempre na tela) */
+.flowtree{margin:14px 0;overflow-x:auto;padding:4px}
+.ft-node{border:1px solid var(--border-strong);border-radius:13px;padding:11px 14px;background:var(--surface-2);font-weight:600;font-size:.9rem;display:block}
+.ft-node.q{border-left:4px solid var(--cyan)}
+.ft-branch{margin-left:14px;border-left:2px dashed var(--border-strong);padding-left:16px;margin-top:6px}
+.ft-opt{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;font-weight:800;color:var(--accent);background:var(--surface);border:1px solid var(--border-strong);border-radius:99px;padding:3px 11px;margin:9px 0 5px}
+.ft-result{border:1px solid rgba(45,212,191,.45);background:rgba(45,212,191,.09);border-radius:12px;padding:10px 14px;margin-top:5px}
+.ft-result b{color:var(--teal);font-size:.95rem}
+.ft-result p{font-size:.84rem;color:var(--text-soft);margin-top:4px;line-height:1.6}
+.flow-legend{font-size:.78rem;color:var(--text-dim);margin:4px 0 12px}
+/* estudo do dia — itens interativos */
+.daily-q{padding:16px;border-radius:14px;margin-bottom:12px;border:1px solid var(--border)}
+.daily-q .qsrc{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-2);margin-bottom:6px}
 
 /* teaching content */
 .teach{font-size:.97rem;color:var(--text)}
@@ -741,186 +754,216 @@ window.doSearch=function(q){
    ============================================================ */
 const MODULES = [];
 
-/* ---------- 1. AVC ---------- */
+/* ---- DOENÇA CEREBROVASCULAR — matérias separadas ---- */
 MODULES.push({
-  id:'avc', emoji:'🩸', region:'vascular', title:'Acidente Vascular Cerebral (AVC)',
-  sub:'Isquêmico, hemorrágico, AIT, NIHSS, trombólise e trombectomia',
-  prio:'altíssima', topics:['AVC isquêmico','AVC hemorrágico','AIT','NIHSS','Trombólise','Trombectomia','Escala ABCD2','Classificação TOAST'],
+  id:'ave_isq', emoji:'🩸', region:'vascular', tema:'Doença Cerebrovascular (AVE)',
+  title:'AVE Isquêmico', sub:'Isquemia cerebral, NIHSS, trombólise e trombectomia',
+  prio:'altíssima', topics:['AVE isquêmico','NIHSS','Trombólise','Trombectomia','TOAST'],
   subtopics:[
-  {label:'Visão geral',html:`
-<h3>O que é um AVC?</h3>
-<p>Imagine o cérebro como uma cidade que <strong>só funciona com energia em tempo real</strong> — ele não tem reservas de oxigênio ou glicose. Quem entrega essa energia é o sangue. Quando uma "rua" (artéria) é bloqueada ou se rompe, o bairro que dependia dela começa a <strong>morrer em minutos</strong>. Isso é o AVC.</p>
-<p>São dois grandes tipos, e <strong>diferenciá-los é a primeira decisão</strong>, porque o tratamento de um <em>mata</em> o paciente do outro:</p>
-<ul><li><strong>AVC isquêmico (≈85%)</strong>: a artéria entope (trombo/êmbolo). Falta sangue → falta oxigênio.</li>
-<li><strong>AVC hemorrágico (≈15%)</strong>: a artéria se rompe → sangue extravasa e comprime o tecido.</li></ul>
-<div class="callout fast"><b>Regra de ouro nº 1</b>Todo déficit neurológico focal de início súbito é AVC até prova em contrário. E a "prova em contrário" inicial é a <strong>TC de crânio sem contraste</strong> — barata, rápida e que serve para uma coisa essencial: <strong>excluir sangramento</strong> antes de pensar em trombolisar.</div>
-<h4>"Time is brain": por que correr?</h4>
-<p>A cada minuto de AVC isquêmico, perdem-se cerca de <strong>1,9 milhão de neurônios</strong>. Ao redor do núcleo morto existe a <strong>penumbra isquêmica</strong>: tecido "atordoado", ainda vivo, que <strong>pode ser salvo</strong> se reperfundirmos rápido. Todo o tratamento agudo gira em torno de salvar a penumbra.</p>
-<div class="callout mne"><b>Mnemônico — reconhecer AVC: "SAMU"</b><strong>S</strong>orriso torto · <strong>A</strong>braço (um braço cai) · <strong>M</strong>ensagem (fala enrolada) · <strong>U</strong>rgente, ligue 192. (Internacional: FAST — Face, Arm, Speech, Time.)</div>`},
-
-  {label:'AVC Isquêmico',html:`
-<h3>🩸 AVC Isquêmico</h3>
-<p>Representa cerca de <strong>85%</strong> dos AVCs. A artéria entope por <strong>trombo</strong> (forma no próprio local, sobre uma placa de aterosclerose) ou por <strong>êmbolo</strong> (um coágulo que viaja de longe — clássico do coração na fibrilação atrial). Sem fluxo, o núcleo isquêmico morre e ao redor fica a penumbra, que é o alvo do tratamento.</p>
-<h4>Classificação etiológica (TOAST) — porque cai muito</h4>
-<table class="med"><tr><th>Subtipo</th><th>Mecanismo</th><th>Pista</th></tr>
-<tr><td>Aterosclerose de grande artéria</td><td>Placa em carótida/intracraniana</td><td>Sopro carotídeo, estenose</td></tr>
-<tr><td>Cardioembólico</td><td>Êmbolo do coração</td><td><strong>Fibrilação atrial</strong>, IAM recente</td></tr>
-<tr><td>Lacunar (pequenos vasos)</td><td>Lipohialinose</td><td>HAS/DM; síndromes lacunares puras</td></tr>
-<tr><td>Outras determinadas</td><td>Dissecção, trombofilia</td><td>Jovem, trauma cervical</td></tr>
-<tr><td>Indeterminado</td><td>Sem causa / mais de uma causa</td><td>"criptogênico"</td></tr></table>
-<div class="callout tip"><b>Por que a etiologia importa?</b>Ela define a prevenção secundária: cardioembólico (FA) → <strong>anticoagulação</strong>; grande vaso → antiagregação + estatina (± endarterectomia/stent); lacunar → controle rigoroso de HAS e DM.</div>`},
-
-  {label:'AVC Hemorrágico',html:`
-<h3>🧨 AVC Hemorrágico</h3>
-<p>Cerca de <strong>15%</strong> dos casos. Aqui o vaso se rompe e o sangue agride e comprime o tecido. Dois grandes cenários:</p>
-<h4>1) Hemorragia intraparenquimatosa</h4>
-<p>Geralmente por <strong>HAS crônica</strong>, que enfraquece pequenas artérias (microaneurismas de Charcot-Bouchard) até a ruptura. Sítio clássico: <strong>putâmen/cápsula interna</strong>, além de tálamo, ponte e cerebelo.</p>
-<h4>2) Hemorragia subaracnóidea (HSA)</h4>
-<p>Tipicamente por <strong>ruptura de aneurisma</strong>. Quadro: "<strong>a pior cefaleia da vida</strong>" de início súbito (<em>thunderclap</em>), rigidez de nuca e vômitos. A TC pode ser normal nas primeiras horas — se a suspeita for alta, faça <strong>punção lombar</strong> à procura de xantocromia.</p>
-<div class="callout warn"><b>Conduta na hemorragia</b>Controle <strong>agressivo</strong> da PA: alvo de PAS em torno de <strong>140 mmHg</strong> (evitar quedas abaixo de ~130). Reverter anticoagulação. Avaliar neurocirurgia. Na HSA: angio-TC para localizar o aneurisma + <strong>nimodipino</strong> para prevenir vasoespasmo.</div>
-<div class="callout trap"><b>Pegadinha mortal</b>NUNCA trombolise um AVC hemorrágico. É exatamente por isso que a <strong>TC sem contraste vem ANTES</strong> de qualquer reperfusão.</div>`},
-
-  {label:'AIT',html:`
-<h3>⏳ AIT — o "aviso prévio"</h3>
-<p>O <strong>Ataque Isquêmico Transitório</strong> é um déficit focal que <strong>resolve completamente</strong> (classicamente em &lt;1h) e <strong>sem infarto na imagem</strong> — essa é a definição tecidual moderna. É uma emergência: até 10% terão AVC em 48h. Estratifique com o <strong>ABCD²</strong>.</p>
-<table class="med"><tr><th>ABCD² — fator</th><th>Pontos</th></tr>
-<tr><td><b>A</b>ge ≥60 anos</td><td>1</td></tr>
-<tr><td><b>B</b>lood pressure ≥140/90</td><td>1</td></tr>
-<tr><td><b>C</b>línica: fraqueza unilateral</td><td>2</td></tr>
-<tr><td>Clínica: distúrbio de fala sem fraqueza</td><td>1</td></tr>
-<tr><td><b>D</b>uração ≥60min / 10–59min</td><td>2 / 1</td></tr>
-<tr><td><b>D</b>iabetes</td><td>1</td></tr></table>
-<p>≥4 pontos = alto risco → internação e investigação rápida. Encare o AIT como uma chance de <strong>prevenir o AVC iminente</strong>.</p>`},
-
-  {label:'NIHSS',html:`
-<h3>📏 NIHSS — medindo a gravidade</h3>
-<p>A <strong>NIH Stroke Scale</strong> (0 a 42) quantifica o déficit. Não decore item por item; entenda a lógica: mede nível de consciência, olhar, campos visuais, paralisia facial, força dos 4 membros, ataxia, sensibilidade, linguagem (afasia), disartria e extinção/negligência.</p>
-<table class="med"><tr><th>NIHSS</th><th>Gravidade</th></tr>
-<tr><td>0</td><td>Sem déficit</td></tr><tr><td>1–4</td><td>Leve</td></tr>
-<tr><td>5–15</td><td>Moderado</td></tr><tr><td>16–20</td><td>Moderado a grave</td></tr>
-<tr><td>21–42</td><td>Grave</td></tr></table>
-<div class="callout tip"><b>Pegadinha de prova</b>A NIHSS <strong>subestima o AVC de circulação posterior</strong> (tronco/cerebelo). Vertigem intensa, ataxia e diplopia podem dar NIHSS baixo e ainda assim ser um AVC grave. Não exclua reperfusão só pelo número.</div>`},
-
-  {label:'Trombólise',html:`
-<h3>💉 Trombólise endovenosa</h3>
-<p><strong>Passo 1 — Estabelecer o "horário zero".</strong> É o <strong>último horário em que o paciente foi visto bem</strong> (não o horário em que descobriram!). No "AVC do despertar", o zero é a hora de dormir.</p>
-<p><strong>Passo 2 — TC de crânio sem contraste.</strong> Tem sangue → hemorrágico, NÃO trombolisa. Sem sangue → isquêmico, candidato à reperfusão.</p>
-<p><strong>Passo 3 — Trombolítico.</strong> Alteplase 0,9 mg/kg (máx 90 mg) ou tenecteplase 0,25 mg/kg. Janela: <strong>até 4,5 horas</strong> do início.</p>
-<table class="med"><tr><th>Contraindicações principais à trombólise</th></tr>
-<tr><td>Hemorragia na TC; AVC isquêmico ou TCE grave nos últimos 3 meses</td></tr>
-<tr><td>Cirurgia de grande porte recente; sangramento ativo; plaquetas &lt;100.000</td></tr>
-<tr><td>PA &gt; 185×110 mmHg refratária (precisa baixar ANTES)</td></tr>
-<tr><td>Glicemia &lt;50 mg/dL (corrigir e reavaliar); INR &gt;1,7 / anticoagulante oral</td></tr>
-<tr><td>Endocardite, dissecção de aorta, neoplasia GI recente</td></tr></table>
-<div class="callout trap"><b>Erro clássico que derruba candidato</b>Confundir os alvos de pressão. <strong>Candidato à trombólise: PA &lt; 185×110.</strong> Já o paciente isquêmico <strong>que NÃO vai trombolisar</strong>: só tratar a PA se <strong>&gt; 220×120</strong> (hipertensão permissiva — a PA alta mantém a perfusão da penumbra).</div>`},
-
-  {label:'Trombectomia',html:`
-<h3>🧲 Trombectomia mecânica</h3>
-<p>É a retirada física do trombo por cateter. Indicada para <strong>oclusão de grande vaso</strong> (carótida, ACM proximal/M1).</p>
-<ul><li><strong>Janela de rotina:</strong> até <strong>6 horas</strong>.</li>
-<li><strong>Janela estendida:</strong> <strong>6–24 horas</strong> em casos selecionados por imagem de perfusão/<em>mismatch</em> (estudos <strong>DAWN</strong> e <strong>DEFUSE-3</strong>).</li>
-<li>Pode ser feita <strong>junto</strong> com a trombólise — não são excludentes.</li></ul>
-<div class="callout tip"><b>Chave da janela estendida</b>O que habilita tratar entre 6 e 24h é a presença de <strong>grande vaso ocluído</strong> + tecido ainda salvável (mismatch entre core e penumbra), e não a idade isolada.</div>`},
-
-  {label:'Revisão de véspera',html:`
-<h3>📌 Revisão de véspera (ultra rápido)</h3>
-<ul>
-<li>Déficit focal súbito → <strong>TC sem contraste</strong> para excluir sangue.</li>
-<li>Isquêmico ≤4,5h → <strong>trombólise</strong>; grande vaso ≤6–24h → <strong>trombectomia</strong>.</li>
-<li>PA: trombólise &lt;185×110 · sem trombólise tratar só se &gt;220×120 · hemorrágico alvo ~140.</li>
-<li>FA → cardioembólico → anticoagular (após excluir transformação hemorrágica).</li>
-<li>HSA = thunderclap + rigidez de nuca; TC normal e suspeita alta → <strong>punção lombar</strong> (xantocromia).</li>
-</ul>
-<div class="callout mne"><b>SAMU / FAST</b>Sorriso torto · Abraço (braço cai) · Mensagem (fala enrolada) · Urgente (192).</div>`}
+   {label:'Visão geral',html:`<h3>🩸 AVE Isquêmico — a base</h3>
+<p>Representa ~85% dos AVCs. Uma artéria entope por <strong>trombo</strong> (forma no local, sobre placa) ou <strong>êmbolo</strong> (vem de longe, ex.: coração na FA). Sem fluxo, o núcleo morre e ao redor há a <strong>penumbra</strong> — tecido salvável que é o alvo do tratamento.</p>
+<div class="callout fast"><b>Regra de ouro</b>Déficit focal súbito → <strong>TC sem contraste</strong> para excluir sangue ANTES de qualquer reperfusão. "Time is brain": cada minuto conta.</div>
+<div class="callout mne"><b>SAMU / FAST</b>Sorriso torto · Abraço (braço cai) · Mensagem (fala enrolada) · Urgente (192).</div>`},
+   {label:'Etiologia (TOAST)',html:`<h3>Classificação etiológica (TOAST)</h3>
+<table class="med"><tr><th>Subtipo</th><th>Pista</th><th>Prevenção</th></tr>
+<tr><td>Grande artéria (aterosclerose)</td><td>Sopro carotídeo, estenose</td><td>Antiagregação + estatina ± endarterectomia</td></tr>
+<tr><td>Cardioembólico</td><td><strong>Fibrilação atrial</strong>, IAM</td><td>Anticoagulação</td></tr>
+<tr><td>Lacunar (pequenos vasos)</td><td>HAS/DM, síndromes puras</td><td>Controle de HAS/DM</td></tr>
+<tr><td>Outras / indeterminado</td><td>Dissecção (jovem); criptogênico</td><td>Conforme causa</td></tr></table>`},
+   {label:'NIHSS',html:`<h3>📏 NIHSS — gravidade</h3>
+<table class="med"><tr><th>NIHSS</th><th>Gravidade</th></tr><tr><td>1–4</td><td>Leve</td></tr><tr><td>5–15</td><td>Moderado</td></tr><tr><td>16–20</td><td>Mod-grave</td></tr><tr><td>21–42</td><td>Grave</td></tr></table>
+<div class="callout trap"><b>Pegadinha</b>NIHSS <strong>subestima a circulação posterior</strong> (tronco/cerebelo): vertigem + ataxia + diplopia podem dar NIHSS baixo e ser AVC grave.</div>`},
+   {label:'Trombólise',html:`<h3>💉 Trombólise endovenosa</h3>
+<p><strong>1.</strong> Horário zero = último visto bem. <strong>2.</strong> TC sem sangue. <strong>3.</strong> Alteplase 0,9 mg/kg (máx 90) ou tenecteplase 0,25 mg/kg — janela <strong>até 4,5h</strong>.</p>
+<table class="med"><tr><th>Contraindicações principais</th></tr><tr><td>Hemorragia na TC; AVC/TCE grave &lt;3 meses</td></tr><tr><td>Sangramento ativo; plaquetas &lt;100.000; INR &gt;1,7</td></tr><tr><td>PA &gt;185×110 refratária; glicemia &lt;50</td></tr></table>
+<div class="callout trap"><b>Erro clássico de PA</b>Para trombolisar: <strong>PA &lt;185×110</strong>. Se NÃO vai trombolisar: tratar só se <strong>&gt;220×120</strong> (permissiva).</div>`},
+   {label:'Trombectomia',html:`<h3>🧲 Trombectomia mecânica</h3>
+<p>Para <strong>oclusão de grande vaso</strong> (carótida, ACM proximal/M1). Janela: até <strong>6h</strong> de rotina; <strong>6–24h</strong> em grande vaso com mismatch (DAWN/DEFUSE-3). Pode ser feita junto da trombólise.</p>
+<div class="callout tip"><b>Chave</b>O que habilita a janela estendida é grande vaso + tecido salvável (mismatch), não a idade.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — AVE Isquêmico</h3>
+<div class="mindmap"><div class="mm-center">AVE ISQUÊMICO</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Dx</b><ul><li>Súbito + TC sem sangue</li><li>NIHSS</li></ul></div>
+<div class="mm-branch"><b>Reperfusão</b><ul><li>≤4,5h trombólise</li><li>≤6–24h trombectomia (grande vaso)</li></ul></div>
+<div class="mm-branch"><b>PA</b><ul><li>Trombólise &lt;185×110</li><li>Sem trombólise &gt;220×120</li></ul></div>
+<div class="mm-branch"><b>Etiologia</b><ul><li>FA → anticoagular</li><li>Carótida → antiagregar</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3><table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Déficit súbito</td><td>TC sem contraste</td></tr><tr><td>≤4,5h, sem sangue</td><td>Trombólise</td></tr><tr><td>Grande vaso ≤6–24h</td><td>Trombectomia</td></tr><tr><td>FA</td><td>Anticoagular após excluir transformação</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas e erros</h3>
+<div class="callout fast"><b>Dicas</b>① TC sempre antes de reperfundir. ② Horário = último visto bem. ③ Trombectomia + trombólise não se excluem.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Confundir alvos de PA. ② Excluir reperfusão pela NIHSS baixa em fossa posterior. ③ Esquecer glicemia (hipo simula AVC).</div>`}
   ],
-  flowDx:{ title:'Fluxograma diagnóstico do AVC agudo', start:'s1', nodes:{
-    s1:{q:'Déficit neurológico focal de início SÚBITO?',opts:[{t:'Sim',go:'s2'},{t:'Não / gradual',go:'r0'}]},
-    s2:{q:'TC de crânio sem contraste — há sangue (hiperdensidade)?',opts:[{t:'SIM, há sangue',go:'rHem'},{t:'NÃO há sangue',go:'s3'}]},
-    s3:{q:'Tempo desde o "último visto bem"?',opts:[{t:'≤ 4,5 h',go:'rTromb'},{t:'4,5–24 h',go:'s4'},{t:'> 24 h',go:'rTarde'}]},
-    s4:{q:'Oclusão de grande vaso + penumbra salvável (perfusão/mismatch)?',opts:[{t:'Sim',go:'rTrombec'},{t:'Não',go:'rTarde'}]}
+  flowDx:{ title:'AVE isquêmico — diagnóstico', start:'s1', nodes:{
+    s1:{q:'Déficit focal súbito + TC SEM sangue?',opts:[{t:'Sim',go:'s2'},{t:'TC com sangue',go:'rHem'}]},
+    s2:{q:'Tempo do último visto bem?',opts:[{t:'≤4,5h',go:'rTromb'},{t:'4,5–24h',go:'s3'},{t:'>24h',go:'rTarde'}]},
+    s3:{q:'Grande vaso + mismatch favorável?',opts:[{t:'Sim',go:'rTrombec'},{t:'Não',go:'rTarde'}]}
   }, results:{
-    r0:{title:'Reavaliar diagnóstico',body:'Início gradual ou não focal sugere outras causas (tumor, metabólico, enxaqueca com aura, crise). Investigue conforme a hipótese.'},
-    rHem:{title:'AVC HEMORRÁGICO',body:'NÃO trombolise. Controle PA (alvo PAS ~140), reverta anticoagulação, avalie neurocirurgia/HSA. Angio-TC se HSA.'},
-    rTromb:{title:'Candidato à TROMBÓLISE',body:'Checar contraindicações, PA <185×110, glicemia. Alteplase 0,9 mg/kg (ou tenecteplase). Avaliar grande vaso para trombectomia associada.'},
-    rTrombec:{title:'TROMBECTOMIA mecânica',body:'Janela estendida (6–24h) em grande vaso com mismatch favorável (DAWN/DEFUSE-3). Encaminhar a centro com hemodinâmica.'},
-    rTarde:{title:'Fora de janela de reperfusão',body:'Cuidado clínico: AAS, controle pressórico permissivo, estatina, prevenção de complicações, investigação etiológica (TOAST).'}
+    rHem:{title:'É hemorrágico',body:'Veja a matéria AVE Hemorrágico. NÃO trombolise.'},
+    rTromb:{title:'TROMBÓLISE',body:'PA <185×110, sem contraindicações → alteplase/tenecteplase. Avaliar grande vaso para trombectomia.'},
+    rTrombec:{title:'TROMBECTOMIA',body:'Janela estendida (6–24h) por mismatch (DAWN/DEFUSE-3). Centro com hemodinâmica.'},
+    rTarde:{title:'Fora de janela',body:'AAS, PA permissiva, estatina, investigação etiológica (TOAST) e prevenção.'}
   }},
-  flowMx:{ title:'Fluxograma de conduta inicial (ABCD do AVC)', steps:[
-    'Via aérea + O₂ se SatO₂ <94%; cabeceira a 30°; acesso venoso; monitorização.',
-    'Glicemia capilar imediata (hipo/hiper simula AVC). Corrigir hipoglicemia.',
-    'Escala NIHSS + horário do "último visto bem".',
-    'TC de crânio sem contraste de urgência (± angio-TC / TC perfusão).',
-    'Excluído sangue + dentro da janela → trombólise EV; grande vaso → trombectomia.',
-    'PA: <185×110 se trombólise; permissiva (tratar só >220×120) se não trombolisar.',
-    'Internar em unidade de AVC; investigar etiologia (ECG/Holter p/ FA, eco, doppler de carótidas); profilaxia e reabilitação precoce.'
+  flowMx:{ title:'Conduta inicial do AVE isquêmico', steps:[
+    'ABC + O₂ se SatO₂<94%; cabeceira 30°; acesso; monitorização.',
+    'Glicemia capilar (corrigir hipoglicemia, que simula AVC).',
+    'NIHSS + horário do último visto bem.',
+    'TC sem contraste (± angio-TC / perfusão).',
+    'Sem sangue + janela → trombólise; grande vaso → trombectomia.',
+    'Unidade de AVC; investigar FA (ECG/Holter), carótidas, eco; prevenção secundária.'
   ]},
   questions:[
-    {stem:'Homem, 68 anos, hipertenso, há 2h com hemiparesia direita e afasia. PA 178×96, glicemia 110, NIHSS 12. TC de crânio sem sangramento. Qual a conduta?',
-     opts:['Aguardar 24h e repetir TC','Trombólise endovenosa com alteplase','Iniciar AAS e heparina plena imediatamente','Controlar PA até <140×90 antes de qualquer conduta'],
-     correct:1, expl:'<b>Alternativa B.</b> Paciente com AVC isquêmico (TC sem sangue) dentro da janela de 4,5h, NIHSS 12, sem contraindicações e com PA <185×110: indicação clássica de trombólise. AAS não substitui reperfusão na fase aguda e heparina plena não tem benefício rotineiro.'},
-    {stem:'Paciente trombolisado por AVC isquêmico. Qual o alvo pressórico nas primeiras 24h?',
-     opts:['<220×120 mmHg','<185×110 mmHg','<140×90 mmHg','Não controlar a PA'],
-     correct:2, expl:'<b>Alternativa C.</b> Antes/durante a trombólise: <185×110. Após trombolisar, mantém-se <strong>PA <180×105 (alvo prático <140×90 evitando hipotensão)</strong> por 24h para reduzir risco de transformação hemorrágica. Na questão, o melhor alvo entre as opções é o mais conservador pós-trombólise.'},
-    {stem:'Mulher, 55a, "a pior dor de cabeça da vida" de início súbito, vômitos e rigidez de nuca. TC de crânio inicial normal. Qual o próximo passo se a suspeita clínica permanece alta?',
-     opts:['Alta com analgésico','Punção lombar à procura de xantocromia','Iniciar triptano','Repetir TC em 7 dias'],
-     correct:1, expl:'<b>Alternativa B.</b> Quadro de HSA (thunderclap). TC pode ser normal em até 5–10% nas primeiras horas/após 6h. Suspeita persistente → punção lombar buscando xantocromia/hemácias. Triptano é contraindicado e perigoso aqui.'},
-    {stem:'Sobre o AIT, assinale a correta:',
-     opts:['Define-se apenas pela duração <24h independentemente da imagem','É benigno e não requer investigação','Pela definição tecidual, é déficit transitório SEM infarto na neuroimagem','Nunca precede um AVC'],
-     correct:2, expl:'<b>Alternativa C.</b> A definição moderna é tecidual: déficit focal transitório <strong>sem infarto</strong> à imagem. É emergência — risco elevado de AVC nos dias seguintes (estratificar com ABCD²).'},
-    {stem:'Qual achado clínico mais sugere etiologia cardioembólica do AVC?',
-     opts:['Síndrome lacunar pura','Fibrilação atrial','Sopro carotídeo','História de tabagismo'],
-     correct:1, expl:'<b>Alternativa B.</b> Fibrilação atrial é a principal fonte cardioembólica. Sopro carotídeo aponta para aterosclerose de grande vaso; síndromes lacunares puras, para doença de pequenos vasos.'},
-    {stem:'Indicação de trombectomia mecânica em janela estendida (6–24h) depende principalmente de:',
-     opts:['NIHSS <4','Idade <50 anos','Oclusão de grande vaso com mismatch de perfusão favorável','Ausência de hipertensão'],
-     correct:2, expl:'<b>Alternativa C.</b> Estudos DAWN/DEFUSE-3: o que habilita a janela estendida é a presença de <strong>grande vaso ocluído</strong> e tecido salvável (mismatch entre core e penumbra), não a idade isolada.'},
-    {stem:'AVC isquêmico que NÃO será trombolisado. A partir de que PA se deve tratar agudamente?',
-     opts:['>140×90','>160×100','>180×100','>220×120'],
-     correct:3, expl:'<b>Alternativa D.</b> Hipertensão permissiva: só tratar se PAS >220 ou PAD >120 (ou lesão de órgão-alvo), pois a PA elevada sustenta a perfusão da penumbra.'},
-    {stem:'Local mais típico de hemorragia intraparenquimatosa hipertensiva:',
-     opts:['Lobar frontal','Putâmen / cápsula interna','Espaço subaracnóideo','Cerebelo exclusivamente'],
-     correct:1, expl:'<b>Alternativa B.</b> A hemorragia hipertensiva clássica ocorre em estruturas profundas — putâmen/cápsula interna, tálamo, ponte e cerebelo —, por ruptura de microaneurismas de Charcot-Bouchard.'}
+    {stem:'Homem, 68a, há 2h com hemiparesia direita e afasia, PA 178×96, glicemia 110, NIHSS 12, TC sem sangue. Conduta?',opts:['Aguardar 24h','Trombólise com alteplase','AAS + heparina plena já','Baixar PA <140×90 antes de tudo'],correct:1,expl:'<b>B.</b> AVE isquêmico dentro de 4,5h, sem contraindicações e PA <185×110: trombólise. AAS não substitui reperfusão e heparina plena não tem benefício agudo rotineiro.'},
+    {stem:'Após trombolisar, qual o alvo pressórico nas primeiras 24h?',opts:['<220×120','<185×110 (idealmente <180×105)','Não controlar','>200 para manter perfusão'],correct:1,expl:'<b>B.</b> Após trombólise mantém-se PA controlada (<180×105) por 24h para reduzir transformação hemorrágica.'},
+    {stem:'Qual achado mais sugere etiologia cardioembólica?',opts:['Síndrome lacunar pura','Fibrilação atrial','Sopro carotídeo','Tabagismo'],correct:1,expl:'<b>B.</b> FA é a principal fonte cardioembólica. Sopro carotídeo → grande vaso; lacunar → pequenos vasos.'},
+    {stem:'Trombectomia em janela estendida (6–24h) depende principalmente de:',opts:['NIHSS <4','Idade <50','Grande vaso ocluído + mismatch favorável','Ausência de HAS'],correct:2,expl:'<b>C.</b> DAWN/DEFUSE-3: o que habilita é grande vaso + tecido salvável (mismatch).'},
+    {stem:'AVE isquêmico que NÃO será trombolisado — a partir de que PA tratar?',opts:['>140×90','>160×100','>180×100','>220×120'],correct:3,expl:'<b>D.</b> Hipertensão permissiva: só tratar se PAS >220 ou PAD >120 (ou lesão de órgão-alvo).'},
+    {stem:'Por que a NIHSS pode subestimar o AVC?',opts:['Superestima fossa posterior','Pontua mal a circulação posterior (tronco/cerebelo)','Só vale para hemorragia','Depende da idade'],correct:1,expl:'<b>B.</b> A NIHSS valoriza pouco déficits de tronco/cerebelo — vertigem/ataxia podem dar pontuação baixa apesar de AVC grave.'}
   ],
   cards:[
-    {tag:'Conceito',q:'Qual a primeira providência diagnóstica em todo déficit focal súbito?',a:'TC de crânio SEM contraste — para excluir hemorragia antes de qualquer reperfusão.'},
-    {tag:'Janela',q:'Janela da trombólise endovenosa no AVC isquêmico?',a:'Até 4,5 horas do "último visto bem".'},
-    {tag:'Janela',q:'Janela da trombectomia mecânica?',a:'Até 6h de rotina; 6–24h em grande vaso com mismatch favorável (DAWN/DEFUSE-3).'},
-    {tag:'PA',q:'Alvo pressórico para trombolisar?',a:'PA < 185×110 mmHg antes e durante a trombólise.'},
-    {tag:'PA',q:'Quando tratar PA no isquêmico que NÃO será trombolisado?',a:'Somente se > 220×120 (hipertensão permissiva).'},
-    {tag:'AIT',q:'O que é AIT pela definição tecidual?',a:'Déficit focal transitório SEM infarto na neuroimagem.'},
-    {tag:'AIT',q:'Para que serve o escore ABCD²?',a:'Estratificar risco de AVC após um AIT (≥4 = alto risco).'},
-    {tag:'Hemorrágico',q:'Alvo de PA na hemorragia intraparenquimatosa?',a:'PAS em torno de 140 mmHg (não reduzir abaixo de ~130).'},
-    {tag:'HSA',q:'Tríade da hemorragia subaracnóidea?',a:'Cefaleia thunderclap ("pior da vida") + rigidez de nuca + vômitos. Nimodipino previne vasoespasmo.'},
-    {tag:'Etiologia',q:'Principal fonte cardioembólica de AVC?',a:'Fibrilação atrial.'},
-    {tag:'Armadilha',q:'Por que NIHSS pode subestimar o AVC?',a:'Pontua mal a circulação posterior (tronco/cerebelo) — vertigem/ataxia podem dar NIHSS baixo.'}
+    {tag:'Dx',q:'Primeira providência no déficit focal súbito?',a:'TC sem contraste para excluir hemorragia.'},
+    {tag:'Janela',q:'Janela da trombólise?',a:'Até 4,5h do último visto bem.'},
+    {tag:'Janela',q:'Janela da trombectomia?',a:'Até 6h; 6–24h em grande vaso com mismatch.'},
+    {tag:'PA',q:'Alvo de PA para trombolisar?',a:'<185×110 mmHg.'},
+    {tag:'PA',q:'Quando tratar PA se não trombolisa?',a:'Só se >220×120 (permissiva).'},
+    {tag:'Etiologia',q:'Principal fonte cardioembólica?',a:'Fibrilação atrial.'},
+    {tag:'Armadilha',q:'Limitação da NIHSS?',a:'Subestima a circulação posterior.'}
   ],
   cases:[
-    {title:'Caso 1 — Hemiparesia aguda',
-     hist:'Homem, 72 anos, hipertenso e diabético. Familiares relatam que há 1h30 começou subitamente com fraqueza no braço e perna esquerdos e desvio da boca.',
-     exam:'PA 190×100, FC 88 irregular. Glasgow 15. Hemiparesia esquerda 3/5, paralisia facial central esquerda, disartria. NIHSS 9.',
-     labs:'Glicemia 142. ECG: fibrilação atrial. TC de crânio: sem sangramento, sinais precoces de isquemia em território de ACM direita.',
-     reason:'Déficit focal súbito + TC sem sangue = AVC isquêmico. Dentro da janela (1h30). FC irregular + FA no ECG sugerem mecanismo cardioembólico. PA precisa cair abaixo de 185×110 para trombolisar.',
-     dx:'AVC isquêmico em território de ACM direita, provável cardioembólico (FA).',
-     tx:'Reduzir PA a <185×110 (ex.: labetalol/esmolol), trombólise com alteplase, avaliar grande vaso para trombectomia. Após fase aguda e exclusão de transformação hemorrágica: anticoagulação oral pela FA (avaliar CHA₂DS₂-VASc).'},
-    {title:'Caso 2 — A pior cefaleia da vida',
-     hist:'Mulher, 49 anos, tabagista, durante esforço físico apresenta cefaleia explosiva occipital de intensidade máxima já no início, seguida de vômito e fotofobia.',
-     exam:'Sonolenta, rigidez de nuca presente, sem déficit motor focal. PA 168×98.',
-     labs:'TC de crânio: hiperdensidade no espaço subaracnóideo das cisternas da base.',
-     reason:'Thunderclap + meningismo + sangue subaracnóideo na TC = HSA, tipicamente por ruptura de aneurisma. Risco de ressangramento e vasoespasmo.',
-     dx:'Hemorragia subaracnóidea aneurismática.',
-     tx:'Repouso, controle de PA e dor, nimodipino para prevenir vasoespasmo, angio-TC/angiografia para localizar o aneurisma e tratamento (clipagem ou embolização endovascular).'},
-    {title:'Caso 3 — Déficit que sumiu',
-     hist:'Homem, 64 anos, hipertenso, episódio de 20 minutos de fraqueza no braço direito e dificuldade para falar, com recuperação completa há 3h.',
-     exam:'Exame neurológico normal no momento. PA 150×92.',
-     labs:'TC/RM sem infarto. ECG normal.',
-     reason:'Déficit focal transitório com resolução completa e sem infarto = AIT. ABCD²: idade (1) + PA (1) + fraqueza unilateral (2) + duração 10–59min (1) = 5 → alto risco.',
-     dx:'Ataque isquêmico transitório (AIT), alto risco.',
-     tx:'Internação/observação, antiagregação, estatina, controle pressórico, doppler de carótidas e investigação cardioembólica. AIT é "aviso" — prevenir o AVC iminente.'}
+    {title:'Caso — Hemiparesia aguda',hist:'Homem, 72a, hipertenso e diabético, há 1h30 com fraqueza no hemicorpo esquerdo e desvio da boca.',exam:'PA 190×100, FC irregular, hemiparesia esquerda 3/5, paralisia facial central, disartria, NIHSS 9.',labs:'Glicemia 142; ECG: fibrilação atrial; TC sem sangramento, sinais precoces em ACM direita.',reason:'Déficit súbito + TC sem sangue = isquêmico, dentro da janela. FC irregular/FA sugere cardioembolia. PA precisa <185×110 para trombolisar.',dx:'AVE isquêmico de ACM direita, provável cardioembólico (FA).',tx:'Baixar PA <185×110, trombólise, avaliar grande vaso p/ trombectomia; após fase aguda e exclusão de transformação, anticoagular (CHA₂DS₂-VASc).'}
+  ]
+});
+
+MODULES.push({
+  id:'ave_hem', emoji:'🧨', region:'vascular', tema:'Doença Cerebrovascular (AVE)',
+  title:'AVE Hemorrágico', sub:'Hemorragia intraparenquimatosa e subaracnóidea (HSA)',
+  prio:'alta', topics:['Hemorragia intraparenquimatosa','HSA','Hunt-Hess','Vasoespasmo'],
+  subtopics:[
+   {label:'Visão geral',html:`<h3>🧨 AVE Hemorrágico</h3>
+<p>~15% dos AVCs. O vaso se rompe e o sangue comprime/agride o tecido. Dois cenários: <strong>intraparenquimatosa</strong> (HAS crônica) e <strong>subaracnóidea</strong> (aneurisma).</p>
+<div class="callout trap"><b>Pegadinha mortal</b>NUNCA trombolise um hemorrágico — por isso a TC sem contraste vem ANTES de qualquer reperfusão.</div>`},
+   {label:'Intraparenquimatosa',html:`<h3>Hemorragia intraparenquimatosa</h3>
+<p>Por <strong>HAS crônica</strong> (microaneurismas de Charcot-Bouchard). Sítio clássico: <strong>putâmen/cápsula interna</strong>, tálamo, ponte, cerebelo.</p>
+<div class="callout warn"><b>Conduta</b>PAS alvo ~<strong>140</strong> (não &lt;130), reverter anticoagulação, avaliar neurocirurgia (hematoma cerebelar &gt;3 cm com deterioração = drenar).</div>`},
+   {label:'HSA',html:`<h3>Hemorragia subaracnóidea (HSA)</h3>
+<p>Ruptura de aneurisma: "<strong>a pior cefaleia da vida</strong>" (thunderclap) + rigidez de nuca + vômitos. TC pode ser normal nas primeiras horas → <strong>punção lombar</strong> (xantocromia).</p>
+<div class="callout warn"><b>Conduta</b>Controle de PA/dor, <strong>nimodipino</strong> (previne vasoespasmo), angio-TC/angiografia e tratamento do aneurisma (clipagem ou embolização).</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — AVE Hemorrágico</h3>
+<div class="mindmap"><div class="mm-center">AVE HEMORRÁGICO</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Intraparenquimatosa</b><ul><li>HAS, putâmen</li><li>PAS ~140</li></ul></div>
+<div class="mm-branch"><b>HSA</b><ul><li>Thunderclap + nuca</li><li>Nimodipino</li><li>Aneurisma → clipar/embolizar</li></ul></div>
+<div class="mm-branch"><b>Regra</b><ul><li>Nunca trombolisar</li><li>Reverter anticoagulação</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3><table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>TC com sangue</td><td>Hemorrágico → não trombolisar</td></tr><tr><td>Thunderclap + nuca</td><td>HSA → TC ± punção</td></tr><tr><td>HSA confirmada</td><td>Nimodipino + tratar aneurisma</td></tr><tr><td>Intraparenquimatosa</td><td>PAS ~140; reverter ACO</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas e erros</h3>
+<div class="callout fast"><b>Dicas</b>① TC normal não exclui HSA → punção. ② Nimodipino é para vasoespasmo, não para baixar PA. ③ Putâmen = sítio hipertensivo clássico.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Dar triptano numa "cefaleia" que é HSA. ② Reduzir PA demais (&lt;130) na intraparenquimatosa. ③ Esquecer de reverter anticoagulante.</div>`}
+  ],
+  flowDx:{ title:'AVE hemorrágico — diagnóstico', start:'h1', nodes:{
+    h1:{q:'TC com sangue. Onde?',opts:[{t:'Parênquima (putâmen/tálamo)',go:'rIPH'},{t:'Espaço subaracnóideo / suspeita de HSA',go:'h2'}]},
+    h2:{q:'TC mostra HSA OU TC normal com forte suspeita?',opts:[{t:'HSA na TC',go:'rHSA'},{t:'TC normal, suspeita alta',go:'rPL'}]}
+  }, results:{
+    rIPH:{title:'Hemorragia intraparenquimatosa',body:'PAS alvo ~140; reverter anticoagulação; avaliar neurocirurgia (ex.: hematoma cerebelar com deterioração).'},
+    rHSA:{title:'HSA confirmada',body:'Nimodipino, controle de PA/dor, angio-TC para o aneurisma, tratamento endovascular ou clipagem.'},
+    rPL:{title:'Punção lombar',body:'Buscar xantocromia/hemácias. Se positiva → conduzir como HSA.'}
+  }},
+  flowMx:{ title:'Conduta no AVE hemorrágico', steps:[
+    'ABC, proteção de via aérea se rebaixamento; acesso e monitorização.',
+    'TC sem contraste; definir intraparenquimatosa × HSA.',
+    'Controle pressórico: intraparenquimatosa PAS ~140 (não <130); reverter anticoagulação.',
+    'HSA: nimodipino, controle de dor/PA, angio para o aneurisma.',
+    'Avaliação neurocirúrgica/endovascular conforme achado; UTI.'
+  ]},
+  questions:[
+    {stem:'Mulher, 55a, "pior dor de cabeça da vida" súbita, vômitos e rigidez de nuca; TC inicial normal e suspeita alta. Próximo passo?',opts:['Alta com analgésico','Punção lombar (xantocromia)','Triptano','Repetir TC em 7 dias'],correct:1,expl:'<b>B.</b> Quadro de HSA; TC pode ser normal nas primeiras horas. Suspeita persistente → punção. Triptano é contraindicado.'},
+    {stem:'Local mais típico da hemorragia intraparenquimatosa hipertensiva:',opts:['Lobar frontal','Putâmen/cápsula interna','Subaracnóideo','Convexidade'],correct:1,expl:'<b>B.</b> Estruturas profundas: putâmen/cápsula interna, tálamo, ponte, cerebelo (Charcot-Bouchard).'},
+    {stem:'Na hemorragia intraparenquimatosa, o alvo pressórico é:',opts:['PAS ~140 (evitar <130)','PAS livre','PAS <90','Permissiva >220'],correct:0,expl:'<b>A.</b> Controle agressivo com PAS em torno de 140, evitando reduções abaixo de ~130.'},
+    {stem:'Qual fármaco previne vasoespasmo na HSA aneurismática?',opts:['Nimodipino','Alteplase','Heparina plena','Manitol'],correct:0,expl:'<b>A.</b> Nimodipino reduz o vasoespasmo e melhora desfecho na HSA. Não é usado para baixar a PA.'},
+    {stem:'Conduta inicial diante de TC com sangue intracraniano:',opts:['Trombolisar','NÃO trombolisar; controlar PA e reverter anticoagulação','AAS + heparina','Aguardar 24h'],correct:1,expl:'<b>B.</b> Hemorragia contraindica trombólise; o foco é controle pressórico, reversão de anticoagulante e avaliação neurocirúrgica.'},
+    {stem:'Sobre a HSA, é correto:',opts:['TC sempre detecta nas primeiras horas','Pode ter TC normal precoce; punção busca xantocromia','Triptano é o tratamento','Dispensa investigar aneurisma'],correct:1,expl:'<b>B.</b> Sensibilidade da TC cai com o tempo; suspeita alta com TC normal exige punção. Sempre investigar o aneurisma (angio).'}
+  ],
+  cards:[
+    {tag:'Regra',q:'Pode trombolisar AVE hemorrágico?',a:'Nunca. Por isso a TC sem contraste vem antes da reperfusão.'},
+    {tag:'IPH',q:'Sítio clássico da hemorragia hipertensiva?',a:'Putâmen/cápsula interna (também tálamo, ponte, cerebelo).'},
+    {tag:'IPH',q:'Alvo de PA na intraparenquimatosa?',a:'PAS ~140 mmHg (não <130).'},
+    {tag:'HSA',q:'Tríade da HSA?',a:'Cefaleia thunderclap + rigidez de nuca + vômitos.'},
+    {tag:'HSA',q:'Para que serve o nimodipino?',a:'Prevenir vasoespasmo na HSA (não é para baixar PA).'},
+    {tag:'HSA',q:'TC normal exclui HSA?',a:'Não nas primeiras horas — fazer punção lombar (xantocromia).'},
+    {tag:'Conduta',q:'O que fazer com anticoagulação na hemorragia?',a:'Reverter imediatamente.'}
+  ],
+  cases:[
+    {title:'Caso — A pior cefaleia da vida',hist:'Mulher, 49a, tabagista, em esforço apresenta cefaleia explosiva occipital máxima já no início, vômito e fotofobia.',exam:'Sonolenta, rigidez de nuca, sem déficit motor focal, PA 168×98.',labs:'TC: hiperdensidade subaracnóidea nas cisternas da base.',reason:'Thunderclap + meningismo + sangue subaracnóideo = HSA aneurismática. Risco de ressangramento e vasoespasmo.',dx:'Hemorragia subaracnóidea aneurismática.',tx:'Repouso, controle de PA/dor, nimodipino, angio-TC/angiografia e tratamento do aneurisma (clipagem ou embolização).'}
+  ]
+});
+
+MODULES.push({
+  id:'ait', emoji:'⏳', region:'vascular', tema:'Doença Cerebrovascular (AVE)',
+  title:'AIT (Ataque Isquêmico Transitório)', sub:'Déficit transitório, ABCD² e prevenção do AVC',
+  prio:'alta', topics:['AIT','ABCD2','Prevenção secundária'],
+  subtopics:[
+   {label:'O que é AIT',html:`<h3>⏳ AIT — o "aviso prévio"</h3>
+<p>Déficit focal que <strong>resolve completamente</strong> (classicamente &lt;1h) e <strong>sem infarto na imagem</strong> (definição tecidual moderna). É emergência: até 10% terão AVC em 48h.</p>
+<div class="callout fast"><b>Encare como chance</b>O AIT é a oportunidade de <strong>prevenir o AVC iminente</strong> — investigue rápido e inicie prevenção.</div>`},
+   {label:'ABCD²',html:`<h3>ABCD² — risco de AVC após AIT</h3>
+<table class="med"><tr><th>Fator</th><th>Pontos</th></tr><tr><td>Age ≥60</td><td>1</td></tr><tr><td>PA ≥140/90</td><td>1</td></tr><tr><td>Fraqueza unilateral</td><td>2</td></tr><tr><td>Fala alterada sem fraqueza</td><td>1</td></tr><tr><td>Duração ≥60 / 10–59 min</td><td>2 / 1</td></tr><tr><td>Diabetes</td><td>1</td></tr></table>
+<p>≥4 = alto risco → internação e investigação rápida.</p>`},
+   {label:'Conduta & Prevenção',html:`<h3>Conduta e prevenção secundária</h3>
+<ul><li>Investigar: imagem (RM), ECG/Holter (FA), doppler de carótidas, eco.</li>
+<li><strong>Antiagregação</strong> (AAS; dupla AAS+clopidogrel por curto período em alto risco) e <strong>estatina</strong>.</li>
+<li>Controle de PA, glicemia, tabagismo.</li>
+<li>FA → <strong>anticoagulação</strong>; estenose carotídea sintomática significativa → endarterectomia/stent.</li></ul>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — AIT</h3>
+<div class="mindmap"><div class="mm-center">AIT</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Definição</b><ul><li>Transitório</li><li>SEM infarto na imagem</li></ul></div>
+<div class="mm-branch"><b>Risco</b><ul><li>ABCD² ≥4 = alto</li></ul></div>
+<div class="mm-branch"><b>Prevenção</b><ul><li>Antiagregar + estatina</li><li>FA → anticoagular</li><li>Carótida → cirurgia</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3><table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Déficit que sumiu, sem infarto</td><td>AIT</td></tr><tr><td>ABCD² ≥4</td><td>Alto risco → internar/investigar</td></tr><tr><td>FA</td><td>Anticoagular</td></tr><tr><td>Estenose carotídea sintomática</td><td>Endarterectomia/stent</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas e erros</h3>
+<div class="callout fast"><b>Dicas</b>① AIT é definição tecidual (sem infarto). ② ABCD² estratifica o risco. ③ Não é benigno — é aviso.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Tratar AIT como algo "sem importância". ② Confundir aura migranosa (marcha típica, reversível) com AIT. ③ Esquecer de investigar FA/carótidas.</div>`}
+  ],
+  flowDx:{ title:'AIT — diagnóstico', start:'a1', nodes:{
+    a1:{q:'Déficit focal que resolveu completamente?',opts:[{t:'Sim',go:'a2'},{t:'Persiste',go:'rAVC'}]},
+    a2:{q:'Imagem mostra infarto?',opts:[{t:'Não',go:'rAIT'},{t:'Sim',go:'rAVCmenor'}]}
+  }, results:{
+    rAVC:{title:'Provável AVC (déficit persistente)',body:'Conduzir como AVC isquêmico/hemorrágico conforme a TC.'},
+    rAIT:{title:'AIT',body:'Estratificar com ABCD²; ≥4 internar. Antiagregação + estatina + investigação (FA, carótidas).'},
+    rAVCmenor:{title:'AVC isquêmico (infarto presente)',body:'Mesmo com sintomas curtos, infarto na imagem = AVC. Conduzir como tal.'}
+  }},
+  flowMx:{ title:'Conduta no AIT', steps:[
+    'Avaliar e estabilizar; documentar o déficit e sua resolução.',
+    'Calcular ABCD²; ≥4 → internação/observação.',
+    'Imagem (RM), ECG/Holter (FA), doppler de carótidas, eco.',
+    'Iniciar antiagregação e estatina; controlar PA, glicemia e tabagismo.',
+    'FA → anticoagular; estenose carotídea sintomática significativa → endarterectomia/stent.'
+  ]},
+  questions:[
+    {stem:'Sobre o AIT, assinale a correta:',opts:['Define-se só pela duração <24h, independente da imagem','É benigno e dispensa investigação','Déficit transitório SEM infarto na neuroimagem (definição tecidual)','Nunca precede um AVC'],correct:2,expl:'<b>C.</b> A definição moderna é tecidual: déficit focal transitório sem infarto à imagem. É emergência (risco alto nos dias seguintes).'},
+    {stem:'Homem, 64a, hipertenso, episódio de 20 min de fraqueza no braço direito e disartria, já recuperado. ABCD²?',opts:['1','3','5','8'],correct:2,expl:'<b>C = 5.</b> Idade (1) + PA (1) + fraqueza unilateral (2) + duração 10–59 min (1) = 5 → alto risco; internar e investigar.'},
+    {stem:'Paciente com AIT e fibrilação atrial. Prevenção secundária de escolha?',opts:['Apenas AAS','Anticoagulação','Nenhuma','Trombólise'],correct:1,expl:'<b>B.</b> AIT cardioembólico por FA → anticoagulação (avaliar escore de risco).'},
+    {stem:'AIT com estenose carotídea sintomática significativa. Conduta adicional além do tratamento clínico?',opts:['Endarterectomia/stent de carótida','Nenhuma','Apenas repouso','Trombectomia'],correct:0,expl:'<b>A.</b> Estenose carotídea sintomática significativa se beneficia de revascularização (endarterectomia ou stent), além de antiagregação e estatina.'},
+    {stem:'Qual exame é prioritário para investigar fonte embólica após AIT?',opts:['EEG','ECG/Holter (procurar fibrilação atrial)','Punção lombar','Raio-X de tórax'],correct:1,expl:'<b>B.</b> A pesquisa de FA (ECG/Holter) é essencial, pois muda a prevenção para anticoagulação.'},
+    {stem:'Diferenciar AIT de aura migranosa — o que favorece a aura?',opts:['Início súbito e completo','Marcha de sintomas (ex.: escotoma cintilante) reversível em 5–60 min, geralmente seguida de cefaleia','Déficit motor permanente','Infarto na RM'],correct:1,expl:'<b>B.</b> A aura tem progressão característica (visual em zigue-zague), totalmente reversível e costuma preceder a dor; o AIT é súbito e sem essa marcha.'}
+  ],
+  cards:[
+    {tag:'Definição',q:'O que é AIT (definição tecidual)?',a:'Déficit focal transitório SEM infarto na neuroimagem.'},
+    {tag:'Risco',q:'Para que serve o ABCD²?',a:'Estratificar o risco de AVC após AIT (≥4 = alto).'},
+    {tag:'Urgência',q:'AIT é benigno?',a:'Não — é aviso de AVC iminente; investigar e prevenir.'},
+    {tag:'Prevenção',q:'Base da prevenção secundária no AIT?',a:'Antiagregação + estatina + controle de fatores de risco.'},
+    {tag:'Etiologia',q:'AIT com FA: o que fazer?',a:'Anticoagular.'},
+    {tag:'Carótida',q:'Estenose carotídea sintomática significativa?',a:'Endarterectomia ou stent.'},
+    {tag:'Diferencial',q:'Como diferenciar de aura migranosa?',a:'Aura tem marcha reversível 5–60 min e segue com cefaleia; AIT é súbito.'}
+  ],
+  cases:[
+    {title:'Caso — Déficit que sumiu',hist:'Homem, 64a, hipertenso, episódio de 20 min de fraqueza no braço direito e dificuldade para falar, com recuperação completa há 3h.',exam:'Exame neurológico normal no momento; PA 150×92.',labs:'RM sem infarto; ECG inicial normal.',reason:'Déficit transitório, resolução completa, sem infarto = AIT. ABCD² = 5 → alto risco.',dx:'Ataque isquêmico transitório (AIT), alto risco.',tx:'Internação/observação, antiagregação, estatina, controle pressórico, doppler de carótidas e investigação de FA (Holter). Prevenir o AVC iminente.'}
   ]
 });
 
 /* ---------- 2. CEFALEIAS ---------- */
 MODULES.push({
-  id:'cefaleia', emoji:'🤕', region:'meningeal', title:'Cefaleias',
+  id:'cefaleia', tema:'Cefaleias', emoji:'🤕', region:'meningeal', title:'Cefaleias',
   sub:'Enxaqueca, tensional, em salvas e cefaleias secundárias (red flags)',
   prio:'alta', topics:['Enxaqueca','Cefaleia tensional','Cefaleia em salvas','Cefaleias secundárias','Red flags','Tratamento abortivo e profilático'],
   subtopics:[
@@ -1138,7 +1181,7 @@ MODULES.push({
 
 /* ---------- 3. EPILEPSIA ---------- */
 MODULES.push({
-  id:'epilepsia', emoji:'⚡', region:'temporal', title:'Epilepsia e Crises',
+  id:'epilepsia', tema:'Epilepsia e Crises', emoji:'⚡', region:'temporal', title:'Epilepsia e Crises',
   sub:'Classificação das crises, estado de mal epiléptico e antiepilépticos',
   prio:'alta', topics:['Classificação das crises','Crise focal e generalizada','Estado de mal epiléptico','Antiepilépticos','Primeira crise'],
   subtopics:[
@@ -1330,7 +1373,7 @@ MODULES.push({
 
 /* ---------- 4. MENINGITES E ENCEFALITES ---------- */
 MODULES.push({
-  id:'meningite', emoji:'🦠', region:'meningeal', title:'Meningites e Encefalites',
+  id:'meningite', tema:'Infecções do SNC', emoji:'🦠', region:'meningeal', title:'Meningites e Encefalites',
   sub:'Bacteriana, viral, análise do líquor e encefalite herpética',
   prio:'alta', topics:['Meningite bacteriana','Meningite viral','Análise do líquor','Encefalite herpética','Antibioticoterapia empírica'],
   subtopics:[
@@ -1524,7 +1567,7 @@ MODULES.push({
 
 /* ---------- 5. TCE ---------- */
 MODULES.push({
-  id:'tce', emoji:'🚑', region:'ventricular', title:'Traumatismo Cranioencefálico (TCE)',
+  id:'tce', tema:'Trauma — TCE e TRM', emoji:'🚑', region:'ventricular', title:'Traumatismo Cranioencefálico (TCE)',
   sub:'Glasgow, hematomas, lesão axonal difusa e hipertensão intracraniana',
   prio:'alta', topics:['Escala de Glasgow','Classificação leve/moderado/grave','Lesão primária e secundária','Hematoma epidural','Hematoma subdural','Lesão axonal difusa','Hipertensão intracraniana','Indicações de TC'],
   subtopics:[
@@ -1765,7 +1808,7 @@ function refreshProgress(){
    ============================================================ */
 const ACHIEVEMENTS=[
   {id:'first',name:'Primeiros Passos',medal:'🌱',desc:'Responda sua primeira questão',check:sp=>sp.questionsAnswered>=1},
-  {id:'avc',name:'Mestre do AVC',medal:'🩸',desc:'80% no módulo de AVC',check:()=>moduleProgress(byId('avc'))>=80},
+  {id:'avc',name:'Mestre do AVC',medal:'🩸',desc:'80% em toda a doença cerebrovascular',check:()=>['ave_isq','ave_hem','ait'].every(x=>moduleProgress(byId(x))>=80)},
   {id:'epi',name:'Senhor das Epilepsias',medal:'⚡',desc:'80% no módulo de Epilepsia',check:()=>moduleProgress(byId('epilepsia'))>=80},
   {id:'cef',name:'Domador das Cefaleias',medal:'🤕',desc:'80% no módulo de Cefaleias',check:()=>moduleProgress(byId('cefaleia'))>=80},
   {id:'inf',name:'Guardião das Meninges',medal:'🦠',desc:'80% em Meningites/Encefalites',check:()=>moduleProgress(byId('meningite'))>=80},
@@ -1889,29 +1932,89 @@ window.toggleFav=function(id){ const f=State.data.favorites; const i=f.indexOf(i
    MÓDULOS (lista)
    ============================================================ */
 function renderModulos(){
-  return `<div class="page-head"><div class="crumb">Conteúdo</div><h1>Módulos de Neurologia</h1>
-    <p>Cada módulo ensina do zero, como um professor, com tabelas, fluxogramas interativos, questões estilo ENARE/Revalida, flashcards, casos clínicos e checklist de domínio.</p></div>
-    <div class="grid g-3">${MODULES.map(modCardHTML).join('')}</div>
-    <div class="card glass" style="margin-top:18px;border-style:dashed">
-      <h3 style="font-size:1rem">🚧 Mais módulos chegando</h3>
-      <p style="color:var(--text-soft);font-size:.86rem;margin-top:6px">Esta versão traz os 5 temas de maior peso totalmente desenvolvidos (AVC, Cefaleias, Epilepsia, Meningites/Encefalites e TCE). Em construção: Demências, Parkinson e distúrbios do movimento, Esclerose Múltipla, Neuropatias (Guillain-Barré), Miastenia, Doenças Medulares/TRM, Vestibulares, Neuroinfecções, Coma e Morte Encefálica, e Semiologia.</p>
+  const temas={}; MODULES.forEach(m=>{ const t=m.tema||'Outros'; (temas[t]=temas[t]||[]).push(m); });
+  let h=`<div class="page-head"><div class="crumb">Conteúdo</div><h1>Matérias de Neurologia</h1>
+    <p>Conteúdo dividido por <strong>matéria</strong>. Cada matéria traz: Teoria detalhada, Scores/Critérios, Questões, Flashcards, Casos clínicos, Fluxograma diagnóstico, Fluxograma de conduta, Mapa mental, Revisão de véspera, Dicas/Pegadinhas, Checklist e Anotações.</p></div>`;
+  Object.keys(temas).forEach(t=>{
+    h+='<h3 style="font-family:var(--font-display);font-size:1.25rem;margin:22px 0 12px;display:flex;align-items:center;gap:9px"><span style="width:5px;height:22px;border-radius:4px;background:linear-gradient(var(--rose),var(--violet));display:inline-block"></span>'+t+'</h3>';
+    h+='<div class="grid g-3">'+temas[t].map(modCardHTML).join('')+'</div>';
+  });
+  h+=`<div class="card glass" style="margin-top:22px;border-style:dashed">
+      <h3 style="font-size:1rem">🚧 Em construção</h3>
+      <p style="color:var(--text-soft);font-size:.86rem;margin-top:6px">Próximas matérias: Coma/Morte Encefálica, Demências, Parkinson e distúrbios do movimento, Miastenia, Guillain-Barré, Doenças Medulares/TRM, Vestibulares, Neuroinfecções, Esclerose Múltipla e Semiologia. Os grandes temas restantes (Cefaleias, Epilepsia, Meningites, TCE) serão também subdivididos em matérias.</p>
     </div>`;
+  return h;
 }
 
 /* ============================================================
    MÓDULO — detalhe com abas
    ============================================================ */
-let curMod=null, curTab='ensino';
+let curMod=null, curTab='teoria';
+
+/* Scores/Critérios por matéria */
+const SCORES = {
+  ave_isq:`<h3>🎯 NIHSS — gravidade do AVC</h3>
+<table class="med"><tr><th>NIHSS</th><th>Gravidade</th></tr><tr><td>0</td><td>Sem déficit</td></tr><tr><td>1–4</td><td>Leve</td></tr><tr><td>5–15</td><td>Moderado</td></tr><tr><td>16–20</td><td>Moderado a grave</td></tr><tr><td>21–42</td><td>Grave</td></tr></table>
+<div class="callout tip"><b>Janelas de reperfusão</b>Trombólise: até <strong>4,5h</strong>. Trombectomia: até <strong>6h</strong> (e <strong>6–24h</strong> em grande vaso com mismatch).</div>
+<div class="callout warn"><b>Alvos de PA</b>Trombólise: &lt;185×110. Sem trombólise: tratar só se &gt;220×120 (permissiva).</div>`,
+  ave_hem:`<h3>🎯 Escalas da hemorragia</h3>
+<table class="med"><tr><th>Hunt-Hess (HSA)</th><th>Quadro</th></tr><tr><td>I</td><td>Assintomático/cefaleia leve</td></tr><tr><td>II</td><td>Cefaleia intensa, rigidez, sem déficit</td></tr><tr><td>III</td><td>Sonolência/déficit leve</td></tr><tr><td>IV</td><td>Estupor, hemiparesia</td></tr><tr><td>V</td><td>Coma</td></tr></table>
+<div class="callout warn"><b>Alvos</b>Hemorragia intraparenquimatosa: PAS ~140 (não &lt;130). HSA: nimodipino para vasoespasmo.</div>`,
+  ait:`<h3>🎯 ABCD² — risco após AIT</h3>
+<table class="med"><tr><th>Fator</th><th>Pontos</th></tr><tr><td>Age ≥60</td><td>1</td></tr><tr><td>PA ≥140/90</td><td>1</td></tr><tr><td>Fraqueza unilateral</td><td>2</td></tr><tr><td>Fala alterada sem fraqueza</td><td>1</td></tr><tr><td>Duração ≥60 / 10–59 min</td><td>2 / 1</td></tr><tr><td>Diabetes</td><td>1</td></tr></table>
+<div class="callout fast"><b>Interpretação</b>≥4 pontos = alto risco → internação e investigação rápida.</div>`,
+  cefaleia:`<h3>🎯 Critérios e alarmes</h3>
+<div class="callout mne"><b>POUND (enxaqueca)</b>Pulsátil · dura<strong>O</strong> 4–72h · <strong>U</strong>nilateral · <strong>N</strong>áusea · <strong>D</strong>isabling. 3–4 = alta probabilidade.</div>
+<table class="med"><tr><th>Red flag (SNNOOP)</th><th>Pensar em</th></tr><tr><td>Onset súbito (thunderclap)</td><td>HSA</td></tr><tr><td>Idade &gt;50a + temporal + VHS↑</td><td>Arterite temporal</td></tr><tr><td>Febre + rigidez</td><td>Meningite</td></tr><tr><td>Papiledema/Valsalva</td><td>HIC</td></tr></table>`,
+  epilepsia:`<h3>🎯 Classificação e definições</h3>
+<table class="med"><tr><th>Início</th><th>Tipos</th></tr><tr><td>Focal</td><td>Perceptiva / disperceptiva / → TCG bilateral</td></tr><tr><td>Generalizado</td><td>TCG, ausência, mioclônica, atônica, tônica</td></tr></table>
+<div class="callout fast"><b>Definições-chave</b>Epilepsia = ≥2 crises não provocadas (&gt;24h) ou 1 + alto risco. <strong>EME</strong> = crise ≥5 min ou sem recuperar consciência.</div>`,
+  meningite:`<h3>🎯 Interpretação do líquor</h3>
+<table class="med"><tr><th></th><th>Bacteriana</th><th>Viral</th><th>TB/Fúngica</th></tr><tr><td>Células</td><td>Neutrófilos ↑↑</td><td>Linfócitos ↑</td><td>Linfócitos ↑</td></tr><tr><td>Glicose</td><td>↓↓</td><td>Normal</td><td>↓</td></tr><tr><td>Proteína</td><td>↑↑</td><td>Normal/↑</td><td>↑</td></tr></table>
+<div class="callout mne"><b>Macete</b>Glicose baixa = bactéria/TB/fungo; normal = vírus.</div>`,
+  tce:`<h3>🎯 Escala de Glasgow & classificação</h3>
+<table class="med"><tr><th>Componente</th><th>Máx</th></tr><tr><td>Ocular (espontânea 4 · voz 3 · dor 2 · ausente 1)</td><td>4</td></tr><tr><td>Verbal (orientada 5 · confusa 4 · palavras 3 · sons 2 · ausente 1)</td><td>5</td></tr><tr><td>Motora (obedece 6 · localiza 5 · retira 4 · flexão 3 · extensão 2 · ausente 1)</td><td>6</td></tr></table>
+<table class="med"><tr><th>Glasgow</th><th>TCE</th></tr><tr><td>13–15</td><td>Leve</td></tr><tr><td>9–12</td><td>Moderado</td></tr><tr><td>≤8</td><td>Grave → intuba</td></tr></table>`
+};
+
+/* separar subtópicos em Teoria / Mapa / Revisão / Dicas */
+function matSubs(m){ return (m.subtopics&&m.subtopics.length)?m.subtopics:autoSplit(m.teach||''); }
+function splitSubs(m){
+  const out={theory:[],mindmap:null,revisao:null,dicas:null};
+  matSubs(m).forEach(s=>{ const L=(s.label||'').toLowerCase();
+    if(L.indexOf('mapa')>=0) out.mindmap=s.html;
+    else if(L.indexOf('revis')>=0) out.revisao=s.html;
+    else if(L.indexOf('dica')>=0||L.indexOf('resumo')>=0) out.dicas=s.html;
+    else out.theory.push(s);
+  });
+  return out;
+}
+function computeTabs(m){
+  const sp=splitSubs(m); const t=[];
+  if(sp.theory.length) t.push(['teoria','📖 Teoria']);
+  if(SCORES[m.id]) t.push(['scores','🎯 Scores/Critérios']);
+  if((m.questions||[]).length) t.push(['questoes','❓ Questões']);
+  if((m.cards||[]).length) t.push(['flashcards','🎴 Flashcards']);
+  if((m.cases||[]).length) t.push(['casos','🩺 Casos']);
+  if(m.flowDx) t.push(['fluxodx','🔀 Fluxo Dx']);
+  if(m.flowMx) t.push(['fluxocond','🧭 Fluxo Conduta']);
+  if(sp.mindmap) t.push(['mapa','🧠 Mapa Mental']);
+  if(sp.revisao) t.push(['revisao','⏰ Revisão']);
+  if(sp.dicas) t.push(['dicas','💡 Dicas']);
+  t.push(['dominio','✅ Domínio']); t.push(['notas','📝 Anotações']);
+  return t;
+}
 window.openModule=function(id){
-  curMod=byId(id); curTab='ensino'; location.hash='mod:'+id; setActiveNav('modulos');
+  curMod=byId(id); curTab='teoria'; location.hash='mod:'+id; setActiveNav('modulos');
   renderModule();
 };
 function renderModule(){
   const m=curMod; const p=moduleProgress(m);
-  const tabs=[['ensino','📖 Aula'],['fluxo','🔀 Fluxogramas'],['questoes','❓ Questões'],['flashcards','🎴 Flashcards'],['casos','🩺 Casos'],['dominio','✅ Domínio'],['notas','📝 Anotações']];
+  const tabs=computeTabs(m);
+  if(!tabs.some(t=>t[0]===curTab)) curTab=tabs[0][0];
   document.getElementById('content').innerHTML=`<div class="view">
     <div class="page-head">
-      <div class="crumb"><span style="cursor:pointer" onclick="navigate('modulos')">Módulos</span> › ${m.region}</div>
+      <div class="crumb"><span style="cursor:pointer" onclick="navigate('modulos')">Módulos</span> › ${m.tema||m.region}</div>
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px">
         <h1>${m.emoji} ${m.title}</h1>
         <button class="btn btn-ghost btn-sm" onclick="toggleFav('${m.id}');renderModule()">${State.data.favorites.includes(m.id)?'⭐ Favorito':'☆ Favoritar'}</button>
@@ -1928,16 +2031,22 @@ function renderModule(){
 window.setTab=function(t){ curTab=t; renderModule(); };
 function renderTab(){
   const m=curMod; const b=document.getElementById('modBody'); if(!b)return;
-  if(curTab==='ensino'){ b.innerHTML=renderEnsino(m); }
-  else if(curTab==='fluxo'){ b.innerHTML=renderFlow(m); }
+  const sp=splitSubs(m);
+  if(curTab==='teoria'){ b.innerHTML=renderEnsino(m, sp.theory); }
+  else if(curTab==='scores'){ b.innerHTML='<div class="card glass"><div class="teach">'+(SCORES[m.id]||'')+'</div></div>'; }
   else if(curTab==='questoes'){ b.innerHTML=renderQuestions(m); }
   else if(curTab==='flashcards'){ b.innerHTML=renderFlashcards(m); }
   else if(curTab==='casos'){ b.innerHTML=renderCases(m); }
+  else if(curTab==='fluxodx'){ b.innerHTML=renderFlowDx(m); }
+  else if(curTab==='fluxocond'){ b.innerHTML=renderFlowMx(m); }
+  else if(curTab==='mapa'){ b.innerHTML='<div class="card glass"><div class="teach">'+(sp.mindmap||'')+'</div></div>'; }
+  else if(curTab==='revisao'){ b.innerHTML='<div class="card glass"><div class="teach">'+(sp.revisao||'')+'</div></div>'; }
+  else if(curTab==='dicas'){ b.innerHTML='<div class="card glass"><div class="teach">'+(sp.dicas||'')+'</div></div>'; }
   else if(curTab==='dominio'){ b.innerHTML=renderChecklist(m); }
   else if(curTab==='notas'){ b.innerHTML=renderNotes(m); }
 }
 
-/* ---- Subtópicos separados (aula) ---- */
+/* ---- Subtópicos separados (Teoria) ---- */
 let subState={};
 function stripTags(s){ return (s||'').replace(/<[^>]*>/g,'').trim(); }
 function autoSplit(html){
@@ -1945,43 +2054,41 @@ function autoSplit(html){
   if(!parts.length) return [{label:'Conteúdo',html:html||''}];
   return parts.map(p=>{ const t=(p.match(/<h3[^>]*>([\s\S]*?)<\/h3>/)||[])[1]||'Seção'; let lbl=stripTags(t); if(lbl.length>34)lbl=lbl.slice(0,32)+'…'; return {label:lbl,html:p}; });
 }
-function renderEnsino(m){
-  const subs=(m.subtopics&&m.subtopics.length)?m.subtopics:autoSplit(m.teach);
+function renderEnsino(m, subs){
+  subs = (subs&&subs.length)?subs:matSubs(m);
+  if(!subs.length) return '<div class="card glass"><p>—</p></div>';
   let idx=subState[m.id]||0; if(idx>subs.length-1)idx=0;
   const nav=subs.map((s,i)=>'<button class="subchip '+(i===idx?'active':'')+'" onclick="setSub(\''+m.id+'\','+i+')">'+(s.label||s.title||('Parte '+(i+1)))+'</button>').join('');
   return '<div class="subnav">'+nav+'</div>'
     +'<div class="card glass"><div class="teach">'+subs[idx].html+'</div>'
-    +'<div class="sub-foot"><button class="btn btn-ghost btn-sm" '+(idx===0?'disabled':'')+' onclick="setSub(\''+m.id+'\','+(idx-1)+')">← Anterior</button>'
+    +(subs.length>1?'<div class="sub-foot"><button class="btn btn-ghost btn-sm" '+(idx===0?'disabled':'')+' onclick="setSub(\''+m.id+'\','+(idx-1)+')">← Anterior</button>'
     +'<span class="mono" style="color:var(--text-dim);font-size:.78rem">'+(idx+1)+' / '+subs.length+'</span>'
-    +'<button class="btn btn-ghost btn-sm" '+(idx===subs.length-1?'disabled':'')+' onclick="setSub(\''+m.id+'\','+(idx+1)+')">Próximo →</button></div></div>';
+    +'<button class="btn btn-ghost btn-sm" '+(idx===subs.length-1?'disabled':'')+' onclick="setSub(\''+m.id+'\','+(idx+1)+')">Próximo →</button></div>':'')+'</div>';
 }
-window.setSub=function(id,i){ subState[id]=i; renderTab(); document.getElementById('modBody').scrollIntoView({behavior:'smooth',block:'start'}); };
+window.setSub=function(id,i){ subState[id]=i; renderTab(); const el=document.getElementById('modBody'); if(el)el.scrollIntoView({behavior:'smooth',block:'start'}); };
 
-/* ---- Fluxogramas interativos ---- */
-let flowState={};
-function renderFlow(m){
-  flowState[m.id]=flowState[m.id]||{dx:m.flowDx?m.flowDx.start:null};
-  let h='<div class="card glass"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:4px">🔀 '+(m.flowDx?m.flowDx.title:'Fluxograma diagnóstico')+'</h3>';
-  h+='<p style="color:var(--text-soft);font-size:.85rem;margin-bottom:12px">Clique nas respostas para percorrer o raciocínio.</p>';
-  h+=renderFlowNode(m)+'</div>';
-  if(m.flowMx){
-    h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:10px">🧭 '+m.flowMx.title+'</h3><div class="flow">';
-    m.flowMx.steps.forEach((s,i)=>{ h+='<div class="flow-step"><div class="n">'+(i+1)+'</div><div class="flow-node" style="flex:1">'+s+'</div></div>'; if(i<m.flowMx.steps.length-1)h+='<div class="flow-arrow">↓</div>'; });
-    h+='</div></div>';
-  }
+/* ---- Fluxogramas VISUAIS (árvore de decisão sempre na tela) ---- */
+function flowTree(fd,key,visited){
+  if(visited.has(key)) return '';
+  const v=new Set(visited); v.add(key);
+  if(fd.results[key]){ const r=fd.results[key]; return '<div class="ft-result"><b>'+r.title+'</b><p>'+r.body+'</p></div>'; }
+  const node=fd.nodes[key]; if(!node) return '';
+  let h='<div class="ft-node q">'+node.q+'</div>';
+  node.opts.forEach(o=>{ h+='<div class="ft-branch"><span class="ft-opt">▸ '+o.t+'</span>'+flowTree(fd,o.go,v)+'</div>'; });
   return h;
 }
-function renderFlowNode(m){
-  const cur=flowState[m.id].dx; if(!m.flowDx||!cur) return '<p>—</p>';
-  if(m.flowDx.nodes[cur]){
-    const node=m.flowDx.nodes[cur];
-    return '<div class="flow-node q"><b>'+node.q+'</b><div class="flow-opts">'+node.opts.map(o=>'<button class="btn-sm" onclick="flowGo(\''+m.id+'\',\''+o.go+'\')">'+o.t+'</button>').join('')+'</div></div>';
-  }
-  const r=m.flowDx.results[cur];
-  return '<div class="flow-node"><div class="flow-result"><b style="color:var(--teal);font-size:1.05rem">'+r.title+'</b><p style="color:var(--text-soft);margin-top:6px;font-size:.9rem">'+r.body+'</p></div><button class="btn-sm btn-ghost" style="margin-top:12px" onclick="flowReset(\''+m.id+'\')">↺ Recomeçar</button></div>';
+function renderFlowDx(m){
+  if(!m.flowDx) return '<div class="card glass"><p style="color:var(--text-soft)">Sem fluxograma diagnóstico para esta matéria.</p></div>';
+  return '<div class="card glass"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:4px">🔀 '+m.flowDx.title+'</h3>'
+    +'<p class="flow-legend">Árvore de decisão completa — acompanhe as setas conforme cada resposta.</p>'
+    +'<div class="flowtree">'+flowTree(m.flowDx,m.flowDx.start,new Set())+'</div></div>';
 }
-window.flowGo=function(id,go){ flowState[id].dx=go; renderTab(); addNP(2); };
-window.flowReset=function(id){ flowState[id].dx=byId(id).flowDx.start; renderTab(); };
+function renderFlowMx(m){
+  if(!m.flowMx) return '<div class="card glass"><p style="color:var(--text-soft)">Sem fluxograma de conduta para esta matéria.</p></div>';
+  let h='<div class="card glass"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:10px">🧭 '+m.flowMx.title+'</h3><div class="flow">';
+  m.flowMx.steps.forEach((s,i)=>{ h+='<div class="flow-step"><div class="n">'+(i+1)+'</div><div class="flow-node" style="flex:1">'+s+'</div></div>'; if(i<m.flowMx.steps.length-1)h+='<div class="flow-arrow">↓</div>'; });
+  h+='</div></div>'; return h;
+}
 
 /* ---- Questões ---- */
 function renderQuestions(m){
@@ -2078,26 +2185,59 @@ function dailyPicks(){
   const pick=(arr,n,s)=>{ const a=[...arr]; const out=[]; for(let k=0;k<n&&a.length;k++){ const idx=Math.floor(seededRandom(s+k*7)*a.length); out.push(a.splice(idx,1)[0]); } return out; };
   return { q:pick(allQ,5,seed), f:pick(allF,5,seed+99), challenge:pick(allQ,3,seed+555) };
 }
+let dfc={idx:0,flip:false,day:null};
 function renderEstudos(){
-  const d=dailyPicks(); const sp=SP();
+  const d=dailyPicks(); const sp=SP(); const t=todayStr();
+  if(dfc.day!==t){ dfc={idx:0,flip:false,day:t}; }
+  const ds=(sp.dailyStats||{})[t]||{q:0,f:0};
   let h=`<div class="page-head"><div class="crumb">Rotina · ${new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})}</div>
-    <h1>📅 Estudos do Dia</h1><p>Conjunto novo todos os dias: questões e flashcards aleatórios, desafio e revisões pendentes.</p></div>`;
-  h+='<div class="grid g-3">'+statCard('🔥',(sp.studyStreak||0)+'d','Sequência')+statCard('❓',d.q.length,'Questões de hoje')+statCard('🎴',d.f.length,'Flashcards de hoje')+'</div>';
-  h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:10px">❓ Questões do dia</h3>';
-  d.q.forEach(x=>{ const ans=(State.data.questions[x.mod]||{})[x.i];
-    h+='<div class="flow-node q" onclick="openModule(\''+x.mod+'\');setTimeout(()=>setTab(\'questoes\'),60)"><b>'+x.emoji+' '+x.title+'</b><p style="color:var(--text-soft);font-size:.86rem;margin-top:4px">'+x.q.stem.slice(0,120)+'…</p>'+(ans?'<span class="pill teal" style="margin-top:6px">'+(ans.correct?'✓ Acertou':'✗ Errou')+'</span>':'<span class="pill" style="margin-top:6px">pendente</span>')+'</div>'; });
+    <h1>📅 Estudos do Dia</h1><p>Resolva tudo aqui mesmo — questões e flashcards se renovam automaticamente a cada dia.</p></div>`;
+  h+='<div class="grid g-3">'+statCard('🔥',(sp.studyStreak||0)+'d','Sequência')+statCard('❓',ds.q,'Questões hoje')+statCard('🎴',ds.f,'Flashcards hoje')+'</div>';
+  // Questões do dia — interativas
+  h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:12px">❓ Questões do dia</h3>';
+  if(d.q.length) d.q.forEach((x,n)=>{ h+=renderDailyQuestion(x); }); else h+='<p style="color:var(--text-soft)">Sem questões disponíveis.</p>';
   h+='</div>';
-  h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:10px">🎴 Flashcards do dia</h3>';
-  d.f.forEach(x=>{ h+='<div class="flow-node q" onclick="openModule(\''+x.mod+'\');setTimeout(()=>setTab(\'flashcards\'),60)"><b>'+x.title+'</b><p style="color:var(--text-soft);font-size:.86rem;margin-top:4px">'+x.c.q+'</p></div>'; });
+  // Flashcards do dia — deck virável
+  h+=renderDailyDeck(d.f);
+  // Desafio do dia — também interativo
+  h+='<div class="card glass" style="margin-top:16px;border-color:rgba(245,196,81,.4)"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:6px">🏅 Desafio do dia</h3><p style="color:var(--text-soft);font-size:.86rem;margin-bottom:10px">3 questões mistas para fechar o dia.</p>';
+  d.challenge.forEach(x=>{ h+=renderDailyQuestion(x); });
   h+='</div>';
-  h+='<div class="card glass" style="margin-top:16px;border-color:rgba(245,196,81,.4)"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:6px">🏅 Desafio do dia</h3><p style="color:var(--text-soft);font-size:.88rem">Resolva 3 questões mistas valendo NeuroPontos em dobro. Clique para ir ao módulo correspondente.</p><div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">';
-  d.challenge.forEach(x=>{ h+='<button class="btn btn-ghost btn-sm" style="justify-content:flex-start" onclick="openModule(\''+x.mod+'\');setTimeout(()=>setTab(\'questoes\'),60)">'+x.emoji+' '+x.title+'</button>'; });
-  h+='</div></div>';
+  // Revisão pendente + temas pendentes (sugestões para aprofundar)
   const pend=MODULES.filter(m=>moduleProgress(m)<50);
   h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:6px">📌 Temas pendentes</h3>'
-    +(pend.length?'<div class="grid g-3" style="margin-top:8px">'+pend.map(modCardHTML).join('')+'</div>':'<p style="color:var(--text-soft)">Nenhum tema crítico pendente. Excelente! 🎉</p>')+'</div>';
+    +(pend.length?'<p style="color:var(--text-soft);font-size:.85rem;margin-bottom:8px">Sugestões para estudar a fundo na aba Módulos.</p><div class="grid g-3">'+pend.map(modCardHTML).join('')+'</div>':'<p style="color:var(--text-soft)">Nenhum tema crítico pendente. Excelente! 🎉</p>')+'</div>';
   return h;
 }
+function renderDailyQuestion(x){
+  const letters=['A','B','C','D','E']; const ans=(State.data.questions[x.mod]||{})[x.i];
+  let h='<div class="daily-q"><div class="qsrc">'+x.emoji+' '+x.title+'</div><div class="q-stem">'+x.q.stem+'</div>';
+  x.q.opts.forEach((o,j)=>{ let cls=''; if(ans){ if(j===x.q.correct)cls='correct'; else if(j===ans.chosen)cls='wrong'; cls+=' disabled'; }
+    h+='<div class="q-opt '+cls+'" '+(ans?'':'onclick="answerDailyQ(\''+x.mod+'\','+x.i+','+j+')"')+'><span class="letter">'+letters[j]+'</span><span>'+o+'</span></div>'; });
+  h+='<div class="q-expl '+(ans?'show':'')+'"><b>Comentário:</b> '+x.q.expl+'</div></div>';
+  return h;
+}
+window.answerDailyQ=function(mod,i,j){
+  const m=byId(mod); const correct=(j===m.questions[i].correct);
+  State.data.questions[mod]=State.data.questions[mod]||{}; State.data.questions[mod][i]={chosen:j,correct};
+  bumpDaily('q'); addNP(correct?10:3, correct?'questão certa!':null); if(correct)toast('✅ Resposta correta!','');
+  refreshProgress(); persist(); navigate('estudos');
+};
+function renderDailyDeck(cards){
+  if(!cards.length) return '';
+  const i=dfc.idx%cards.length; const x=cards[i];
+  return `<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:12px">🎴 Flashcards do dia</h3>
+    <div class="fc-stage"><div class="fc ${dfc.flip?'flip':''}" id="dailyFc" onclick="dfcFlip()">
+      <div class="fc-face fc-front"><span class="tagm">${x.c.tag} · ${x.title}</span><div class="fc-q">${x.c.q}</div><span class="fc-hint">clique para ver a resposta</span></div>
+      <div class="fc-face fc-back"><span class="tagm">resposta</span><div class="fc-a">${x.c.a}</div><span class="fc-hint">clique para voltar</span></div>
+    </div></div>
+    <div class="fc-rate"><button class="btn-sm rate-hard" onclick="dfcRate('hard')">😓 Difícil</button><button class="btn-sm rate-med" onclick="dfcRate('med')">🤔 Médio</button><button class="btn-sm rate-easy" onclick="dfcRate('easy')">😎 Fácil</button></div>
+    <div class="fc-controls"><button class="btn-sm btn-ghost" onclick="dfcNav(-1)">← Anterior</button><button class="btn-sm btn-ghost" onclick="dfcNav(1)">Próximo →</button></div>
+    <div class="fc-counter">Cartão ${i+1} de ${cards.length}</div></div>`;
+}
+window.dfcFlip=function(){ dfc.flip=!dfc.flip; const el=document.getElementById('dailyFc'); if(el)el.classList.toggle('flip',dfc.flip); };
+window.dfcNav=function(dir){ const d=dailyPicks(); dfc.idx=(dfc.idx+dir+d.f.length)%d.f.length; dfc.flip=false; navigate('estudos'); };
+window.dfcRate=function(r){ const d=dailyPicks(); const x=d.f[dfc.idx%d.f.length]; State.data.flashcards[x.mod]=State.data.flashcards[x.mod]||{}; State.data.flashcards[x.mod][x.i]=r; bumpDaily('f'); addNP(r==='easy'?6:5); scheduleSpaced(x.mod,r); refreshProgress(); persist(); toast('🎴 Desempenho registrado',''); if(dfc.idx<d.f.length-1){dfc.idx++;dfc.flip=false;} navigate('estudos'); };
 function bumpDaily(type){ const sp=SP(); const t=todayStr(); sp.dailyStats=sp.dailyStats||{}; sp.dailyStats[t]=sp.dailyStats[t]||{q:0,f:0}; sp.dailyStats[t][type]++; }
 
 /* ============================================================
