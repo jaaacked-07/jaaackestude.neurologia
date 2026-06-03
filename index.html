@@ -428,6 +428,31 @@ table.med tr:hover td{background:var(--surface-2)}
 .loader{position:fixed;inset:0;display:grid;place-items:center;z-index:90;background:var(--bg)}
 .loader .ring{width:54px;height:54px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+/* Flashcards Inteligentes */
+.fc-creator{margin-top:16px;border:1px solid var(--border-strong);border-radius:18px;padding:16px;background:linear-gradient(150deg,rgba(167,139,250,.08),var(--surface))}
+.fcc-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.fcc-head b{font-family:var(--font-display);font-size:1.05rem}
+.fcc-counts{display:flex;gap:6px;flex-wrap:wrap}
+.fcc-types{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.fcc-type{font-size:.74rem;font-weight:700;padding:6px 11px;border-radius:99px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-soft);cursor:pointer;transition:.15s}
+.fcc-type.active{background:linear-gradient(100deg,var(--teal),var(--cyan));color:#06121b;border-color:transparent}
+.fcc-field{margin-bottom:8px}
+.fcc-field label{display:block;font-size:.72rem;font-weight:700;color:var(--text-soft);margin-bottom:3px}
+.fcc-input{width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:9px 11px;color:var(--text);font-family:var(--font-body);font-size:.9rem;resize:vertical}
+.fcc-input:focus{outline:none;border-color:var(--accent)}
+.fcc-row{display:flex;gap:8px;flex-wrap:wrap}.fcc-row .fcc-field{flex:1;min-width:150px}
+.usercard{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--border);border-radius:11px;margin-top:7px;background:var(--surface-2);font-size:.85rem}
+.usercard .uc-q{flex:1;color:var(--text)}
+.usercard .uc-meta{font-size:.66rem;color:var(--text-dim);font-family:var(--font-mono)}
+.uc-badge{font-size:.62rem;font-weight:800;padding:2px 7px;border-radius:6px;white-space:nowrap}
+.uc-due{background:rgba(251,191,36,.16);color:var(--amber)}
+.uc-mast{background:rgba(52,211,153,.16);color:var(--green)}
+.uc-del{cursor:pointer;color:var(--text-dim);font-weight:800}.uc-del:hover{color:var(--red)}
+.sr-rate{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.sr-rate .btn-sm{flex:1;min-width:84px;max-width:130px}
+.rate-err{background:rgba(248,113,113,.16);color:var(--red);border:1px solid rgba(248,113,113,.3)}
+.cf-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.cf-filters select,.cf-filters input{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:9px 11px;color:var(--text);font-family:var(--font-body);font-size:.88rem}
 </style>
 </head>
 <body>
@@ -510,17 +535,12 @@ table.med tr:hover td{background:var(--surface-2)}
 
 <div class="toast-wrap" id="toasts"></div>
 
-<!-- Firebase SDK (compat) — scripts clássicos, carregam de forma confiável no GitHub Pages -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
 <script>
 /* ============================================================
-   FIREBASE + DATA LAYER  (SDK compat via <script> + fallback local)
-   O Firebase é carregado por scripts clássicos acima. Se eles não
-   carregarem (sem rede), a interface continua funcionando com
-   armazenamento local.
+   FIREBASE + DATA LAYER  (carregamento NÃO-bloqueante + fallback local)
+   O Firebase é carregado por injeção dinâmica, então NUNCA trava a
+   renderização. A tela de acesso aparece na hora; se o Firebase não
+   carregar, a plataforma funciona com armazenamento local.
    ============================================================ */
 const firebaseConfig = {
   apiKey: "AIzaSyAKN3qsYIc3pel81vl8WEAH6Ob4oR-icAM",
@@ -534,9 +554,21 @@ const firebaseConfig = {
 const PLATFORM_ID = "neuroresidencia";
 
 let fb = { ok:false, auth:null, db:null };
-function initFirebase(){
+function loadScriptOnce(src){
+  return new Promise((resolve,reject)=>{
+    const s=document.createElement('script');
+    s.src=src; s.async=true;
+    s.onload=()=>resolve();
+    s.onerror=()=>reject(new Error('Falha ao carregar '+src));
+    document.head.appendChild(s);
+  });
+}
+async function initFirebase(){
   try{
-    if(typeof firebase==='undefined' || !firebase.initializeApp) throw new Error('SDK do Firebase não carregou');
+    await loadScriptOnce("https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js");
+    await loadScriptOnce("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js");
+    await loadScriptOnce("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js");
+    if(typeof firebase==='undefined' || !firebase.initializeApp) throw new Error('SDK do Firebase indisponível');
     if(!firebase.apps || !firebase.apps.length) firebase.initializeApp(firebaseConfig);
     fb.auth = firebase.auth();
     fb.db = firebase.firestore();
@@ -562,7 +594,7 @@ const State = {
   uid:null, email:null, name:"Estudante", usingLocal:false,
   data:{
     checklists:{}, questions:{}, flashcards:{}, notes:{}, highlights:{}, favorites:[],
-    spaced:{}, dailySeed:null, dailyDone:{q:0,f:0},
+    spaced:{}, dailySeed:null, dailyDone:{q:0,f:0}, userCards:[],
     surgeonProgress:{
       currentPhase:1, cyclePercentage:0, completedStages:[], achievements:[],
       studyStreak:0, lastStreakDay:null, questionsAnswered:0, correctAnswers:0,
@@ -755,38 +787,143 @@ MODULES.push({
   title:'AVE Isquêmico', sub:'Isquemia cerebral, NIHSS, trombólise e trombectomia',
   prio:'altíssima', topics:['AVE isquêmico','NIHSS','Trombólise','Trombectomia','TOAST'],
   subtopics:[
-   {label:'Visão geral',html:`<h3>🩸 AVE Isquêmico — a base</h3>
-<p>Representa ~85% dos AVCs. Uma artéria entope por <strong>trombo</strong> (forma no local, sobre placa) ou <strong>êmbolo</strong> (vem de longe, ex.: coração na FA). Sem fluxo, o núcleo morre e ao redor há a <strong>penumbra</strong> — tecido salvável que é o alvo do tratamento.</p>
-<div class="callout fast"><b>Regra de ouro</b>Déficit focal súbito → <strong>TC sem contraste</strong> para excluir sangue ANTES de qualquer reperfusão. "Time is brain": cada minuto conta.</div>
-<div class="callout mne"><b>SAMU / FAST</b>Sorriso torto · Abraço (braço cai) · Mensagem (fala enrolada) · Urgente (192).</div>`},
-   {label:'Etiologia (TOAST)',html:`<h3>Classificação etiológica (TOAST)</h3>
-<table class="med"><tr><th>Subtipo</th><th>Pista</th><th>Prevenção</th></tr>
-<tr><td>Grande artéria (aterosclerose)</td><td>Sopro carotídeo, estenose</td><td>Antiagregação + estatina ± endarterectomia</td></tr>
-<tr><td>Cardioembólico</td><td><strong>Fibrilação atrial</strong>, IAM</td><td>Anticoagulação</td></tr>
-<tr><td>Lacunar (pequenos vasos)</td><td>HAS/DM, síndromes puras</td><td>Controle de HAS/DM</td></tr>
-<tr><td>Outras / indeterminado</td><td>Dissecção (jovem); criptogênico</td><td>Conforme causa</td></tr></table>`},
-   {label:'NIHSS',html:`<h3>📏 NIHSS — gravidade</h3>
-<table class="med"><tr><th>NIHSS</th><th>Gravidade</th></tr><tr><td>1–4</td><td>Leve</td></tr><tr><td>5–15</td><td>Moderado</td></tr><tr><td>16–20</td><td>Mod-grave</td></tr><tr><td>21–42</td><td>Grave</td></tr></table>
-<div class="callout trap"><b>Pegadinha</b>NIHSS <strong>subestima a circulação posterior</strong> (tronco/cerebelo): vertigem + ataxia + diplopia podem dar NIHSS baixo e ser AVC grave.</div>`},
-   {label:'Trombólise',html:`<h3>💉 Trombólise endovenosa</h3>
-<p><strong>1.</strong> Horário zero = último visto bem. <strong>2.</strong> TC sem sangue. <strong>3.</strong> Alteplase 0,9 mg/kg (máx 90) ou tenecteplase 0,25 mg/kg — janela <strong>até 4,5h</strong>.</p>
-<table class="med"><tr><th>Contraindicações principais</th></tr><tr><td>Hemorragia na TC; AVC/TCE grave &lt;3 meses</td></tr><tr><td>Sangramento ativo; plaquetas &lt;100.000; INR &gt;1,7</td></tr><tr><td>PA &gt;185×110 refratária; glicemia &lt;50</td></tr></table>
-<div class="callout trap"><b>Erro clássico de PA</b>Para trombolisar: <strong>PA &lt;185×110</strong>. Se NÃO vai trombolisar: tratar só se <strong>&gt;220×120</strong> (permissiva).</div>`},
-   {label:'Trombectomia',html:`<h3>🧲 Trombectomia mecânica</h3>
-<p>Para <strong>oclusão de grande vaso</strong> (carótida, ACM proximal/M1). Janela: até <strong>6h</strong> de rotina; <strong>6–24h</strong> em grande vaso com mismatch (DAWN/DEFUSE-3). Pode ser feita junto da trombólise.</p>
-<div class="callout tip"><b>Chave</b>O que habilita a janela estendida é grande vaso + tecido salvável (mismatch), não a idade.</div>`},
+   {label:'1. O que é (e por que acontece)',html:`<h3>🩸 Entendendo o AVE isquêmico do zero</h3>
+<p>Imagine que o cérebro é uma cidade e as artérias são os <b>canos que levam água (sangue com oxigênio)</b> a cada bairro. Se um cano entope, o bairro fica sem água e os moradores (os neurônios) começam a morrer. Isso é o AVE isquêmico: a <b>interrupção súbita do fluxo de sangue</b> a uma parte do cérebro.</p>
+<p>Ele é o tipo mais comum de AVC — cerca de <b>85%</b> dos casos (os outros 15% são hemorrágicos, quando o cano se rompe).</p>
+<h3>Por que entope? (os dois mecanismos)</h3>
+<table class="med"><tr><th>Mecanismo</th><th>O que é (em palavras simples)</th><th>Exemplo típico</th></tr>
+<tr><td><b>Trombótico</b></td><td>O coágulo se forma ali mesmo, geralmente sobre uma placa de gordura (aterosclerose) que foi estreitando o cano ao longo dos anos</td><td>Hipertenso/diabético com placa na carótida</td></tr>
+<tr><td><b>Embólico</b></td><td>O coágulo se forma <b>longe</b> (no coração ou numa carótida) e viaja pela corrente até entupir um cano menor no cérebro</td><td>Paciente com fibrilação atrial (coração arritmico que forma coágulos)</td></tr></table>
+<h3>Núcleo e penumbra — o conceito que decide o tratamento</h3>
+<p>Quando o cano entope, a região afetada tem duas partes:</p>
+<ul>
+<li><b>Núcleo (core):</b> o centro, que ficou totalmente sem sangue. Esse tecido <b>já morreu</b> e não tem volta.</li>
+<li><b>Penumbra:</b> a borda ao redor, que recebe um pouquinho de sangue de canos vizinhos. Está "em coma", sofrendo, mas <b>ainda viva e salvável</b> — se reabrirmos o cano a tempo.</li>
+</ul>
+<div class="callout fast"><b>"Tempo é cérebro" (time is brain)</b>A cada minuto de AVC sem tratamento, perdem-se cerca de <b>1,9 milhão de neurônios</b>. Por isso AVE é <b>emergência absoluta</b>: quanto antes reabrirmos o cano, mais penumbra (cérebro) salvamos. Todo o tratamento gira em torno de <b>ganhar tempo</b>.</div>
+<div class="callout mne"><b>Guarde esta lógica</b>① Reconhecer rápido → ② Excluir hemorragia (TC) → ③ Reabrir o vaso dentro da janela. É isso que você vai detalhar nas próximas seções.</div>`},
+   {label:'2. Como se manifesta (por território)',html:`<h3>🧭 O quadro clínico depende de QUAL cano entupiu</h3>
+<p>Como cada artéria irriga uma região diferente, os sintomas "denunciam" o local. Você não precisa decorar tudo, mas entender a lógica ajuda a acertar questões.</p>
+<p><b>A marca registrada de qualquer AVC é: déficit neurológico FOCAL e SÚBITO</b> (instala-se em segundos/minutos). "Focal" = atinge uma função/região específica (um lado do corpo, a fala...), diferente de algo difuso como desmaio ou confusão global.</p>
+<h3>Artéria cerebral média (ACM) — a mais comum</h3>
+<p>Irriga a maior parte da face lateral do cérebro (área motora/sensitiva de <b>face e braço</b>, e as áreas da linguagem no lado dominante).</p>
+<ul><li><b>Hemiparesia/hemiplegia</b> contralateral (lado oposto ao AVC), pior em <b>face e braço</b> que na perna.</li>
+<li>Perda de sensibilidade do mesmo lado.</li>
+<li>Se for o hemisfério dominante (esquerdo, na maioria): <b>afasia</b> (dificuldade de falar/entender).</li>
+<li>Se o não-dominante: <b>negligência</b> (ignora o lado esquerdo do corpo/espaço).</li>
+<li>Desvio do olhar para o lado da lesão.</li></ul>
+<h3>Artéria cerebral anterior (ACA)</h3>
+<p>Irriga a parte interna/superior — área motora da <b>perna</b>. Dá hemiparesia <b>predominante na perna</b> contralateral, às vezes com alterações de comportamento.</p>
+<h3>Artéria cerebral posterior (ACP)</h3>
+<p>Irriga o lobo occipital (visão). Dá <b>perda de campo visual</b> (hemianopsia) contralateral, com força geralmente preservada.</p>
+<h3>Circulação posterior (vertebrobasilar — tronco e cerebelo)</h3>
+<p>Aqui moram funções vitais. Pense nos <b>"Ds"</b>: <b>D</b>iplopia (visão dupla), <b>D</b>isartria (fala arrastada), <b>D</b>isfagia (engasgo), <b>D</b>esequilíbrio/ataxia, <b>D</b>izziness (vertigem). Pode haver déficits cruzados (face de um lado, corpo do outro) e rebaixamento de consciência.</p>
+<div class="callout trap"><b>Pegadinha clássica</b>Vertigem + ataxia + diplopia podem ser um <b>AVC de fossa posterior grave</b> e ainda assim dar NIHSS baixo. Não descarte AVC só porque "a pontuação foi baixa".</div>
+<h3>Lacunar (pequenos vasos)</h3>
+<p>Entope um vaso minúsculo profundo (típico de HAS/DM). Dá síndromes "puras": só motora, ou só sensitiva — sem afasia nem alteração visual.</p>
+<div class="callout mne"><b>Reconhecimento rápido — SAMU (192)</b><b>S</b>orriso torto · <b>A</b>braço (um braço cai) · <b>M</b>ensagem (fala enrolada) · <b>U</b>rgente, ligue 192. Equivale ao "FAST" internacional (Face, Arm, Speech, Time).</div>`},
+   {label:'3. Diagnóstico passo a passo',html:`<h3>🔬 O que fazer, na ordem, quando chega um suspeito de AVC</h3>
+<p>O diagnóstico é <b>clínico + tempo + imagem</b>. Siga o roteiro do pronto-socorro:</p>
+<table class="med"><tr><th>Passo</th><th>O que fazer</th><th>Por quê</th></tr>
+<tr><td>1</td><td><b>ABC</b> e sinais vitais; O₂ só se SatO₂&lt;94%</td><td>Estabilizar; oxigênio demais não ajuda</td></tr>
+<tr><td>2</td><td><b>Glicemia capilar</b> imediata</td><td>Hipoglicemia <b>imita</b> AVC e é reversível na hora</td></tr>
+<tr><td>3</td><td>Definir o <b>horário do último momento "bem"</b> (last seen well)</td><td>É esse horário, não o de chegada, que define a janela de tratamento</td></tr>
+<tr><td>4</td><td>Exame neurológico + <b>NIHSS</b></td><td>Mede a gravidade e serve de base para comparar a evolução</td></tr>
+<tr><td>5</td><td><b>TC de crânio SEM contraste</b> (urgente)</td><td>Primeira pergunta a responder: <b>tem sangue?</b> Se houver, é hemorrágico — muda tudo</td></tr>
+<tr><td>6</td><td>Conforme o serviço: <b>angio-TC</b> e/ou <b>TC de perfusão</b></td><td>Procurar oclusão de grande vaso e medir a penumbra salvável</td></tr></table>
+<h3>Por que a TC vem antes de tudo?</h3>
+<p>Porque o tratamento do isquêmico (dissolver/retirar o coágulo) seria <b>desastroso</b> num hemorrágico. A TC sem contraste é rápida e ótima para ver sangue. Nas primeiras horas, o infarto isquêmico costuma ser <b>sutil ou invisível</b> na TC — e tudo bem: o que importa agora é <b>excluir sangue</b>.</p>
+<h3>"Stroke mimics" — o que pode se passar por AVC</h3>
+<p>Sempre pense nos imitadores antes de tratar:</p>
+<ul><li><b>Hipoglicemia</b> (por isso a glicemia é obrigatória).</li>
+<li><b>Crise epiléptica</b> com paralisia de Todd (fraqueza transitória pós-crise).</li>
+<li><b>Aura de enxaqueca</b> (sintomas que "marcham" e revertem).</li>
+<li><b>Transtorno conversivo</b>, intoxicações, encefalopatias.</li></ul>
+<div class="callout warn"><b>Regra de ouro</b>Diante de déficit focal súbito: <b>glicemia + TC sem contraste</b>. Sem sangue na TC e dentro da janela → pense em reabrir o vaso (próximas seções).</div>`},
+   {label:'4. NIHSS na prática',html:`<h3>📏 NIHSS: a "régua" da gravidade do AVC</h3>
+<p>NIHSS (National Institutes of Health Stroke Scale) é uma escala de <b>0 a 42</b> que pontua vários domínios neurológicos. Quanto maior, mais grave. Ela serve para: <b>(1)</b> medir a gravidade, <b>(2)</b> ajudar a decidir o tratamento e <b>(3)</b> acompanhar a evolução (melhorou? piorou?).</p>
+<table class="med"><tr><th>O que ela avalia (resumo)</th></tr>
+<tr><td>Nível de consciência e perguntas/comandos</td></tr>
+<tr><td>Olhar e campos visuais</td></tr>
+<tr><td>Paralisia facial</td></tr>
+<tr><td>Força nos 4 membros</td></tr>
+<tr><td>Ataxia, sensibilidade</td></tr>
+<tr><td>Linguagem (afasia), fala (disartria) e negligência</td></tr></table>
+<table class="med"><tr><th>Pontuação</th><th>Gravidade</th></tr><tr><td>0</td><td>Sem déficit</td></tr><tr><td>1–4</td><td>Leve</td></tr><tr><td>5–15</td><td>Moderado</td></tr><tr><td>16–20</td><td>Moderado a grave</td></tr><tr><td>21–42</td><td>Grave</td></tr></table>
+<div class="callout trap"><b>A pegadinha que mais cai</b>A NIHSS <b>valoriza pouco a circulação posterior</b> (tronco e cerebelo). Um AVC de tronco pode ser gravíssimo e pontuar baixo. Nunca use "NIHSS baixa" para descartar AVC nem para negar tratamento se houver oclusão de grande vaso.</div>
+<div class="callout tip"><b>Uso prático</b>NIHSS muito alta sugere oclusão de grande vaso (candidato a trombectomia). Mas mesmo déficits "leves", porém incapacitantes (ex.: afasia isolada), podem indicar trombólise.</div>`},
+   {label:'5. Etiologia (classificação TOAST)',html:`<h3>🧬 De onde veio o coágulo? (e por que isso importa)</h3>
+<p>Descobrir a <b>causa</b> não muda só a curiosidade acadêmica — define a <b>prevenção</b> para o paciente não ter outro AVC. A classificação <b>TOAST</b> divide em 5 grupos:</p>
+<table class="med"><tr><th>Subtipo</th><th>Como reconhecer</th><th>Prevenção (a chave da prova)</th></tr>
+<tr><td><b>Aterosclerose de grande artéria</b></td><td>Placa/estenose (ex.: sopro na carótida); déficits corticais</td><td>Antiagregante + estatina; se estenose carotídea sintomática importante → <b>endarterectomia/stent</b></td></tr>
+<tr><td><b>Cardioembólico</b></td><td><b>Fibrilação atrial</b>, IAM recente, prótese valvar, trombo no coração</td><td><b>Anticoagulação</b> (não é antiagregante!)</td></tr>
+<tr><td><b>Pequenos vasos (lacunar)</b></td><td>HAS/DM; síndromes puras (só motora ou só sensitiva)</td><td>Controle rigoroso de PA e diabetes + antiagregante</td></tr>
+<tr><td><b>Outra causa definida</b></td><td><b>Dissecção arterial</b> (jovem, após trauma cervical), trombofilias, vasculites</td><td>Tratar a causa específica</td></tr>
+<tr><td><b>Indeterminada</b></td><td>Investigação negativa ou múltiplas causas</td><td>Investigar mais (Holter prolongado pode achar FA oculta)</td></tr></table>
+<div class="callout mne"><b>Macete que vale ouro</b>Achou <b>fibrilação atrial</b>? → pense <b>ANTICOAGULAR</b>. Achou <b>placa na carótida</b>? → pense <b>ANTIAGREGAR + avaliar cirurgia</b>. Esses dois cenários caem muito.</div>
+<div class="callout tip"><b>AVC no jovem</b>Sem fatores de risco clássicos, pense em <b>dissecção</b>, forame oval patente, trombofilias e uso de drogas.</div>`},
+   {label:'6. Conduta — Trombólise',html:`<h3>💉 Reperfusão (1): trombólise endovenosa</h3>
+<p>Trombolisar = injetar um remédio que <b>dissolve o coágulo</b> ("destranca o cano") por dentro da veia. É o tratamento que reabre o fluxo e salva a penumbra. Os remédios são a <b>alteplase</b> (0,9 mg/kg, máx. 90 mg) ou a <b>tenecteplase</b> (0,25 mg/kg).</p>
+<h3>Passo a passo da decisão</h3>
+<table class="med"><tr><th>Passo</th><th>O que checar</th></tr>
+<tr><td>1</td><td><b>TC sem sangue</b> (excluiu hemorragia)</td></tr>
+<tr><td>2</td><td><b>Janela ≤ 4,5 horas</b> do último momento bem</td></tr>
+<tr><td>3</td><td><b>PA &lt; 185 × 110</b> mmHg (baixar com anti-hipertensivo EV se preciso, antes de liberar)</td></tr>
+<tr><td>4</td><td>Sem contraindicações (ver abaixo)</td></tr></table>
+<h3>Contraindicações principais (motivos para NÃO trombolisar)</h3>
+<ul><li>Hemorragia na TC; AVC isquêmico extenso ou TCE grave nos últimos 3 meses.</li>
+<li>Sangramento ativo; <b>plaquetas &lt; 100.000</b>; uso de anticoagulante com <b>INR &gt; 1,7</b>.</li>
+<li><b>PA &gt; 185 × 110</b> que não cede; glicemia &lt; 50 (corrigir e reavaliar).</li>
+<li>Cirurgia de grande porte recente, sangramento gastrointestinal recente.</li></ul>
+<div class="callout trap"><b>O erro de PA que derruba na prova — leia 3 vezes</b>① Se VAI trombolisar: PA precisa ficar <b>&lt; 185 × 110</b>. ② Se NÃO vai trombolisar: deixe a PA alta em paz (hipertensão <b>permissiva</b>) e só trate se passar de <b>220 × 120</b>. Inverter isso é o erro mais comum.</div>
+<h3>Depois de trombolisar</h3>
+<ul><li>Manter PA <b>&lt; 180 × 105</b> por 24h (reduz transformação hemorrágica).</li>
+<li><b>Não</b> dar antiagregante/anticoagulante nas primeiras 24h.</li>
+<li>Vigiar a complicação temida: <b>hemorragia intracraniana</b> (piora súbita, cefaleia, queda de consciência → TC imediata).</li>
+<li>Sempre avaliar se há oclusão de grande vaso para encaminhar à trombectomia.</li></ul>`},
+   {label:'7. Conduta — Trombectomia',html:`<h3>🧲 Reperfusão (2): trombectomia mecânica</h3>
+<p>Quando o entupimento é num <b>vaso grande</b> (carótida intracraniana, segmento M1 da cerebral média, basilar), o remédio sozinho muitas vezes não basta. Aí entra a trombectomia: por um cateter (geralmente pela artéria da virilha), o neurorradiologista chega até o coágulo e o <b>retira fisicamente</b> com um dispositivo (stent retriever/aspiração).</p>
+<h3>Quem é candidato</h3>
+<ul><li><b>Oclusão de grande vaso</b> confirmada (angio-TC).</li>
+<li>Janela: <b>até 6 horas</b> de rotina.</li>
+<li><b>6 a 24 horas</b>: ainda pode, se exames de imagem (perfusão) mostrarem <b>muito tecido salvável</b> em relação ao já perdido — o conceito de <b>mismatch</b> (estudos DAWN e DEFUSE-3).</li></ul>
+<div class="callout tip"><b>Entenda o "mismatch" sem decoreba</b>É a comparação entre o que já morreu (núcleo) e o que ainda dá para salvar (penumbra). Se sobra muita penumbra, vale a pena ir buscar o coágulo mesmo tardiamente. <b>O que abre a janela estendida é a imagem, não a idade do paciente.</b></div>
+<p>A trombólise e a trombectomia <b>não competem</b>: se o paciente preenche critérios para as duas, faz-se a trombólise e encaminha-se para a trombectomia (não se atrasa uma pela outra).</p>
+<div class="callout fast"><b>Resumo de bolso</b>Vaso pequeno/dentro de 4,5h → trombólise. Vaso GRANDE → trombectomia (até 6h; até 24h se houver mismatch).</div>`},
+   {label:'8. Prevenção e unidade de AVC',html:`<h3>🛡️ Depois da fase aguda: evitar o próximo</h3>
+<p>Reabrir o vaso é só o começo. O paciente deve ir para uma <b>Unidade de AVC</b> (reduz mortalidade e sequelas) e iniciar a <b>prevenção secundária</b>, guiada pela causa (TOAST):</p>
+<table class="med"><tr><th>Pilar</th><th>Conduta</th></tr>
+<tr><td><b>Antitrombótico</b></td><td>Aterosclerose/lacunar → <b>antiagregante</b> (AAS; ou dupla AAS+clopidogrel por curto período em casos selecionados). Cardioembólico (FA) → <b>anticoagulação</b></td></tr>
+<tr><td><b>Estatina</b></td><td>Alta potência (ex.: atorvastatina) para estabilizar placas</td></tr>
+<tr><td><b>Pressão arterial</b></td><td>Controle (após a fase aguda); principal fator de risco modificável</td></tr>
+<tr><td><b>Diabetes / tabagismo</b></td><td>Controle glicêmico; cessar tabagismo</td></tr>
+<tr><td><b>Carótida</b></td><td>Estenose sintomática importante → endarterectomia ou stent</td></tr></table>
+<h3>Cuidados gerais que salvam (e caem em prova)</h3>
+<ul><li><b>Disfagia</b>: testar a deglutição <b>antes</b> de oferecer água/comida (risco de broncoaspiração e pneumonia).</li>
+<li>Profilaxia de TVP, mobilização precoce, reabilitação (fono, fisio, TO).</li>
+<li>Rastrear e tratar depressão pós-AVC.</li></ul>
+<div class="callout mne"><b>Fechando o raciocínio</b>Agudo: reconhecer → TC → reabrir o vaso na janela. Depois: unidade de AVC + prevenção pela causa. Esse é o caminho completo que uma prova de residência cobra.</div>`},
    {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — AVE Isquêmico</h3>
 <div class="mindmap"><div class="mm-center">AVE ISQUÊMICO</div><div class="mm-trunk"></div><div class="mm-branches">
-<div class="mm-branch"><b>Dx</b><ul><li>Súbito + TC sem sangue</li><li>NIHSS</li></ul></div>
-<div class="mm-branch"><b>Reperfusão</b><ul><li>≤4,5h trombólise</li><li>≤6–24h trombectomia (grande vaso)</li></ul></div>
-<div class="mm-branch"><b>PA</b><ul><li>Trombólise &lt;185×110</li><li>Sem trombólise &gt;220×120</li></ul></div>
-<div class="mm-branch"><b>Etiologia</b><ul><li>FA → anticoagular</li><li>Carótida → antiagregar</li></ul></div>
+<div class="mm-branch"><b>Conceito</b><ul><li>Cano entupiu</li><li>Núcleo morto + penumbra salvável</li><li>Tempo é cérebro</li></ul></div>
+<div class="mm-branch"><b>Diagnóstico</b><ul><li>Glicemia</li><li>Último visto bem</li><li>TC sem contraste (sangue?)</li><li>NIHSS</li></ul></div>
+<div class="mm-branch"><b>Reperfusão</b><ul><li>≤4,5h: trombólise</li><li>Grande vaso: trombectomia (≤6h; ≤24h se mismatch)</li></ul></div>
+<div class="mm-branch"><b>PA</b><ul><li>Com trombólise &lt;185×110</li><li>Sem trombólise permissiva &gt;220×120</li></ul></div>
+<div class="mm-branch"><b>Causa → prevenção</b><ul><li>FA → anticoagular</li><li>Carótida → antiagregar + cirurgia</li></ul></div>
 </div></div>`},
-   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3><table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
-<tr><td>Déficit súbito</td><td>TC sem contraste</td></tr><tr><td>≤4,5h, sem sangue</td><td>Trombólise</td></tr><tr><td>Grande vaso ≤6–24h</td><td>Trombectomia</td></tr><tr><td>FA</td><td>Anticoagular após excluir transformação</td></tr></table>`},
-   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas e erros</h3>
-<div class="callout fast"><b>Dicas</b>① TC sempre antes de reperfundir. ② Horário = último visto bem. ③ Trombectomia + trombólise não se excluem.</div>
-<div class="callout trap"><b>Pegadinhas</b>① Confundir alvos de PA. ② Excluir reperfusão pela NIHSS baixa em fossa posterior. ③ Esquecer glicemia (hipo simula AVC).</div>`}
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera — só o que cai</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta automática</th></tr>
+<tr><td>Déficit focal súbito</td><td>Glicemia + TC sem contraste</td></tr>
+<tr><td>TC sem sangue, ≤4,5h</td><td>Trombólise (PA &lt;185×110)</td></tr>
+<tr><td>Oclusão de grande vaso ≤6h (ou ≤24h com mismatch)</td><td>Trombectomia</td></tr>
+<tr><td>NÃO vai trombolisar</td><td>PA permissiva (tratar só &gt;220×120)</td></tr>
+<tr><td>Fibrilação atrial</td><td>Anticoagular (prevenção)</td></tr>
+<tr><td>Estenose carotídea sintomática</td><td>Endarterectomia/stent</td></tr>
+<tr><td>Antes de dar água</td><td>Testar disfagia</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas de ouro</h3>
+<div class="callout fast"><b>Faça sempre</b>① Glicemia antes de tudo (hipoglicemia imita AVC). ② Horário = último visto bem. ③ TC sem contraste antes de qualquer reperfusão. ④ Trombólise e trombectomia se somam, não competem.</div>
+<h3>🚫 Pegadinhas que derrubam</h3>
+<div class="callout trap"><b>Cuidado</b>① Inverter os alvos de PA (com vs sem trombólise). ② Descartar AVC de fossa posterior por NIHSS baixa. ③ Esquecer de anticoagular o cardioembólico (dar só AAS). ④ Dar comida antes de testar a deglutição. ⑤ Achar que a janela estendida depende da idade — depende da <b>imagem (mismatch)</b>.</div>`}
   ],
   flowDx:{ title:'AVE isquêmico — diagnóstico', start:'s1', nodes:{
     s1:{q:'Déficit focal súbito + TC SEM sangue?',opts:[{t:'Sim',go:'s2'},{t:'TC com sangue',go:'rHem'}]},
@@ -1698,7 +1835,9 @@ function moduleProgress(m){
   const qd=State.data.questions[m.id]||{}; const ans=Object.keys(qd).length;
   const corr=Object.values(qd).filter(x=>x.correct).length; const qtot=(m.questions||[]).length||1;
   const qR=ans?Math.min(ans/qtot,1)*(corr/ans):0;
-  const fd=State.data.flashcards[m.id]||{}; const rev=Object.keys(fd).length; const ftot=(m.cards||[]).length||1;
+  const fd=State.data.flashcards[m.id]||{}; const fbrev=Object.keys(fd).length; const fbtot=(m.cards||[]).length;
+  const uc=(State.data.userCards||[]).filter(c=>c.matId===m.id); const ucrev=uc.filter(c=>(c.reviews||0)>0).length;
+  const ftot=(fbtot+uc.length)||1; const rev=fbrev+ucrev;
   const fR=Math.min(rev/ftot,1);
   return Math.min(100,Math.round(clR*40+qR*30+fR*30));
 }
@@ -1759,6 +1898,7 @@ const NAV=[
   {id:'favoritos',ic:'⭐',label:'Favoritos'},
   {id:'anotacoes',ic:'📝',label:'Minhas Anotações'},
   {id:'revisao',ic:'🔁',label:'Revisão Espaçada'},
+  {id:'central',ic:'🗂️',label:'Flashcards Inteligentes'},
   {id:'modulos',ic:'📚',label:'Módulos'},
   {sec:'Progresso'},
   {id:'brain',ic:'🧠',label:'Mapa Cerebral'},
@@ -1783,8 +1923,8 @@ window.navigate=function(view){
   const c=document.getElementById('content'); c.scrollTop=0;
   const R={dashboard:renderDashboard,estudos:renderEstudos,jornada:renderJornada,metas:renderMetas,
     temas:renderTemas,favoritos:renderFavoritos,anotacoes:renderAnotacoes,revisao:renderRevisao,
-    modulos:renderModulos,brain:renderBrain,conquistas:renderConquistas};
-  if(R[view]){ c.innerHTML='<div class="view">'+R[view]()+'</div>'; if(view==='brain')wireBrain(); if(view==='temas')wireTemas(); }
+    modulos:renderModulos,brain:renderBrain,conquistas:renderConquistas,central:renderCentral};
+  if(R[view]){ c.innerHTML='<div class="view">'+R[view]()+'</div>'; if(view==='brain')wireBrain(); if(view==='temas')wireTemas(); if(view==='central')wireCentral(); }
   else c.innerHTML='<div class="view"><p>Em breve.</p></div>';
   persist();
 };
@@ -1978,11 +2118,13 @@ function renderEnsino(m, subs){
   if(!subs.length) return '<div class="card glass"><p>—</p></div>';
   let idx=subState[m.id]||0; if(idx>subs.length-1)idx=0;
   const nav=subs.map((s,i)=>'<button class="subchip '+(i===idx?'active':'')+'" onclick="setSub(\''+m.id+'\','+i+')">'+(s.label||s.title||('Parte '+(i+1)))+'</button>').join('');
+  const subLabel=(subs[idx].label||subs[idx].title||('Parte '+(idx+1)));
   return '<div class="subnav">'+nav+'</div>'
     +'<div class="card glass"><div class="teach">'+subs[idx].html+'</div>'
     +(subs.length>1?'<div class="sub-foot"><button class="btn btn-ghost btn-sm" '+(idx===0?'disabled':'')+' onclick="setSub(\''+m.id+'\','+(idx-1)+')">← Anterior</button>'
     +'<span class="mono" style="color:var(--text-dim);font-size:.78rem">'+(idx+1)+' / '+subs.length+'</span>'
-    +'<button class="btn btn-ghost btn-sm" '+(idx===subs.length-1?'disabled':'')+' onclick="setSub(\''+m.id+'\','+(idx+1)+')">Próximo →</button></div>':'')+'</div>';
+    +'<button class="btn btn-ghost btn-sm" '+(idx===subs.length-1?'disabled':'')+' onclick="setSub(\''+m.id+'\','+(idx+1)+')">Próximo →</button></div>':'')+'</div>'
+    +renderCardCreator(m, subLabel);
 }
 window.setSub=function(id,i){ subState[id]=i; renderTab(); const el=document.getElementById('modBody'); if(el)el.scrollIntoView({behavior:'smooth',block:'start'}); };
 
@@ -2118,6 +2260,17 @@ function renderEstudos(){
   h+='</div>';
   // Flashcards do dia — deck virável
   h+=renderDailyDeck(d.f);
+  // Missões diárias + Flashcards Inteligentes pendentes
+  const ds2=(sp.dailyStats||{})[t]||{}; const created=ds2.created||0; const revd=ds2.f||0; const dueC=dueUserCards().length;
+  const missions=[
+    {ic:'✍️',label:'Criar flashcards',cur:created,goal:3},
+    {ic:'🔁',label:'Revisar flashcards',cur:revd,goal:10},
+    {ic:'❓',label:'Resolver questões',cur:ds2.q||0,goal:5}
+  ];
+  h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:10px">🎯 Missões do dia</h3><div class="grid g-3">';
+  missions.forEach(ms=>{ const pct=Math.min(100,Math.round(ms.cur/ms.goal*100)); h+='<div class="card" style="background:var(--surface-2)"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:.9rem">'+ms.ic+' '+ms.label+'</b><span class="mono" style="font-size:.78rem;color:'+(pct>=100?'var(--green)':'var(--text-dim)')+'">'+ms.cur+'/'+ms.goal+(pct>=100?' ✓':'')+'</span></div><div class="progress" style="margin-top:8px"><i style="width:'+pct+'%"></i></div></div>'; });
+  h+='</div></div>';
+  h+='<div class="card glass" style="margin-top:16px;border-color:rgba(167,139,250,.4)"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><div><b style="font-family:var(--font-display);font-size:1.1rem">🧠 Flashcards pendentes</b><p style="color:var(--text-soft);font-size:.84rem;margin-top:4px">'+(dueC?dueC+' cartões seus aguardam revisão hoje.':'Sem cartões pendentes — crie novos enquanto estuda!')+'</p></div>'+(dueC?'<button class="btn btn-primary" onclick="startCardReview()">▶️ Revisar agora</button>':'<button class="btn btn-ghost btn-sm" onclick="navigate(\'central\')">Central de Flashcards</button>')+'</div></div>';
   // Desafio do dia — também interativo
   h+='<div class="card glass" style="margin-top:16px;border-color:rgba(245,196,81,.4)"><h3 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:6px">🏅 Desafio do dia</h3><p style="color:var(--text-soft);font-size:.86rem;margin-bottom:10px">3 questões mistas para fechar o dia.</p>';
   d.challenge.forEach(x=>{ h+=renderDailyQuestion(x); });
@@ -2157,7 +2310,7 @@ function renderDailyDeck(cards){
 window.dfcFlip=function(){ dfc.flip=!dfc.flip; const el=document.getElementById('dailyFc'); if(el)el.classList.toggle('flip',dfc.flip); };
 window.dfcNav=function(dir){ const d=dailyPicks(); dfc.idx=(dfc.idx+dir+d.f.length)%d.f.length; dfc.flip=false; navigate('estudos'); };
 window.dfcRate=function(r){ const d=dailyPicks(); const x=d.f[dfc.idx%d.f.length]; State.data.flashcards[x.mod]=State.data.flashcards[x.mod]||{}; State.data.flashcards[x.mod][x.i]=r; bumpDaily('f'); addNP(r==='easy'?6:5); scheduleSpaced(x.mod,r); refreshProgress(); persist(); toast('🎴 Desempenho registrado',''); if(dfc.idx<d.f.length-1){dfc.idx++;dfc.flip=false;} navigate('estudos'); };
-function bumpDaily(type){ const sp=SP(); const t=todayStr(); sp.dailyStats=sp.dailyStats||{}; sp.dailyStats[t]=sp.dailyStats[t]||{q:0,f:0}; sp.dailyStats[t][type]++; }
+function bumpDaily(type){ const sp=SP(); const t=todayStr(); sp.dailyStats=sp.dailyStats||{}; sp.dailyStats[t]=sp.dailyStats[t]||{q:0,f:0}; if(typeof sp.dailyStats[t][type]!=='number')sp.dailyStats[t][type]=0; sp.dailyStats[t][type]++; }
 
 /* ============================================================
    MINHA JORNADA
@@ -2255,9 +2408,12 @@ function scheduleSpaced(id,rating){ const sp=SP(); const intervals={hard:1,med:3
 function renderRevisao(){
   const t=todayStr(); const sd=State.data.spaced;
   const due=MODULES.filter(m=>{ const s=sd[m.id]; return !s || (s.due && s.due<=t); });
-  let h=`<div class="page-head"><div class="crumb">Memória de longo prazo</div><h1>🔁 Revisão Espaçada</h1><p>O sistema agenda revisões com intervalos crescentes (1 → 3 → 7 → 16 → 35 dias) conforme seu desempenho nos flashcards.</p></div>`;
-  h+='<div class="grid g-3">'+statCard('📌',due.length,'Para revisar hoje')+statCard('🗂️',MODULES.length,'Módulos no ciclo')+statCard('🎴',SP().flashcardsReviewed||0,'Revisões totais')+'</div>';
-  h+='<h3 style="font-family:var(--font-display);margin:20px 0 10px">Pendentes de revisão</h3>';
+  let h=`<div class="page-head"><div class="crumb">Memória de longo prazo</div><h1>🔁 Revisão Espaçada</h1><p>O sistema agenda revisões com intervalos crescentes conforme seu desempenho nos flashcards.</p></div>`;
+  const dueCards=dueUserCards();
+  h+='<div class="grid g-3">'+statCard('📌',due.length,'Módulos a revisar')+statCard('🧠',dueCards.length,'Cartões a revisar')+statCard('🎴',SP().flashcardsReviewed||0,'Revisões totais')+'</div>';
+  // Flashcards Inteligentes devidos (alimentado automaticamente)
+  h+='<div class="card glass" style="margin-top:16px;border-color:rgba(167,139,250,.4)"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><div><b style="font-family:var(--font-display);font-size:1.1rem">🧠 Seus Flashcards Inteligentes</b><p style="color:var(--text-soft);font-size:.84rem;margin-top:4px">'+(dueCards.length?dueCards.length+' cartões pendentes de revisão hoje (de todas as matérias).':'Nenhum cartão pendente agora. 🎉')+'</p></div>'+(dueCards.length?'<button class="btn btn-primary" onclick="startCardReview()">▶️ Iniciar sessão</button>':'<button class="btn btn-ghost btn-sm" onclick="navigate(\'central\')">Abrir Central</button>')+'</div></div>';
+  h+='<h3 style="font-family:var(--font-display);margin:20px 0 10px">Módulos pendentes</h3>';
   if(due.length){ h+='<div class="grid g-2">'; due.forEach(m=>{ const s=sd[m.id]; h+='<div class="card glass" style="cursor:pointer" onclick="openModule(\''+m.id+'\');setTimeout(()=>setTab(\'flashcards\'),60)"><div style="display:flex;justify-content:space-between"><b>'+m.emoji+' '+m.title+'</b><span class="pill rose">revisar</span></div><p style="color:var(--text-soft);font-size:.84rem;margin-top:6px">'+(s?('Intervalo atual: '+s.interval+'d · revisões: '+s.reps):'Nunca revisado — comece o ciclo')+'</p></div>'; }); h+='</div>'; }
   else h+='<div class="card glass" style="text-align:center;padding:30px"><div style="font-size:2rem">✅</div><p style="color:var(--text-soft);margin-top:6px">Tudo revisado por hoje! Volte amanhã.</p></div>';
   return h;
@@ -2325,6 +2481,141 @@ function wireBrain(){
       +(mods.length?'<p style="margin-top:6px"><b>Módulos:</b> '+mods.map(m=>'<a style="cursor:pointer" onclick="openModule(\''+m.id+'\')">'+m.title+' ('+moduleProgress(m)+'%)</a>').join(', ')+'</p>':'<p style="margin-top:6px;color:var(--text-dim)">Conteúdo em construção.</p>');
   }
   document.querySelectorAll('.region[data-region],.region-row[data-region]').forEach(el=>el.onclick=()=>show(el.dataset.region));
+}
+
+/* ============================================================
+   FLASHCARDS INTELIGENTES — criação rápida + SR (Anki) + Central
+   (adição não-destrutiva; não altera funções existentes)
+   ============================================================ */
+const CARD_TYPES=[['basic','Frente / Verso'],['qa','Pergunta / Resposta'],['cloze','Cloze (lacuna)'],['tf','Verdadeiro / Falso'],['image','Imagem + Pergunta']];
+let creatorState={};
+function cardsFor(matId,subtema){ return (State.data.userCards||[]).filter(c=>c.matId===matId && (!subtema||c.subtema===subtema)); }
+function cardDue(c){ return !c.due || c.due<=todayStr(); }
+function cardMastered(c){ return (c.reps||0)>=4 || (c.interval||0)>=21; }
+function cardStats(list){ return { total:list.length, dominated:list.filter(cardMastered).length, pending:list.filter(cardDue).length }; }
+function cardFrontText(c){ if(c.type==='cloze') return (c.front||'').replace(/\{([^}]*)\}/g,'[ ... ]'); return c.front||''; }
+function cardBackText(c){ if(c.type==='cloze') return (c.front||'').replace(/\{([^}]*)\}/g,'<b style="color:var(--teal)">$1</b>'); if(c.type==='tf') return (c.back==='V'?'Verdadeiro ✔':'Falso ✘'); return c.back||''; }
+
+function renderCardCreator(m, subLabel){
+  const type=(creatorState[m.id]&&creatorState[m.id].type)||'basic';
+  const here=cardsFor(m.id, subLabel); const st=cardStats(here);
+  const all=cardsFor(m.id); const sta=cardStats(all);
+  let fields='';
+  if(type==='basic'){ fields='<div class="fcc-field"><label>Frente</label><textarea class="fcc-input" id="fccFront" rows="2" placeholder="Ex.: Janela da trombólise no AVC isquêmico?"></textarea></div><div class="fcc-field"><label>Verso</label><textarea class="fcc-input" id="fccBack" rows="2" placeholder="Ex.: Até 4,5h do último visto bem."></textarea></div>'; }
+  else if(type==='qa'){ fields='<div class="fcc-field"><label>Pergunta</label><textarea class="fcc-input" id="fccFront" rows="2"></textarea></div><div class="fcc-field"><label>Resposta</label><textarea class="fcc-input" id="fccBack" rows="2"></textarea></div>'; }
+  else if(type==='cloze'){ fields='<div class="fcc-field"><label>Texto — marque a lacuna entre chaves { }</label><textarea class="fcc-input" id="fccFront" rows="2" placeholder="Ex.: A janela da trombólise é de {4,5 horas}."></textarea></div>'; }
+  else if(type==='tf'){ fields='<div class="fcc-row"><div class="fcc-field"><label>Afirmação</label><textarea class="fcc-input" id="fccFront" rows="2"></textarea></div><div class="fcc-field" style="max-width:160px"><label>É verdadeira?</label><select class="fcc-input" id="fccBack"><option value="V">Verdadeiro</option><option value="F">Falso</option></select></div></div>'; }
+  else if(type==='image'){ fields='<div class="fcc-field"><label>URL da imagem</label><input class="fcc-input" id="fccImg" placeholder="https://..."></div><div class="fcc-row"><div class="fcc-field"><label>Pergunta</label><textarea class="fcc-input" id="fccFront" rows="2"></textarea></div><div class="fcc-field"><label>Resposta</label><textarea class="fcc-input" id="fccBack" rows="2"></textarea></div></div>'; }
+  const listHtml=here.slice(-6).reverse().map(userCardRow).join('');
+  return `<div class="fc-creator">
+    <div class="fcc-head"><b>✏️ Flashcards Inteligentes</b>
+      <div class="fcc-counts"><span class="pill teal">${st.total} aqui</span><span class="pill gold">${sta.pending} a revisar</span><span class="pill">${sta.dominated}/${sta.total} dominados</span></div></div>
+    <div style="font-size:.78rem;color:var(--text-dim);margin-bottom:10px">Vinculado a: <b style="color:var(--accent-2)">${esc(m.title)}</b> › ${esc(subLabel)} — criação imediata, sem sair da leitura.</div>
+    <div class="fcc-types">${CARD_TYPES.map(t=>'<span class="fcc-type '+(type===t[0]?'active':'')+'" onclick="setCreatorType(\''+m.id+'\',\''+t[0]+'\')">'+t[1]+'</span>').join('')}</div>
+    ${fields}
+    <button class="btn btn-primary btn-sm" onclick="addUserCard('${m.id}')">＋ Adicionar cartão</button>
+    ${here.length?'<div style="margin-top:12px;font-size:.72rem;color:var(--text-dim);font-weight:700;letter-spacing:.06em">SEUS CARTÕES NESTE TÓPICO</div>'+listHtml:''}
+  </div>`;
+}
+function userCardRow(c){
+  const badge = cardMastered(c)?'<span class="uc-badge uc-mast">dominado</span>':(cardDue(c)?'<span class="uc-badge uc-due">revisar</span>':'<span class="uc-badge" style="background:var(--surface);color:var(--text-dim)">ok</span>');
+  return '<div class="usercard"><span class="uc-q">'+esc(cardFrontText(c)).slice(0,90)+'</span>'+badge+'<span class="uc-meta">'+(c.reviews||0)+'rev</span><span class="uc-del" title="Excluir" onclick="delUserCard(\''+c.id+'\')">✕</span></div>';
+}
+window.setCreatorType=function(id,t){ creatorState[id]={type:t}; renderTab(); };
+window.addUserCard=function(matId){
+  const m=byId(matId); const subs=splitSubs(m).theory; const idx=Math.min(subState[matId]||0, Math.max(0,subs.length-1));
+  const subLabel = (subs[idx]&&(subs[idx].label||subs[idx].title))||'Conteúdo';
+  const type=(creatorState[matId]&&creatorState[matId].type)||'basic';
+  const g=id=>{const el=document.getElementById(id);return el?el.value.trim():'';};
+  const front=g('fccFront'); let back=g('fccBack'); const img=g('fccImg');
+  if(type==='cloze'){ if(!front||front.indexOf('{')<0){ toast('Marque a lacuna com chaves { } no texto',''); return; } }
+  else if(!front){ toast('Preencha a frente/pergunta',''); return; }
+  if((type==='basic'||type==='qa'||type==='image') && !back){ toast('Preencha o verso/resposta',''); return; }
+  const c={ id:'uc_'+Date.now()+'_'+Math.floor(Math.random()*1e4), matId, tema:m.tema||'', subtema:subLabel, type,
+    front, back:(type==='tf'?(back||'V'):back), img:img||'', created:todayStr(), reviews:0, correct:0, reps:0, interval:1, due:todayStr(), difficulty:null };
+  State.data.userCards=State.data.userCards||[]; State.data.userCards.push(c);
+  bumpDaily('created'); addNP(3,'flashcard criado'); refreshProgress(); persist(true);
+  toast('🧠 Flashcard criado e vinculado!','');
+  renderTab();
+};
+window.delUserCard=function(cid){ State.data.userCards=(State.data.userCards||[]).filter(c=>c.id!==cid); persist(); refreshProgress(); if(curMod&&document.getElementById('modBody'))renderTab(); else navigate(currentView); };
+
+function rateUserCard(c,rating){
+  c.reviews=(c.reviews||0)+1; c.difficulty=rating;
+  if(rating==='errei'){ c.lapses=(c.lapses||0)+1; c.reps=0; c.interval=1; }
+  else { c.reps=(c.reps||0)+1; if(rating!=='dificil') c.correct=(c.correct||0)+1;
+    const mult = rating==='facil'?2.6 : rating==='medio'?1.7 : 1.2;
+    c.interval=Math.max(1,Math.min(180,Math.round((c.interval||1)*mult)+(rating==='facil'?1:0))); }
+  c.due=new Date(Date.now()+(c.interval||1)*864e5).toISOString().slice(0,10);
+  bumpDaily('f'); SP().flashcardsReviewed=(SP().flashcardsReviewed||0)+1;
+  addNP(rating==='errei'?2:rating==='facil'?6:5); refreshProgress(); persist();
+}
+let srSession={queue:[],idx:0,flip:false,active:false};
+function dueUserCards(filterMat){ return (State.data.userCards||[]).filter(c=>cardDue(c) && (!filterMat||c.matId===filterMat)); }
+window.startCardReview=function(filterMat){
+  const q=dueUserCards(filterMat||''); if(!q.length){ toast('Nenhum cartão para revisar agora 🎉',''); return; }
+  srSession={queue:q.map(c=>c.id), idx:0, flip:false, active:true}; navigate('central');
+};
+window.srFlip=function(){ srSession.flip=!srSession.flip; const el=document.getElementById('srCard'); if(el)el.classList.toggle('flip',srSession.flip); };
+window.srRate=function(rating){
+  const cid=srSession.queue[srSession.idx]; const c=(State.data.userCards||[]).find(x=>x.id===cid);
+  if(c) rateUserCard(c,rating);
+  srSession.flip=false; srSession.idx++;
+  if(srSession.idx>=srSession.queue.length){ srSession.active=false; toast('✅ Sessão concluída!','gold'); }
+  navigate('central');
+};
+window.endSrSession=function(){ srSession.active=false; navigate('central'); };
+function renderReviewSession(){
+  const cid=srSession.queue[srSession.idx]; const c=(State.data.userCards||[]).find(x=>x.id===cid);
+  if(!c){ srSession.active=false; return '<div class="card glass"><p>Sessão concluída.</p></div>'; }
+  const img = (c.type==='image'&&c.img)? '<img src="'+esc(c.img)+'" style="max-width:100%;max-height:160px;border-radius:10px;margin-bottom:10px" onerror="this.style.display=\'none\'">':'';
+  return `<div class="card glass"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><span class="pill violet">Sessão de revisão</span><span class="mono" style="color:var(--text-dim);font-size:.8rem">${srSession.idx+1} / ${srSession.queue.length}</span></div>
+    <div class="fc-stage"><div class="fc ${srSession.flip?'flip':''}" id="srCard" onclick="srFlip()">
+      <div class="fc-face fc-front"><span class="tagm">${esc(byId(c.matId).title||'')} · ${esc(c.subtema||'')}</span>${img}<div class="fc-q">${esc(cardFrontText(c))}</div><span class="fc-hint">clique para ver a resposta</span></div>
+      <div class="fc-face fc-back"><span class="tagm">resposta</span><div class="fc-a">${cardBackText(c)}</div><span class="fc-hint">avalie abaixo</span></div>
+    </div></div>
+    <div class="sr-rate"><button class="btn-sm rate-err" onclick="srRate('errei')">Errei</button><button class="btn-sm rate-hard" onclick="srRate('dificil')">Difícil</button><button class="btn-sm rate-med" onclick="srRate('medio')">Médio</button><button class="btn-sm rate-easy" onclick="srRate('facil')">Fácil</button></div>
+    <div style="text-align:center;margin-top:10px"><button class="btn btn-ghost btn-sm" onclick="endSrSession()">Encerrar sessão</button></div></div>`;
+}
+let cfFilter={mat:'',dif:'',q:''};
+function renderCentral(){
+  if(srSession.active) return '<div class="page-head"><div class="crumb">Flashcards Inteligentes</div><h1>🗂️ Sessão de Revisão</h1></div>'+renderReviewSession();
+  const all=State.data.userCards||[]; const st=cardStats(all); const due=dueUserCards().length;
+  const revd=all.filter(c=>c.reviews); const accAvg=revd.length?Math.round(revd.reduce((s,c)=>s+c.correct/c.reviews,0)/revd.length*100):0;
+  let h=`<div class="page-head"><div class="crumb">Flashcards Inteligentes</div><h1>🗂️ Central de Flashcards</h1>
+    <p>Tudo que você cria nas matérias aparece aqui e alimenta a Revisão Espaçada, o Estudo do Dia e a gamificação.</p></div>`;
+  h+='<div class="grid g-4">'+statCard('🗂️',st.total,'Cartões criados')+statCard('🔔',due,'Para revisar hoje')+statCard('🏆',st.dominated,'Dominados')+statCard('🎯',accAvg+'%','Acerto médio')+'</div>';
+  h+='<div style="margin:16px 0"><button class="btn btn-primary" onclick="startCardReview()">▶️ Revisar devidos agora ('+due+')</button></div>';
+  h+='<div class="card glass"><h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:10px">🔎 Buscar e filtrar</h3><div class="cf-filters">'
+    +'<select id="cfMat"><option value="">Todas as matérias</option>'+MODULES.map(m=>'<option value="'+m.id+'">'+esc(m.title)+'</option>').join('')+'</select>'
+    +'<select id="cfDif"><option value="">Toda dificuldade</option><option value="errei">Errei</option><option value="dificil">Difícil</option><option value="medio">Médio</option><option value="facil">Fácil</option></select>'
+    +'<input id="cfQ" placeholder="Buscar no conteúdo…" style="flex:1;min-width:160px">'
+    +'</div><div id="cfList"></div></div>';
+  h+='<div class="card glass" style="margin-top:16px"><h3 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:6px">📆 Calendário de revisões</h3><p style="color:var(--text-soft);font-size:.82rem;margin-bottom:6px">Dias com cartões agendados para revisar.</p>'+reviewCalendar()+'</div>';
+  return h;
+}
+function reviewCalendar(){
+  const all=State.data.userCards||[]; const now=new Date(); const y=now.getFullYear(),mo=now.getMonth();
+  const first=new Date(y,mo,1).getDay(); const total=new Date(y,mo+1,0).getDate(); const tStr=todayStr(); const ym=y+'-'+String(mo+1).padStart(2,'0');
+  const counts={}; all.forEach(c=>{ if(c.due&&c.due.slice(0,7)===ym) counts[c.due]=(counts[c.due]||0)+1; });
+  let h='<div class="cal">'; ['D','S','T','Q','Q','S','S'].forEach(d=>h+='<div style="font-size:.66rem;color:var(--text-dim);text-align:center;font-weight:700">'+d+'</div>');
+  for(let i=0;i<first;i++)h+='<div></div>';
+  for(let d=1;d<=total;d++){ const ds=ym+'-'+String(d).padStart(2,'0'); const n=counts[ds]||0; h+='<div class="d '+(n?'on':'')+' '+(ds===tStr?'today':'')+'" title="'+n+' cartões">'+d+(n?' ·'+n:'')+'</div>'; }
+  h+='</div>'; return h;
+}
+function wireCentral(){
+  const ml=document.getElementById('cfMat'), df=document.getElementById('cfDif'), q=document.getElementById('cfQ');
+  if(!ml) return;
+  function draw(){
+    let list=(State.data.userCards||[]);
+    if(ml.value) list=list.filter(c=>c.matId===ml.value);
+    if(df.value) list=list.filter(c=>c.difficulty===df.value);
+    if(q.value){ const s=q.value.toLowerCase(); list=list.filter(c=>((c.front||'')+' '+(c.back||'')).toLowerCase().indexOf(s)>=0); }
+    const el=document.getElementById('cfList'); if(!el)return;
+    if(!list.length){ el.innerHTML='<p style="color:var(--text-soft);font-size:.88rem">Nenhum flashcard ainda. Crie cartões direto na aba <b>Teoria</b> de cada matéria — a área de criação fica sempre visível ali.</p>'; return; }
+    el.innerHTML=list.slice(0,200).map(c=>{ const m=byId(c.matId); return '<div class="usercard"><span class="uc-q">'+esc(cardFrontText(c)).slice(0,100)+'</span><span class="uc-meta">'+esc(m.title||'')+' · '+(c.reviews||0)+'rev</span>'+(cardMastered(c)?'<span class="uc-badge uc-mast">dominado</span>':(cardDue(c)?'<span class="uc-badge uc-due">revisar</span>':''))+'<span class="uc-del" onclick="delUserCard(\''+c.id+'\')">✕</span></div>'; }).join('');
+  }
+  ml.onchange=draw; df.onchange=draw; q.oninput=draw; draw();
 }
 
 /* ============================================================
