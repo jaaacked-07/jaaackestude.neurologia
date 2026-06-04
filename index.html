@@ -466,6 +466,20 @@ table.med tr:hover td{background:var(--surface-2)}
 .fcc-fmtlbl{font-size:.72rem;color:var(--text-dim);font-weight:700}
 .fcc-fmthint{font-size:.68rem;color:var(--text-dim)}
 .fcc-edit{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:.76rem;color:var(--accent-2);font-weight:700}
+
+/* ===== Flashcards: imagens por print/upload (frente e verso) ===== */
+.fcc-imglbl{font-size:.72rem;color:var(--text-dim);font-weight:700;margin:10px 0 6px}
+.fcc-imgrow{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.fcc-imgbox{flex:1;min-width:150px}
+.fcc-imgbox>label{display:block;font-size:.72rem;color:var(--text-soft);margin-bottom:4px}
+.imgzone{border:1px dashed var(--border);border-radius:10px;background:var(--surface-2);min-height:62px;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:8px;transition:.15s;outline:none}
+.imgzone:hover,.imgzone:focus{border-color:var(--accent)}
+.imgph{font-size:.74rem;color:var(--text-dim);text-align:center;line-height:1.4}
+.imgph span{font-size:.66rem}
+.imgthumb{position:relative;display:inline-block}
+.imgthumb img{max-width:100%;max-height:120px;border-radius:8px;display:block}
+.imgrm{position:absolute;top:-8px;right:-8px;background:#ef4444;color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.7rem;cursor:pointer;font-weight:800}
+.fc-img{max-width:100%;max-height:210px;border-radius:10px;margin:0 auto 10px;display:block}
 </style>
 </head>
 <body>
@@ -4001,6 +4015,15 @@ function renderCardCreator(m, subLabel){
   else if(type==='cloze'){ fields='<div class="fcc-field"><label>Texto — marque a lacuna entre chaves { }</label><textarea class="fcc-input" id="fccFront" onfocus="window.__cf=this" rows="2" placeholder="Ex.: A janela da trombólise é de {4,5 horas}.">'+edF+'</textarea></div>'; }
   else if(type==='tf'){ fields='<div class="fcc-row"><div class="fcc-field"><label>Afirmação</label><textarea class="fcc-input" id="fccFront" onfocus="window.__cf=this" rows="2">'+edF+'</textarea></div><div class="fcc-field" style="max-width:160px"><label>É verdadeira?</label><select class="fcc-input" id="fccBack"><option value="V" '+((!ed||ed.back!=='F')?'selected':'')+'>Verdadeiro</option><option value="F" '+((ed&&ed.back==='F')?'selected':'')+'>Falso</option></select></div></div>'; }
   else if(type==='image'){ fields='<div class="fcc-field"><label>URL da imagem</label><input class="fcc-input" id="fccImg" value="'+edI+'" placeholder="https://..."></div><div class="fcc-row"><div class="fcc-field"><label>Pergunta</label><textarea class="fcc-input" id="fccFront" onfocus="window.__cf=this" rows="2">'+edF+'</textarea></div><div class="fcc-field"><label>Resposta</label><textarea class="fcc-input" id="fccBack" onfocus="window.__cf=this" rows="2">'+edB+'</textarea></div></div>'; }
+  var cs=creatorState[m.id]||{};
+  var imgF=('imgFront' in cs)?cs.imgFront:(ed?(ed.imgFront||ed.img||''):'');
+  var imgB=('imgBack' in cs)?cs.imgBack:(ed?(ed.imgBack||''):'');
+  function imgBox(side,label,data){ var fid='file_'+side+'_'+m.id;
+    var thumb=data?'<div class="imgthumb"><img src="'+data+'" alt=""><span class="imgrm" title="Remover" onclick="event.stopPropagation();cfRemoveImg(\''+m.id+'\',\''+side+'\')">\u2715</span></div>':'<div class="imgph">\ud83d\udcf7 Cole um print (Ctrl+V)<br><span>ou clique para enviar arquivo</span></div>';
+    return '<div class="fcc-imgbox"><label>'+label+'</label><div class="imgzone" tabindex="0" onclick="window.__imgT={mat:\''+m.id+'\',side:\''+side+'\'};document.getElementById(\''+fid+'\').click()" onfocus="window.__imgT={mat:\''+m.id+'\',side:\''+side+'\'}" onpaste="cfPaste(event,\''+m.id+'\',\''+side+'\')" ondragover="event.preventDefault()" ondrop="cfDrop(event,\''+m.id+'\',\''+side+'\')">'+thumb+'</div><input type="file" id="'+fid+'" accept="image/*" style="display:none" onchange="cfFile(event,\''+m.id+'\',\''+side+'\')"></div>';
+  }
+  var hasBack=(type==='basic'||type==='qa'||type==='image');
+  var imgUI='<div class="fcc-imglbl">\ud83d\udcce Imagens \u2014 cole um print (Ctrl+V) ou envie arquivo (frente e/ou verso):</div><div class="fcc-imgrow">'+imgBox('front',(type==='cloze'||type==='tf')?'Imagem':'Imagem na frente',imgF)+(hasBack?imgBox('back','Imagem no verso',imgB):'')+'</div>';
   const listHtml=here.slice(-6).reverse().map(userCardRow).join('');
   return `<div class="fc-creator">
     <div class="fcc-head"><b>✏️ Flashcards Inteligentes</b>
@@ -4008,6 +4031,7 @@ function renderCardCreator(m, subLabel){
     <div style="font-size:.78rem;color:var(--text-dim);margin-bottom:10px">Vinculado a: <b style="color:var(--accent-2)">${esc(m.title)}</b> › ${esc(subLabel)} — criação imediata, sem sair da leitura.</div>
     <div class="fcc-types">${CARD_TYPES.map(t=>'<span class="fcc-type '+(type===t[0]?'active':'')+'" onclick="setCreatorType(\''+m.id+'\',\''+t[0]+'\')">'+t[1]+'</span>').join('')}</div>
     ${fields}
+    ${imgUI}
     <div class="fcc-fmt"><span class="fcc-fmtlbl">Formatação:</span><button type="button" class="fmtb" onclick="cfFmt('b')" title="Negrito"><b>N</b></button><button type="button" class="fmtb" style="color:#3b82f6" onclick="cfFmt('a')" title="Azul">A</button><button type="button" class="fmtb" style="color:#ef4444" onclick="cfFmt('v')" title="Vermelho">A</button><button type="button" class="fmtb" onclick="cfFmt('p')" title="Preto (padrão)">A</button><span class="fcc-fmthint">selecione o texto e clique</span></div>
     ${ed?('<div class="fcc-edit">✎ Editando cartão<span class="uc-edit" style="margin-left:auto" onclick="cancelEdit(\''+m.id+'\')">✕ cancelar</span></div><button class="btn btn-primary btn-sm" onclick="saveUserCard(\''+m.id+'\')">💾 Salvar alterações</button>'):('<button class="btn btn-primary btn-sm" onclick="addUserCard(\''+m.id+'\')">＋ Adicionar cartão</button>')}
     ${here.length?'<div style="margin-top:12px;font-size:.72rem;color:var(--text-dim);font-weight:700;letter-spacing:.06em">SEUS CARTÕES NESTE TÓPICO</div>'+listHtml:''}
@@ -4015,22 +4039,24 @@ function renderCardCreator(m, subLabel){
 }
 function userCardRow(c){
   const badge = cardMastered(c)?'<span class="uc-badge uc-mast">dominado</span>':(cardDue(c)?'<span class="uc-badge uc-due">revisar</span>':'<span class="uc-badge" style="background:var(--surface);color:var(--text-dim)">ok</span>');
-  return '<div class="usercard"><span class="uc-q">'+cardPreview(c)+'</span>'+badge+'<span class="uc-meta">'+(c.reviews||0)+'rev</span><span class="uc-edit" title="Editar" onclick="editUserCard(\''+c.id+'\')">✎</span><span class="uc-del" title="Excluir" onclick="delUserCard(\''+c.id+'\')">✕</span></div>';
+  return '<div class="usercard"><span class="uc-q">'+cardPreview(c)+'</span>'+((c.imgFront||c.imgBack||c.img)?'<span class="uc-meta">📷</span>':'')+badge+'<span class="uc-meta">'+(c.reviews||0)+'rev</span><span class="uc-edit" title="Editar" onclick="editUserCard(\''+c.id+'\')">✎</span><span class="uc-del" title="Excluir" onclick="delUserCard(\''+c.id+'\')">✕</span></div>';
 }
-window.setCreatorType=function(id,t){ creatorState[id]={type:t}; renderTab(); };
+window.setCreatorType=function(id,t){ var cs=creatorState[id]||{}; creatorState[id]={type:t, imgFront:cs.imgFront||'', imgBack:cs.imgBack||'', editId:cs.editId}; renderTab(); };
 window.addUserCard=function(matId){
   const m=byId(matId); const subs=splitSubs(m).theory; const idx=Math.min(subState[matId]||0, Math.max(0,subs.length-1));
   const subLabel = (subs[idx]&&(subs[idx].label||subs[idx].title))||'Conteúdo';
   const type=(creatorState[matId]&&creatorState[matId].type)||'basic';
   const g=id=>{const el=document.getElementById(id);return el?el.value.trim():'';};
   const front=g('fccFront'); let back=g('fccBack'); const img=g('fccImg');
+  const cs0=creatorState[matId]||{}; const imgFront=cs0.imgFront||''; const imgBack=cs0.imgBack||'';
   if(type==='cloze'){ if(!front||front.indexOf('{')<0){ toast('Marque a lacuna com chaves { } no texto',''); return; } }
-  else if(!front){ toast('Preencha a frente/pergunta',''); return; }
-  if((type==='basic'||type==='qa'||type==='image') && !back){ toast('Preencha o verso/resposta',''); return; }
+  else if(!front && !imgFront){ toast('Preencha a frente ou anexe uma imagem',''); return; }
+  if((type==='basic'||type==='qa'||type==='image') && !back && !imgBack){ toast('Preencha o verso ou anexe uma imagem',''); return; }
   const c={ id:'uc_'+Date.now()+'_'+Math.floor(Math.random()*1e4), matId, tema:m.tema||'', subtema:subLabel, type,
-    front, back:(type==='tf'?(back||'V'):back), img:img||'', created:todayStr(), reviews:0, correct:0, reps:0, interval:1, due:todayStr(), difficulty:null };
+    front, back:(type==='tf'?(back||'V'):back), img:img||'', imgFront:imgFront, imgBack:imgBack, created:todayStr(), reviews:0, correct:0, reps:0, interval:1, due:todayStr(), difficulty:null };
   State.data.userCards=State.data.userCards||[]; State.data.userCards.push(c);
   bumpDaily('created'); addNP(3,'flashcard criado'); refreshProgress(); persist(true);
+  creatorState[matId]={type:type};
   toast('🧠 Flashcard criado e vinculado!','');
   renderTab();
 };
@@ -4042,9 +4068,37 @@ window.cfFmt=function(kind){
   el.value=val.slice(0,s)+w[0]+sel+w[1]+val.slice(e); el.focus();
   var p=s+w[0].length; try{el.setSelectionRange(p,p+sel.length);}catch(_){}
 };
+function cfStoreImage(file, matId, side){
+  if(!file || !(file.type&&file.type.indexOf('image')===0)){ toast('Selecione uma imagem',''); return; }
+  var reader=new FileReader();
+  reader.onload=function(){
+    var im=new Image();
+    im.onload=function(){
+      var MAX=1100, w=im.width, h=im.height, sc=Math.min(1, MAX/w, MAX/h);
+      var cw=Math.max(1,Math.round(w*sc)), ch=Math.max(1,Math.round(h*sc));
+      var cv=document.createElement('canvas'); cv.width=cw; cv.height=ch;
+      cv.getContext('2d').drawImage(im,0,0,cw,ch);
+      var q=0.82, data=cv.toDataURL('image/jpeg',q);
+      while(data.length>700000 && q>0.4){ q-=0.12; data=cv.toDataURL('image/jpeg',q); }
+      creatorState[matId]=creatorState[matId]||{type:'basic'};
+      creatorState[matId][side==='back'?'imgBack':'imgFront']=data;
+      toast('🖼️ Imagem anexada!',''); renderTab();
+    };
+    im.onerror=function(){ toast('Não consegui ler a imagem',''); };
+    im.src=reader.result;
+  };
+  reader.onerror=function(){ toast('Falha ao ler o arquivo',''); };
+  reader.readAsDataURL(file);
+}
+window.cfFile=function(ev,matId,side){ var f=ev&&ev.target&&ev.target.files&&ev.target.files[0]; if(f) cfStoreImage(f,matId,side); if(ev&&ev.target) ev.target.value=''; };
+window.cfDrop=function(ev,matId,side){ ev.preventDefault(); var dt=ev.dataTransfer; if(dt&&dt.files&&dt.files[0]) cfStoreImage(dt.files[0],matId,side); };
+window.cfPaste=function(ev,matId,side){ var it=(ev.clipboardData&&ev.clipboardData.items)||[]; for(var i=0;i<it.length;i++){ if(it[i].type&&it[i].type.indexOf('image')===0){ var f=it[i].getAsFile(); if(f){ ev.preventDefault(); cfStoreImage(f,matId,side); return; } } } };
+function cfDocPaste(ev){ var t=window.__imgT; if(!t) return; var it=(ev.clipboardData&&ev.clipboardData.items)||[]; for(var i=0;i<it.length;i++){ if(it[i].type&&it[i].type.indexOf('image')===0){ var f=it[i].getAsFile(); if(f){ ev.preventDefault(); cfStoreImage(f,t.mat,t.side); return; } } } }
+window.cfRemoveImg=function(matId,side){ creatorState[matId]=creatorState[matId]||{type:'basic'}; creatorState[matId][side==='back'?'imgBack':'imgFront']=''; renderTab(); };
+if(typeof document!=='undefined'&&document.addEventListener){ document.addEventListener('paste',cfDocPaste); }
 window.editUserCard=function(cid){
   var c=(State.data.userCards||[]).find(function(x){return x.id===cid;}); if(!c)return;
-  creatorState[c.matId]={type:c.type, editId:cid};
+  creatorState[c.matId]={type:c.type, editId:cid, imgFront:(c.imgFront||c.img||''), imgBack:(c.imgBack||'')};
   if(typeof curMod!=='undefined' && curMod===c.matId){ renderTab(); }
   else { try{ openModule(c.matId); setTab('teoria'); }catch(e){ renderTab(); } }
   toast('✎ Editando cartão — edite e salve','');
@@ -4055,11 +4109,12 @@ window.saveUserCard=function(matId){
   var c=(State.data.userCards||[]).find(function(x){return x.id===cid;}); if(!c){ delete st.editId; renderTab(); return; }
   var type=st.type||c.type; var g=function(id){var el=document.getElementById(id);return el?el.value.trim():'';};
   var front=g('fccFront'), back=g('fccBack'), img=g('fccImg');
+  var imgFront=('imgFront' in st)?st.imgFront:(c.imgFront||c.img||''); var imgBack=('imgBack' in st)?st.imgBack:(c.imgBack||'');
   if(type==='cloze'){ if(!front||front.indexOf('{')<0){ toast('Marque a lacuna com chaves { }',''); return; } }
-  else if(!front){ toast('Preencha a frente/pergunta',''); return; }
-  if((type==='basic'||type==='qa'||type==='image') && !back){ toast('Preencha o verso/resposta',''); return; }
-  c.type=type; c.front=front; c.back=(type==='tf'?(back||'V'):back); c.img=img||'';
-  delete st.editId; persist(true); refreshProgress(); toast('💾 Cartão atualizado!',''); renderTab();
+  else if(!front && !imgFront){ toast('Preencha a frente ou anexe uma imagem',''); return; }
+  if((type==='basic'||type==='qa'||type==='image') && !back && !imgBack){ toast('Preencha o verso ou anexe uma imagem',''); return; }
+  c.type=type; c.front=front; c.back=(type==='tf'?(back||'V'):back); c.img=img||''; c.imgFront=imgFront; c.imgBack=imgBack;
+  delete st.editId; creatorState[matId]={type:type}; persist(true); refreshProgress(); toast('💾 Cartão atualizado!',''); renderTab();
 };
 window.delUserCard=function(cid){ State.data.userCards=(State.data.userCards||[]).filter(c=>c.id!==cid); persist(); refreshProgress(); if(curMod&&document.getElementById('modBody'))renderTab(); else navigate(currentView); };
 
@@ -4091,11 +4146,12 @@ window.endSrSession=function(){ srSession.active=false; navigate('central'); };
 function renderReviewSession(){
   const cid=srSession.queue[srSession.idx]; const c=(State.data.userCards||[]).find(x=>x.id===cid);
   if(!c){ srSession.active=false; return '<div class="card glass"><p>Sessão concluída.</p></div>'; }
-  const img = (c.type==='image'&&c.img)? '<img src="'+esc(c.img)+'" style="max-width:100%;max-height:160px;border-radius:10px;margin-bottom:10px" onerror="this.style.display=\'none\'">':'';
+  const imgF=(c.imgFront||c.img)? '<img src="'+esc(c.imgFront||c.img)+'" class="fc-img" onerror="this.style.display=\'none\'">':'';
+  const imgB=(c.imgBack)? '<img src="'+esc(c.imgBack)+'" class="fc-img" onerror="this.style.display=\'none\'">':'';
   return `<div class="card glass"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><span class="pill violet">Sessão de revisão</span><span class="mono" style="color:var(--text-dim);font-size:.8rem">${srSession.idx+1} / ${srSession.queue.length}</span></div>
     <div class="fc-stage"><div class="fc ${srSession.flip?'flip':''}" id="srCard" onclick="srFlip()">
-      <div class="fc-face fc-front"><span class="tagm">${esc(byId(c.matId).title||'')} · ${esc(c.subtema||'')}</span>${img}<div class="fc-q">${fmtCardFront(c)}</div><span class="fc-hint">clique para ver a resposta</span></div>
-      <div class="fc-face fc-back"><span class="tagm">resposta</span><div class="fc-a">${fmtCardBack(c)}</div><span class="fc-hint">avalie abaixo</span></div>
+      <div class="fc-face fc-front"><span class="tagm">${esc(byId(c.matId).title||'')} · ${esc(c.subtema||'')}</span>${imgF}<div class="fc-q">${fmtCardFront(c)}</div><span class="fc-hint">clique para ver a resposta</span></div>
+      <div class="fc-face fc-back"><span class="tagm">resposta</span>${imgB}<div class="fc-a">${fmtCardBack(c)}</div><span class="fc-hint">avalie abaixo</span></div>
     </div></div>
     <div class="sr-rate"><button class="btn-sm rate-err" onclick="srRate('errei')">Errei</button><button class="btn-sm rate-hard" onclick="srRate('dificil')">Difícil</button><button class="btn-sm rate-med" onclick="srRate('medio')">Médio</button><button class="btn-sm rate-easy" onclick="srRate('facil')">Fácil</button></div>
     <div style="text-align:center;margin-top:10px"><button class="btn btn-ghost btn-sm" onclick="endSrSession()">Encerrar sessão</button></div></div>`;
