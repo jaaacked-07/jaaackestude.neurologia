@@ -2407,6 +2407,310 @@ MODULES.push({
   cases:[{title:'Caso — Pancada no futebol',hist:'Jogador, 19a, choque de cabeças; ficou atordoado, "viu estrelas", sem perda de consciência, agora com cefaleia leve e tontura.',exam:'Glasgow 15, orientado, sem déficit; sem sinais de fratura.',labs:'TC (se indicada) normal.',reason:'Disfunção transitória sem lesão estrutural = concussão. Sem fatores de risco fortes para TC, mas vigiar.',dx:'Concussão cerebral.',tx:'Repouso relativo, sintomáticos, orientar sinais de alarme; retorno ao esporte gradual e somente quando assintomático (evitar segundo impacto).'}]
 });
 
+/* ---------- 6. DEMÊNCIAS E COGNIÇÃO ---------- */
+MODULES.push({
+  id:'demencias', emoji:'🧩', region:'frontal', tema:'Demências e Cognição',
+  title:'Síndrome Demencial e Alzheimer', sub:'Demência x delirium, causas reversíveis e doença de Alzheimer',
+  prio:'alta', topics:['Demência','Delirium','Causas reversíveis','Alzheimer'],
+  subtopics:[
+   {label:'1. O que é demência',html:`<h3>🧩 Entendendo do zero</h3>
+<p>Demência é um <b>declínio cognitivo adquirido</b> (a pessoa perde capacidades que já teve), <b>progressivo</b>, que compromete a <b>funcionalidade</b> (atrapalha o dia a dia: finanças, medicações, trabalho). Atinge um ou mais domínios: memória, linguagem, funções executivas, atenção, habilidades visuoespaciais, comportamento social.</p>
+<p>Um ponto-chave: na demência a <b>consciência/alerta está preservado</b> (a pessoa está acordada e atenta, mas "não funciona" cognitivamente) — isso a separa do <b>delirium</b>.</p>
+<div class="callout mne"><b>Definição em uma frase</b>Declínio cognitivo adquirido + progressivo + que <b>compromete a funcionalidade</b>, com nível de consciência preservado.</div>`},
+   {label:'2. Delirium x Demência x CCL',html:`<h3>⚖️ O diferencial mais importante</h3>
+<p>Antes de chamar de "demência", separe destes dois:</p>
+<table class="med"><tr><th></th><th>Delirium</th><th>Demência</th></tr>
+<tr><td>Início</td><td><b>Agudo</b> (horas/dias)</td><td>Insidioso (meses/anos)</td></tr>
+<tr><td>Curso</td><td><b>Flutuante</b> (piora à noite)</td><td>Estável/progressivo</td></tr>
+<tr><td>Atenção</td><td><b>Muito comprometida</b></td><td>Preservada no início</td></tr>
+<tr><td>Consciência</td><td>Alterada</td><td>Preservada</td></tr>
+<tr><td>Reversível?</td><td><b>Sim</b> (tratar a causa: infecção, droga, metabólico)</td><td>Geralmente não</td></tr></table>
+<p><b>Comprometimento Cognitivo Leve (CCL/MCI):</b> há déficit cognitivo objetivo, mas a pessoa <b>ainda é funcional</b> (não atrapalha as atividades). É um estágio intermediário — alguns evoluem para demência.</p>
+<div class="callout trap"><b>Pegadinha clássica</b>Idoso internado "ficou confuso de repente" = pense <b>DELIRIUM</b> (agudo, flutuante, atenção alterada) → procure a causa (infecção urinária, medicação, distúrbio metabólico). Não rotule como demência.</div>`},
+   {label:'3. Causas reversíveis',html:`<h3>🔄 O que NÃO pode passar (causas tratáveis)</h3>
+<p>Toda investigação de demência precisa <b>excluir causas reversíveis</b> — algumas curam o quadro:</p>
+<table class="med"><tr><th>Causa</th><th>Pista / exame</th></tr>
+<tr><td><b>Hipotireoidismo</b></td><td>TSH</td></tr>
+<tr><td><b>Deficiência de B12</b></td><td>Dosagem de B12 (+ alterações medulares)</td></tr>
+<tr><td><b>Neurossífilis / HIV</b></td><td>VDRL/FTA-ABS, sorologia HIV</td></tr>
+<tr><td><b>Hidrocefalia de pressão normal</b></td><td>Tríade: <b>demência + apraxia da marcha + incontinência urinária</b> ("wet, wacky, wobbly")</td></tr>
+<tr><td><b>Depressão (pseudodemência)</b></td><td>Idoso deprimido que parece demente; melhora ao tratar a depressão</td></tr>
+<tr><td><b>Hematoma subdural crônico</b></td><td>Idoso/anticoagulado, trauma esquecido → TC</td></tr>
+<tr><td><b>Medicações</b></td><td>Anticolinérgicos, benzodiazepínicos, etc.</td></tr></table>
+<h3>Investigação básica</h3>
+<p>Hemograma, TSH, B12, função renal/hepática, cálcio, sorologias (sífilis/HIV) e <b>neuroimagem</b> (TC/RM, para afastar lesões e ver atrofia/vascular).</p>
+<div class="callout mne"><b>Regra de ouro</b>Demência nova = <b>rastreio de causas reversíveis</b> sempre. É barato e pode mudar tudo.</div>`},
+   {label:'4. Doença de Alzheimer',html:`<h3>🧠 Alzheimer — a demência mais comum</h3>
+<p>Responsável pela maioria dos casos. No cérebro acumulam-se <b>placas de beta-amiloide</b> (fora dos neurônios) e <b>emaranhados neurofibrilares de proteína tau</b> (dentro), levando à morte neuronal — começando pelo <b>hipocampo</b> (memória).</p>
+<h3>Como se manifesta (a ordem importa)</h3>
+<ul><li><b>Primeiro</b>: perda de <b>memória episódica recente</b> (esquece o que acabou de acontecer, repete perguntas, perde objetos).</li>
+<li>Depois: dificuldade de linguagem, desorientação no tempo/espaço, prejuízo de funções executivas.</li>
+<li>Fases avançadas: dependência total, alterações de comportamento.</li></ul>
+<div class="callout tip"><b>Padrão típico</b>Início <b>insidioso</b> e <b>progressão lenta</b>, com a <b>memória recente</b> sendo a primeira a falhar. Atrofia hipocampal/temporal medial na RM.</div>`},
+   {label:'5. Diagnóstico e tratamento',html:`<h3>🩺 Como diagnosticar e tratar o Alzheimer</h3>
+<p>O diagnóstico é <b>clínico</b>: história + testes cognitivos (ex.: Miniexame do Estado Mental) + <b>exclusão de causas reversíveis</b> + neuroimagem. Biomarcadores (líquor/PET amiloide) ajudam em casos selecionados.</p>
+<table class="med"><tr><th>Tratamento</th><th>Detalhe</th></tr>
+<tr><td><b>Anticolinesterásicos</b></td><td>Donepezila, rivastigmina, galantamina — leve a moderado (melhoram sintomas, não curam)</td></tr>
+<tr><td><b>Memantina</b></td><td>(antagonista NMDA) — moderado a grave; pode associar ao anticolinesterásico</td></tr>
+<tr><td><b>Não farmacológico</b></td><td>Estimulação cognitiva, atividade física, segurança no domicílio, apoio ao cuidador</td></tr>
+<tr><td><b>Sintomas comportamentais</b></td><td>Primeiro medidas não farmacológicas; antipsicóticos com <b>muita cautela</b> (riscos no idoso)</td></tr></table>
+<div class="callout mne"><b>Resumo</b>Confirmar (clínico), excluir reversíveis, tratar com anticolinesterásico ± memantina e <b>apoiar o cuidador</b>. O tratamento controla sintomas e ritmo, não cura.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Síndrome Demencial e Alzheimer</h3>
+<div class="mindmap"><div class="mm-center">DEMÊNCIA / ALZHEIMER</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Conceito</b><ul><li>Declínio adquirido + funcional</li><li>Consciência preservada</li></ul></div>
+<div class="mm-branch"><b>Diferencial</b><ul><li>Delirium (agudo, flutuante, atenção)</li><li>CCL (sem perda funcional)</li></ul></div>
+<div class="mm-branch"><b>Reversíveis</b><ul><li>TSH, B12, sífilis/HIV</li><li>HPN, depressão, subdural</li></ul></div>
+<div class="mm-branch"><b>Alzheimer</b><ul><li>Memória recente primeiro</li><li>Amiloide + tau, hipocampo</li><li>Anticolinesterásico ± memantina</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Confusão aguda e flutuante, atenção alterada</td><td>Delirium → achar a causa</td></tr>
+<tr><td>Déficit cognitivo sem perda de funcionalidade</td><td>CCL</td></tr>
+<tr><td>Demência nova</td><td>Rastrear reversíveis (TSH, B12, sífilis/HIV) + imagem</td></tr>
+<tr><td>Demência + marcha apráxica + incontinência</td><td>Hidrocefalia de pressão normal</td></tr>
+<tr><td>Perda de memória recente, progressão lenta</td><td>Alzheimer</td></tr>
+<tr><td>Tratamento do Alzheimer</td><td>Anticolinesterásico ± memantina</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Demência preserva a consciência (≠ delirium). ② Sempre excluir reversíveis. ③ Alzheimer = memória recente primeiro. ④ Apoiar o cuidador faz parte do tratamento.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Chamar delirium de demência (perde a causa tratável). ② Esquecer B12/TSH/sífilis. ③ Não lembrar da hidrocefalia de pressão normal (tríade). ④ Usar antipsicótico à toa em idoso com demência (riscos).</div>`}
+  ],
+  questions:[
+    {stem:'Idosa internada por pneumonia fica subitamente confusa à noite, desatenta, com curso flutuante. Diagnóstico mais provável?',opts:['Doença de Alzheimer','Delirium','Demência vascular','Depressão'],correct:1,expl:'<b>B.</b> Início agudo, curso flutuante e atenção comprometida = delirium; buscar a causa (infecção, droga, metabólico). É reversível.'},
+    {stem:'Qual achado caracteriza a hidrocefalia de pressão normal?',opts:['Memória recente isolada','Demência + apraxia da marcha + incontinência urinária','Alucinações visuais','Início súbito em degraus'],correct:1,expl:'<b>B.</b> Tríade clássica ("wet, wacky, wobbly") — causa potencialmente reversível.'},
+    {stem:'Primeiro domínio cognitivo tipicamente afetado na doença de Alzheimer:',opts:['Comportamento social','Memória episódica recente','Força muscular','Marcha'],correct:1,expl:'<b>B.</b> A memória recente (episódica) é a primeira a falhar, refletindo o acometimento hipocampal.'},
+    {stem:'Tratamento medicamentoso de base do Alzheimer leve a moderado:',opts:['Levodopa','Anticolinesterásico (ex.: donepezila)','Anticoagulante','Antibiótico'],correct:1,expl:'<b>B.</b> Anticolinesterásicos (donepezila, rivastigmina, galantamina); memantina nas fases mais avançadas.'},
+    {stem:'Diante de uma demência recém-diagnosticada, é essencial:',opts:['Iniciar antipsicótico','Excluir causas reversíveis (TSH, B12, sífilis/HIV, imagem)','Indicar cirurgia','Suspender toda medicação'],correct:1,expl:'<b>B.</b> Sempre rastrear causas reversíveis — algumas são curáveis.'}
+  ],
+  cards:[
+    {tag:'Conceito',q:'O que define demência?',a:'Declínio cognitivo adquirido, progressivo, que compromete a funcionalidade (consciência preservada).'},
+    {tag:'Diferencial',q:'Delirium x demência?',a:'Delirium: agudo, flutuante, atenção alterada, reversível. Demência: crônico, progressivo, atenção preservada no início.'},
+    {tag:'CCL',q:'O que é comprometimento cognitivo leve?',a:'Déficit cognitivo objetivo sem perda de funcionalidade.'},
+    {tag:'Reversíveis',q:'Cite causas reversíveis de demência.',a:'Hipotireoidismo, B12, neurossífilis/HIV, hidrocefalia de pressão normal, depressão, subdural crônico, medicações.'},
+    {tag:'Alzheimer',q:'Padrão clínico do Alzheimer?',a:'Início insidioso, memória recente primeiro, progressão lenta; atrofia hipocampal.'},
+    {tag:'Tratamento',q:'Tratamento do Alzheimer?',a:'Anticolinesterásicos ± memantina + medidas e apoio ao cuidador (não cura).'}
+  ],
+  cases:[{title:'Caso — Esquecimentos progressivos',hist:'Mulher, 74a, há 2 anos repete perguntas, perde objetos e se perdeu voltando para casa; mantém-se alerta.',exam:'Atenção preservada, déficit de memória recente no teste cognitivo; sem déficit motor.',labs:'TSH, B12, VDRL normais; RM com atrofia hipocampal.',reason:'Declínio insidioso e progressivo, memória recente primeiro, reversíveis afastadas, atrofia hipocampal = Alzheimer.',dx:'Doença de Alzheimer.',tx:'Anticolinesterásico (ex.: donepezila), estimulação cognitiva e atividade física, segurança domiciliar e orientação/apoio ao cuidador.'}]
+});
+
+MODULES.push({
+  id:'demencias_outras', emoji:'🧠', region:'frontal', tema:'Demências e Cognição',
+  title:'Demências Não-Alzheimer', sub:'Vascular, corpos de Lewy, frontotemporal e rapidamente progressivas',
+  prio:'média', topics:['Demência vascular','Corpos de Lewy','Frontotemporal','Creutzfeldt-Jakob'],
+  subtopics:[
+   {label:'1. Demência vascular',html:`<h3>🩸 Demência vascular</h3>
+<p>Segunda causa mais comum. O declínio cognitivo resulta de <b>lesões vasculares</b> (AVCs, múltiplos infartos, doença de pequenos vasos). Pense nela em quem tem <b>fatores de risco vascular</b> (HAS, DM, tabagismo, fibrilação atrial).</p>
+<h3>Como reconhecer</h3>
+<ul><li>Curso <b>"em degraus"</b> (piora súbita após eventos, com platôs), ou progressivo na doença de pequenos vasos.</li>
+<li>Sinais/sintomas neurológicos focais e alterações de marcha podem acompanhar.</li>
+<li>Domínio mais afetado costuma ser <b>executivo/atenção</b> (mais que memória pura).</li></ul>
+<div class="callout tip"><b>Conduta-chave</b>O tratamento é <b>controlar os fatores de risco vascular</b> (PA, glicemia, antiagregação/anticoagulação conforme a causa) para frear a progressão — é prevenção secundária de AVC aplicada à cognição.</div>`},
+   {label:'2. Corpos de Lewy',html:`<h3>👁️ Demência por corpos de Lewy (DCL)</h3>
+<p>Acúmulo de <b>alfa-sinucleína</b> (corpos de Lewy) no córtex. Tem uma tríade muito cobrada:</p>
+<ul><li><b>Flutuação cognitiva</b> marcante (varia muito ao longo do dia).</li>
+<li><b>Alucinações visuais</b> vívidas e recorrentes.</li>
+<li><b>Parkinsonismo</b> (rigidez, bradicinesia).</li></ul>
+<p>Pode haver distúrbio do sono REM (atua os sonhos) e quedas.</p>
+<div class="callout trap"><b>Pegadinha que salva vidas</b>Pacientes com DCL têm <b>grave sensibilidade a neurolépticos (antipsicóticos)</b> — podem piorar muito (rigidez intensa, até síndrome neuroléptica maligna). <b>Evite antipsicóticos típicos.</b></div>
+<div class="callout mne"><b>DCL x Parkinson-demência</b>Se a demência vem <b>antes ou junto</b> do parkinsonismo → corpos de Lewy. Se o parkinsonismo veio <b>anos antes</b> e a demência depois → demência da doença de Parkinson. (Regra do "1 ano".)</div>`},
+   {label:'3. Frontotemporal',html:`<h3>🗣️ Demência frontotemporal (DFT)</h3>
+<p>Degeneração dos lobos <b>frontal e temporal</b>. Costuma começar <b>mais jovem</b> (50–60 anos) e, ao contrário do Alzheimer, a <b>memória é relativamente preservada no início</b>.</p>
+<table class="med"><tr><th>Variante</th><th>Marca</th></tr>
+<tr><td><b>Comportamental</b> (a mais comum)</td><td>Mudança de <b>personalidade/comportamento</b>: desinibição, apatia, perda de empatia, comportamento social inadequado</td></tr>
+<tr><td><b>Linguagem</b> (afasia progressiva primária)</td><td>Dificuldade progressiva de fala/compreensão</td></tr></table>
+<div class="callout tip"><b>Dica</b>Pessoa relativamente jovem com <b>mudança de comportamento/personalidade</b> e memória ainda razoável → pense em DFT (às vezes confundida com quadro psiquiátrico).</div>`},
+   {label:'4. Rapidamente progressivas',html:`<h3>⏩ Quando a demência avança em semanas/meses</h3>
+<p>Se o declínio é <b>muito rápido</b> (semanas a poucos meses), pense em causas específicas — algumas tratáveis:</p>
+<table class="med"><tr><th>Causa</th><th>Pista</th></tr>
+<tr><td><b>Doença de Creutzfeldt-Jakob</b> (priônica)</td><td>Demência rápida + <b>mioclonias</b> + ataxia; EEG e RM com padrões típicos; sem tratamento</td></tr>
+<tr><td><b>Encefalite autoimune</b></td><td>Subaguda, com crises/alterações psiquiátricas; <b>pode responder a imunoterapia</b> — não perder</td></tr>
+<tr><td>Infecciosas/metabólicas/neoplásicas</td><td>Investigar (líquor, imagem, anticorpos)</td></tr></table>
+<div class="callout warn"><b>Mensagem</b>Demência rapidamente progressiva é "bandeira" para investigação agressiva — entre as causas há tratáveis (ex.: autoimune).</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Demências Não-Alzheimer</h3>
+<div class="mindmap"><div class="mm-center">NÃO-ALZHEIMER</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Vascular</b><ul><li>Fatores de risco</li><li>Em degraus</li><li>Controlar PA/DM</li></ul></div>
+<div class="mm-branch"><b>Corpos de Lewy</b><ul><li>Flutuação + alucinação visual + parkinsonismo</li><li>NÃO dar neuroléptico</li></ul></div>
+<div class="mm-branch"><b>Frontotemporal</b><ul><li>Jovem</li><li>Comportamento/personalidade</li><li>Memória preservada no início</li></ul></div>
+<div class="mm-branch"><b>Rápida</b><ul><li>Creutzfeldt-Jakob (mioclonia)</li><li>Autoimune (tratável)</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Declínio em degraus + fatores de risco vascular</td><td>Demência vascular</td></tr>
+<tr><td>Flutuação + alucinação visual + parkinsonismo</td><td>Corpos de Lewy</td></tr>
+<tr><td>Demência por corpos de Lewy</td><td>Evitar neurolépticos (sensibilidade)</td></tr>
+<tr><td>Jovem + mudança de personalidade, memória ok</td><td>Frontotemporal</td></tr>
+<tr><td>Demência rápida + mioclonias</td><td>Creutzfeldt-Jakob</td></tr>
+<tr><td>Demência rápida subaguda com crises</td><td>Pensar em encefalite autoimune (tratável)</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Vascular = degraus + fatores de risco (controlar). ② Lewy = flutuação + alucinação visual + parkinsonismo. ③ DFT = jovem + comportamento. ④ Rápida = investigar (CJD x autoimune).</div>
+<div class="callout trap"><b>Pegadinhas</b>① Dar antipsicótico no corpos de Lewy (perigoso). ② Confundir DFT com transtorno psiquiátrico. ③ Esquecer de tratar fatores de risco na vascular. ④ Não investigar a demência rapidamente progressiva (pode ser autoimune tratável).</div>`}
+  ],
+  questions:[
+    {stem:'Homem, 70a, com declínio cognitivo "em degraus", HAS e DM mal controlados, RM com múltiplos infartos. Tipo de demência?',opts:['Alzheimer','Vascular','Frontotemporal','Corpos de Lewy'],correct:1,expl:'<b>B.</b> Curso em degraus + fatores de risco vascular + infartos = demência vascular; tratar os fatores de risco.'},
+    {stem:'Paciente com flutuação cognitiva, alucinações visuais e parkinsonismo. Qual conduta EVITAR?',opts:['Investigar corpos de Lewy','Antipsicótico típico (alta sensibilidade)','Avaliar marcha','Apoio ao cuidador'],correct:1,expl:'<b>B.</b> Demência por corpos de Lewy tem grave sensibilidade a neurolépticos — evitar antipsicóticos típicos.'},
+    {stem:'Homem de 58a com mudança de personalidade, desinibição e perda de empatia, mas memória ainda razoável. Diagnóstico provável?',opts:['Alzheimer','Demência frontotemporal','Demência vascular','Delirium'],correct:1,expl:'<b>B.</b> Início jovem + alterações de comportamento/personalidade com memória relativamente preservada = DFT (variante comportamental).'},
+    {stem:'Demência que progride em poucas semanas, com mioclonias, sugere:',opts:['Alzheimer','Doença de Creutzfeldt-Jakob','Depressão','Hipotireoidismo'],correct:1,expl:'<b>B.</b> Demência rapidamente progressiva com mioclonias é clássica de doença priônica (Creutzfeldt-Jakob); mas sempre afastar causas tratáveis (autoimune).'}
+  ],
+  cards:[
+    {tag:'Vascular',q:'Como reconhecer a demência vascular?',a:'Fatores de risco vascular + curso em degraus; tratar PA/DM/antitrombótico.'},
+    {tag:'Lewy',q:'Tríade da demência por corpos de Lewy?',a:'Flutuação cognitiva + alucinações visuais + parkinsonismo.'},
+    {tag:'Lewy',q:'O que evitar na DCL?',a:'Antipsicóticos (neurolépticos) — alta sensibilidade.'},
+    {tag:'DFT',q:'Perfil da demência frontotemporal?',a:'Mais jovem; mudança de comportamento/personalidade ou linguagem; memória preservada no início.'},
+    {tag:'Rápida',q:'Demência rápida + mioclonias?',a:'Creutzfeldt-Jakob (priônica).'},
+    {tag:'Tratável',q:'Demência rápida que não pode passar?',a:'Encefalite autoimune (responde a imunoterapia).'}
+  ],
+  cases:[{title:'Caso — Alucinações e quedas',hist:'Homem, 72a, com cognição que varia muito de um dia para o outro, vê pessoas/animais que não existem e anda devagar, rígido.',exam:'Bradicinesia leve, rigidez, sem tremor de repouso marcante; flutuação da atenção.',labs:'RM sem infartos relevantes.',reason:'Flutuação cognitiva + alucinações visuais + parkinsonismo = demência por corpos de Lewy.',dx:'Demência por corpos de Lewy.',tx:'Anticolinesterásico pode ajudar; tratar sintomas com cautela e EVITAR antipsicóticos típicos (risco de piora grave); segurança e apoio ao cuidador.'}]
+});
+
+/* ---------- 7. DISTÚRBIOS DO MOVIMENTO ---------- */
+MODULES.push({
+  id:'parkinson', emoji:'🧍', region:'basal', tema:'Distúrbios do Movimento',
+  title:'Doença de Parkinson', sub:'Tétrade motora (TRAP), diagnóstico e tratamento',
+  prio:'alta', topics:['Parkinson','TRAP','Levodopa','Parkinsonismo'],
+  subtopics:[
+   {label:'1. O que é (e por que acontece)',html:`<h3>🧍 Entendendo do zero</h3>
+<p>Pense na <b>dopamina</b> como o "óleo" que deixa os movimentos fluidos. Na doença de Parkinson, os neurônios que produzem dopamina na <b>substância negra</b> (parte dos núcleos da base) vão <b>morrendo</b> (com acúmulo de <b>alfa-sinucleína</b> — os corpos de Lewy). Com menos dopamina, o "óleo" acaba e o movimento fica <b>lento, rígido e travado</b>.</p>
+<p>É uma doença <b>degenerativa e progressiva</b>, mais comum após os 60 anos. Os sintomas só aparecem quando já se perdeu boa parte dos neurônios dopaminérgicos.</p>
+<div class="callout mne"><b>Ideia central</b>Parkinson = <b>falta de dopamina</b> nos núcleos da base → movimento "freado". Por isso o tratamento é <b>repor dopamina</b>.</div>`},
+   {label:'2. Quadro motor (TRAP)',html:`<h3>🤲 A tétrade motora — mnemônico TRAP</h3>
+<table class="med"><tr><th>Sinal</th><th>Como é</th></tr>
+<tr><td><b>T</b> — Tremor de <b>repouso</b></td><td>"Contar moedas", some ao mover; é o mais característico</td></tr>
+<tr><td><b>R</b> — Rigidez</td><td>"Roda denteada" (resistência em catraca ao mobilizar o membro)</td></tr>
+<tr><td><b>A</b> — Acinesia/bradicinesia</td><td>Lentidão e pobreza de movimento (sinal obrigatório para o diagnóstico)</td></tr>
+<tr><td><b>P</b> — Instabilidade <b>Postural</b></td><td>Quedas; aparece mais tardiamente</td></tr></table>
+<p>Outros achados: início <b>assimétrico</b> (começa de um lado), <b>hipomimia</b> (face de máscara), <b>micrografia</b> (letra pequena), voz baixa, marcha de <b>pequenos passos</b> com <b>festinação</b> (acelera) e redução do balanço dos braços.</p>
+<div class="callout trap"><b>Pegadinha do tremor</b>No Parkinson o tremor é de <b>repouso</b> (melhora ao usar a mão). No <b>tremor essencial</b> é de <b>ação/postura</b> (piora ao usar a mão). Não confunda!</div>`},
+   {label:'3. Sintomas não-motores',html:`<h3>🌫️ O Parkinson é mais que tremor</h3>
+<p>Muitos sintomas <b>não-motores</b> aparecem — alguns <b>anos antes</b> do tremor:</p>
+<ul><li><b>Hiposmia</b> (perde o olfato), <b>constipação</b>.</li>
+<li><b>Distúrbio comportamental do sono REM</b> (atua os sonhos, "briga dormindo") — pista precoce.</li>
+<li>Depressão, ansiedade, apatia.</li>
+<li>Disautonomia (hipotensão postural), e <b>demência</b> em fases avançadas.</li></ul>
+<div class="callout tip"><b>Por que importa</b>Reconhecer os não-motores ajuda no diagnóstico precoce e no cuidado integral (tratar constipação, sono, humor melhora muito a qualidade de vida).</div>`},
+   {label:'4. Diagnóstico',html:`<h3>🔬 Como diagnosticar (e o que descartar)</h3>
+<p>O diagnóstico é <b>clínico</b>: <b>bradicinesia</b> + (tremor de repouso e/ou rigidez), de início assimétrico, com <b>boa resposta à levodopa</b>. Não há exame que "feche" — a imagem serve para excluir outras causas.</p>
+<h3>Diferenciais essenciais (caem muito)</h3>
+<table class="med"><tr><th>Grupo</th><th>Pistas de que NÃO é Parkinson típico</th></tr>
+<tr><td><b>Parkinsonismo medicamentoso</b></td><td>Uso de <b>neurolépticos</b>/antieméticos (metoclopramida); costuma ser <b>simétrico</b> e reverte ao suspender — SEMPRE pergunte os remédios</td></tr>
+<tr><td><b>Parkinsonismos atípicos</b></td><td>Quedas precoces, paralisia do olhar (PSP), disautonomia grave precoce (atrofia de múltiplos sistemas), má resposta à levodopa</td></tr>
+<tr><td><b>Vascular</b></td><td>Fatores de risco, predomínio em membros inferiores</td></tr></table>
+<div class="callout warn"><b>Regra de ouro</b>Antes de diagnosticar Parkinson, <b>revise a lista de medicamentos</b> (neurolépticos, metoclopramida) — parkinsonismo medicamentoso é reversível.</div>`},
+   {label:'5. Tratamento',html:`<h3>💊 Como tratar</h3>
+<p>A base é <b>repor dopamina</b>. Não cura, mas controla muito bem os sintomas por anos.</p>
+<table class="med"><tr><th>Opção</th><th>Detalhe</th></tr>
+<tr><td><b>Levodopa + carbidopa</b></td><td>O <b>mais eficaz</b> para os sintomas motores; a carbidopa evita efeitos periféricos. Preferida sobretudo no idoso</td></tr>
+<tr><td><b>Agonistas dopaminérgicos</b></td><td>(pramipexol, etc.) — úteis em mais jovens; cuidado com sonolência e transtornos do controle de impulsos</td></tr>
+<tr><td>Outros</td><td>IMAO-B (selegilina), anticolinérgicos (tremor em jovens), amantadina (discinesias)</td></tr>
+<tr><td><b>Cirurgia (DBS)</b></td><td>Estimulação cerebral profunda em casos selecionados (flutuações/discinesias refratárias)</td></tr></table>
+<h3>Complicações tardias da levodopa</h3>
+<ul><li><b>Wearing-off</b> (o efeito "acaba" antes da próxima dose) e <b>discinesias</b> (movimentos involuntários no pico) após anos de uso.</li></ul>
+<div class="callout mne"><b>Resumo</b>Levodopa é a mais eficaz (idoso); agonistas em mais jovens. Com o tempo surgem flutuações/discinesias → ajustar esquema ou considerar DBS. Tratar também os sintomas não-motores.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Doença de Parkinson</h3>
+<div class="mindmap"><div class="mm-center">PARKINSON</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Causa</b><ul><li>↓ dopamina (substância negra)</li><li>Alfa-sinucleína</li></ul></div>
+<div class="mm-branch"><b>TRAP</b><ul><li>Tremor de repouso</li><li>Rigidez (roda denteada)</li><li>Acinesia/bradicinesia</li><li>Instabilidade postural</li></ul></div>
+<div class="mm-branch"><b>Diagnóstico</b><ul><li>Clínico, assimétrico</li><li>Responde à levodopa</li><li>Excluir neurolépticos</li></ul></div>
+<div class="mm-branch"><b>Tratamento</b><ul><li>Levodopa (mais eficaz)</li><li>Agonistas (jovem)</li><li>DBS; tardio: discinesias</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Tremor de repouso + rigidez + bradicinesia, assimétrico</td><td>Doença de Parkinson</td></tr>
+<tr><td>Parkinsonismo simétrico + uso de neuroléptico/metoclopramida</td><td>Parkinsonismo medicamentoso (reversível)</td></tr>
+<tr><td>Tratamento mais eficaz</td><td>Levodopa + carbidopa</td></tr>
+<tr><td>Paciente jovem</td><td>Considerar agonista dopaminérgico</td></tr>
+<tr><td>Após anos de levodopa</td><td>Wearing-off / discinesias</td></tr>
+<tr><td>Sintoma precoce não-motor</td><td>Hiposmia, constipação, distúrbio do sono REM</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① TRAP + início assimétrico + resposta à levodopa. ② Tremor é de REPOUSO. ③ Levodopa é a mais eficaz. ④ Sintomas não-motores importam.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Esquecer o parkinsonismo medicamentoso (neuroléptico/metoclopramida). ② Confundir tremor de repouso (Parkinson) com tremor de ação (essencial). ③ Não reconhecer discinesias/wearing-off como complicação da levodopa. ④ Ignorar quedas precoces / má resposta à levodopa (pensar em atípico).</div>`}
+  ],
+  questions:[
+    {stem:'Homem, 66a, tremor na mão direita que some ao pegar objetos, lentidão e rigidez em roda denteada, início assimétrico. Diagnóstico?',opts:['Tremor essencial','Doença de Parkinson','AVC','Distonia'],correct:1,expl:'<b>B.</b> Tremor de repouso + bradicinesia + rigidez assimétrica = Parkinson. Tremor essencial é de ação/postura e bilateral.'},
+    {stem:'Idosa em uso de metoclopramida desenvolve parkinsonismo simétrico. Conduta inicial?',opts:['Iniciar levodopa para sempre','Suspender a metoclopramida (parkinsonismo medicamentoso)','Indicar DBS','Antibiótico'],correct:1,expl:'<b>B.</b> Bloqueadores dopaminérgicos (neurolépticos, metoclopramida) causam parkinsonismo reversível — suspender a droga.'},
+    {stem:'Tratamento mais eficaz para os sintomas motores do Parkinson:',opts:['Propranolol','Levodopa + carbidopa','Toxina botulínica','Amitriptilina'],correct:1,expl:'<b>B.</b> Levodopa é a mais eficaz (carbidopa reduz efeitos periféricos).'},
+    {stem:'Complicação após anos de levodopa:',opts:['Discinesias e wearing-off','Hipotireoidismo','Meningite','Cefaleia em salvas'],correct:0,expl:'<b>A.</b> Flutuações motoras (wearing-off) e discinesias são complicações tardias do uso prolongado de levodopa.'}
+  ],
+  cards:[
+    {tag:'Causa',q:'O que falta no Parkinson?',a:'Dopamina (degeneração da substância negra; alfa-sinucleína).'},
+    {tag:'TRAP',q:'Tétrade motora?',a:'Tremor de repouso, Rigidez (roda denteada), Acinesia/bradicinesia, instabilidade Postural.'},
+    {tag:'Tremor',q:'Parkinson x tremor essencial?',a:'Parkinson = tremor de repouso; essencial = tremor de ação/postura.'},
+    {tag:'Diagnóstico',q:'Como é o diagnóstico?',a:'Clínico, assimétrico, com resposta à levodopa; excluir neurolépticos.'},
+    {tag:'Tratamento',q:'Droga mais eficaz?',a:'Levodopa + carbidopa (agonistas em mais jovens).'},
+    {tag:'Tardio',q:'Complicações da levodopa?',a:'Wearing-off e discinesias.'}
+  ],
+  cases:[{title:'Caso — Lentidão e tremor',hist:'Homem, 68a, há 1 ano com tremor na mão direita em repouso, lentidão para se vestir e letra cada vez menor.',exam:'Bradicinesia, rigidez em roda denteada à direita, hipomimia, marcha em pequenos passos.',labs:'Sem uso de neurolépticos; boa resposta ao teste com levodopa.',reason:'TRAP assimétrico + micrografia + resposta à levodopa = doença de Parkinson.',dx:'Doença de Parkinson.',tx:'Levodopa+carbidopa, tratar sintomas não-motores (constipação, sono, humor), fisioterapia; monitorar complicações motoras tardias.'}]
+});
+
+MODULES.push({
+  id:'mov_outros', emoji:'💫', region:'basal', tema:'Distúrbios do Movimento',
+  title:'Outros Distúrbios do Movimento', sub:'Tremor essencial, distonia, coreia/Huntington e tiques',
+  prio:'média', topics:['Tremor essencial','Distonia','Coreia','Huntington','Tourette'],
+  subtopics:[
+   {label:'1. Tremor essencial',html:`<h3>〰️ Tremor essencial</h3>
+<p>É o tremor mais comum. Diferente do Parkinson, é um tremor de <b>ação/postura</b>: aparece ou piora quando a pessoa <b>usa</b> a mão (segurar um copo, escrever, levar a colher à boca). Costuma ser <b>bilateral</b>, atinge mãos e às vezes cabeça/voz, tem <b>história familiar</b> e classicamente <b>melhora com pequenas doses de álcool</b>.</p>
+<table class="med"><tr><th></th><th>Tremor essencial</th><th>Parkinson</th></tr>
+<tr><td>Quando</td><td>Ação/postura</td><td>Repouso</td></tr>
+<tr><td>Lado</td><td>Bilateral</td><td>Assimétrico</td></tr>
+<tr><td>Outros sinais</td><td>Sem rigidez/bradicinesia</td><td>TRAP</td></tr>
+<tr><td>Álcool</td><td>Melhora</td><td>Não muda</td></tr></table>
+<div class="callout tip"><b>Tratamento</b>Se incomoda: <b>propranolol</b> ou <b>primidona</b> (1ª linha).</div>`},
+   {label:'2. Distonia',html:`<h3>🌀 Distonia</h3>
+<p>Contrações musculares <b>sustentadas</b> que torcem o segmento e geram <b>posturas anormais</b> e repetitivas. Pode ser <b>focal</b> (mais comum no adulto) ou generalizada.</p>
+<ul><li><b>Blefaroespasmo</b>: fechamento involuntário das pálpebras.</li>
+<li><b>Torcicolo espasmódico (distonia cervical)</b>: pescoço puxado para um lado.</li>
+<li><b>Cãibra do escrivão</b>: distonia da mão ao escrever.</li>
+<li>Pista clássica: o <b>"gesto antagonista"</b> (tocar o rosto melhora o torcicolo).</li></ul>
+<div class="callout tip"><b>Tratamento</b>Distonias focais: <b>toxina botulínica</b> é o tratamento de escolha. Lembrar da distonia <b>aguda por neurolépticos</b> (ex.: crise oculógira) → tratar com <b>anticolinérgico</b> (biperideno).</div>`},
+   {label:'3. Coreia e Huntington',html:`<h3>💃 Coreia e doença de Huntington</h3>
+<p><b>Coreia</b> = movimentos involuntários <b>rápidos, irregulares e "dançantes"</b>, que migram pelo corpo (parecem fragmentos de gestos). Causas: Huntington, coreia de Sydenham (pós-estreptocócica, na criança/febre reumática), gravidez, lúpus, fármacos.</p>
+<h3>Doença de Huntington</h3>
+<ul><li><b>Genética autossômica dominante</b> (expansão do trinucleotídeo <b>CAG</b> no gene da huntingtina).</li>
+<li>Tríade: <b>coreia + declínio cognitivo (demência) + sintomas psiquiátricos</b> (depressão, irritabilidade).</li>
+<li><b>Antecipação</b>: tende a começar mais cedo e mais grave nas gerações seguintes.</li></ul>
+<div class="callout trap"><b>Não confundir</b>Coreia de <b>Sydenham</b> (criança, pós-estreptococo, autolimitada) ≠ <b>Huntington</b> (adulto, hereditária, progressiva com demência). História familiar e idade ajudam.</div>`},
+   {label:'4. Tiques e mioclonias',html:`<h3>⚡ Tiques (Tourette) e mioclonias</h3>
+<h3>Tiques / Síndrome de Tourette</h3>
+<ul><li><b>Tiques</b> = movimentos (motores) ou sons (vocais) <b>súbitos, repetitivos e estereotipados</b>, que a pessoa consegue <b>suprimir por um tempo</b> (com sensação de "alívio" ao executar).</li>
+<li><b>Tourette</b>: tiques motores <b>e</b> vocais que começam na infância e persistem; associa-se a TDAH e TOC.</li>
+<li>Tratamento conforme o impacto (terapia comportamental; fármacos se necessário).</li></ul>
+<h3>Mioclonia</h3>
+<p>Abalos musculares <b>brevíssimos</b> "como choque". Podem ser fisiológicos (soluço, ao adormecer) ou sinal de doença (ex.: epilepsia mioclônica, encefalopatias, Creutzfeldt-Jakob).</p>
+<div class="callout mne"><b>Resumo dos "hipercinéticos"</b>Tremor (oscilação rítmica) · coreia (dançante, irregular) · distonia (postura torcida sustentada) · tique (estereotipado, supressível) · mioclonia (choque breve).</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Outros Distúrbios do Movimento</h3>
+<div class="mindmap"><div class="mm-center">MOVIMENTO</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Tremor essencial</b><ul><li>Ação/postura, bilateral</li><li>Melhora com álcool</li><li>Propranolol/primidona</li></ul></div>
+<div class="mm-branch"><b>Distonia</b><ul><li>Postura torcida sustentada</li><li>Toxina botulínica</li><li>Aguda por neuroléptico → biperideno</li></ul></div>
+<div class="mm-branch"><b>Coreia/Huntington</b><ul><li>Movimentos dançantes</li><li>Huntington: CAG, demência, AD</li><li>Sydenham: criança, pós-estrepto</li></ul></div>
+<div class="mm-branch"><b>Tiques</b><ul><li>Estereotipados, supressíveis</li><li>Tourette (motor+vocal)</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Tremor que piora ao usar a mão, bilateral, melhora com álcool</td><td>Tremor essencial → propranolol/primidona</td></tr>
+<tr><td>Postura torcida sustentada (torcicolo, blefaroespasmo)</td><td>Distonia → toxina botulínica</td></tr>
+<tr><td>Distonia aguda após neuroléptico</td><td>Biperideno (anticolinérgico)</td></tr>
+<tr><td>Movimentos dançantes + demência + história familiar</td><td>Huntington (CAG, autossômica dominante)</td></tr>
+<tr><td>Coreia na criança após faringite</td><td>Sydenham (febre reumática)</td></tr>
+<tr><td>Tiques motores + vocais desde a infância</td><td>Tourette</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Tremor essencial = ação, melhora com álcool, propranolol. ② Distonia focal = toxina botulínica. ③ Huntington = CAG + coreia + demência (AD, antecipação). ④ Tique = supressível.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Tratar tremor essencial como Parkinson (e vice-versa). ② Esquecer biperideno na distonia aguda por neuroléptico. ③ Confundir Sydenham (criança) com Huntington (adulto hereditário). ④ Achar que tique é "mania" — é distúrbio do movimento.</div>`}
+  ],
+  questions:[
+    {stem:'Mulher, 40a, tremor nas duas mãos que piora ao escrever e ao segurar a xícara, melhora após uma taça de vinho; mãe tinha o mesmo. Diagnóstico e tratamento?',opts:['Parkinson; levodopa','Tremor essencial; propranolol','Distonia; toxina','Coreia; haloperidol'],correct:1,expl:'<b>B.</b> Tremor de ação, bilateral, familiar e que melhora com álcool = tremor essencial; 1ª linha propranolol (ou primidona).'},
+    {stem:'Paciente desenvolve torcicolo involuntário sustentado (distonia cervical). Tratamento de escolha?',opts:['Levodopa','Toxina botulínica','Antibiótico','Propranolol'],correct:1,expl:'<b>B.</b> Distonias focais respondem bem à toxina botulínica.'},
+    {stem:'Homem, 42a, com movimentos coreicos, alterações de humor e declínio cognitivo; pai faleceu com quadro semelhante. Diagnóstico?',opts:['Coreia de Sydenham','Doença de Huntington','Tremor essencial','Tourette'],correct:1,expl:'<b>B.</b> Coreia + demência + psiquiátrico + herança autossômica dominante (CAG) = Huntington.'},
+    {stem:'Após receber metoclopramida, jovem apresenta desvio sustentado dos olhos e contração cervical (distonia aguda). Conduta?',opts:['Biperideno (anticolinérgico)','Levodopa','Toxina botulínica','Observar'],correct:0,expl:'<b>A.</b> Distonia aguda por bloqueador dopaminérgico → anticolinérgico (biperideno).'}
+  ],
+  cards:[
+    {tag:'Tremor essencial',q:'Características?',a:'Tremor de ação/postura, bilateral, familiar, melhora com álcool; tratar com propranolol/primidona.'},
+    {tag:'Distonia',q:'O que é e tratamento focal?',a:'Contração sustentada com postura anormal; toxina botulínica.'},
+    {tag:'Distonia aguda',q:'Por neuroléptico — conduta?',a:'Anticolinérgico (biperideno).'},
+    {tag:'Huntington',q:'Tríade e herança?',a:'Coreia + demência + psiquiátrico; autossômica dominante (expansão CAG, antecipação).'},
+    {tag:'Sydenham',q:'Quando pensar?',a:'Coreia na criança após infecção estreptocócica (febre reumática).'},
+    {tag:'Tique',q:'O que caracteriza?',a:'Movimento/som estereotipado e supressível; Tourette = motor + vocal na infância.'}
+  ],
+  cases:[{title:'Caso — Movimentos involuntários e história familiar',hist:'Homem, 45a, há meses com movimentos rápidos e irregulares dos membros, irritabilidade e esquecimentos; pai teve doença parecida e faleceu cedo.',exam:'Coreia generalizada, déficit cognitivo leve.',labs:'Teste genético: expansão CAG no gene da huntingtina.',reason:'Coreia + alterações psiquiátricas/cognitivas + herança autossômica dominante + CAG = Huntington.',dx:'Doença de Huntington.',tx:'Aconselhamento genético, manejo sintomático da coreia e dos sintomas psiquiátricos, suporte multidisciplinar (sem cura).'}]
+});
+
 const REGION_INFO = {
   frontal:{name:'Lobo Frontal',msg:'Funções executivas ativadas.',color:'#38BDF8',represents:'Neuroanatomia, cognição, demências'},
   parietal:{name:'Lobo Parietal',msg:'Processamento sensorial desbloqueado.',color:'#22D3EE',represents:'Sensibilidade, síndromes corticais'},
@@ -2629,7 +2933,11 @@ const SCORES = {
   tce_aval:`<h3>🎯 Glasgow & classificação</h3><table class="med"><tr><th>Componente</th><th>Faixa</th></tr><tr><td>Ocular</td><td>1–4</td></tr><tr><td>Verbal</td><td>1–5</td></tr><tr><td>Motora</td><td>1–6</td></tr></table><table class="med"><tr><th>Glasgow</th><th>TCE</th></tr><tr><td>13–15</td><td>Leve</td></tr><tr><td>9–12</td><td>Moderado</td></tr><tr><td>≤8</td><td>Grave → intubar</td></tr></table>`,
   tce_hemat:`<h3>🎯 Extradural x Subdural</h3><table class="med"><tr><th></th><th>Extradural</th><th>Subdural</th></tr><tr><td>Vaso</td><td>A. meníngea média</td><td>Veias-ponte</td></tr><tr><td>Formato</td><td>Lente biconvexa</td><td>Crescente</td></tr><tr><td>Suturas</td><td>Não cruza</td><td>Cruza</td></tr><tr><td>Perfil</td><td>Intervalo lúcido</td><td>Idoso/etilista/anticoag.</td></tr></table>`,
   tce_leve:`<h3>🎯 TCE leve — quando pedir TC</h3><table class="med"><tr><th>Indicar TC</th></tr><tr><td>Glasgow &lt;15 após 2h / rebaixamento</td></tr><tr><td>Vômitos repetidos, ≥65a, anticoagulante</td></tr><tr><td>Sinais de fratura de base, déficit, convulsão</td></tr></table><div class="callout mne"><b>Fratura de base:</b> olhos de guaxinim, sinal de Battle, oto/rinorreia liquórica.</div>`
-
+,
+  demencias:`<h3>🎯 Delirium x Demência</h3><table class="med"><tr><th></th><th>Delirium</th><th>Demência</th></tr><tr><td>Início</td><td>Agudo</td><td>Insidioso</td></tr><tr><td>Atenção</td><td>Alterada</td><td>Preservada (início)</td></tr><tr><td>Curso</td><td>Flutuante</td><td>Progressivo</td></tr><tr><td>Reversível</td><td>Sim</td><td>Em geral não</td></tr></table><div class="callout mne"><b>Reversíveis:</b> TSH, B12, sífilis/HIV, hidrocefalia de pressão normal, depressão, subdural, medicações.</div>`,
+  demencias_outras:`<h3>🎯 Tipos não-Alzheimer</h3><table class="med"><tr><th>Tipo</th><th>Marca</th></tr><tr><td>Vascular</td><td>Em degraus + fatores de risco</td></tr><tr><td>Corpos de Lewy</td><td>Flutuação + alucinação visual + parkinsonismo (não dar neuroléptico)</td></tr><tr><td>Frontotemporal</td><td>Jovem + comportamento; memória preservada</td></tr><tr><td>Creutzfeldt-Jakob</td><td>Rápida + mioclonias</td></tr></table>`,
+  parkinson:`<h3>🎯 TRAP & diferenciais</h3><table class="med"><tr><th>TRAP</th><th></th></tr><tr><td>Tremor</td><td>de repouso</td></tr><tr><td>Rigidez</td><td>roda denteada</td></tr><tr><td>Acinesia</td><td>bradicinesia (obrigatória)</td></tr><tr><td>Postural</td><td>instabilidade (tardia)</td></tr></table><div class="callout mne"><b>Excluir:</b> parkinsonismo por neuroléptico/metoclopramida (simétrico, reversível). <b>Tratar:</b> levodopa (mais eficaz).</div>`,
+  mov_outros:`<h3>🎯 Hipercinéticos</h3><table class="med"><tr><th>Distúrbio</th><th>Chave</th></tr><tr><td>Tremor essencial</td><td>Ação/postura, melhora com álcool → propranolol</td></tr><tr><td>Distonia</td><td>Postura torcida → toxina botulínica</td></tr><tr><td>Huntington</td><td>Coreia + demência, CAG, autossômica dominante</td></tr><tr><td>Tourette</td><td>Tiques motor + vocal, supressíveis</td></tr></table>`
 };
 
 /* separar subtópicos em Teoria / Mapa / Revisão / Dicas */
