@@ -815,6 +815,22 @@ MODULES.push({
   prio:'altíssima', topics:['AVE isquêmico','NIHSS','Trombólise','Trombectomia','TOAST'],
   subtopics:[
    {label:'1. O que é (e por que acontece)',html:`<h3>🩸 Entendendo o AVE isquêmico do zero</h3>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:10px 0;text-align:center">
+<svg viewBox="0 0 300 210" width="100%" style="max-width:320px">
+<ellipse cx="150" cy="100" rx="128" ry="86" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<ellipse cx="150" cy="58" rx="42" ry="32" fill="#b48ad6" opacity="0.65"/>
+<ellipse cx="66" cy="106" rx="42" ry="58" fill="#8fd4c8" opacity="0.5"/>
+<ellipse cx="234" cy="106" rx="42" ry="58" fill="#8fd4c8" opacity="0.5"/>
+<ellipse cx="150" cy="158" rx="58" ry="30" fill="#f2a33a" opacity="0.6"/>
+<text x="150" y="62" text-anchor="middle" font-size="12" font-weight="800" fill="#1a0f24">ACA</text>
+<text x="60" y="110" text-anchor="middle" font-size="12" font-weight="800" fill="#06302a">ACM</text>
+<text x="240" y="110" text-anchor="middle" font-size="12" font-weight="800" fill="#06302a">ACM</text>
+<text x="150" y="162" text-anchor="middle" font-size="12" font-weight="800" fill="#3a2406">ACP</text>
+<text x="150" y="14" text-anchor="middle" font-size="9" fill="#cfd8e3">(frente)</text>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:6px;text-align:left">
+<b>Territórios:</b> <b style="color:#c79ae0">ACA</b> (cerebral anterior) → perna/medial · <b style="color:#8fd4c8">ACM</b> (cerebral média) → face e braço, afasia (lado dominante), negligência · <b style="color:#f2a33a">ACP</b> (cerebral posterior) → visão (hemianopsia). O <b>território</b> acometido prevê o déficit.</div>
+</div>
 <p>Imagine que o cérebro é uma cidade e as artérias são os <b>canos que levam água (sangue com oxigênio)</b> a cada bairro. Se um cano entope, o bairro fica sem água e os moradores (os neurônios) começam a morrer. Isso é o AVE isquêmico: a <b>interrupção súbita do fluxo de sangue</b> a uma parte do cérebro.</p>
 <p>Ele é o tipo mais comum de AVC — cerca de <b>85%</b> dos casos (os outros 15% são hemorrágicos, quando o cano se rompe).</p>
 <h3>Por que entope? (os dois mecanismos)</h3>
@@ -3482,6 +3498,656 @@ MODULES.push({
   cases:[{title:'Caso — Coma após hemorragia maciça',hist:'Paciente com hemorragia cerebral extensa, em ventilação mecânica, sem sedação há tempo suficiente, normotérmico e sem distúrbios metabólicos.',exam:'Coma não perceptivo; ausência de todos os reflexos de tronco.',labs:'Teste de apneia: sem movimentos respiratórios com PaCO₂ 60 mmHg.',reason:'Causa conhecida e irreversível, confundidores excluídos, exame clínico e apneia compatíveis — falta confirmar com complementar e repetir o exame clínico.',dx:'Protocolo de morte encefálica em andamento.',tx:'Repetir o exame clínico por segundo médico capacitado após o intervalo, realizar exame complementar obrigatório, preencher o Termo de ME e comunicar família e central de transplantes.'}]
 });
 
+/* ---------- 12. MEDULA ESPINHAL ---------- */
+MODULES.push({
+  id:'trm', emoji:'🦴', region:'spinal', tema:'Medula Espinhal',
+  title:'Trauma Raquimedular (TRM)', sub:'Síndromes medulares, choque medular x neurogênico',
+  prio:'altíssima', topics:['TRM','Brown-Séquard','Choque medular','Choque neurogênico','Nível neurológico'],
+  subtopics:[
+   {label:'1. Conceitos iniciais',html:`<h3>🦴 Entendendo do zero</h3>
+<p>No trauma raquimedular (TRM), uma lesão na coluna danifica a <b>medula espinhal</b> — o "cabo" que leva os sinais entre o cérebro e o corpo. Abaixo da lesão, perde-se função motora e/ou sensitiva.</p>
+<table class="med"><tr><th>Conceito</th><th>Significado</th></tr>
+<tr><td><b>Nível neurológico</b></td><td>O segmento mais baixo com função normal — define onde começa o déficit</td></tr>
+<tr><td><b>Lesão completa</b></td><td>Ausência total de função motora e sensitiva abaixo do nível (inclui segmentos sacrais)</td></tr>
+<tr><td><b>Lesão incompleta</b></td><td>Há alguma função preservada abaixo (ex.: sensibilidade perianal — "preservação sacral") → melhor prognóstico</td></tr>
+<tr><td><b>Primária x secundária</b></td><td>A primária é o impacto; a <b>secundária</b> (hipóxia, hipotensão, edema) é o que se previne</td></tr></table>
+<div class="callout warn"><b>Na cena do trauma</b>Todo politraumatizado tem lesão de coluna até prova em contrário: <b>imobilização</b> (colar cervical, prancha) e cuidado ABCDE. Evitar hipotensão/hipóxia (lesão secundária).</div>`},
+   {label:'2. Choque medular x neurogênico',html:`<h3>⚡ A pegadinha clássica: dois "choques" diferentes</h3>
+<table class="med"><tr><th></th><th>Choque MEDULAR</th><th>Choque NEUROGÊNICO</th></tr>
+<tr><td>O que é</td><td>Fenômeno <b>neurológico</b>: perda transitória de TODA a função (e reflexos) abaixo da lesão logo após o trauma</td><td>Fenômeno <b>hemodinâmico</b>: hipotensão por perda do tônus simpático</td></tr>
+<tr><td>Achados</td><td>Flacidez + <b>arreflexia</b> abaixo da lesão; é temporário</td><td><b>Hipotensão + BRADICARDIA</b> (sem taquicardia compensatória)</td></tr>
+<tr><td>Quando</td><td>Imediatamente após o TRM; reflexos retornam em dias/semanas</td><td>Lesões <b>cervicais/torácicas altas</b> (acima de T6)</td></tr>
+<tr><td>Conduta</td><td>Suporte; o retorno do <b>reflexo bulbocavernoso</b> marca o fim</td><td>Volume + <b>vasopressor</b>; atropina se bradicardia</td></tr></table>
+<div class="callout trap"><b>Não confunda!</b>① <b>Choque medular</b> = perda de reflexos (neurológico, transitório). ② <b>Choque neurogênico</b> = hipotensão COM bradicardia (hemodinâmico). ③ E cuidado: no politrauma, hipotensão é <b>hemorrágica</b> até prova em contrário (taquicardia) — só atribua ao neurogênico após excluir sangramento.</div>`},
+   {label:'3. Síndromes medulares (cortes)',html:`<h3>🔬 As síndromes incompletas (com o corte da medula)</h3>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 330 150" width="100%" style="max-width:360px">
+<g><ellipse cx="55" cy="62" rx="32" ry="38" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<path d="M55 24 A 32 38 0 0 0 55 100 Z" fill="#ef4444" opacity="0.5"/>
+<text x="55" y="120" text-anchor="middle" font-size="10" fill="#e7edf5" font-weight="700">Brown-Séquard</text>
+<text x="55" y="133" text-anchor="middle" font-size="8" fill="#8fd4c8">(hemissecção)</text></g>
+<g><ellipse cx="165" cy="62" rx="32" ry="38" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<ellipse cx="165" cy="62" rx="11" ry="18" fill="#ef4444" opacity="0.6"/>
+<text x="165" y="120" text-anchor="middle" font-size="10" fill="#e7edf5" font-weight="700">Central</text>
+<text x="165" y="133" text-anchor="middle" font-size="8" fill="#8fd4c8">(MMSS &gt; MMII)</text></g>
+<g><ellipse cx="275" cy="62" rx="32" ry="38" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<path d="M275 70 m-30 0 a30 30 0 0 0 60 0 Z" fill="#ef4444" opacity="0.5"/>
+<ellipse cx="275" cy="78" rx="26" ry="20" fill="#ef4444" opacity="0.45"/>
+<text x="275" y="120" text-anchor="middle" font-size="10" fill="#e7edf5" font-weight="700">Anterior</text>
+<text x="275" y="133" text-anchor="middle" font-size="8" fill="#8fd4c8">(poupa vibração)</text></g>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">Áreas em vermelho = região lesada no corte da medula.</div>
+</div>
+<table class="med"><tr><th>Síndrome</th><th>Quadro</th></tr>
+<tr><td><b>Brown-Séquard</b> (hemissecção)</td><td>Mesmo lado (ipsilateral): perda <b>motora</b> + <b>propriocepção/vibração</b>. Lado oposto (contralateral): perda de <b>dor e temperatura</b> (alguns níveis abaixo)</td></tr>
+<tr><td><b>Central</b></td><td>Déficit <b>maior nos braços que nas pernas</b>; idoso após hiperextensão cervical</td></tr>
+<tr><td><b>Anterior</b></td><td>Perda motora + dor/temperatura abaixo; <b>poupa propriocepção/vibração</b> (cordões posteriores); <b>pior prognóstico</b> (artéria espinhal anterior)</td></tr></table>
+<div class="callout mne"><b>Macete do cruzamento</b>A via de <b>dor/temperatura cruza</b> na medula → na Brown-Séquard ela se perde do lado <b>contralateral</b>. Já força e vibração ficam do lado <b>ipsilateral</b>.</div>`},
+   {label:'4. Localização pelo nível',html:`<h3>📍 Onde está a lesão? Use os dermátomos</h3>
+<table class="med"><tr><th>Nível</th><th>Referência</th></tr>
+<tr><td>C4</td><td>Ombro/clavícula</td></tr>
+<tr><td>C6</td><td>Polegar</td></tr>
+<tr><td>C8</td><td>Dedo mínimo</td></tr>
+<tr><td><b>T4</b></td><td><b>Mamilos</b></td></tr>
+<tr><td><b>T10</b></td><td><b>Umbigo</b></td></tr>
+<tr><td>L1</td><td>Virilha</td></tr>
+<tr><td>S4-S5</td><td>Períneo (preservação sacral)</td></tr></table>
+<p>Lesões <b>cervicais</b> altas ameaçam a respiração (diafragma = C3-C5: "C3,4,5 keep the diaphragm alive"). Abaixo da lesão, com o tempo, surgem sinais de <b>1º neurônio</b> (espasticidade, hiperreflexia, Babinski) — embora na fase de choque medular o quadro seja flácido.</p>
+<div class="callout tip"><b>Dica</b>Sempre teste a <b>sensibilidade perianal e o tônus do esfíncter</b>: a preservação sacral indica lesão <b>incompleta</b> (melhor prognóstico).</div>`},
+   {label:'5. Avaliação e conduta',html:`<h3>🏥 Conduta no TRM</h3>
+<table class="med"><tr><th>Passo</th><th>Conduta</th></tr>
+<tr><td><b>ABCDE + imobilização</b></td><td>Colar cervical/prancha; via aérea (cuidado em lesão cervical); ventilação</td></tr>
+<tr><td><b>Circulação</b></td><td>Evitar hipotensão (manter perfusão medular); diferenciar choque hemorrágico de neurogênico</td></tr>
+<tr><td><b>Exame neurológico</b></td><td>Nível motor/sensitivo (padrão ASIA), reflexos, tônus e sensibilidade sacral</td></tr>
+<tr><td><b>Imagem</b></td><td><b>TC</b> da coluna (ossos); <b>RM</b> para a medula/ligamentos/hematoma</td></tr>
+<tr><td><b>Definitivo</b></td><td>Estabilização cirúrgica conforme a lesão; suporte em UTI</td></tr></table>
+<div class="callout warn"><b>Corticoide no TRM</b>O uso de corticoide em alta dose <b>não</b> é recomendado de rotina (benefício duvidoso e riscos). Foque em <b>imobilizar, manter PA/oxigenação</b> e tratar a causa.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — TRM</h3>
+<div class="mindmap"><div class="mm-center">TRM</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Choques</b><ul><li>Medular: arreflexia transitória</li><li>Neurogênico: hipotensão + bradicardia</li></ul></div>
+<div class="mm-branch"><b>Síndromes</b><ul><li>Brown-Séquard (cruzamento)</li><li>Central (MMSS&gt;MMII)</li><li>Anterior (poupa vibração)</li></ul></div>
+<div class="mm-branch"><b>Localização</b><ul><li>T4 mamilo, T10 umbigo</li><li>Preservação sacral = incompleta</li></ul></div>
+<div class="mm-branch"><b>Conduta</b><ul><li>Imobilizar + ABCDE</li><li>Manter PA/O₂</li><li>TC/RM; corticoide não de rotina</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Hipotensão + bradicardia após TRM cervical</td><td>Choque neurogênico (volume + vasopressor)</td></tr>
+<tr><td>Flacidez e arreflexia logo após o trauma</td><td>Choque medular (transitório)</td></tr>
+<tr><td>Força+vibração de um lado, dor/temperatura do outro</td><td>Brown-Séquard</td></tr>
+<tr><td>Déficit maior em braços que pernas, idoso</td><td>Síndrome medular central</td></tr>
+<tr><td>Perde motor+dor/temp, poupa vibração</td><td>Síndrome medular anterior (pior prognóstico)</td></tr>
+<tr><td>Sensibilidade perianal preservada</td><td>Lesão incompleta (melhor prognóstico)</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Choque medular (reflexos) ≠ neurogênico (hipotensão+bradicardia). ② Brown-Séquard cruza dor/temperatura. ③ Anterior poupa vibração. ④ Preservação sacral = incompleta.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Atribuir hipotensão ao neurogênico sem excluir hemorragia (taquicardia). ② Esquecer de testar a sensibilidade sacral. ③ Usar corticoide de rotina. ④ Não imobilizar o politraumatizado.</div>`}
+  ],
+  questions:[
+    {stem:'Após TRM cervical, paciente com PA 80x50 e FC 48 bpm, pele quente. Qual o tipo de choque mais provável?',opts:['Hemorrágico','Neurogênico','Séptico','Cardiogênico'],correct:1,expl:'<b>B.</b> Hipotensão COM bradicardia (e pele quente) por perda do tônus simpático = choque neurogênico (lesão cervical/torácica alta). Ainda assim, excluir hemorragia.'},
+    {stem:'Lesão com perda motora e proprioceptiva à direita e perda de dor/temperatura à esquerda. Síndrome?',opts:['Medular central','Brown-Séquard','Medular anterior','Cauda equina'],correct:1,expl:'<b>B.</b> Hemissecção (Brown-Séquard): motor/vibração ipsilateral; dor/temperatura contralateral (a via que cruza).'},
+    {stem:'Idoso cai, hiperestende o pescoço e fica com fraqueza muito maior nos braços que nas pernas. Síndrome?',opts:['Medular anterior','Medular central','Brown-Séquard','Posterior'],correct:1,expl:'<b>B.</b> Síndrome medular central: déficit predomina nos membros superiores; típica em idoso com hiperextensão cervical.'},
+    {stem:'Sobre o choque medular:',opts:['É hemodinâmico, com bradicardia','É a perda transitória de reflexos/função abaixo da lesão','Indica corticoide imediato','Significa lesão completa permanente'],correct:1,expl:'<b>B.</b> Choque medular é a perda neurológica transitória (flacidez/arreflexia) abaixo da lesão; o retorno do reflexo bulbocavernoso marca o fim.'}
+  ],
+  cards:[
+    {tag:'Choques',q:'Choque medular x neurogênico?',a:'Medular: arreflexia/flacidez transitória (neurológico). Neurogênico: hipotensão + bradicardia (hemodinâmico).'},
+    {tag:'Brown-Séquard',q:'Achados?',a:'Ipsilateral: motor + vibração/propriocepção. Contralateral: dor e temperatura.'},
+    {tag:'Central',q:'Quadro e perfil?',a:'Déficit maior em MMSS que MMII; idoso com hiperextensão cervical.'},
+    {tag:'Anterior',q:'O que poupa e prognóstico?',a:'Poupa propriocepção/vibração (cordões posteriores); pior prognóstico.'},
+    {tag:'Níveis',q:'T4 e T10?',a:'T4 = mamilos; T10 = umbigo.'},
+    {tag:'Incompleta',q:'O que indica lesão incompleta?',a:'Preservação sacral (sensibilidade perianal/tônus do esfíncter).'}
+  ],
+  cases:[{title:'Caso — Mergulho em água rasa',hist:'Homem, 22a, mergulhou e bateu a cabeça; não move os membros, sensibilidade alterada.',exam:'Imobilizado; tetraparesia, arreflexia, PA 82x50 e FC 50; sensibilidade perianal ausente no momento.',labs:'TC/RM: lesão cervical.',reason:'TRM cervical com flacidez/arreflexia (choque medular) e hipotensão com bradicardia (choque neurogênico), após excluir hemorragia.',dx:'Trauma raquimedular cervical com choque medular e neurogênico.',tx:'Imobilização, ABCDE, manter PA (volume + vasopressor, atropina se bradicardia), RM, estabilização cirúrgica conforme a lesão; reavaliar reflexos/preservação sacral ao sair do choque medular.'}]
+});
+
+MODULES.push({
+  id:'mielopatia', emoji:'🧵', region:'spinal', tema:'Medula Espinhal',
+  title:'Compressão Medular e Mielopatias', sub:'Emergência oncológica, espondilótica e mielites',
+  prio:'alta', topics:['Compressão medular','Metástase','Mielite transversa','Cauda equina','B12'],
+  subtopics:[
+   {label:'1. Conceitos',html:`<h3>🧵 Entendendo do zero</h3>
+<p><b>Mielopatia</b> é qualquer doença da medula. O primeiro passo é separar:</p>
+<ul><li><b>Compressiva</b>: algo aperta a medula por fora (tumor/metástase, hérnia, abscesso, fratura) — muitas vezes <b>emergência</b> com janela para tratar.</li>
+<li><b>Não compressiva</b>: a medula adoece "por dentro" (inflamatória, carencial, isquêmica, infecciosa).</li></ul>
+<p>O quadro típico de mielopatia: déficit motor/sensitivo <b>com nível</b>, sinais de <b>1º neurônio</b> abaixo da lesão (espasticidade, hiperreflexia, Babinski) e disfunção <b>esfincteriana</b>.</p>
+<div class="callout mne"><b>Fixe a ideia</b>Mielopatia = síndrome medular (nível sensitivo + 1º neurônio + esfíncteres). A pergunta urgente é: <b>tem compressão?</b> → RM.</div>`},
+   {label:'2. Compressão medular maligna',html:`<h3>🚨 A emergência oncológica</h3>
+<p>Metástases na coluna (epidurais) podem comprimir a medula. Cânceres clássicos: <b>mama, próstata, pulmão</b> (e outros). É uma <b>emergência</b>: quanto antes tratar, maior a chance de preservar a função.</p>
+<table class="med"><tr><th>Pista</th><th>Detalhe</th></tr>
+<tr><td><b>Dor nas costas</b></td><td>Progressiva, <b>pior à noite/deitado</b>, pode preceder o déficit em dias/semanas</td></tr>
+<tr><td>Déficit</td><td>Fraqueza, nível sensitivo, depois retenção/incontinência urinária</td></tr>
+<tr><td>Diagnóstico</td><td><b>RM de toda a coluna</b> com urgência</td></tr>
+<tr><td>Tratamento</td><td><b>Corticoide (dexametasona) imediato</b> + radioterapia e/ou cirurgia descompressiva</td></tr></table>
+<div class="callout warn"><b>Regra de ouro</b>Paciente com câncer + <b>dor nas costas progressiva</b> (especialmente noturna) → pense em compressão medular metastática e faça <b>RM já</b>. Iniciar <b>dexametasona</b> ao suspeitar não atrasa nada e protege a medula.</div>`},
+   {label:'3. Espondilótica e cauda equina',html:`<h3>🦴 Degenerativa e a síndrome da cauda equina</h3>
+<h3>Mielopatia espondilótica cervical</h3>
+<p>É a causa <b>mais comum</b> de mielopatia no adulto/idoso: a artrose cervical comprime a medula lentamente. Quadro: <b>marcha espástica</b>, mãos "desajeitadas", hiperreflexia, Babinski; piora progressiva. Trata-se com cirurgia descompressiva nos casos significativos.</p>
+<h3>Síndrome da cauda equina (emergência!)</h3>
+<p>Compressão das raízes abaixo do cone medular (ex.: hérnia volumosa). Tríade de alerta:</p>
+<ul><li><b>Anestesia em sela</b> (períneo/região glútea).</li>
+<li><b>Retenção urinária</b> (depois incontinência por transbordamento).</li>
+<li>Fraqueza/dor nos membros inferiores, arreflexia.</li></ul>
+<div class="callout trap"><b>Não perca a cauda equina</b>Lombalgia + anestesia em sela + retenção urinária = <b>emergência cirúrgica</b> (descompressão precoce). Toda lombalgia com red flags merece exame neurológico e RM.</div>`},
+   {label:'4. Mielopatias não compressivas',html:`<h3>🔬 Quando não há compressão</h3>
+<table class="med"><tr><th>Causa</th><th>Pista</th></tr>
+<tr><td><b>Mielite transversa</b></td><td>Déficit sensitivo-motor agudo/subagudo com <b>nível</b>; inflamatória/pós-infecciosa/autoimune (associa-se a EM, neuromielite óptica); RM com hipersinal medular, líquor inflamatório. Trata com <b>corticoide</b></td></tr>
+<tr><td><b>Deficiência de B12</b></td><td><b>Degeneração combinada subaguda</b>: acomete cordões <b>posteriores</b> (vibração/propriocepção) e <b>laterais</b> (piramidal); parestesias, ataxia, sinais de 1º neurônio; repor B12</td></tr>
+<tr><td>Isquemia medular</td><td>Instalação súbita (território da artéria espinhal anterior)</td></tr>
+<tr><td>Infecciosas</td><td>HIV, HTLV-1, sífilis, esquistossomose (contexto brasileiro)</td></tr></table>
+<div class="callout mne"><b>Atalho</b>Mielopatia + macrocitose/anemia/glossite → pense <b>B12</b> (degeneração combinada). Déficit com nível + RM com hipersinal sem compressão → <b>mielite</b>.</div>`},
+   {label:'5. Conduta e bandeiras vermelhas',html:`<h3>🚩 O que fazer</h3>
+<table class="med"><tr><th>Passo</th><th>Conduta</th></tr>
+<tr><td>1</td><td>Reconhecer síndrome medular (nível + 1º neurônio + esfíncteres)</td></tr>
+<tr><td>2</td><td><b>RM urgente</b> para responder: há compressão?</td></tr>
+<tr><td>3</td><td>Com compressão (tumor): <b>dexametasona</b> + radioterapia/cirurgia. Cauda equina: <b>cirurgia urgente</b></td></tr>
+<tr><td>4</td><td>Sem compressão: investigar causa (líquor, B12, sorologias, autoanticorpos) e tratar (ex.: corticoide na mielite, repor B12)</td></tr></table>
+<div class="callout warn"><b>Bandeiras vermelhas da dor nas costas</b>Déficit neurológico, retenção urinária, anestesia em sela, febre, câncer conhecido, dor noturna progressiva, idade extrema → <b>investigar com RM</b> sem demora.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Compressão e Mielopatias</h3>
+<div class="mindmap"><div class="mm-center">MIELOPATIAS</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Compressiva</b><ul><li>Metástase (mama/próstata/pulmão)</li><li>Dor noturna → RM + dexametasona</li><li>Espondilótica cervical (mais comum)</li></ul></div>
+<div class="mm-branch"><b>Cauda equina</b><ul><li>Anestesia em sela</li><li>Retenção urinária</li><li>Cirurgia urgente</li></ul></div>
+<div class="mm-branch"><b>Não compressiva</b><ul><li>Mielite transversa (corticoide)</li><li>B12 (combinada subaguda)</li><li>Isquemia, infecções</li></ul></div>
+<div class="mm-branch"><b>Conduta</b><ul><li>RM urgente</li><li>Tratar a causa</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Câncer + dor nas costas progressiva/noturna + déficit</td><td>Compressão medular metastática → RM + dexametasona</td></tr>
+<tr><td>Anestesia em sela + retenção urinária</td><td>Cauda equina → cirurgia urgente</td></tr>
+<tr><td>Marcha espástica + mãos desajeitadas no idoso</td><td>Mielopatia espondilótica cervical</td></tr>
+<tr><td>Déficit com nível + RM hipersinal, sem compressão</td><td>Mielite transversa → corticoide</td></tr>
+<tr><td>Ataxia + vibração alterada + anemia</td><td>Deficiência de B12 (degeneração combinada)</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Síndrome medular → RM urgente (tem compressão?). ② Câncer + dor noturna = metástase → dexametasona. ③ Cauda equina = cirurgia urgente. ④ B12 = cordões posteriores + laterais.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Demorar a RM na suspeita de compressão. ② Não reconhecer a cauda equina (anestesia em sela + retenção). ③ Esquecer B12 numa mielopatia com anemia/ataxia. ④ Tratar como lombalgia simples uma dor com red flags.</div>`}
+  ],
+  questions:[
+    {stem:'Mulher com câncer de mama, dor torácica nas costas progressiva e pior à noite, agora com fraqueza nas pernas e nível sensitivo. Conduta?',opts:['Analgésico e alta','RM de coluna urgente + dexametasona','Fisioterapia eletiva','Aguardar'],correct:1,expl:'<b>B.</b> Suspeita de compressão medular metastática (emergência): RM urgente e dexametasona ao suspeitar, depois radioterapia/cirurgia.'},
+    {stem:'Paciente com lombalgia, dormência em sela e retenção urinária aguda. Diagnóstico e conduta?',opts:['Cauda equina; cirurgia urgente','Mielite; corticoide ambulatorial','Hérnia simples; repouso','Choque medular'],correct:0,expl:'<b>A.</b> Síndrome da cauda equina é emergência cirúrgica (descompressão precoce).'},
+    {stem:'Mielopatia com perda de vibração/propriocepção e sinais piramidais, anemia macrocítica e glossite. Causa?',opts:['Compressão por metástase','Deficiência de vitamina B12','Esclerose lateral amiotrófica','Cauda equina'],correct:1,expl:'<b>B.</b> Degeneração combinada subaguda por deficiência de B12 (cordões posteriores + laterais).'},
+    {stem:'Causa mais comum de mielopatia no adulto/idoso:',opts:['Mielite transversa','Mielopatia espondilótica cervical','Isquemia medular','Esquistossomose'],correct:1,expl:'<b>B.</b> A espondilose cervical degenerativa é a causa mais comum de mielopatia.'}
+  ],
+  cards:[
+    {tag:'Conceito',q:'O que é mielopatia?',a:'Doença da medula (síndrome com nível sensitivo + 1º neurônio + esfíncteres); separar compressiva x não compressiva.'},
+    {tag:'Metástase',q:'Compressão medular maligna — pista e conduta?',a:'Câncer + dor nas costas noturna/progressiva; RM urgente + dexametasona + RT/cirurgia.'},
+    {tag:'Espondilótica',q:'Causa mais comum de mielopatia?',a:'Mielopatia espondilótica cervical (degenerativa).'},
+    {tag:'Cauda equina',q:'Tríade e conduta?',a:'Anestesia em sela + retenção urinária + déficit em MMII → cirurgia urgente.'},
+    {tag:'Mielite',q:'Como é a mielite transversa?',a:'Déficit agudo/subagudo com nível; RM com hipersinal sem compressão; trata com corticoide.'},
+    {tag:'B12',q:'Mielopatia carencial clássica?',a:'Deficiência de B12 (degeneração combinada subaguda: cordões posteriores + laterais).'}
+  ],
+  cases:[{title:'Caso — Dor nas costas que virou fraqueza',hist:'Homem, 65a, câncer de próstata, há 2 semanas com dor dorsal progressiva, pior à noite; hoje com fraqueza nas pernas e dificuldade para urinar.',exam:'Paraparesia, nível sensitivo torácico, hiperreflexia em MMII, bexiga palpável.',labs:'RM: lesão epidural comprimindo a medula torácica.',reason:'Câncer + dor noturna progressiva + síndrome medular = compressão medular metastática (emergência).',dx:'Compressão medular metastática.',tx:'Dexametasona imediata, RM de toda a coluna, radioterapia e/ou cirurgia descompressiva urgente; analgesia e cuidado vesical.'}]
+});
+
+/* ---------- 13. TONTURA E VESTIBULAR ---------- */
+MODULES.push({
+  id:'vertigem', emoji:'🌀', region:'cerebellum', tema:'Tontura e Vestibular',
+  title:'Vertigem e Síndromes Vestibulares', sub:'Periférica x central, VPPB, neurite e Ménière',
+  prio:'alta', topics:['Vertigem','VPPB','HINTS','Neurite vestibular','Ménière'],
+  subtopics:[
+   {label:'1. O que é vertigem',html:`<h3>🌀 Entendendo do zero</h3>
+<p>"Tontura" é um termo amplo — o primeiro passo é classificar:</p>
+<table class="med"><tr><th>Tipo</th><th>Sensação</th></tr>
+<tr><td><b>Vertigem</b></td><td><b>Ilusão de movimento</b> (o ambiente "roda") → problema do sistema <b>vestibular</b></td></tr>
+<tr><td>Pré-síncope</td><td>"Vou desmaiar" → pensar em causa cardiovascular</td></tr>
+<tr><td>Desequilíbrio</td><td>Instabilidade ao andar → neurológico/multifatorial</td></tr>
+<tr><td>Tontura inespecífica</td><td>"Cabeça leve" → ansiedade, metabólico, drogas</td></tr></table>
+<p>O equilíbrio depende de três entradas: <b>labirinto (vestibular)</b>, <b>visão</b> e <b>propriocepção</b>. A vertigem nasce de um desequilíbrio entre os labirintos (periférico) ou de suas conexões no <b>tronco/cerebelo</b> (central).</p>
+<div class="callout mne"><b>Fixe a ideia</b>Vertigem = ilusão de rotação. A grande pergunta é: <b>é periférica (benigna) ou central (perigosa)?</b></div>`},
+   {label:'2. Periférica x central',html:`<h3>⚖️ A distinção mais importante</h3>
+<table class="med"><tr><th></th><th>Periférica (labirinto/nervo)</th><th>Central (tronco/cerebelo)</th></tr>
+<tr><td>Intensidade</td><td>Vertigem <b>intensa</b>, muito enjoo</td><td>Pode ser leve, mas com sinais neurológicos</td></tr>
+<tr><td>Nistagmo</td><td><b>Horizonto-rotatório, unidirecional</b>, <b>suprime</b> com a fixação ocular</td><td><b>Vertical/bidirecional</b>, NÃO suprime com fixação</td></tr>
+<tr><td>Sinais associados</td><td>Pode ter sintomas <b>auditivos</b> (zumbido, hipoacusia)</td><td><b>Déficits neurológicos</b> (diplopia, disartria, ataxia, dormência)</td></tr>
+<tr><td>Marcha</td><td>Instável, mas anda</td><td>Ataxia <b>grave</b> (não consegue ficar de pé)</td></tr></table>
+<h3>O exame HINTS (vertigem aguda contínua)</h3>
+<p>Três testes que, juntos, separam periférico de central:</p>
+<ul><li><b>H</b>ead Impulse (impulso cefálico): <b>anormal</b> (com sacada corretiva) = periférico; <b>normal</b> = suspeito de central.</li>
+<li><b>N</b>istagmo: unidirecional = periférico; <b>que muda de direção</b> = central.</li>
+<li><b>T</b>est of Skew (desvio vertical do olhar): presente = central.</li></ul>
+<div class="callout trap"><b>Pegadinha que salva vidas</b>Um <b>AVC de fossa posterior</b> (cerebelo/tronco) pode se apresentar só como vertigem. Sinais de alerta para central: nistagmo que muda de direção, head impulse normal, skew, déficit neurológico, cefaleia/cervicalgia súbita, incapacidade de andar. Na dúvida → <b>neuroimagem (RM)</b>.</div>`},
+   {label:'3. VPPB',html:`<h3>🪨 Vertigem posicional paroxística benigna (VPPB)</h3>
+<p>É a causa <b>mais comum</b> de vertigem. Pequenos cristais (otólitos) se soltam e caem dentro de um <b>canal semicircular</b> (mais comum o posterior). Ao mover a cabeça, eles deslocam o líquido e disparam uma vertigem <b>breve</b>.</p>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 240 150" width="100%" style="max-width:260px">
+<ellipse cx="120" cy="70" rx="34" ry="12" fill="none" stroke="#cfd8e3" stroke-width="3"/>
+<ellipse cx="108" cy="58" rx="12" ry="30" fill="none" stroke="#cfd8e3" stroke-width="3" transform="rotate(-28 108 58)"/>
+<ellipse cx="140" cy="58" rx="12" ry="30" fill="none" stroke="#cfd8e3" stroke-width="3" transform="rotate(28 140 58)"/>
+<path d="M104 104 q-16 -2 -14 -18 q2 -14 16 -12 q12 2 10 14" fill="none" stroke="#cfd8e3" stroke-width="3"/>
+<g fill="#ef4444"><circle cx="150" cy="74" r="3"/><circle cx="154" cy="80" r="3"/><circle cx="148" cy="82" r="3"/></g>
+<text x="195" y="80" text-anchor="start" font-size="9" fill="#ef4444">otólitos</text>
+<text x="120" y="135" text-anchor="middle" font-size="10" fill="#e7edf5">canais semicirculares + cóclea</text>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">Os <b style="color:#ef4444">otólitos soltos</b> dentro de um canal disparam a vertigem ao mexer a cabeça.</div>
+</div>
+<table class="med"><tr><th>Item</th><th>Detalhe</th></tr>
+<tr><td>Crise</td><td>Vertigem de <b>segundos</b>, desencadeada por <b>mudança de posição</b> (deitar, virar na cama, olhar para cima)</td></tr>
+<tr><td>Sem</td><td>Sintomas auditivos; sem déficit neurológico</td></tr>
+<tr><td>Diagnóstico</td><td>Manobra de <b>Dix-Hallpike</b> (provoca nistagmo posicional)</td></tr>
+<tr><td>Tratamento</td><td>Manobra de <b>Epley</b> (reposiciona os cristais) — muito eficaz</td></tr></table>
+<div class="callout mne"><b>Atalho</b>VPPB = vertigem <b>de segundos</b>, posicional, sem sintoma auditivo. <b>Dix-Hallpike</b> diagnostica, <b>Epley</b> trata.</div>`},
+   {label:'4. Neurite, labirintite e Ménière',html:`<h3>🦠 As outras periféricas</h3>
+<table class="med"><tr><th>Quadro</th><th>Características</th></tr>
+<tr><td><b>Neurite vestibular</b></td><td>Vertigem <b>aguda e contínua</b> por <b>dias</b>, intensa, geralmente pós-viral; <b>sem</b> sintomas auditivos. HINTS periférico</td></tr>
+<tr><td><b>Labirintite</b></td><td>Como a neurite, porém <b>com</b> sintomas auditivos (hipoacusia/zumbido)</td></tr>
+<tr><td><b>Doença de Ménière</b></td><td>Crises <b>recorrentes</b> (20 min a horas) de vertigem + <b>hipoacusia flutuante</b> + <b>zumbido</b> + plenitude auricular (hidropisia endolinfática)</td></tr></table>
+<h3>Tratamento</h3>
+<ul><li>Fase aguda: <b>sintomáticos por pouco tempo</b> (anti-histamínicos/antieméticos, ex.: dimenidrinato) — não usar por muitos dias (atrapalham a compensação).</li>
+<li>Neurite: considerar corticoide; reabilitação vestibular.</li>
+<li>Ménière: restrição de sal, diurético, evitar gatilhos.</li></ul>
+<div class="callout tip"><b>Dica</b>Vertigem contínua por dias + sem audição alterada = <b>neurite</b>. Com audição alterada = <b>labirintite</b>. Episódica com zumbido/hipoacusia flutuante = <b>Ménière</b>.</div>`},
+   {label:'5. Abordagem e quando investigar',html:`<h3>🏥 Como conduzir</h3>
+<table class="med"><tr><th>Passo</th><th>Conduta</th></tr>
+<tr><td>1</td><td>Classificar a tontura (é vertigem?) e o tempo (segundos x dias x episódica)</td></tr>
+<tr><td>2</td><td>Decidir <b>periférico x central</b> (nistagmo, HINTS, sinais neurológicos)</td></tr>
+<tr><td>3</td><td>Posicional de segundos → <b>Dix-Hallpike</b> e tratar com <b>Epley</b></td></tr>
+<tr><td>4</td><td>Contínua aguda → avaliar HINTS; se central ou red flags → <b>RM</b> (AVC de fossa posterior)</td></tr>
+<tr><td>5</td><td>Sintomáticos por pouco tempo + reabilitação vestibular</td></tr></table>
+<div class="callout warn"><b>Não rotular tudo como "labirintite"</b>Vertigem súbita em paciente com fatores de risco vascular, com qualquer sinal central, exige excluir <b>AVC cerebelar</b> — que pode evoluir com edema e ser fatal.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Vertigem</h3>
+<div class="mindmap"><div class="mm-center">VERTIGEM</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Periférica x central</b><ul><li>Nistagmo unidirecional/suprime = periférico</li><li>Muda direção/não suprime = central</li><li>HINTS</li></ul></div>
+<div class="mm-branch"><b>VPPB</b><ul><li>Segundos, posicional</li><li>Dix-Hallpike / Epley</li></ul></div>
+<div class="mm-branch"><b>Agudas</b><ul><li>Neurite (sem audição)</li><li>Labirintite (com audição)</li></ul></div>
+<div class="mm-branch"><b>Ménière</b><ul><li>Episódica + zumbido + hipoacusia flutuante</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Vertigem de segundos ao deitar/virar</td><td>VPPB → Dix-Hallpike / Epley</td></tr>
+<tr><td>Vertigem contínua dias, sem audição alterada</td><td>Neurite vestibular</td></tr>
+<tr><td>Idem, com hipoacusia/zumbido</td><td>Labirintite</td></tr>
+<tr><td>Crises + hipoacusia flutuante + zumbido + plenitude</td><td>Ménière</td></tr>
+<tr><td>Nistagmo que muda de direção / head impulse normal / skew</td><td>Central → RM (AVC fossa posterior)</td></tr>
+<tr><td>Nistagmo unidirecional que suprime com fixação</td><td>Periférico</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Vertigem = ilusão de rotação. ② VPPB: segundos, Dix-Hallpike/Epley. ③ HINTS separa periférico de central. ④ Sintomático por pouco tempo (não atrasar a compensação).</div>
+<div class="callout trap"><b>Pegadinhas</b>① Chamar tudo de "labirintite" e perder um AVC cerebelar. ② Esquecer que nistagmo que muda de direção é central. ③ Usar supressor vestibular por semanas. ④ Não fazer Epley na VPPB (é o tratamento).</div>`}
+  ],
+  flowDx:{ title:'Vertigem: periférica ou central?', start:'v1', nodes:{
+    v1:{q:'Há sinais neurológicos, nistagmo que muda de direção, head impulse normal ou skew?',opts:[{t:'Sim',go:'rCentral'},{t:'Não',go:'v2'}]},
+    v2:{q:'É de segundos e desencadeada por mudança de posição?',opts:[{t:'Sim',go:'rVPPB'},{t:'Não (contínua dias)',go:'rNeurite'}]}
+  }, results:{
+    rCentral:{title:'Suspeita de causa central',body:'Excluir AVC de fossa posterior → RM. Não rotular como labirintite.'},
+    rVPPB:{title:'VPPB',body:'Confirmar com Dix-Hallpike e tratar com a manobra de Epley.'},
+    rNeurite:{title:'Vertigem periférica aguda',body:'Neurite (sem audição) ou labirintite (com audição); sintomáticos por pouco tempo + reabilitação.'}
+  }},
+  questions:[
+    {stem:'Paciente tem vertigem de poucos segundos sempre que se deita ou vira na cama, sem zumbido nem déficit. Diagnóstico e tratamento?',opts:['Ménière; diurético','VPPB; manobra de Epley','Neurite; corticoide','AVC; trombólise'],correct:1,expl:'<b>B.</b> Vertigem posicional de segundos, sem sintoma auditivo = VPPB; Dix-Hallpike diagnostica e Epley trata.'},
+    {stem:'Vertigem aguda e contínua há 2 dias, intensa, sem alteração auditiva; HINTS periférico. Diagnóstico?',opts:['Neurite vestibular','Doença de Ménière','VPPB','AVC cerebelar'],correct:0,expl:'<b>A.</b> Vertigem contínua por dias, sem sintomas auditivos, com HINTS periférico = neurite vestibular.'},
+    {stem:'Qual achado aponta para vertigem CENTRAL?',opts:['Nistagmo unidirecional que suprime com fixação','Nistagmo que muda de direção / head impulse normal / skew','Vertigem posicional de segundos','Zumbido isolado'],correct:1,expl:'<b>B.</b> Nistagmo direção-variável, head impulse normal e skew (HINTS central) sugerem causa central → investigar AVC.'},
+    {stem:'Crises recorrentes de vertigem com hipoacusia flutuante, zumbido e plenitude auricular. Diagnóstico?',opts:['VPPB','Doença de Ménière','Neurite','Migrânea vestibular'],correct:1,expl:'<b>B.</b> A tétrade (vertigem episódica + hipoacusia flutuante + zumbido + plenitude) é a doença de Ménière.'}
+  ],
+  cards:[
+    {tag:'Conceito',q:'O que é vertigem?',a:'Ilusão de movimento rotatório, por disfunção vestibular (periférica ou central).'},
+    {tag:'Periférico x central',q:'Como diferenciar pelo nistagmo?',a:'Periférico: unidirecional, suprime com fixação. Central: vertical/muda de direção, não suprime.'},
+    {tag:'HINTS',q:'O que sugere central?',a:'Head impulse normal, nistagmo que muda de direção e skew presente.'},
+    {tag:'VPPB',q:'Diagnóstico e tratamento?',a:'Dix-Hallpike diagnostica; Epley trata.'},
+    {tag:'Agudas',q:'Neurite x labirintite?',a:'Neurite: sem sintomas auditivos. Labirintite: com sintomas auditivos.'},
+    {tag:'Ménière',q:'Tétrade?',a:'Vertigem episódica + hipoacusia flutuante + zumbido + plenitude auricular.'}
+  ],
+  cases:[{title:'Caso — Tudo rodando ao deitar',hist:'Mulher, 50a, refere que ao deitar ou virar na cama tem crises de vertigem rotatória de poucos segundos, há uma semana; nega zumbido, perda auditiva e déficits.',exam:'Exame neurológico normal; Dix-Hallpike provoca nistagmo posicional típico.',labs:'Sem sinais centrais.',reason:'Vertigem posicional de segundos, sem sintomas auditivos/neurológicos, com Dix-Hallpike positivo = VPPB.',dx:'Vertigem posicional paroxística benigna.',tx:'Manobra de Epley (reposicionamento); orientar; sintomáticos por pouco tempo se necessário; reavaliar.'}]
+});
+
+/* ---------- 14. NEURO-ONCOLOGIA E NEUROINFECÇÃO ---------- */
+MODULES.push({
+  id:'tumores', emoji:'🎯', region:'frontal', tema:'Neuro-oncologia e Neuroinfecção',
+  title:'Tumores do SNC', sub:'Primários x metástases, HIC e principais tipos',
+  prio:'alta', topics:['Tumores SNC','Glioblastoma','Meningioma','Metástases','Schwannoma'],
+  subtopics:[
+   {label:'1. Conceitos',html:`<h3>🎯 Entendendo do zero</h3>
+<p>Tumores do SNC podem ser <b>primários</b> (nascem no próprio sistema nervoso) ou <b>metastáticos</b> (vêm de outro órgão). Dois conceitos guiam a leitura da imagem:</p>
+<table class="med"><tr><th>Conceito</th><th>Significado</th></tr>
+<tr><td><b>Intra-axial</b></td><td>Dentro do parênquima cerebral (ex.: gliomas, metástases)</td></tr>
+<tr><td><b>Extra-axial</b></td><td>Fora do parênquima, empurrando o cérebro (ex.: meningioma, schwannoma)</td></tr></table>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 330 130" width="100%" style="max-width:360px">
+<g><ellipse cx="55" cy="55" rx="42" ry="40" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<path d="M30 25 a14 14 0 0 1 24 6 q-12 4 -24 -6 Z" fill="#f2f5f9"/>
+<text x="55" y="112" text-anchor="middle" font-size="9.5" fill="#e7edf5" font-weight="700">Meningioma</text>
+<text x="55" y="124" text-anchor="middle" font-size="8" fill="#8fd4c8">extra-axial (dural)</text></g>
+<g><ellipse cx="165" cy="55" rx="42" ry="40" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<path d="M150 40 q18 -10 26 6 q6 16 -10 22 q-20 4 -22 -12 q0 -10 6 -16Z" fill="#ef4444" opacity="0.75"/>
+<text x="165" y="112" text-anchor="middle" font-size="9.5" fill="#e7edf5" font-weight="700">Glioma</text>
+<text x="165" y="124" text-anchor="middle" font-size="8" fill="#8fd4c8">intra-axial (infiltra)</text></g>
+<g><ellipse cx="275" cy="55" rx="42" ry="40" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<circle cx="262" cy="42" r="8" fill="#f2a33a"/><circle cx="290" cy="55" r="7" fill="#f2a33a"/><circle cx="270" cy="70" r="6" fill="#f2a33a"/>
+<text x="275" y="112" text-anchor="middle" font-size="9.5" fill="#e7edf5" font-weight="700">Metástases</text>
+<text x="275" y="124" text-anchor="middle" font-size="8" fill="#8fd4c8">múltiplas, arredondadas</text></g>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">Padrões esquemáticos: meningioma (massa de base dural), glioma (infiltrativo no parênquima), metástases (múltiplas e arredondadas).</div>
+</div>
+<div class="callout mne"><b>Fixe</b>No <b>adulto</b>, a <b>metástase</b> é o tumor cerebral mais comum (pulmão, mama, melanoma). Entre os primários: glioma (maligno) e meningioma (benigno).</div>`},
+   {label:'2. Quadro clínico (HIC)',html:`<h3>🩺 Como se manifesta</h3>
+<p>Os sintomas vêm de três mecanismos: <b>hipertensão intracraniana (HIC)</b>, <b>irritação cortical (crises)</b> e <b>déficit focal progressivo</b>.</p>
+<table class="med"><tr><th>Sinal</th><th>Detalhe</th></tr>
+<tr><td><b>Cefaleia</b></td><td>Progressiva, <b>pior pela manhã</b> e à Valsalva, pode acordar à noite; com vômitos</td></tr>
+<tr><td><b>Papiledema</b></td><td>Sinal de HIC ao fundo de olho</td></tr>
+<tr><td><b>Crise epiléptica</b></td><td>Primeira crise <b>no adulto</b> → investigar tumor</td></tr>
+<tr><td>Déficit focal</td><td>Progressivo conforme a topografia; mudança de personalidade (frontal)</td></tr></table>
+<div class="callout warn"><b>Bandeiras vermelhas</b>Cefaleia nova/progressiva, pior pela manhã/Valsalva, com papiledema, déficit focal ou primeira crise no adulto → <b>neuroimagem</b>. (Releia a matéria de Cefaleias Secundárias.)</div>`},
+   {label:'3. Principais tumores',html:`<h3>🧫 Quem é quem</h3>
+<table class="med"><tr><th>Tumor</th><th>Características</th></tr>
+<tr><td><b>Glioblastoma</b> (glioma de alto grau)</td><td>Primário maligno mais comum no adulto; infiltrativo, realce <b>heterogêneo/anelar com necrose</b>, cruza a linha média ("asa de borboleta"); prognóstico ruim</td></tr>
+<tr><td><b>Meningioma</b></td><td>Primário benigno mais comum; <b>extra-axial</b>, base dural, realce homogêneo; mais em mulheres; muitas vezes achado/lento</td></tr>
+<tr><td><b>Metástases</b></td><td>Múltiplas, na <b>junção córtico-subcortical</b>, realce anelar, muito edema</td></tr>
+<tr><td><b>Schwannoma vestibular</b></td><td>Ângulo ponto-cerebelar; <b>perda auditiva unilateral</b> + zumbido; bilateral sugere <b>NF2</b></td></tr></table>
+<div class="callout trap"><b>Adulto x criança</b>No <b>adulto</b>, os tumores primários são mais <b>supratentoriais</b>. Na <b>criança</b>, predominam os de <b>fossa posterior</b> (meduloblastoma, astrocitoma pilocítico, ependimoma) — daí sinais cerebelares e hidrocefalia.</div>`},
+   {label:'4. Diagnóstico',html:`<h3>🔬 Como investigar</h3>
+<table class="med"><tr><th>Exame</th><th>Papel</th></tr>
+<tr><td><b>RM com contraste</b></td><td>Exame de <b>escolha</b>: localiza, caracteriza o realce, o edema e o efeito de massa</td></tr>
+<tr><td>TC</td><td>Rápida na emergência (sangramento, HIC, herniação)</td></tr>
+<tr><td><b>Biópsia/cirurgia</b></td><td>Define a <b>histologia e o perfil molecular</b> (orienta tratamento e prognóstico)</td></tr>
+<tr><td>Rastreio</td><td>Se suspeita de metástase, procurar o tumor primário (tórax, mama, pele)</td></tr></table>
+<div class="callout tip"><b>Dica</b>Lesão única x múltiplas, intra x extra-axial e o padrão de realce já estreitam muito o diagnóstico antes da biópsia.</div>`},
+   {label:'5. Tratamento',html:`<h3>💊 Princípios de tratamento</h3>
+<table class="med"><tr><th>Frente</th><th>Conduta</th></tr>
+<tr><td><b>Edema/HIC</b></td><td><b>Corticoide (dexametasona)</b> reduz o edema peritumoral e os sintomas</td></tr>
+<tr><td><b>Crises</b></td><td>Anticonvulsivante se houve crise (não de rotina profilática em todos)</td></tr>
+<tr><td><b>Específico</b></td><td><b>Cirurgia</b> (ressecção/biópsia), <b>radioterapia</b> e <b>quimioterapia</b> conforme o tipo (ex.: glioblastoma = cirurgia + RT + temozolomida)</td></tr>
+<tr><td>Metástases</td><td>Tratar o primário + RT (focal/encefálica) ± cirurgia conforme número/local</td></tr></table>
+<div class="callout mne"><b>Resumo</b>RM com contraste para diagnóstico; <b>dexametasona</b> para o edema; tratamento conforme histologia (cirurgia/RT/QT). Primeira crise no adulto = investigar tumor.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Tumores do SNC</h3>
+<div class="mindmap"><div class="mm-center">TUMORES SNC</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Tipos</b><ul><li>Metástase (mais comum no adulto)</li><li>Glioblastoma (primário maligno)</li><li>Meningioma (extra-axial benigno)</li></ul></div>
+<div class="mm-branch"><b>Clínica</b><ul><li>HIC (cefaleia matinal, papiledema)</li><li>1ª crise no adulto</li><li>Déficit focal</li></ul></div>
+<div class="mm-branch"><b>Diagnóstico</b><ul><li>RM com contraste</li><li>Biópsia (histologia/molecular)</li></ul></div>
+<div class="mm-branch"><b>Tratamento</b><ul><li>Dexametasona (edema)</li><li>Cirurgia/RT/QT</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Tumor cerebral mais comum no adulto</td><td>Metástase</td></tr>
+<tr><td>Primário maligno mais comum</td><td>Glioblastoma</td></tr>
+<tr><td>Massa extra-axial de base dural, mulher</td><td>Meningioma</td></tr>
+<tr><td>Perda auditiva unilateral + ângulo ponto-cerebelar</td><td>Schwannoma vestibular</td></tr>
+<tr><td>Criança com tumor</td><td>Fossa posterior (infratentorial)</td></tr>
+<tr><td>Edema peritumoral sintomático</td><td>Dexametasona</td></tr>
+<tr><td>Exame de escolha</td><td>RM com contraste</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Metástase é o + comum no adulto. ② RM com contraste. ③ Dexametasona para o edema. ④ Criança = fossa posterior.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Não investigar a 1ª crise do adulto. ② Esquecer de procurar o primário nas metástases. ③ Confundir meningioma (extra-axial) com glioma (intra-axial). ④ Anticonvulsivante profilático "para todo tumor" (só se houve crise).</div>`}
+  ],
+  questions:[
+    {stem:'Adulto com primeira crise convulsiva e cefaleia progressiva pior pela manhã. Conduta inicial mais adequada?',opts:['Alta com analgésico','Neuroimagem (RM com contraste)','Apenas anticonvulsivante','Punção lombar de rotina'],correct:1,expl:'<b>B.</b> Primeira crise no adulto + cefaleia com padrão de HIC → investigar com neuroimagem (RM com contraste) para tumor.'},
+    {stem:'Qual é o tumor cerebral mais comum no adulto?',opts:['Glioblastoma','Meningioma','Metástase','Schwannoma'],correct:2,expl:'<b>C.</b> As metástases (pulmão, mama, melanoma) são os tumores cerebrais mais comuns no adulto.'},
+    {stem:'Massa extra-axial, de base dural, com realce homogêneo, em mulher de meia-idade. Diagnóstico provável?',opts:['Glioblastoma','Meningioma','Metástase','Abscesso'],correct:1,expl:'<b>B.</b> Meningioma: extra-axial, base dural, realce homogêneo; mais comum em mulheres.'},
+    {stem:'Para reduzir o edema peritumoral sintomático, usa-se:',opts:['Dexametasona','Antibiótico','Levodopa','Anticoagulante'],correct:0,expl:'<b>A.</b> O corticoide (dexametasona) reduz o edema vasogênico peritumoral e alivia sintomas.'}
+  ],
+  cards:[
+    {tag:'Epidemiologia',q:'Tumor cerebral mais comum no adulto?',a:'Metástase (pulmão, mama, melanoma).'},
+    {tag:'Primário',q:'Primário maligno mais comum?',a:'Glioblastoma (glioma de alto grau).'},
+    {tag:'Benigno',q:'Primário benigno mais comum?',a:'Meningioma (extra-axial, base dural).'},
+    {tag:'Clínica',q:'Sinais de alerta?',a:'Cefaleia matinal/Valsalva, papiledema, 1ª crise no adulto, déficit focal progressivo.'},
+    {tag:'Imagem',q:'Exame de escolha?',a:'RM com contraste; biópsia define histologia/molecular.'},
+    {tag:'Criança',q:'Onde predominam os tumores na criança?',a:'Fossa posterior (infratentorial).'}
+  ],
+  cases:[{title:'Caso — Primeira crise no adulto',hist:'Homem, 58a, tabagista, primeira crise tônico-clônica; relata cefaleia progressiva há semanas, pior ao acordar.',exam:'Papiledema, leve déficit motor à direita.',labs:'RM: lesão única intra-axial com realce anelar e edema; TC de tórax com massa pulmonar.',reason:'Cefaleia de HIC + 1ª crise no adulto + lesão com realce + massa pulmonar = provável metástase cerebral.',dx:'Metástase cerebral (provável primário pulmonar).',tx:'Dexametasona para o edema, anticonvulsivante (houve crise), estadiamento do primário, RT ± cirurgia conforme número/local; equipe multidisciplinar.'}]
+});
+
+MODULES.push({
+  id:'hidrocefalia', emoji:'💧', region:'ventricular', tema:'Neuro-oncologia e Neuroinfecção',
+  title:'Hidrocefalia', sub:'Comunicante x obstrutiva e a hidrocefalia de pressão normal',
+  prio:'média', topics:['Hidrocefalia','LCR','Pressão normal','Derivação (DVP)'],
+  subtopics:[
+   {label:'1. O que é (o ciclo do líquor)',html:`<h3>💧 Entendendo do zero</h3>
+<p>O <b>líquor (LCR)</b> é produzido no <b>plexo coroide</b> (nos ventrículos), circula pelo sistema ventricular e espaço subaracnóideo e é <b>reabsorvido</b> nas granulações aracnoides. Quando a produção, a circulação ou a reabsorção desequilibram, o LCR se acumula e <b>dilata os ventrículos</b> = hidrocefalia.</p>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 300 130" width="100%" style="max-width:320px">
+<g><ellipse cx="75" cy="55" rx="55" ry="48" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<path d="M60 40 q15 -8 22 0 q-2 12 -10 14 q-12 2 -12 -14Z" fill="#0a0f1c"/>
+<path d="M90 40 q-15 -8 -22 0" fill="none"/>
+<ellipse cx="68" cy="50" rx="9" ry="16" fill="#0a0f1c"/><ellipse cx="84" cy="50" rx="9" ry="16" fill="#0a0f1c"/>
+<text x="75" y="118" text-anchor="middle" font-size="10" fill="#8fd4c8" font-weight="700">normal</text></g>
+<g><ellipse cx="220" cy="55" rx="55" ry="48" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<ellipse cx="208" cy="52" rx="20" ry="30" fill="#0a0f1c"/><ellipse cx="234" cy="52" rx="20" ry="30" fill="#0a0f1c"/>
+<text x="220" y="118" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="700">hidrocefalia</text></g>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">Ventrículos (em preto): pequenos no normal, <b>dilatados</b> na hidrocefalia.</div>
+</div>
+<div class="callout mne"><b>Fixe</b>Hidrocefalia = excesso de LCR com <b>dilatação ventricular</b>. A chave é descobrir <b>onde</b> está o problema (obstrução x reabsorção).</div>`},
+   {label:'2. Comunicante x obstrutiva',html:`<h3>🔀 Os dois grandes tipos</h3>
+<table class="med"><tr><th>Tipo</th><th>Mecanismo</th><th>Causas</th></tr>
+<tr><td><b>Não comunicante (obstrutiva)</b></td><td>Bloqueio <b>dentro</b> do sistema ventricular</td><td>Tumor, <b>estenose do aqueduto</b>, hemorragia intraventricular</td></tr>
+<tr><td><b>Comunicante</b></td><td>O LCR circula, mas a <b>reabsorção</b> falha</td><td>Pós-<b>HSA</b>, pós-<b>meningite</b> (granulações "entupidas")</td></tr></table>
+<div class="callout tip"><b>Dica de imagem</b>Na obstrutiva, os ventrículos <b>antes</b> do bloqueio dilatam e os de <b>depois</b> ficam normais (ajuda a localizar o ponto obstruído).</div>`},
+   {label:'3. Quadro clínico',html:`<h3>🩺 Como se apresenta</h3>
+<table class="med"><tr><th>Cenário</th><th>Achados</th></tr>
+<tr><td><b>Aguda (HIC)</b></td><td>Cefaleia, vômitos, sonolência/rebaixamento, papiledema; pode evoluir para herniação</td></tr>
+<tr><td><b>Lactente/RN</b></td><td><b>Aumento do perímetro cefálico</b>, fontanela tensa/abaulada, suturas separadas, olhar em <b>"sol poente"</b>, irritabilidade</td></tr>
+<tr><td>Crônica (adulto)</td><td>Sintomas mais insidiosos; ver hidrocefalia de pressão normal</td></tr></table>
+<div class="callout warn"><b>Emergência</b>Hidrocefalia aguda com rebaixamento é emergência neurocirúrgica → <b>derivação ventricular externa (DVE)</b> para aliviar a pressão.</div>`},
+   {label:'4. Hidrocefalia de pressão normal',html:`<h3>🚶 HPN — a "demência tratável"</h3>
+<p>Forma crônica do idoso em que os ventrículos dilatam com <b>pressão de LCR normal</b>. É importante porque é uma <b>causa reversível</b> de declínio cognitivo. A tríade clássica:</p>
+<table class="med"><tr><th>Tríade ("wet, wacky, wobbly")</th></tr>
+<tr><td><b>Apraxia da marcha</b> (marcha "magnética", arrastada) — costuma ser o primeiro e o que mais melhora</td></tr>
+<tr><td><b>Incontinência urinária</b></td></tr>
+<tr><td><b>Demência</b> (declínio cognitivo)</td></tr></table>
+<p>Diagnóstico apoia-se na imagem (ventrículos dilatados desproporcionais à atrofia) e no <b>tap test</b> (melhora da marcha após retirar LCR por punção). Tratamento: <b>derivação ventriculoperitoneal (DVP)</b>.</p>
+<div class="callout mne"><b>Atalho</b>Idoso com <b>marcha + incontinência + demência</b> e ventrículos grandes = HPN → tap test → DVP. (Já citado nas Demências como reversível.)</div>`},
+   {label:'5. Diagnóstico e tratamento',html:`<h3>🏥 Conduta</h3>
+<table class="med"><tr><th>Passo</th><th>Conduta</th></tr>
+<tr><td>Imagem</td><td>TC/RM mostram ventrículos dilatados; localizam obstrução/causa</td></tr>
+<tr><td>Aguda/obstrutiva</td><td>Aliviar a pressão: <b>DVE</b>; tratar a causa (ex.: ressecar tumor)</td></tr>
+<tr><td>Definitivo</td><td><b>Derivação ventriculoperitoneal (DVP)</b> ou <b>terceiro-ventriculostomia endoscópica</b> (em obstrutivas selecionadas)</td></tr>
+<tr><td>Complicações da derivação</td><td>Infecção e obstrução do shunt — suspeitar se retorno dos sintomas</td></tr></table>
+<div class="callout warn"><b>Atenção</b>Paciente com DVP que volta com cefaleia/rebaixamento/febre → pensar em <b>disfunção ou infecção do shunt</b>.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Hidrocefalia</h3>
+<div class="mindmap"><div class="mm-center">HIDROCEFALIA</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Tipos</b><ul><li>Obstrutiva (bloqueio ventricular)</li><li>Comunicante (reabsorção: pós-HSA/meningite)</li></ul></div>
+<div class="mm-branch"><b>Clínica</b><ul><li>HIC aguda</li><li>RN: perímetro cefálico, sol poente</li></ul></div>
+<div class="mm-branch"><b>HPN</b><ul><li>Marcha + incontinência + demência</li><li>Tap test → DVP</li></ul></div>
+<div class="mm-branch"><b>Tratamento</b><ul><li>DVE (agudo)</li><li>DVP / 3ª ventriculostomia</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Bloqueio dentro dos ventrículos</td><td>Hidrocefalia obstrutiva (não comunicante)</td></tr>
+<tr><td>Pós-HSA/meningite com dilatação</td><td>Hidrocefalia comunicante</td></tr>
+<tr><td>RN com perímetro cefálico aumentado + sol poente</td><td>Hidrocefalia</td></tr>
+<tr><td>Idoso: marcha + incontinência + demência</td><td>HPN → tap test → DVP</td></tr>
+<tr><td>Hidrocefalia aguda com rebaixamento</td><td>DVE (emergência)</td></tr>
+<tr><td>DVP + cefaleia/febre/rebaixamento</td><td>Disfunção/infecção do shunt</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Obstrutiva (dentro) x comunicante (reabsorção). ② RN: perímetro cefálico + sol poente. ③ HPN: marcha+incontinência+demência → DVP. ④ Aguda grave → DVE.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Esquecer a HPN como demência reversível. ② Não pensar em disfunção de shunt no portador de DVP sintomático. ③ Confundir ventrículos grandes por atrofia (ex vacuo) com hidrocefalia verdadeira.</div>`}
+  ],
+  questions:[
+    {stem:'Idoso com marcha arrastada "magnética", incontinência urinária e declínio cognitivo; TC com ventrículos dilatados. Diagnóstico e teste?',opts:['Alzheimer; nenhum','Hidrocefalia de pressão normal; tap test','Parkinson; teste com levodopa','AVC; angiografia'],correct:1,expl:'<b>B.</b> Tríade de HPN; o tap test (melhora após retirada de LCR) apoia a indicação de DVP.'},
+    {stem:'Hidrocefalia após meningite, por falha de reabsorção do LCR, é do tipo:',opts:['Obstrutiva','Comunicante','Ex vacuo','Aguda traumática'],correct:1,expl:'<b>B.</b> Pós-meningite/HSA a reabsorção falha → hidrocefalia comunicante.'},
+    {stem:'Lactente com aumento progressivo do perímetro cefálico, fontanela tensa e olhar em "sol poente". Pensar em:',opts:['Hidrocefalia','Enxaqueca','Cefaleia tensional','Vertigem'],correct:0,expl:'<b>A.</b> Sinais clássicos de hidrocefalia no lactente (crânio ainda complacente).'},
+    {stem:'Tratamento definitivo mais comum da hidrocefalia crônica:',opts:['Derivação ventriculoperitoneal (DVP)','Antibiótico','Corticoide','Punção única'],correct:0,expl:'<b>A.</b> A DVP é a derivação definitiva mais usada; a 3ª ventriculostomia endoscópica é opção em obstrutivas selecionadas.'}
+  ],
+  cards:[
+    {tag:'Conceito',q:'O que é hidrocefalia?',a:'Acúmulo de LCR com dilatação ventricular (desequilíbrio entre produção, circulação e reabsorção).'},
+    {tag:'Tipos',q:'Obstrutiva x comunicante?',a:'Obstrutiva: bloqueio dentro do sistema ventricular. Comunicante: falha de reabsorção (pós-HSA/meningite).'},
+    {tag:'RN',q:'Sinais no lactente?',a:'Aumento do perímetro cefálico, fontanela tensa, olhar em sol poente.'},
+    {tag:'HPN',q:'Tríade e tratamento?',a:'Marcha apráxica + incontinência + demência; tap test → DVP.'},
+    {tag:'Agudo',q:'Conduta na hidrocefalia aguda grave?',a:'Derivação ventricular externa (DVE) de emergência.'},
+    {tag:'Shunt',q:'Quando suspeitar de disfunção de DVP?',a:'Retorno de cefaleia/rebaixamento ± febre no portador de derivação.'}
+  ],
+  cases:[{title:'Caso — Caindo e esquecido',hist:'Homem, 74a, há meses com quedas por marcha arrastada, perda urinária e esquecimentos; família achava ser "idade".',exam:'Marcha magnética, leve déficit cognitivo, sem outros focais.',labs:'TC: ventrículos dilatados desproporcionais à atrofia.',reason:'Tríade clássica (marcha + incontinência + demência) com ventrículos dilatados = hidrocefalia de pressão normal (potencialmente reversível).',dx:'Hidrocefalia de pressão normal.',tx:'Tap test; se boa resposta, derivação ventriculoperitoneal (DVP); reabilitação da marcha.'}]
+});
+
+MODULES.push({
+  id:'neuroinfeccao', emoji:'🧫', region:'meningeal', tema:'Neuro-oncologia e Neuroinfecção',
+  title:'Neuroinfecção Avançada', sub:'Neurocisticercose, neuro-HIV/oportunistas e TB do SNC',
+  prio:'alta', topics:['Neurocisticercose','Toxoplasmose','Criptococo','Tuberculose SNC'],
+  subtopics:[
+   {label:'1. Neurocisticercose',html:`<h3>🧫 Neurocisticercose</h3>
+<p>É a parasitose mais comum do SNC e uma <b>causa importante de epilepsia adquirida no Brasil</b>. Ocorre pela ingestão de ovos da <b>Taenia solium</b> (água/alimentos contaminados), que formam <b>cistos</b> no cérebro.</p>
+<table class="med"><tr><th>Item</th><th>Detalhe</th></tr>
+<tr><td>Quadro</td><td><b>Crises epilépticas</b> (mais comum), cefaleia, sinais de HIC; depende do número/fase dos cistos</td></tr>
+<tr><td>Imagem</td><td>Cistos em várias fases na TC/RM; o cisto pode mostrar o <b>escólex</b> (ponto no interior); fase calcificada nos antigos</td></tr>
+<tr><td>Tratamento</td><td><b>Albendazol</b> (± praziquantel) + <b>corticoide</b> (controla a inflamação ao matar o cisto) + <b>anticonvulsivante</b> para as crises</td></tr></table>
+<div class="callout warn"><b>Cuidado</b>Antes de tratar com antiparasitário, avaliar a carga de cistos e a forma (ex.: <b>oftálmica</b> ou <b>encefalite com muitos cistos</b>) — o corticoide é essencial para conter a reação inflamatória intensa ao tratamento.</div>`},
+   {label:'2. Neuro-HIV e oportunistas',html:`<h3>🦠 Lesões no paciente com HIV (CD4 baixo)</h3>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 160 120" width="100%" style="max-width:180px">
+<circle cx="80" cy="55" r="40" fill="none" stroke="#f2f5f9" stroke-width="9"/>
+<circle cx="80" cy="55" r="22" fill="#0a0f1c"/>
+<text x="80" y="112" text-anchor="middle" font-size="10" fill="#e7edf5">realce anelar</text>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">Lesão com <b>realce anelar</b> (rim que capta contraste, centro necrótico) — padrão típico da toxoplasmose (e de metástase/abscesso).</div>
+</div>
+<table class="med"><tr><th>Doença</th><th>Pistas</th></tr>
+<tr><td><b>Toxoplasmose</b> cerebral</td><td>Lesões <b>múltiplas com realce anelar</b> (gânglios da base); conduta: <b>prova terapêutica</b> (sulfadiazina + pirimetamina) e reavaliar imagem</td></tr>
+<tr><td><b>Linfoma primário do SNC</b></td><td>Costuma ser <b>lesão única</b>; diferencial da toxo que não responde ao tratamento</td></tr>
+<tr><td><b>Criptococose</b></td><td><b>Meningite</b> subaguda com <b>pressão de abertura alta</b>; tinta da China/antígeno (CrAg); tratar e <b>aliviar a pressão</b></td></tr>
+<tr><td><b>LEMP</b> (vírus JC)</td><td>Desmielinização multifocal, sem realce/efeito de massa</td></tr></table>
+<div class="callout mne"><b>Atalho</b>HIV + <b>lesões múltiplas anelares</b> → toxoplasmose (prova terapêutica). <b>Lesão única</b> que não responde → pensar linfoma. Meningite com <b>pressão muito alta</b> → criptococo.</div>`},
+   {label:'3. Tuberculose do SNC',html:`<h3>🫁 Meningite tuberculosa</h3>
+<p>Quadro <b>subagudo</b> (dias a semanas) de cefaleia, febre, alteração de consciência e <b>acometimento de pares cranianos</b> (tem predileção pela <b>base do crânio</b>). Pode causar hidrocefalia e vasculite/AVC.</p>
+<table class="med"><tr><th>Líquor na TB</th><th>Padrão</th></tr>
+<tr><td>Células</td><td><b>Linfócitos</b> aumentados</td></tr>
+<tr><td>Glicose</td><td><b>Baixa</b></td></tr>
+<tr><td>Proteína</td><td><b>Muito alta</b></td></tr>
+<tr><td>Apoio</td><td><b>ADA</b> elevada; BAAR/cultura/PCR</td></tr></table>
+<p>Tratamento: <b>esquema antituberculose (RIPE)</b> prolongado + <b>corticoide</b> (reduz mortalidade/sequelas na meningite TB).</p>
+<div class="callout trap"><b>Pegadinha do líquor</b>Linfócitos + <b>glicose baixa</b> aponta para TB ou fungo (não vírus, que tem glicose normal). ADA ajuda a favorecer TB.</div>`},
+   {label:'4. Outras no Brasil',html:`<h3>🇧🇷 Não esquecer no contexto brasileiro</h3>
+<table class="med"><tr><th>Doença</th><th>Pistas</th></tr>
+<tr><td><b>Neurossífilis</b></td><td>Pode dar desde meningite a quadros tardios (tabes dorsalis, demência); VDRL/FTA; tratar com <b>penicilina</b></td></tr>
+<tr><td><b>Esquistossomose medular</b></td><td>Mielite (mielorradiculopatia) em área endêmica; pode causar paraparesia</td></tr>
+<tr><td>Hanseníase</td><td>Neuropatia periférica (vista no bloco neuromuscular)</td></tr></table>
+<div class="callout tip"><b>Dica</b>Sempre considere a <b>epidemiologia</b>: viagem/procedência, imunossupressão (HIV), contato com tuberculose e exposição a água contaminada mudam a probabilidade das hipóteses.</div>`},
+   {label:'5. Abordagem',html:`<h3>🏥 Como conduzir</h3>
+<table class="med"><tr><th>Passo</th><th>Conduta</th></tr>
+<tr><td>1</td><td>Suspeição pela <b>epidemiologia</b> + quadro (crises, déficit, meningite subaguda)</td></tr>
+<tr><td>2</td><td><b>Neuroimagem</b> (RM com contraste) e <b>líquor</b> (celularidade, glicose, proteína, ADA, tinta da China, antígenos, PCR)</td></tr>
+<tr><td>3</td><td>Status de <b>HIV</b> e CD4 (muda todo o diferencial)</td></tr>
+<tr><td>4</td><td>Tratar dirigido; usar <b>corticoide</b> quando indicado (TB do SNC; reação inflamatória na neurocisticercose); aliviar pressão na criptococose</td></tr></table>
+<div class="callout mne"><b>Resumo</b>Imagem + líquor + status imune guiam tudo. Padrões: anelares múltiplos (toxo), meningite de base com pares cranianos e ADA↑ (TB), crises com cistos (neurocisticercose), meningite com pressão alta (criptococo).</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Neuroinfecção</h3>
+<div class="mindmap"><div class="mm-center">NEUROINFECÇÃO</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Neurocisticercose</b><ul><li>Taenia solium</li><li>Crises (epilepsia adquirida)</li><li>Albendazol + corticoide + anticonvulsivante</li></ul></div>
+<div class="mm-branch"><b>HIV</b><ul><li>Toxo (múltiplas anelares)</li><li>Linfoma (única)</li><li>Criptococo (pressão alta)</li><li>LEMP (JC)</li></ul></div>
+<div class="mm-branch"><b>TB do SNC</b><ul><li>Subaguda, base, pares cranianos</li><li>Líquor: linfo, glicose baixa, ADA↑</li><li>RIPE + corticoide</li></ul></div>
+<div class="mm-branch"><b>Brasil</b><ul><li>Neurossífilis</li><li>Esquistossomose medular</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Crises + cistos cerebrais (Brasil)</td><td>Neurocisticercose → albendazol + corticoide + anticonvulsivante</td></tr>
+<tr><td>HIV + lesões múltiplas com realce anelar</td><td>Toxoplasmose → prova terapêutica</td></tr>
+<tr><td>HIV + lesão única que não responde à toxo</td><td>Linfoma primário do SNC</td></tr>
+<tr><td>HIV + meningite com pressão de abertura alta</td><td>Criptococo</td></tr>
+<tr><td>Meningite subaguda, base do crânio, ADA↑, glicose baixa</td><td>Tuberculose do SNC → RIPE + corticoide</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Neurocisticercose = causa importante de epilepsia no Brasil. ② HIV: anelares múltiplas = toxo; única = linfoma; pressão alta = criptococo. ③ TB: linfócitos + glicose baixa + ADA↑.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Esquecer corticoide na neurocisticercose ao tratar (reação inflamatória) e na meningite TB. ② Achar que glicose baixa no líquor é vírus (é bactéria/TB/fungo). ③ Não checar status de HIV/CD4. ④ Não aliviar a pressão na criptococose.</div>`}
+  ],
+  questions:[
+    {stem:'Paciente brasileiro hígido com primeira crise; TC mostra cistos cerebrais, alguns calcificados. Diagnóstico mais provável?',opts:['Glioblastoma','Neurocisticercose','Toxoplasmose','AVC'],correct:1,expl:'<b>B.</b> Cistos cerebrais (alguns calcificados) + crise no Brasil = neurocisticercose; tratar com albendazol + corticoide + anticonvulsivante.'},
+    {stem:'Paciente HIV+ com CD4 baixo e múltiplas lesões com realce anelar nos gânglios da base. Conduta inicial?',opts:['Biópsia imediata','Prova terapêutica para toxoplasmose','Radioterapia','Anticoagulação'],correct:1,expl:'<b>B.</b> O padrão sugere toxoplasmose; inicia-se prova terapêutica (sulfadiazina + pirimetamina) e reavalia a imagem; lesão única que não responde levanta linfoma.'},
+    {stem:'Líquor com linfocitose, glicose baixa, proteína muito alta e ADA elevada, quadro subagudo. Diagnóstico?',opts:['Meningite viral','Meningite tuberculosa','Meningite bacteriana aguda','Hemorragia'],correct:1,expl:'<b>B.</b> Padrão linfocítico com glicose baixa e ADA elevada, subagudo, é típico de TB do SNC; tratar com RIPE + corticoide.'},
+    {stem:'HIV+ com meningite e pressão de abertura muito elevada no líquor. Agente provável?',opts:['Criptococo','Enterovírus','Pneumococo','Listeria'],correct:0,expl:'<b>A.</b> Criptococose dá meningite subaguda com hipertensão liquórica; além do antifúngico, é essencial aliviar a pressão.'}
+  ],
+  cards:[
+    {tag:'Neurocisticercose',q:'Importância e tratamento?',a:'Causa importante de epilepsia adquirida no Brasil (Taenia solium); albendazol + corticoide + anticonvulsivante.'},
+    {tag:'Toxoplasmose',q:'Padrão no HIV e conduta?',a:'Lesões múltiplas com realce anelar; prova terapêutica e reavaliação.'},
+    {tag:'Linfoma SNC',q:'Quando suspeitar?',a:'HIV com lesão única que não responde à terapia para toxoplasmose.'},
+    {tag:'Criptococo',q:'Marca da meningite criptocócica?',a:'Pressão de abertura alta; tratar e aliviar a pressão; CrAg/tinta da China.'},
+    {tag:'TB SNC',q:'Líquor típico?',a:'Linfócitos, glicose baixa, proteína muito alta, ADA elevada (subagudo).'},
+    {tag:'TB tratamento',q:'Como tratar a meningite TB?',a:'Esquema RIPE prolongado + corticoide.'}
+  ],
+  cases:[{title:'Caso — HIV e lesões cerebrais',hist:'Homem, 34a, HIV+ sem tratamento, há dias com cefaleia, febre e hemiparesia.',exam:'Déficit focal, sem rigidez importante.',labs:'CD4 baixo; RM com múltiplas lesões com realce anelar nos gânglios da base.',reason:'HIV com CD4 baixo + múltiplas lesões anelares = toxoplasmose cerebral provável.',dx:'Toxoplasmose cerebral.',tx:'Prova terapêutica (sulfadiazina + pirimetamina + ácido folínico), reavaliar imagem; se lesão única sem resposta, investigar linfoma; iniciar/retomar TARV; corticoide se muito edema.'}]
+});
+
+/* ---------- 15. SEMIOLOGIA E LOCALIZAÇÃO ---------- */
+MODULES.push({
+  id:'semiologia', emoji:'🧭', region:'parietal', tema:'Semiologia e Localização',
+  title:'Semiologia e Localização Neurológica', sub:'1º x 2º neurônio, síndromes topográficas e o exame',
+  prio:'altíssima', topics:['Semiologia','1º e 2º neurônio','Localização','Reflexos','Vias'],
+  subtopics:[
+   {label:'1. A pergunta-mestra: onde está a lesão?',html:`<h3>🧭 Entendendo do zero</h3>
+<p>A neurologia se organiza em torno de uma pergunta: <b>onde está a lesão?</b> (localização) e só depois <b>o que é?</b> (etiologia). O exame neurológico é a ferramenta que <b>localiza</b>. Ele avalia, em ordem:</p>
+<ol><li><b>Estado mental/consciência</b> (córtex difuso, SARA)</li>
+<li><b>Pares cranianos</b> (tronco encefálico)</li>
+<li><b>Motor</b> (força, tônus, trofismo)</li>
+<li><b>Reflexos</b> (profundos e superficiais)</li>
+<li><b>Sensibilidade</b> (superficial e profunda)</li>
+<li><b>Coordenação e marcha</b> (cerebelo)</li></ol>
+<div class="callout mne"><b>Fixe a ideia</b>Cada achado aponta para um "andar" do sistema nervoso. Combinando os achados, você localiza: córtex, subcortical, tronco, cerebelo, medula, raiz, nervo, junção ou músculo.</div>`},
+   {label:'2. 1º x 2º neurônio motor',html:`<h3>⚖️ A distinção que organiza tudo</h3>
+<p>A via motora tem dois neurônios em série. Saber se a lesão é do <b>1º (superior)</b> ou do <b>2º (inferior)</b> localiza metade dos casos:</p>
+<table class="med"><tr><th>Achado</th><th>1º neurônio (superior)</th><th>2º neurônio (inferior)</th></tr>
+<tr><td>Tônus</td><td><b>Espasticidade</b> (aumentado)</td><td><b>Hipotonia</b> (flácido)</td></tr>
+<tr><td>Reflexos profundos</td><td><b>Hiperreflexia</b></td><td><b>Hipo/arreflexia</b></td></tr>
+<tr><td>Babinski</td><td><b>Presente</b> (extensor)</td><td>Ausente</td></tr>
+<tr><td>Trofismo</td><td>Pouca atrofia (desuso)</td><td><b>Atrofia</b> marcante</td></tr>
+<tr><td>Fasciculações</td><td>Ausentes</td><td><b>Presentes</b></td></tr>
+<tr><td>Onde fica</td><td>Córtex até medula (encéfalo/medula)</td><td>Corno anterior, raiz, nervo periférico</td></tr></table>
+<div class="callout mne"><b>Macete</b><b>1º neurônio = "tudo para cima"</b> (tônus↑, reflexos↑, Babinski+). <b>2º neurônio = "tudo para baixo"</b> (tônus↓, reflexos↓) + atrofia e fasciculações. (Na ELA, os dois coexistem.)</div>`},
+   {label:'3. Vias e o homúnculo',html:`<h3>🧠 As três vias que mais caem</h3>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 260 150" width="100%" style="max-width:280px">
+<ellipse cx="130" cy="70" rx="110" ry="55" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<path d="M130 16 L130 124" stroke="#0a0f1c" stroke-width="2"/>
+<g font-size="8" fill="#f2f5f9" text-anchor="middle">
+<text x="120" y="34">perna</text><text x="112" y="50">tronco</text><text x="104" y="66">braço</text><text x="98" y="82">mão</text><text x="96" y="100">face</text></g>
+<circle cx="131" cy="30" r="3" fill="#f2a33a"/><circle cx="124" cy="46" r="3" fill="#f2a33a"/><circle cx="118" cy="62" r="3" fill="#f2a33a"/><circle cx="113" cy="78" r="3" fill="#f2a33a"/><circle cx="111" cy="96" r="4" fill="#f2a33a"/>
+<text x="200" y="70" text-anchor="middle" font-size="9" fill="#8fd4c8">homúnculo</text>
+<text x="200" y="82" text-anchor="middle" font-size="8" fill="#8fd4c8">(córtex motor)</text>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">Homúnculo motor: a <b>perna</b> fica no alto/medial (face interhemisférica) e <b>face/mão</b> na convexidade lateral — isso explica os padrões dos AVCs.</div>
+</div>
+<table class="med"><tr><th>Via</th><th>O que carrega</th><th>Cruza onde</th></tr>
+<tr><td><b>Corticoespinhal</b></td><td>Força (motor)</td><td>No <b>bulbo</b> (decussação das pirâmides)</td></tr>
+<tr><td><b>Espinotalâmica</b></td><td><b>Dor e temperatura</b></td><td>Na <b>medula</b>, logo após entrar (por isso na Brown-Séquard a perda é contralateral)</td></tr>
+<tr><td><b>Coluna dorsal</b></td><td><b>Vibração e propriocepção</b></td><td>No <b>bulbo</b> (sobe ipsilateral e cruza alto)</td></tr></table>
+<div class="callout tip"><b>Aplicação</b>Homúnculo: AVC de artéria cerebral <b>anterior</b> → perna; artéria cerebral <b>média</b> → face e braço. Vias: o local do cruzamento explica déficits ipsi vs contralaterais.</div>`},
+   {label:'4. Síndromes topográficas',html:`<h3>📍 Reconhecendo o "andar" lesado</h3>
+<table class="med"><tr><th>Topografia</th><th>Pistas</th></tr>
+<tr><td><b>Cortical</b></td><td>Déficit focal + sinais "corticais" (afasia, negligência, crise); 1º neurônio contralateral</td></tr>
+<tr><td><b>Tronco encefálico</b></td><td><b>Síndromes cruzadas</b>: par craniano de um lado + déficit motor/sensitivo do corpo do outro lado</td></tr>
+<tr><td><b>Cerebelo</b></td><td>Ataxia, dismetria, nistagmo, disartria — sinais <b>ipsilaterais</b>; sem fraqueza verdadeira</td></tr>
+<tr><td><b>Medula</b></td><td><b>Nível</b> sensitivo + 1º neurônio abaixo + esfíncteres</td></tr>
+<tr><td><b>Raiz/plexo</b></td><td>Dor irradiada no dermátomo/miótomo; reflexo específico abolido</td></tr>
+<tr><td><b>Nervo periférico</b></td><td>Território do nervo; 2º neurônio</td></tr>
+<tr><td><b>Junção neuromuscular</b></td><td><b>Fatigabilidade</b>, sem alteração sensitiva, reflexos normais (miastenia)</td></tr>
+<tr><td><b>Músculo</b></td><td>Fraqueza <b>proximal</b> simétrica, sem sensitivo (miopatia)</td></tr></table>
+<div class="callout mne"><b>Atalho do tronco</b>"Síndrome cruzada" (cara de um lado, corpo do outro) = lesão no <b>tronco encefálico</b>.</div>`},
+   {label:'5. Reflexos e manobras',html:`<h3>🔨 Ferramentas do exame</h3>
+<table class="med"><tr><th>Reflexo</th><th>Raiz</th></tr>
+<tr><td>Bicipital</td><td>C5-C6</td></tr>
+<tr><td>Tricipital</td><td>C7</td></tr>
+<tr><td>Patelar</td><td>L4</td></tr>
+<tr><td>Aquileu</td><td>S1</td></tr></table>
+<ul><li><b>Babinski</b>: estímulo plantar → extensão do hálux = sinal de <b>1º neurônio</b> (piramidal).</li>
+<li><b>Romberg</b>: cai ao fechar os olhos = déficit <b>proprioceptivo/coluna dorsal</b> (não cerebelar puro).</li>
+<li><b>Sinais de irritação meníngea</b>: rigidez de nuca, Kernig, Brudzinski.</li>
+<li><b>Coordenação</b>: index-nariz, calcanhar-joelho (cerebelo).</li></ul>
+<div class="callout tip"><b>Como usar</b>Combine: fraqueza + hiperreflexia + Babinski = 1º neurônio (lesão central/medular). Fraqueza + arreflexia + atrofia = 2º neurônio (raiz/nervo/corno anterior). Acrescente o padrão sensitivo e a topografia aparece.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Semiologia e Localização</h3>
+<div class="mindmap"><div class="mm-center">LOCALIZAÇÃO</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>1º x 2º neurônio</b><ul><li>1º: tônus↑, reflexos↑, Babinski</li><li>2º: atrofia, fasciculação, reflexos↓</li></ul></div>
+<div class="mm-branch"><b>Vias</b><ul><li>Corticoespinhal (cruza no bulbo)</li><li>Espinotalâmica (cruza na medula)</li><li>Coluna dorsal (vibração)</li></ul></div>
+<div class="mm-branch"><b>Topografia</b><ul><li>Tronco = síndrome cruzada</li><li>Cerebelo = ataxia ipsilateral</li><li>Medula = nível</li></ul></div>
+<div class="mm-branch"><b>Exame</b><ul><li>Reflexos por raiz</li><li>Babinski, Romberg</li><li>Coordenação/marcha</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Achado</th><th>Localização</th></tr>
+<tr><td>Hiperreflexia + Babinski + espasticidade</td><td>1º neurônio (central/medular)</td></tr>
+<tr><td>Atrofia + fasciculações + arreflexia</td><td>2º neurônio (corno anterior/raiz/nervo)</td></tr>
+<tr><td>Par craniano de um lado + corpo do outro</td><td>Tronco encefálico (cruzada)</td></tr>
+<tr><td>Ataxia/dismetria ipsilateral</td><td>Cerebelo</td></tr>
+<tr><td>Nível sensitivo + esfíncteres</td><td>Medula</td></tr>
+<tr><td>Fatigabilidade, reflexos normais</td><td>Junção neuromuscular</td></tr>
+<tr><td>Fraqueza proximal simétrica, sem sensitivo</td><td>Músculo (miopatia)</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Primeiro localize, depois pense na causa. ② 1º neurônio "para cima", 2º "para baixo". ③ Tronco = síndrome cruzada. ④ Cerebelo = ataxia ipsilateral.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Confundir Romberg (proprioceptivo) com ataxia cerebelar (cai com e sem olhos). ② Esquecer que a espinotalâmica cruza na medula (déficit contralateral). ③ Não combinar motor + sensitivo + reflexos para topografar. ④ Atribuir fraqueza proximal simétrica a "neuropatia" (pensar miopatia).</div>`}
+  ],
+  questions:[
+    {stem:'Paciente com fraqueza no braço, hiperreflexia, espasticidade e Babinski presente. A lesão é do:',opts:['2º neurônio (nervo periférico)','1º neurônio (via piramidal)','Junção neuromuscular','Músculo'],correct:1,expl:'<b>B.</b> Tônus↑, reflexos↑ e Babinski caracterizam lesão do 1º neurônio (superior/piramidal).'},
+    {stem:'Lesão que causa paralisia de um par craniano de um lado e fraqueza do corpo do lado oposto localiza-se no:',opts:['Córtex','Tronco encefálico','Cerebelo','Nervo periférico'],correct:1,expl:'<b>B.</b> As síndromes cruzadas (cara de um lado, corpo do outro) são típicas do tronco encefálico.'},
+    {stem:'A via espinotalâmica (dor e temperatura) cruza:',opts:['No bulbo','Na medula, logo após entrar','No tálamo','Não cruza'],correct:1,expl:'<b>B.</b> A espinotalâmica cruza na medula — por isso, na Brown-Séquard, a perda de dor/temperatura é contralateral.'},
+    {stem:'Atrofia muscular com fasciculações e arreflexia indica lesão do:',opts:['1º neurônio','2º neurônio','Cerebelo','Coluna dorsal'],correct:1,expl:'<b>B.</b> Atrofia, fasciculações e hipo/arreflexia são marcas do 2º neurônio (inferior).'}
+  ],
+  cards:[
+    {tag:'Princípio',q:'Qual a pergunta central da neurologia?',a:'Onde está a lesão? (localizar antes de definir a causa).'},
+    {tag:'1º x 2º',q:'Sinais de 1º x 2º neurônio?',a:'1º: tônus↑, reflexos↑, Babinski. 2º: atrofia, fasciculações, reflexos↓.'},
+    {tag:'Vias',q:'Onde cruzam as vias?',a:'Corticoespinhal e coluna dorsal: no bulbo. Espinotalâmica: na medula.'},
+    {tag:'Tronco',q:'Sinal de lesão de tronco?',a:'Síndrome cruzada (par craniano de um lado, corpo do outro).'},
+    {tag:'Cerebelo',q:'Sinais cerebelares?',a:'Ataxia, dismetria, nistagmo, disartria — ipsilaterais.'},
+    {tag:'Reflexos',q:'Raízes dos reflexos?',a:'Bicipital C5-6, tricipital C7, patelar L4, aquileu S1.'}
+  ],
+  cases:[{title:'Caso — Localizando a lesão',hist:'Mulher, 60a, com fraqueza no hemicorpo direito de início súbito e dificuldade para falar.',exam:'Hemiparesia direita com hiperreflexia e Babinski à direita, afasia; face e braço mais afetados que a perna.',labs:'TC/RM: a definir.',reason:'1º neurônio (hiperreflexia/Babinski) + sinais corticais (afasia) + predomínio face/braço = córtex no território da artéria cerebral média esquerda.',dx:'Síndrome cortical (provável AVE de ACM esquerda).',tx:'Localização orienta a investigação vascular urgente (ver matéria de AVE isquêmico): protocolo de AVC, neuroimagem e reperfusão conforme a janela.'}]
+});
+
 const REGION_INFO = {
   frontal:{name:'Lobo Frontal',msg:'Funções executivas ativadas.',color:'#38BDF8',represents:'Neuroanatomia, cognição, demências'},
   parietal:{name:'Lobo Parietal',msg:'Processamento sensorial desbloqueado.',color:'#22D3EE',represents:'Sensibilidade, síndromes corticais'},
@@ -3543,6 +4209,10 @@ const ACHIEVEMENTS=[
   {id:'emerg',name:'Rei das Emergências',medal:'🚑',desc:'80% em todo o Trauma (TCE)',check:()=>['tce_aval','tce_hemat','tce_leve'].every(x=>moduleProgress(byId(x))>=80)},
   {id:'neuromusc',name:'Mestre Neuromuscular',medal:'💪',desc:'80% no bloco Neuromuscular',check:()=>['miastenia','ela','neuropatias','bell'].every(x=>moduleProgress(byId(x))>=80)},
   {id:'consc',name:'Guardião da Consciência',medal:'🌑',desc:'80% em Emergências e Consciência',check:()=>['coma','morte_encefalica'].every(x=>moduleProgress(byId(x))>=80)},
+  {id:'medula',name:'Mestre da Medula',medal:'🦴',desc:'80% no tema Medula Espinhal',check:()=>['trm','mielopatia'].every(x=>moduleProgress(byId(x))>=80)},
+  {id:'equil',name:'Equilíbrio Dominado',medal:'🌀',desc:'80% em Vertigem e Vestibular',check:()=>moduleProgress(byId('vertigem'))>=80},
+  {id:'oncoinf',name:'Neuro-onco & Infecto',medal:'🎯',desc:'80% em Neuro-oncologia e Neuroinfecção',check:()=>['tumores','hidrocefalia','neuroinfeccao'].every(x=>moduleProgress(byId(x))>=80)},
+  {id:'semio',name:'Localizador Neuro',medal:'🧭',desc:'80% em Semiologia e Localização',check:()=>moduleProgress(byId('semiologia'))>=80},
   {id:'streak3',name:'Constância',medal:'🔥',desc:'3 dias seguidos de estudo',check:sp=>sp.studyStreak>=3},
   {id:'streak7',name:'Disciplina de Aço',medal:'💎',desc:'7 dias seguidos',check:sp=>sp.studyStreak>=7},
   {id:'q50',name:'Maratonista',medal:'🏃',desc:'50 questões respondidas',check:sp=>sp.questionsAnswered>=50},
@@ -3718,7 +4388,14 @@ const SCORES = {
   neuropatias:`<h3>🎯 Neuropatias periféricas</h3><table class="med"><tr><th>Padrão/causa</th><th>Chave</th></tr><tr><td>Polineuropatia</td><td>Distal simétrica (bota e luva) — diabetes</td></tr><tr><td>Mediano</td><td>Túnel do carpo (1º-3º dedos, Tinel/Phalen)</td></tr><tr><td>Fibular</td><td>Pé caído</td></tr><tr><td>Brasil</td><td>Hanseníase (mancha + nervo espessado)</td></tr></table><div class="callout mne"><b>Rastreio:</b> glicemia, B12, TSH. Dor: gabapentina/duloxetina.</div>`,
   bell:`<h3>🎯 Paralisia facial</h3><table class="med"><tr><th></th><th>Periférica (Bell)</th><th>Central (AVC)</th></tr><tr><td>Testa</td><td>Acometida (cai)</td><td>Poupada (enruga)</td></tr></table><div class="callout fast"><b>Bell:</b> corticoide precoce + proteção ocular. Vesículas no ouvido = Ramsay Hunt (antiviral).</div>`,
   coma:`<h3>🎯 Coma — chave</h3><table class="med"><tr><th>Tipo</th><th>Pista</th></tr><tr><td>Estrutural</td><td>Foco/anisocoria → imagem</td></tr><tr><td>Tóxico-metabólico</td><td>Simétrico, pupilas reativas → corrigir</td></tr></table><div class="callout fast"><b>Sempre:</b> glicemia + coquetel (glicose, tiamina, naloxona). Glasgow ≤8 → intubar. Pupila fixa unilateral = herniação.</div>`,
-  morte_encefalica:`<h3>🎯 Morte encefálica (CFM 2.173/2017)</h3><table class="med"><tr><th>Etapa</th><th>Detalhe</th></tr><tr><td>Pré-requisitos</td><td>Causa conhecida; excluir hipotermia/drogas/metabólico</td></tr><tr><td>Exame clínico</td><td>2 médicos diferentes; reflexos de tronco ausentes</td></tr><tr><td>Apneia</td><td>Sem respirar com PaCO₂ &gt;55</td></tr><tr><td>Complementar</td><td>Obrigatório (EEG/Doppler/arteriografia/cintilografia)</td></tr></table>`
+  morte_encefalica:`<h3>🎯 Morte encefálica (CFM 2.173/2017)</h3><table class="med"><tr><th>Etapa</th><th>Detalhe</th></tr><tr><td>Pré-requisitos</td><td>Causa conhecida; excluir hipotermia/drogas/metabólico</td></tr><tr><td>Exame clínico</td><td>2 médicos diferentes; reflexos de tronco ausentes</td></tr><tr><td>Apneia</td><td>Sem respirar com PaCO₂ &gt;55</td></tr><tr><td>Complementar</td><td>Obrigatório (EEG/Doppler/arteriografia/cintilografia)</td></tr></table>`,
+  trm:`<h3>🎯 TRM — síndromes</h3><table class="med"><tr><th>Síndrome</th><th>Chave</th></tr><tr><td>Brown-Séquard</td><td>Ipsi: motor/vibração; contra: dor/temperatura</td></tr><tr><td>Central</td><td>MMSS &gt; MMII (idoso, hiperextensão)</td></tr><tr><td>Anterior</td><td>Poupa vibração; pior prognóstico</td></tr></table><div class="callout trap"><b>Choque medular</b> (arreflexia transitória) ≠ <b>neurogênico</b> (hipotensão + bradicardia).</div>`,
+  mielopatia:`<h3>🎯 Compressão e mielopatias</h3><table class="med"><tr><th>Causa</th><th>Chave</th></tr><tr><td>Metástase</td><td>Câncer + dor noturna → RM + dexametasona</td></tr><tr><td>Cauda equina</td><td>Anestesia em sela + retenção → cirurgia urgente</td></tr><tr><td>Espondilótica</td><td>Mais comum (idoso)</td></tr><tr><td>B12</td><td>Degeneração combinada subaguda</td></tr></table>`,
+  vertigem:`<h3>🎯 Vertigem — periférica x central</h3><table class="med"><tr><th></th><th>Periférica</th><th>Central</th></tr><tr><td>Nistagmo</td><td>Unidirecional, suprime</td><td>Muda direção, não suprime</td></tr><tr><td>HINTS</td><td>Head impulse anormal</td><td>Head impulse normal, skew</td></tr></table><div class="callout fast"><b>VPPB:</b> segundos, posicional → Dix-Hallpike / Epley. <b>Neurite:</b> dias, sem audição. <b>Ménière:</b> episódica + zumbido + hipoacusia flutuante.</div>`,
+  tumores:`<h3>🎯 Tumores do SNC</h3><table class="med"><tr><th>Tipo</th><th>Chave</th></tr><tr><td>Metástase</td><td>+ comum no adulto (pulmão/mama/melanoma)</td></tr><tr><td>Glioblastoma</td><td>Primário maligno + comum</td></tr><tr><td>Meningioma</td><td>Extra-axial, dural, benigno</td></tr><tr><td>Criança</td><td>Fossa posterior</td></tr></table><div class="callout fast"><b>RM com contraste</b> + biópsia. <b>Dexametasona</b> para o edema. 1ª crise no adulto → investigar.</div>`,
+  hidrocefalia:`<h3>🎯 Hidrocefalia</h3><table class="med"><tr><th>Tipo</th><th>Mecanismo</th></tr><tr><td>Obstrutiva</td><td>Bloqueio ventricular</td></tr><tr><td>Comunicante</td><td>Falha de reabsorção (pós-HSA/meningite)</td></tr></table><div class="callout fast"><b>HPN:</b> marcha + incontinência + demência → tap test → DVP. Aguda grave → DVE.</div>`,
+  neuroinfeccao:`<h3>🎯 Neuroinfecção</h3><table class="med"><tr><th>Quadro</th><th>Chave</th></tr><tr><td>Neurocisticercose</td><td>Crises + cistos; albendazol + corticoide</td></tr><tr><td>Toxoplasmose</td><td>HIV + múltiplas anelares → prova terapêutica</td></tr><tr><td>Criptococo</td><td>Meningite + pressão alta</td></tr><tr><td>TB do SNC</td><td>Linfo + glicose baixa + ADA↑</td></tr></table>`,
+  semiologia:`<h3>🎯 Localização neurológica</h3><table class="med"><tr><th>Achado</th><th>Localização</th></tr><tr><td>Reflexos↑ + Babinski</td><td>1º neurônio</td></tr><tr><td>Atrofia + fasciculação</td><td>2º neurônio</td></tr><tr><td>Síndrome cruzada</td><td>Tronco</td></tr><tr><td>Ataxia ipsilateral</td><td>Cerebelo</td></tr><tr><td>Nível sensitivo</td><td>Medula</td></tr></table><div class="callout fast"><b>Vias:</b> corticoespinhal e coluna dorsal cruzam no bulbo; espinotalâmica cruza na medula.</div>`
 };
 
 /* separar subtópicos em Teoria / Mapa / Revisão / Dicas */
