@@ -453,6 +453,19 @@ table.med tr:hover td{background:var(--surface-2)}
 .rate-err{background:rgba(248,113,113,.16);color:var(--red);border:1px solid rgba(248,113,113,.3)}
 .cf-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .cf-filters select,.cf-filters input{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:9px 11px;color:var(--text);font-family:var(--font-body);font-size:.88rem}
+
+/* ===== Flashcards: quebras de linha, separação e formatação ===== */
+.fc-q,.fc-a{white-space:pre-wrap;word-break:break-word}
+.usercard{margin-top:9px}
+.usercard+.usercard{margin-top:9px}
+.usercard .uc-edit{cursor:pointer;color:var(--text-dim);font-size:.9rem}
+.usercard .uc-edit:hover{color:var(--accent)}
+.fcc-fmt{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:2px 0 10px}
+.fcc-fmt .fmtb{min-width:32px;height:28px;padding:0 9px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font-weight:800;cursor:pointer;font-size:.92rem;line-height:1}
+.fcc-fmt .fmtb:hover{border-color:var(--accent)}
+.fcc-fmtlbl{font-size:.72rem;color:var(--text-dim);font-weight:700}
+.fcc-fmthint{font-size:.68rem;color:var(--text-dim)}
+.fcc-edit{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:.76rem;color:var(--accent-2);font-weight:700}
 </style>
 </head>
 <body>
@@ -2711,6 +2724,566 @@ MODULES.push({
   cases:[{title:'Caso — Movimentos involuntários e história familiar',hist:'Homem, 45a, há meses com movimentos rápidos e irregulares dos membros, irritabilidade e esquecimentos; pai teve doença parecida e faleceu cedo.',exam:'Coreia generalizada, déficit cognitivo leve.',labs:'Teste genético: expansão CAG no gene da huntingtina.',reason:'Coreia + alterações psiquiátricas/cognitivas + herança autossômica dominante + CAG = Huntington.',dx:'Doença de Huntington.',tx:'Aconselhamento genético, manejo sintomático da coreia e dos sintomas psiquiátricos, suporte multidisciplinar (sem cura).'}]
 });
 
+/* ---------- 8. DOENÇAS DESMIELINIZANTES ---------- */
+MODULES.push({
+  id:'esclerose_multipla', emoji:'⚡', region:'spinal', tema:'Doenças Desmielinizantes',
+  title:'Esclerose Múltipla', sub:'Doença desmielinizante do SNC: surtos, McDonald e tratamento',
+  prio:'alta', topics:['Esclerose múltipla','Desmielinização','Neurite óptica','Bandas oligoclonais'],
+  subtopics:[
+   {label:'1. O que é (e por que acontece)',html:`<h3>⚡ Entendendo do zero</h3>
+<p>Imagine os neurônios como fios elétricos. A <b>mielina</b> é a "capa isolante" que envolve o axônio e faz o impulso viajar rápido (condução "saltatória"). Na esclerose múltipla (EM), o <b>sistema imune ataca a própria mielina do sistema nervoso central</b> (cérebro, medula e nervo óptico) — é uma doença <b>autoimune e desmielinizante</b>.</p>
+<p>Com a "capa" danificada, o sinal passa devagar ou falha — daí os sintomas. Como o ataque ocorre em <b>vários pontos e em vários momentos</b>, surge o conceito central: lesões <b>disseminadas no espaço e no tempo</b>.</p>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 360 120" width="100%" style="max-width:380px">
+<line x1="20" y1="60" x2="340" y2="60" stroke="#6b7a90" stroke-width="3"/>
+<ellipse cx="60" cy="60" rx="22" ry="13" fill="#8fd4c8"/><ellipse cx="110" cy="60" rx="22" ry="13" fill="#8fd4c8"/>
+<rect x="150" y="46" width="60" height="28" rx="6" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="180" y="32" text-anchor="middle" font-size="11" fill="#ef4444">placa (desmielinização)</text>
+<ellipse cx="250" cy="60" rx="22" ry="13" fill="#8fd4c8"/><ellipse cx="300" cy="60" rx="22" ry="13" fill="#8fd4c8"/>
+<text x="85" y="95" text-anchor="middle" font-size="11" fill="#8fd4c8">bainha de mielina normal</text>
+<circle cx="20" cy="60" r="5" fill="#cfd8e3"/>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">Axônio com mielina normal (verde) e uma <b>placa desmielinizada</b> (área vermelha): ali a condução falha.</div>
+</div>
+<div class="callout mne"><b>Fixe a ideia</b>EM = ataque autoimune à mielina do SNC, gerando lesões <b>disseminadas no espaço e no tempo</b>. Atinge sobretudo <b>mulheres jovens</b> (20–40 anos).</div>`},
+   {label:'2. Quadro clínico',html:`<h3>🩺 Como se manifesta</h3>
+<p>Os sintomas dependem de <b>onde</b> está a placa e costumam vir em <b>surtos</b> (instalam-se em horas/dias, duram &gt;24h, e melhoram total ou parcialmente). Os mais clássicos:</p>
+<table class="med"><tr><th>Síndrome</th><th>Como é</th></tr>
+<tr><td><b>Neurite óptica</b></td><td>Perda visual de um olho + <b>dor à movimentação ocular</b>; é uma apresentação muito típica</td></tr>
+<tr><td><b>Mielite</b></td><td>Alterações motoras/sensitivas e esfincterianas por lesão medular</td></tr>
+<tr><td>Tronco/cerebelo</td><td>Diplopia, vertigem, ataxia, disartria</td></tr></table>
+<h3>Sinais "de prova"</h3>
+<ul><li><b>Sinal de Lhermitte</b>: sensação de "choque elétrico" descendo pela coluna ao fletir o pescoço.</li>
+<li><b>Fenômeno de Uhthoff</b>: piora dos sintomas com o <b>calor</b> (febre, exercício, banho quente).</li>
+<li><b>Fadiga</b> intensa e desproporcional.</li></ul>
+<div class="callout tip"><b>Pista de ouro</b>Mulher jovem com episódios neurológicos que vão e voltam (ex.: neurite óptica e, meses depois, formigamento/fraqueza em outra topografia) = pense em EM (disseminação no tempo e espaço).</div>`},
+   {label:'3. Formas evolutivas',html:`<h3>📈 Os "tipos" de evolução</h3>
+<table class="med"><tr><th>Forma</th><th>Característica</th></tr>
+<tr><td><b>Surto-remissão (EMRR)</b></td><td>A <b>mais comum</b>: surtos seguidos de recuperação, com estabilidade entre eles</td></tr>
+<tr><td><b>Secundariamente progressiva</b></td><td>Começa como surto-remissão e, com o tempo, passa a piorar progressivamente</td></tr>
+<tr><td><b>Primariamente progressiva</b></td><td>Piora contínua desde o início, sem surtos definidos</td></tr></table>
+<div class="callout mne"><b>Atalho</b>A maioria começa <b>surto-remissão</b>. Reconhecer a forma orienta o tratamento e o prognóstico.</div>`},
+   {label:'4. Diagnóstico',html:`<h3>🔬 Como diagnosticar (critérios de McDonald)</h3>
+<p>O diagnóstico combina clínica + exames, demonstrando <b>disseminação no espaço</b> (lesões em locais diferentes do SNC) e <b>no tempo</b> (lesões surgidas em momentos diferentes).</p>
+<table class="med"><tr><th>Exame</th><th>Achado típico</th></tr>
+<tr><td><b>Ressonância (principal)</b></td><td>Lesões em substância branca, sobretudo <b>periventriculares</b> ("<b>dedos de Dawson</b>"), justacorticais, infratentoriais e medulares; lesões que captam contraste indicam atividade recente</td></tr>
+<tr><td><b>Líquor</b></td><td><b>Bandas oligoclonais</b> (IgG) presentes no líquor e ausentes no sangue</td></tr>
+<tr><td>Potenciais evocados</td><td>Condução lentificada (ex.: visual na neurite óptica)</td></tr></table>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 240 150" width="100%" style="max-width:260px">
+<ellipse cx="120" cy="75" rx="105" ry="68" fill="#46566a" stroke="#cfd8e3" stroke-width="3"/>
+<path d="M95 50 Q120 75 95 100 M145 50 Q120 75 145 100" fill="none" stroke="#2a3340" stroke-width="9"/>
+<g fill="#f2f5f9"><ellipse cx="92" cy="42" rx="5" ry="11" transform="rotate(28 92 42)"/><ellipse cx="80" cy="60" rx="5" ry="12" transform="rotate(15 80 60)"/><ellipse cx="150" cy="44" rx="5" ry="11" transform="rotate(-28 150 44)"/><ellipse cx="162" cy="62" rx="5" ry="12" transform="rotate(-15 162 62)"/><ellipse cx="86" cy="98" rx="5" ry="11" transform="rotate(-25 86 98)"/><ellipse cx="156" cy="98" rx="5" ry="11" transform="rotate(25 156 98)"/></g>
+<text x="120" y="142" text-anchor="middle" font-size="11" fill="#f2f5f9">lesões periventriculares (dedos de Dawson)</text>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">Esquema de corte do cérebro: lesões ovais (brancas) <b>perpendiculares aos ventrículos</b> — os clássicos "dedos de Dawson" na RM.</div>
+</div>
+<div class="callout trap"><b>Cuidado</b>Sempre afaste diferenciais (ex.: neuromielite óptica/NMO — com anticorpo anti-aquaporina-4, mielites extensas e neurite óptica grave) e causas infecciosas/inflamatórias. O tratamento muda.</div>`},
+   {label:'5. Tratamento',html:`<h3>💊 Como tratar</h3>
+<table class="med"><tr><th>Situação</th><th>Conduta</th></tr>
+<tr><td><b>Surto agudo</b></td><td><b>Corticoide em pulso</b> (metilprednisolona EV em altas doses) — acelera a recuperação do surto</td></tr>
+<tr><td><b>Doença (longo prazo)</b></td><td><b>Drogas modificadoras</b> da doença (ex.: interferon-beta, acetato de glatirâmer, e agentes mais novos) — reduzem surtos e progressão</td></tr>
+<tr><td><b>Sintomático</b></td><td>Espasticidade, dor, fadiga, bexiga, depressão; reabilitação</td></tr></table>
+<h3>Medidas e orientações</h3>
+<ul><li>Evitar <b>calor excessivo</b> (Uhthoff), tratar febres, manejar fadiga.</li>
+<li>Vacinação e estilo de vida; acompanhamento com RM seriada.</li></ul>
+<div class="callout mne"><b>Resumo</b>Surto = <b>pulso de corticoide</b>. Prevenir surtos/progressão = <b>droga modificadora</b>. Mais tratamento sintomático e reabilitação. Não cura, mas controla.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Esclerose Múltipla</h3>
+<div class="mindmap"><div class="mm-center">ESCLEROSE MÚLTIPLA</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Conceito</b><ul><li>Autoimune, desmielinizante do SNC</li><li>Mulher jovem</li><li>Espaço + tempo</li></ul></div>
+<div class="mm-branch"><b>Clínica</b><ul><li>Neurite óptica, mielite</li><li>Lhermitte, Uhthoff, fadiga</li></ul></div>
+<div class="mm-branch"><b>Diagnóstico</b><ul><li>McDonald</li><li>RM: dedos de Dawson</li><li>Bandas oligoclonais</li></ul></div>
+<div class="mm-branch"><b>Tratamento</b><ul><li>Surto: pulso de corticoide</li><li>Modificadoras da doença</li><li>Sintomático</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Mulher jovem, perda visual + dor ao mover o olho</td><td>Neurite óptica (suspeitar EM)</td></tr>
+<tr><td>"Choque" ao fletir o pescoço</td><td>Sinal de Lhermitte</td></tr>
+<tr><td>Piora com calor/febre</td><td>Fenômeno de Uhthoff</td></tr>
+<tr><td>RM: lesões periventriculares perpendiculares</td><td>Dedos de Dawson</td></tr>
+<tr><td>Líquor</td><td>Bandas oligoclonais</td></tr>
+<tr><td>Surto agudo</td><td>Pulso de corticoide</td></tr>
+<tr><td>Prevenção de surtos</td><td>Droga modificadora da doença</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① EM = disseminação no espaço E no tempo. ② Neurite óptica + Lhermitte + Uhthoff. ③ Dedos de Dawson + bandas oligoclonais. ④ Surto = corticoide; prevenção = modificadora.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Tratar surto com modificadora (surto é corticoide). ② Esquecer o diferencial com NMO (anti-aquaporina-4). ③ Não reconhecer Uhthoff (piora com calor não é "novo surto"). ④ Achar que uma única lesão isolada já fecha EM (precisa de disseminação).</div>`}
+  ],
+  flowMx:{ title:'Conduta na EM', steps:[
+    'Suspeita clínica (surtos; neurite óptica, mielite) em paciente jovem.',
+    'RM de crânio e medula (lesões disseminadas; dedos de Dawson) + líquor (bandas oligoclonais).',
+    'Aplicar critérios de McDonald (disseminação no espaço e no tempo); afastar diferenciais (NMO etc.).',
+    'Surto agudo: pulso de metilprednisolona EV.',
+    'Iniciar droga modificadora da doença para reduzir surtos/progressão.',
+    'Tratamento sintomático + reabilitação; evitar calor (Uhthoff); RM seriada.'
+  ]},
+  questions:[
+    {stem:'Mulher, 28a, com perda visual em um olho e dor ao movimentar o olho; há 6 meses teve formigamento e fraqueza em uma perna que melhoraram. Diagnóstico mais provável?',opts:['Enxaqueca com aura','Esclerose múltipla','AVC','Miastenia'],correct:1,expl:'<b>B.</b> Neurite óptica + episódio prévio em outra topografia (disseminação no tempo e espaço) em mulher jovem = esclerose múltipla.'},
+    {stem:'Qual achado no líquor apoia o diagnóstico de EM?',opts:['Glicose baixa','Bandas oligoclonais de IgG','Neutrófilos elevados','Cultura positiva'],correct:1,expl:'<b>B.</b> Bandas oligoclonais presentes no líquor (e ausentes no soro) apoiam a EM.'},
+    {stem:'Tratamento do surto agudo de esclerose múltipla:',opts:['Interferon-beta','Pulso de corticoide (metilprednisolona EV)','Antibiótico','Levodopa'],correct:1,expl:'<b>B.</b> O surto é tratado com pulso de corticoide; as drogas modificadoras (interferon etc.) são para prevenção, não para o surto agudo.'},
+    {stem:'O fenômeno de Uhthoff caracteriza-se por:',opts:['Piora dos sintomas com o calor','Choque ao fletir o pescoço','Perda auditiva súbita','Tremor de repouso'],correct:0,expl:'<b>A.</b> Uhthoff = piora transitória dos sintomas com o aumento da temperatura (febre, exercício, calor).'}
+  ],
+  cards:[
+    {tag:'Conceito',q:'O que é a esclerose múltipla?',a:'Doença autoimune desmielinizante do SNC, com lesões disseminadas no espaço e no tempo (mulher jovem).'},
+    {tag:'Clínica',q:'Apresentações clássicas?',a:'Neurite óptica (dor ao mover o olho), mielite; sinais de Lhermitte e Uhthoff, fadiga.'},
+    {tag:'RM',q:'Achado típico na ressonância?',a:'Lesões periventriculares perpendiculares — "dedos de Dawson".'},
+    {tag:'Líquor',q:'O que apoia o diagnóstico?',a:'Bandas oligoclonais de IgG no líquor.'},
+    {tag:'Surto',q:'Tratamento do surto?',a:'Pulso de corticoide (metilprednisolona EV).'},
+    {tag:'Prevenção',q:'Como reduzir surtos/progressão?',a:'Drogas modificadoras da doença (interferon-beta, glatirâmer e outras).'}
+  ],
+  cases:[{title:'Caso — Episódios que vão e voltam',hist:'Mulher, 30a, com embaçamento visual e dor ao mover o olho direito; relata que no ano passado teve dormência e fraqueza numa perna que regrediram.',exam:'Acuidade visual reduzida à direita, dor à movimentação ocular; reflexo de Lhermitte presente.',labs:'RM com múltiplas lesões periventriculares (dedos de Dawson) e medular; líquor com bandas oligoclonais.',reason:'Surtos em topografias diferentes e em tempos diferentes + RM/líquor compatíveis (McDonald) = esclerose múltipla surto-remissão.',dx:'Esclerose múltipla (forma surto-remissão).',tx:'Pulso de metilprednisolona para o surto (neurite óptica); iniciar droga modificadora; orientar sobre Uhthoff e fadiga; reabilitação e RM de seguimento.'}]
+});
+
+/* ---------- 9. GUILLAIN-BARRÉ ---------- */
+MODULES.push({
+  id:'guillain_barre', emoji:'🦵', region:'pns', tema:'Doenças Desmielinizantes',
+  title:'Síndrome de Guillain-Barré', sub:'Polirradiculoneuropatia aguda: fraqueza ascendente e arreflexia',
+  prio:'altíssima', topics:['Guillain-Barré','Fraqueza ascendente','Dissociação albumino-citológica','Imunoglobulina'],
+  subtopics:[
+   {label:'1. O que é (e por que acontece)',html:`<h3>🦵 Entendendo do zero</h3>
+<p>A síndrome de Guillain-Barré (SGB) é uma <b>polirradiculoneuropatia aguda autoimune</b>: o sistema imune ataca os <b>nervos periféricos</b> (em geral a <b>mielina</b> deles). Resultado: a mensagem do cérebro não chega bem aos músculos → <b>fraqueza</b>.</p>
+<h3>O gatilho clássico</h3>
+<p>Costuma vir <b>1 a 3 semanas após uma infecção</b> (diarreia por <i>Campylobacter jejuni</i>, viroses respiratórias, entre outras). O corpo cria anticorpos contra o germe que, "por engano", atacam também a mielina dos nervos (mimetismo molecular).</p>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 200 230" width="100%" style="max-width:170px">
+<circle cx="100" cy="34" r="22" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<rect x="86" y="56" width="28" height="80" rx="10" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<rect x="60" y="70" width="22" height="60" rx="10" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<rect x="118" y="70" width="22" height="60" rx="10" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<rect x="80" y="135" width="16" height="80" rx="8" fill="#ef4444"/><rect x="104" y="135" width="16" height="80" rx="8" fill="#ef4444"/>
+<rect x="86" y="120" width="28" height="20" rx="6" fill="#f0a"/>
+<text x="170" y="205" text-anchor="end" font-size="12" fill="#ef4444" font-weight="700">↑ começa nas pernas</text>
+<text x="170" y="150" text-anchor="end" font-size="11" fill="#f2f5f9">sobe...</text>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">Fraqueza <b>ascendente</b>: inicia nos membros inferiores e <b>sobe</b> — pode atingir tronco, braços e músculos respiratórios.</div>
+</div>
+<div class="callout mne"><b>Fixe a ideia</b>SGB = fraqueza <b>aguda, ascendente e simétrica</b> + <b>arreflexia</b> (reflexos abolidos), geralmente <b>após uma infecção</b>.</div>`},
+   {label:'2. Quadro clínico',html:`<h3>🩺 Como se manifesta</h3>
+<table class="med"><tr><th>Achado</th><th>Detalhe</th></tr>
+<tr><td><b>Fraqueza ascendente</b></td><td>Começa nas pernas e sobe; <b>simétrica</b></td></tr>
+<tr><td><b>Arreflexia / hiporreflexia</b></td><td>Reflexos tendíneos <b>diminuídos ou abolidos</b> (sinal-chave)</td></tr>
+<tr><td>Sensitivo</td><td>Parestesias/dor podem preceder; o predomínio é <b>motor</b></td></tr>
+<tr><td>Disautonomia</td><td>Variações de PA e FC, arritmias — exige monitorização</td></tr>
+<tr><td>Pares cranianos</td><td>Fraqueza facial; variante de Miller Fisher: <b>oftalmoplegia + ataxia + arreflexia</b></td></tr></table>
+<div class="callout warn"><b>O perigo que mata</b>A fraqueza pode atingir os <b>músculos respiratórios</b> → <b>insuficiência respiratória</b>. Vigie a capacidade vital; queda → <b>UTI e suporte ventilatório</b>. A disautonomia também pode ser fatal.</div>`},
+   {label:'3. Diagnóstico',html:`<h3>🔬 Como confirmar</h3>
+<p>O diagnóstico é <b>clínico</b> (fraqueza ascendente + arreflexia, progressiva por dias), apoiado por dois exames clássicos:</p>
+<table class="med"><tr><th>Exame</th><th>Achado típico</th></tr>
+<tr><td><b>Líquor</b></td><td><b>Dissociação albumino-citológica</b>: proteína <b>alta</b> com células <b>normais</b> (pode levar alguns dias para aparecer)</td></tr>
+<tr><td><b>Eletroneuromiografia</b></td><td>Sinais de <b>desmielinização</b> (lentificação de condução, bloqueios) na maioria das formas</td></tr></table>
+<div class="callout mne"><b>Macete</b>"<b>Proteína alta, células normais</b>" no líquor = dissociação albumino-citológica = pense em Guillain-Barré.</div>
+<div class="callout trap"><b>Diferenciais</b>Compressão medular aguda (tem nível sensitivo e reflexos vivos/Babinski), miastenia (fatigável, reflexos normais), botulismo (paralisia descendente, pupilas), hipocalemia. A <b>arreflexia + ascendente + dissociação</b> aponta para SGB.</div>`},
+   {label:'4. Tratamento',html:`<h3>💊 Como tratar</h3>
+<table class="med"><tr><th>Pilar</th><th>Detalhe</th></tr>
+<tr><td><b>Imunoterapia</b></td><td><b>Imunoglobulina humana EV (IVIg)</b> <u>ou</u> <b>plasmaférese</b> — eficácia semelhante; escolher uma (não se associam)</td></tr>
+<tr><td><b>Suporte</b></td><td>Monitorar <b>função respiratória</b> (capacidade vital) e <b>autonômica</b>; UTI e ventilação se necessário; profilaxia de TVP; dor; fisioterapia</td></tr></table>
+<div class="callout trap"><b>Pegadinha importante</b><b>Corticoide isolado NÃO é eficaz</b> na Guillain-Barré (diferente da esclerose múltipla!). O tratamento é <b>IVIg ou plasmaférese</b>.</div>
+<h3>Prognóstico</h3>
+<p>A maioria <b>se recupera</b> ao longo de semanas a meses, embora alguns fiquem com sequelas. O reconhecimento precoce e o suporte respiratório são o que salvam.</p>
+<div class="callout mne"><b>Resumo</b>SGB: suporte (respiratório/autonômico) + <b>IVIg ou plasmaférese</b>. Nada de corticoide isolado.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Guillain-Barré</h3>
+<div class="mindmap"><div class="mm-center">GUILLAIN-BARRÉ</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Causa</b><ul><li>Autoimune pós-infecção</li><li>Campylobacter jejuni</li><li>Ataca mielina periférica</li></ul></div>
+<div class="mm-branch"><b>Clínica</b><ul><li>Fraqueza ascendente simétrica</li><li>Arreflexia</li><li>Risco respiratório</li></ul></div>
+<div class="mm-branch"><b>Diagnóstico</b><ul><li>Dissociação albumino-citológica</li><li>ENMG: desmielinização</li></ul></div>
+<div class="mm-branch"><b>Tratamento</b><ul><li>IVIg OU plasmaférese</li><li>Suporte respiratório</li><li>Corticoide isolado não serve</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Fraqueza ascendente simétrica + arreflexia, pós-infecção</td><td>Guillain-Barré</td></tr>
+<tr><td>Líquor: proteína alta, células normais</td><td>Dissociação albumino-citológica</td></tr>
+<tr><td>Tratamento</td><td>IVIg OU plasmaférese (não associar)</td></tr>
+<tr><td>Corticoide isolado</td><td>NÃO é eficaz</td></tr>
+<tr><td>Queda da capacidade vital</td><td>UTI + ventilação</td></tr>
+<tr><td>Oftalmoplegia + ataxia + arreflexia</td><td>Variante de Miller Fisher</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Ascendente + simétrica + arreflexia, pós-infecção. ② Dissociação albumino-citológica. ③ IVIg ou plasmaférese. ④ Vigiar respiração.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Dar corticoide isolado (não funciona). ② Associar IVIg + plasmaférese (escolher uma). ③ Esquecer de monitorar a função respiratória/autonômica. ④ Confundir com compressão medular (esta tem nível sensitivo e reflexos vivos).</div>`}
+  ],
+  flowMx:{ title:'Conduta na Guillain-Barré', steps:[
+    'Suspeitar: fraqueza aguda ascendente e simétrica + arreflexia, geralmente pós-infecção.',
+    'Avaliar gravidade: função respiratória (capacidade vital) e sinais autonômicos.',
+    'Confirmar: líquor (dissociação albumino-citológica) e eletroneuromiografia.',
+    'Internar; se piora respiratória/autonômica → UTI e suporte ventilatório.',
+    'Imunoterapia: IVIg OU plasmaférese (não associar; corticoide isolado não é eficaz).',
+    'Suporte: profilaxia de TVP, manejo da dor, fisioterapia e reabilitação.'
+  ]},
+  questions:[
+    {stem:'Homem, 35a, 2 semanas após diarreia, evolui com fraqueza nas pernas que sobe para o tronco, simétrica, com reflexos abolidos. Diagnóstico?',opts:['Esclerose múltipla','Síndrome de Guillain-Barré','AVC','Enxaqueca'],correct:1,expl:'<b>B.</b> Fraqueza aguda ascendente, simétrica, com arreflexia e antecedente infeccioso = Guillain-Barré.'},
+    {stem:'Qual achado no líquor é característico?',opts:['Glicose baixa','Dissociação albumino-citológica (proteína alta, células normais)','Neutrófilos elevados','Bandas oligoclonais'],correct:1,expl:'<b>B.</b> Proteína elevada com celularidade normal é a clássica dissociação albumino-citológica.'},
+    {stem:'Tratamento de escolha na Guillain-Barré:',opts:['Corticoide isolado','Imunoglobulina EV ou plasmaférese','Antibiótico','Levodopa'],correct:1,expl:'<b>B.</b> IVIg ou plasmaférese (eficácia semelhante). Corticoide isolado não é eficaz.'},
+    {stem:'Qual a complicação que mais ameaça a vida e exige vigilância?',opts:['Insuficiência respiratória (fraqueza dos músculos respiratórios)','Cefaleia','Hipertensão crônica','Catarata'],correct:0,expl:'<b>A.</b> A fraqueza pode atingir a musculatura respiratória → insuficiência respiratória; a disautonomia também é perigosa.'}
+  ],
+  cards:[
+    {tag:'Conceito',q:'O que é Guillain-Barré?',a:'Polirradiculoneuropatia aguda autoimune que ataca os nervos periféricos, geralmente pós-infecção.'},
+    {tag:'Clínica',q:'Tríade clínica?',a:'Fraqueza ascendente + simétrica + arreflexia.'},
+    {tag:'Gatilho',q:'Antecedente clássico?',a:'Infecção 1–3 semanas antes (ex.: Campylobacter jejuni, viroses).'},
+    {tag:'Líquor',q:'Achado típico?',a:'Dissociação albumino-citológica (proteína alta, células normais).'},
+    {tag:'Tratamento',q:'Qual o tratamento?',a:'IVIg OU plasmaférese (não associar; corticoide isolado não funciona).'},
+    {tag:'Perigo',q:'O que vigiar?',a:'Função respiratória (capacidade vital) e disautonomia → UTI se necessário.'}
+  ],
+  cases:[{title:'Caso — Fraqueza que sobe',hist:'Mulher, 40a, há 4 dias com formigamento e fraqueza nas pernas que progride para as coxas e mãos; teve quadro diarreico há 2 semanas.',exam:'Tetraparesia flácida simétrica, reflexos abolidos, sem nível sensitivo; capacidade vital limítrofe.',labs:'Líquor com proteína elevada e células normais; ENMG com desmielinização.',reason:'Fraqueza aguda ascendente simétrica + arreflexia + dissociação albumino-citológica + antecedente infeccioso = Guillain-Barré, com risco respiratório.',dx:'Síndrome de Guillain-Barré.',tx:'Internação com monitorização respiratória/autonômica (UTI se piora), IVIg ou plasmaférese, profilaxia de TVP e fisioterapia.'}]
+});
+
+/* ---------- 10. NEUROMUSCULAR ---------- */
+MODULES.push({
+  id:'miastenia', emoji:'💪', region:'nmj', tema:'Neuromuscular',
+  title:'Miastenia Gravis', sub:'Doença da junção neuromuscular: fatigabilidade e anti-AChR',
+  prio:'alta', topics:['Miastenia','Junção neuromuscular','Anti-AChR','Piridostigmina','Timo'],
+  subtopics:[
+   {label:'1. O que é (e por que acontece)',html:`<h3>💪 Entendendo do zero</h3>
+<p>Para o músculo contrair, o nervo libera <b>acetilcolina (ACh)</b> na <b>junção neuromuscular</b>, que se liga a <b>receptores</b> na membrana do músculo. Na miastenia gravis, o sistema imune produz <b>anticorpos anti-receptor de acetilcolina (anti-AChR)</b> que <b>bloqueiam e destroem</b> esses receptores. Com menos receptores, a "ligação" falha cada vez que é usada → o músculo <b>cansa</b>.</p>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 300 170" width="100%" style="max-width:320px">
+<rect x="60" y="10" width="180" height="46" rx="12" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<text x="150" y="38" text-anchor="middle" font-size="11" fill="#e7edf5">terminal do nervo</text>
+<g fill="#8fd4c8"><circle cx="110" cy="70" r="4"/><circle cx="130" cy="78" r="4"/><circle cx="150" cy="72" r="4"/><circle cx="170" cy="79" r="4"/><circle cx="190" cy="71" r="4"/></g>
+<text x="252" y="76" text-anchor="start" font-size="9" fill="#8fd4c8">ACh</text>
+<rect x="60" y="110" width="180" height="46" rx="12" fill="#5a4a6a" stroke="#cfd8e3" stroke-width="2"/>
+<text x="150" y="150" text-anchor="middle" font-size="11" fill="#e7edf5">membrana do músculo</text>
+<g stroke="#cfd8e3" stroke-width="2"><line x1="100" y1="110" x2="100" y2="100"/><line x1="140" y1="110" x2="140" y2="100"/><line x1="180" y1="110" x2="180" y2="100"/><line x1="210" y1="110" x2="210" y2="100"/></g>
+<g fill="#ef4444" font-size="13" font-weight="800"><text x="100" y="100" text-anchor="middle">Y</text><text x="140" y="100" text-anchor="middle">Y</text><text x="180" y="100" text-anchor="middle">Y</text></g>
+<text x="150" y="100" text-anchor="middle" font-size="0">.</text>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">Os <b style="color:#ef4444">anticorpos (Y vermelho)</b> bloqueiam os receptores de ACh na membrana muscular — por isso a força "acaba" com o uso.</div>
+</div>
+<p>Há forte ligação com o <b>timo</b>: muitos pacientes têm <b>hiperplasia tímica</b> e alguns têm <b>timoma</b> (tumor do timo) — por isso sempre se investiga o tórax.</p>
+<div class="callout mne"><b>Fixe a ideia</b>Miastenia = anticorpos contra o receptor de ACh → <b>fatigabilidade</b> (fraqueza que piora com o uso e melhora com repouso). Pensar no <b>timo</b>.</div>`},
+   {label:'2. Quadro clínico',html:`<h3>🩺 A marca registrada: fatigabilidade</h3>
+<p>O sintoma-chave é a <b>flutuação</b>: a fraqueza <b>piora ao longo do dia</b> e com o esforço repetido, e <b>melhora com o repouso</b>. Tipicamente <b>pior à noite</b>.</p>
+<table class="med"><tr><th>Forma</th><th>Como é</th></tr>
+<tr><td><b>Ocular</b> (muito comum/inicial)</td><td><b>Ptose</b> (pálpebra caída) e <b>diplopia</b> que pioram com o uso</td></tr>
+<tr><td><b>Bulbar</b></td><td>Disfagia, disartria, fraqueza facial, dificuldade para mastigar</td></tr>
+<tr><td><b>Generalizada</b></td><td>Fraqueza de membros (proximal), pescoço</td></tr></table>
+<p>Importante: <b>não há</b> alteração sensitiva, os <b>reflexos são normais</b> e as <b>pupilas são poupadas</b>.</p>
+<div class="callout warn"><b>Crise miastênica</b>Quando a fraqueza atinge a <b>musculatura respiratória</b> → insuficiência respiratória. É emergência: <b>UTI, suporte ventilatório</b> e imunoterapia. Pode ser desencadeada por infecção, cirurgia ou alguns fármacos.</div>`},
+   {label:'3. Diagnóstico',html:`<h3>🔬 Como confirmar</h3>
+<table class="med"><tr><th>Exame</th><th>Achado</th></tr>
+<tr><td><b>Anticorpos</b></td><td><b>Anti-AChR</b> (mais comuns); se negativo, <b>anti-MuSK</b></td></tr>
+<tr><td><b>Eletroneuromiografia</b></td><td><b>Estimulação repetitiva</b>: padrão de <b>decremento</b> (a resposta cai com repetição). Fibra única (jitter) é o mais sensível</td></tr>
+<tr><td>Provas à beira-leito</td><td><b>Teste do gelo</b> (gelo na pálpebra melhora a ptose); prova com anticolinesterásico (edrofônio/neostigmina)</td></tr>
+<tr><td><b>TC/RM de tórax</b></td><td>Procurar <b>timoma</b>/hiperplasia tímica</td></tr></table>
+<div class="callout trap"><b>Diferencial-chave: Síndrome de Eaton-Lambert</b>É o "oposto": anticorpo contra o <b>canal de cálcio</b> pré-sináptico, associado ao <b>câncer de pulmão de pequenas células</b>. A força <b>MELHORA com o exercício</b> repetido (facilitação) e os <b>reflexos estão diminuídos</b>. Na miastenia, a força <b>piora</b> com o uso.</div>`},
+   {label:'4. Tratamento',html:`<h3>💊 Como tratar</h3>
+<table class="med"><tr><th>Pilar</th><th>Detalhe</th></tr>
+<tr><td><b>Sintomático</b></td><td><b>Piridostigmina</b> (anticolinesterásico: aumenta a ACh disponível na junção)</td></tr>
+<tr><td><b>Imunossupressão</b></td><td><b>Corticoide</b> e poupadores (azatioprina, micofenolato) para controle de base</td></tr>
+<tr><td><b>Timectomia</b></td><td>Indicada se <b>timoma</b>; também considerada em casos selecionados (sobretudo anti-AChR mais jovens)</td></tr>
+<tr><td><b>Crise miastênica</b></td><td><b>IVIg ou plasmaférese</b> + suporte ventilatório (UTI)</td></tr></table>
+<div class="callout trap"><b>Crise miastênica × crise colinérgica</b>Excesso de anticolinesterásico pode causar <b>crise colinérgica</b> (muita ACh): também dá fraqueza, mas com sinais <b>muscarínicos</b> (sialorreia, lacrimejamento, miose, diarreia, bradicardia). Diferenciar é essencial — uma pede MAIS imunoterapia, a outra pede SUSPENDER o anticolinesterásico.</div>
+<div class="callout warn"><b>Fármacos a evitar</b>Vários medicamentos pioram a miastenia (alguns antibióticos como aminoglicosídeos e macrolídeos, bloqueadores neuromusculares, magnésio, betabloqueadores). Sempre cheque antes de prescrever.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Miastenia Gravis</h3>
+<div class="mindmap"><div class="mm-center">MIASTENIA GRAVIS</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Causa</b><ul><li>Anti-AChR (ou anti-MuSK)</li><li>Junção neuromuscular</li><li>Timo (timoma)</li></ul></div>
+<div class="mm-branch"><b>Clínica</b><ul><li>Fatigabilidade</li><li>Ptose/diplopia, bulbar</li><li>Reflexos/pupila normais</li></ul></div>
+<div class="mm-branch"><b>Diagnóstico</b><ul><li>Anti-AChR</li><li>ENMG: decremento</li><li>TC de tórax</li></ul></div>
+<div class="mm-branch"><b>Tratamento</b><ul><li>Piridostigmina</li><li>Imunossupressão</li><li>Timectomia</li><li>Crise: IVIg/plasmaférese</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Ptose/diplopia que piora ao longo do dia, melhora com repouso</td><td>Miastenia gravis</td></tr>
+<tr><td>Anticorpo principal</td><td>Anti-AChR (depois anti-MuSK)</td></tr>
+<tr><td>ENMG</td><td>Decremento na estimulação repetitiva</td></tr>
+<tr><td>Sempre investigar</td><td>Timo (TC/RM de tórax)</td></tr>
+<tr><td>Sintomático</td><td>Piridostigmina</td></tr>
+<tr><td>Crise miastênica</td><td>IVIg/plasmaférese + UTI</td></tr>
+<tr><td>Força MELHORA com exercício + câncer de pulmão</td><td>Eaton-Lambert (não é miastenia)</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Fatigabilidade (piora com uso). ② Anti-AChR + ENMG com decremento. ③ Investigar timo. ④ Piridostigmina + imunossupressão; crise = IVIg/plasmaférese.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Confundir com Eaton-Lambert (melhora com exercício, reflexos baixos, câncer de pulmão). ② Não diferenciar crise miastênica de colinérgica. ③ Esquecer de procurar timoma. ④ Prescrever fármaco que piora (aminoglicosídeo, magnésio, etc.).</div>`}
+  ],
+  flowMx:{ title:'Conduta na miastenia', steps:[
+    'Suspeitar pela fatigabilidade (ptose/diplopia que pioram com uso).',
+    'Confirmar: anti-AChR (depois anti-MuSK) e ENMG (estimulação repetitiva com decremento).',
+    'Investigar o timo com TC/RM de tórax (timoma?).',
+    'Tratar: piridostigmina (sintomático) + imunossupressão (corticoide/poupadores).',
+    'Timectomia se timoma (ou casos selecionados).',
+    'Crise miastênica (fraqueza respiratória): UTI, suporte ventilatório, IVIg ou plasmaférese.'
+  ]},
+  questions:[
+    {stem:'Mulher, 30a, com ptose e visão dupla que pioram ao fim do dia e melhoram após repouso. Reflexos normais. Diagnóstico?',opts:['Esclerose múltipla','Miastenia gravis','Guillain-Barré','AVC'],correct:1,expl:'<b>B.</b> Fatigabilidade (piora com uso, melhora com repouso), ocular, com reflexos normais = miastenia gravis.'},
+    {stem:'Qual exame de imagem é obrigatório na miastenia?',opts:['RM de joelho','TC/RM de tórax (timo/timoma)','Cintilografia óssea','Ecocardiograma'],correct:1,expl:'<b>B.</b> Pela associação com timoma/hiperplasia tímica, investiga-se o tórax.'},
+    {stem:'Paciente com fraqueza que MELHORA com o exercício repetido e tem câncer de pulmão de pequenas células. Diagnóstico mais provável?',opts:['Miastenia gravis','Síndrome de Eaton-Lambert','ELA','Bell'],correct:1,expl:'<b>B.</b> Facilitação (melhora com exercício) + neoplasia pulmonar = Eaton-Lambert (anticorpo anti-canal de cálcio).'},
+    {stem:'Tratamento da crise miastênica com insuficiência respiratória:',opts:['Apenas aumentar piridostigmina','IVIg ou plasmaférese + suporte ventilatório (UTI)','Corticoide oral em casa','Antibiótico'],correct:1,expl:'<b>B.</b> Crise miastênica é emergência: UTI, ventilação e imunoterapia rápida (IVIg/plasmaférese).'}
+  ],
+  cards:[
+    {tag:'Causa',q:'O que causa a miastenia?',a:'Anticorpos anti-receptor de ACh (anti-AChR) na junção neuromuscular.'},
+    {tag:'Clínica',q:'Marca clínica?',a:'Fatigabilidade: fraqueza que piora com uso e melhora com repouso (ptose, diplopia).'},
+    {tag:'Timo',q:'O que sempre investigar?',a:'O timo (timoma/hiperplasia) com TC/RM de tórax.'},
+    {tag:'Diagnóstico',q:'Achado na ENMG?',a:'Decremento na estimulação repetitiva (jitter na fibra única).'},
+    {tag:'Tratamento',q:'Base do tratamento?',a:'Piridostigmina + imunossupressão; crise = IVIg/plasmaférese.'},
+    {tag:'Diferencial',q:'Eaton-Lambert x miastenia?',a:'Eaton-Lambert: melhora com exercício, reflexos baixos, câncer de pulmão. Miastenia: piora com uso.'}
+  ],
+  cases:[{title:'Caso — Pálpebra que cai à noite',hist:'Mulher, 28a, há semanas com pálpebra caída e visão dupla que pioram ao fim do dia; relata cansaço para mastigar no jantar.',exam:'Ptose que piora à fixação do olhar para cima; força melhora após repouso; reflexos e pupilas normais.',labs:'Anti-AChR positivo; ENMG com decremento; TC de tórax mostra timoma.',reason:'Fatigabilidade ocular/bulbar + anti-AChR + decremento + timoma = miastenia gravis.',dx:'Miastenia gravis com timoma.',tx:'Piridostigmina + imunossupressão; timectomia pelo timoma; orientar sinais de crise e fármacos a evitar.'}]
+});
+
+MODULES.push({
+  id:'ela', emoji:'🧬', region:'spinal', tema:'Neuromuscular',
+  title:'Esclerose Lateral Amiotrófica (ELA)', sub:'Doença do neurônio motor: 1º + 2º neurônios',
+  prio:'média', topics:['ELA','Neurônio motor','1º e 2º neurônio','Riluzol'],
+  subtopics:[
+   {label:'1. O que é (e o conceito-chave)',html:`<h3>🧬 Entendendo do zero</h3>
+<p>A ELA é uma <b>doença degenerativa e progressiva do neurônio motor</b>. O ponto que define tudo: ela atinge <b>os dois</b> neurônios motores ao mesmo tempo:</p>
+<ul><li><b>1º neurônio motor (superior/central)</b>: vai do córtex até a medula.</li>
+<li><b>2º neurônio motor (inferior/periférico)</b>: vai da medula até o músculo.</li></ul>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 260 180" width="100%" style="max-width:260px">
+<circle cx="60" cy="30" r="20" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/><text x="60" y="34" text-anchor="middle" font-size="9" fill="#e7edf5">córtex</text>
+<line x1="60" y1="50" x2="60" y2="110" stroke="#f2a33a" stroke-width="5"/>
+<text x="72" y="84" font-size="10" fill="#f2a33a">1º neurônio</text>
+<rect x="40" y="110" width="40" height="26" rx="8" fill="#5a4a6a" stroke="#cfd8e3" stroke-width="2"/><text x="60" y="127" text-anchor="middle" font-size="8" fill="#e7edf5">medula</text>
+<line x1="80" y1="123" x2="200" y2="123" stroke="#8fd4c8" stroke-width="5"/>
+<text x="120" y="115" font-size="10" fill="#8fd4c8">2º neurônio</text>
+<rect x="200" y="110" width="40" height="26" rx="8" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/><text x="220" y="127" text-anchor="middle" font-size="8" fill="#e7edf5">músculo</text>
+<text x="130" y="165" text-anchor="middle" font-size="11" fill="#ef4444" font-weight="700">ELA atinge os DOIS neurônios</text>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">A coexistência de sinais de 1º e 2º neurônio é a assinatura da ELA.</div>
+</div>
+<div class="callout mne"><b>Fixe a ideia</b>ELA = degeneração do neurônio motor com sinais de <b>1º E 2º neurônio</b> ao mesmo tempo, <b>poupando</b> sensibilidade, e geralmente cognição, olhos e esfíncteres.</div>`},
+   {label:'2. Sinais de 1º e 2º neurônio',html:`<h3>⚖️ A combinação que fecha o diagnóstico</h3>
+<table class="med"><tr><th>1º neurônio (superior)</th><th>2º neurônio (inferior)</th></tr>
+<tr><td>Espasticidade (rigidez)</td><td>Hipotonia (flacidez)</td></tr>
+<tr><td>Hiperreflexia</td><td>Hipo/arreflexia</td></tr>
+<tr><td>Sinal de Babinski</td><td><b>Fasciculações</b> e <b>atrofia</b></td></tr>
+<tr><td>Fraqueza</td><td>Fraqueza</td></tr></table>
+<p>Encontrar, por exemplo, um membro <b>atrófico com fasciculações</b> (2º neurônio) mas com <b>reflexos vivos e Babinski</b> (1º neurônio) é altamente sugestivo de ELA.</p>
+<div class="callout warn"><b>O que NÃO tem</b>A ELA classicamente <b>não</b> dá alteração <b>sensitiva</b>, e costuma poupar a <b>movimentação ocular</b> e o controle <b>esfincteriano</b>. Se há déficit sensitivo importante, repense o diagnóstico.</div>`},
+   {label:'3. Quadro e progressão',html:`<h3>🩺 Como evolui</h3>
+<ul><li>Fraqueza <b>progressiva</b> e assimétrica, com atrofia e fasciculações; cãibras.</li>
+<li>Acometimento <b>bulbar</b>: disartria, disfagia, fraqueza da língua — risco de aspiração.</li>
+<li>Com a progressão: <b>fraqueza respiratória</b> (principal causa de óbito).</li>
+<li>Sensibilidade, cognição (na maioria) e oculomotricidade preservadas.</li></ul>
+<div class="callout tip"><b>Atenção</b>Um quadro de fraqueza progressiva com atrofia/fasciculações + sinais de liberação piramidal (hiperreflexia/Babinski), <b>sem</b> sensitivo, deve levantar ELA — e exige excluir causas tratáveis que imitam.</div>`},
+   {label:'4. Diagnóstico',html:`<h3>🔬 Como diagnosticar</h3>
+<p>O diagnóstico é <b>clínico</b> (sinais de 1º + 2º neurônio em múltiplas regiões, progressivos), apoiado pela <b>eletroneuromiografia</b> (desnervação difusa, ativa e crônica) e pela <b>exclusão de mimetizadores</b>.</p>
+<table class="med"><tr><th>Excluir (tratáveis!)</th><th>Como</th></tr>
+<tr><td>Espondilose/compressão cervical</td><td>RM de coluna (pode imitar 1º+2º neurônio)</td></tr>
+<tr><td>Outras</td><td>Neuropatias motoras, doenças da junção, distúrbios metabólicos/tireoide</td></tr></table>
+<div class="callout mne"><b>Macete</b>ELA é, em parte, <b>diagnóstico de exclusão</b>: antes de cravar, afaste o que tem tratamento (sobretudo compressão medular cervical).</div>`},
+   {label:'5. Tratamento',html:`<h3>💊 Como tratar</h3>
+<table class="med"><tr><th>Medida</th><th>Detalhe</th></tr>
+<tr><td><b>Riluzol</b></td><td>Único de uso amplo que <b>prolonga modestamente a sobrevida</b> (não cura)</td></tr>
+<tr><td><b>Suporte respiratório</b></td><td>Ventilação não invasiva quando indicada</td></tr>
+<tr><td><b>Nutrição</b></td><td>Gastrostomia em disfagia importante (evita aspiração/desnutrição)</td></tr>
+<tr><td><b>Multidisciplinar</b></td><td>Fisioterapia, fonoaudiologia, manejo de sialorreia/espasticidade, cuidados paliativos</td></tr></table>
+<div class="callout warn"><b>Prognóstico</b>É uma doença <b>grave e progressiva</b>; o cuidado foca em <b>qualidade de vida</b> e suporte. O acompanhamento multidisciplinar e a comunicação compassiva são parte essencial do tratamento.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — ELA</h3>
+<div class="mindmap"><div class="mm-center">ELA</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Conceito</b><ul><li>Neurônio motor</li><li>1º + 2º neurônio</li><li>Poupa sensibilidade/olhos</li></ul></div>
+<div class="mm-branch"><b>Sinais</b><ul><li>1º: espasticidade, Babinski</li><li>2º: atrofia, fasciculações</li></ul></div>
+<div class="mm-branch"><b>Diagnóstico</b><ul><li>Clínico + ENMG</li><li>Excluir compressão cervical</li></ul></div>
+<div class="mm-branch"><b>Tratamento</b><ul><li>Riluzol</li><li>Suporte respiratório/nutrição</li><li>Multidisciplinar</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Sinais de 1º + 2º neurônio, sem sensitivo</td><td>ELA</td></tr>
+<tr><td>Atrofia + fasciculações + hiperreflexia/Babinski</td><td>ELA (combinação clássica)</td></tr>
+<tr><td>Sempre excluir</td><td>Compressão medular cervical (RM)</td></tr>
+<tr><td>Droga que prolonga sobrevida</td><td>Riluzol</td></tr>
+<tr><td>Principal causa de óbito</td><td>Insuficiência respiratória</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① 1º + 2º neurônio juntos. ② Sem alteração sensitiva. ③ Excluir compressão cervical. ④ Riluzol + suporte.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Diagnosticar ELA sem excluir compressão cervical (tratável). ② Esperar déficit sensitivo (a ELA não dá). ③ Achar que riluzol cura (apenas prolonga modestamente). ④ Esquecer o suporte respiratório/nutricional.</div>`}
+  ],
+  questions:[
+    {stem:'Homem, 55a, com fraqueza progressiva, atrofia e fasciculações nas mãos, porém reflexos vivos e Babinski presente, sem qualquer alteração sensitiva. Diagnóstico?',opts:['Guillain-Barré','Esclerose lateral amiotrófica','Neuropatia diabética','Miastenia'],correct:1,expl:'<b>B.</b> Coexistência de 2º neurônio (atrofia/fasciculações) e 1º neurônio (hiperreflexia/Babinski) sem sensitivo = ELA.'},
+    {stem:'O que a ELA classicamente POUPA?',opts:['A força','A sensibilidade (e geralmente olhos/esfíncteres)','Os reflexos','A musculatura bulbar'],correct:1,expl:'<b>B.</b> A ELA poupa a sensibilidade e costuma poupar oculomotricidade e esfíncteres.'},
+    {stem:'Antes de firmar ELA, é essencial excluir:',opts:['Enxaqueca','Compressão medular cervical (RM)','Cefaleia tensional','Sinusite'],correct:1,expl:'<b>B.</b> A espondilose/compressão cervical pode imitar sinais de 1º+2º neurônio e é tratável.'},
+    {stem:'Qual fármaco prolonga modestamente a sobrevida na ELA?',opts:['Riluzol','Levodopa','Piridostigmina','Propranolol'],correct:0,expl:'<b>A.</b> O riluzol oferece ganho modesto de sobrevida; o restante é suporte.'}
+  ],
+  cards:[
+    {tag:'Conceito',q:'O que define a ELA?',a:'Degeneração do neurônio motor com sinais de 1º E 2º neurônio, poupando a sensibilidade.'},
+    {tag:'1º neurônio',q:'Sinais de 1º neurônio?',a:'Espasticidade, hiperreflexia, Babinski.'},
+    {tag:'2º neurônio',q:'Sinais de 2º neurônio?',a:'Atrofia, fasciculações, hipotonia, hipo/arreflexia.'},
+    {tag:'Poupa',q:'O que a ELA não acomete?',a:'Sensibilidade; em geral olhos e esfíncteres; cognição na maioria.'},
+    {tag:'Excluir',q:'Mimetizador tratável a afastar?',a:'Compressão medular cervical (RM).'},
+    {tag:'Tratamento',q:'Tratamento?',a:'Riluzol + suporte respiratório/nutricional e cuidado multidisciplinar.'}
+  ],
+  cases:[{title:'Caso — Fraqueza com fasciculações',hist:'Homem, 58a, há 8 meses com fraqueza e atrofia progressivas das mãos, cãibras e "tremores" sob a pele (fasciculações), depois disartria.',exam:'Atrofia e fasciculações nos membros, reflexos exaltados, Babinski bilateral, sensibilidade normal.',labs:'ENMG com desnervação difusa; RM cervical sem compressão significativa.',reason:'Sinais de 1º + 2º neurônio em várias regiões, progressivos, sem sensitivo, com mimetizadores excluídos = ELA.',dx:'Esclerose lateral amiotrófica.',tx:'Riluzol, acompanhamento multidisciplinar, suporte respiratório e nutricional conforme evolução, cuidados paliativos.'}]
+});
+
+MODULES.push({
+  id:'neuropatias', emoji:'🧤', region:'pns', tema:'Neuromuscular',
+  title:'Neuropatias Periféricas', sub:'Polineuropatia, mononeuropatias e dor neuropática',
+  prio:'alta', topics:['Polineuropatia','Diabetes','Túnel do carpo','Dor neuropática','Hanseníase'],
+  subtopics:[
+   {label:'1. Conceito e padrões',html:`<h3>🧤 Entendendo do zero</h3>
+<p>Neuropatia periférica é qualquer doença dos <b>nervos periféricos</b>. Eles carregam fibras <b>motoras</b> (força), <b>sensitivas</b> (tato, dor, posição) e <b>autonômicas</b> — daí os sintomas variarem. O primeiro passo é reconhecer o <b>padrão</b>:</p>
+<table class="med"><tr><th>Padrão</th><th>O que é</th></tr>
+<tr><td><b>Mononeuropatia</b></td><td>Um único nervo (ex.: túnel do carpo)</td></tr>
+<tr><td><b>Mononeuropatia múltipla</b></td><td>Vários nervos isolados, em tempos diferentes (ex.: vasculites, hanseníase)</td></tr>
+<tr><td><b>Polineuropatia</b></td><td>Difusa e <b>simétrica</b>, distal, padrão <b>"em bota e luva"</b></td></tr></table>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 240 150" width="100%" style="max-width:260px">
+<rect x="40" y="20" width="20" height="110" rx="10" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<rect x="40" y="95" width="20" height="35" rx="10" fill="#ef4444"/>
+<text x="50" y="145" text-anchor="middle" font-size="10" fill="#ef4444">bota</text>
+<rect x="150" y="20" width="18" height="90" rx="9" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<rect x="150" y="80" width="18" height="30" rx="9" fill="#ef4444"/>
+<text x="159" y="128" text-anchor="middle" font-size="10" fill="#ef4444">luva</text>
+<text x="120" y="14" text-anchor="middle" font-size="10" fill="#e7edf5">acometimento distal e simétrico</text>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">Polineuropatia: sintomas começam nas <b>extremidades</b> (pés e mãos) — distribuição "em bota e luva".</div>
+</div>
+<div class="callout mne"><b>Fixe a ideia</b>Defina o padrão (mono × múltipla × poli) e quais fibras (motora/sensitiva/autonômica) — isso direciona a causa e a investigação.</div>`},
+   {label:'2. Polineuropatias (causas)',html:`<h3>🩺 As polineuropatias e suas causas</h3>
+<p>A polineuropatia distal simétrica é o padrão mais comum. Principais causas:</p>
+<table class="med"><tr><th>Causa</th><th>Pista</th></tr>
+<tr><td><b>Diabetes</b> (a mais comum)</td><td>Sensitiva distal, queimação/dormência nos pés, risco de <b>pé diabético</b></td></tr>
+<tr><td>Álcool / deficiência de <b>B12</b></td><td>Etilismo; B12 também dá alteração medular</td></tr>
+<tr><td>Urêmica / hipotireoidismo</td><td>Doença renal/tireoide</td></tr>
+<tr><td><b>Hanseníase</b></td><td><b>Muito relevante no Brasil</b>: neuropatia + lesões de pele com perda de sensibilidade; nervos espessados</td></tr>
+<tr><td>Fármacos / tóxicos</td><td>Quimioterápicos, isoniazida, etc.</td></tr></table>
+<div class="callout warn"><b>Não esqueça a hanseníase</b>Em prova brasileira, neuropatia periférica + manchas hipoestésicas + espessamento de nervo = pensar em <b>hanseníase</b> (doença de notificação compulsória).</div>`},
+   {label:'3. Mononeuropatias compressivas',html:`<h3>✋ As compressões mais cobradas</h3>
+<table class="med"><tr><th>Nervo / síndrome</th><th>Quadro</th></tr>
+<tr><td><b>Mediano — túnel do carpo</b></td><td>Parestesia/dor nos <b>1º a 3º dedos</b> (e metade do 4º), pior à noite; <b>Tinel</b> e <b>Phalen</b> positivos; comum em gestantes, hipotireoidismo, atividades repetitivas</td></tr>
+<tr><td><b>Ulnar — cotovelo</b></td><td>Parestesia no 4º/5º dedos; fraqueza de pinça</td></tr>
+<tr><td><b>Fibular — joelho</b></td><td><b>Pé caído</b> (dificuldade de dorsiflexão), marcha escarvante</td></tr>
+<tr><td><b>Radial</b></td><td>"Mão caída" (compressão no braço)</td></tr></table>
+<div class="callout tip"><b>Dica</b>Localize pelo território: dedos 1–3 → mediano; 4–5 → ulnar; pé caído → fibular; punho/mão caída → radial.</div>`},
+   {label:'4. Diagnóstico',html:`<h3>🔬 Como investigar</h3>
+<p>Clínica define o <b>padrão</b>; a <b>eletroneuromiografia</b> diz se é <b>axonal</b> (a maioria das metabólicas, como a diabética) ou <b>desmielinizante</b>, e localiza compressões. Em paralelo, busca-se a <b>causa</b>:</p>
+<ul><li>Glicemia/HbA1c, <b>B12</b>, TSH, função renal, sorologias, eletroforese de proteínas conforme o caso.</li>
+<li>Na suspeita de hanseníase: avaliação dermatoneurológica e baciloscopia.</li></ul>
+<div class="callout mne"><b>Macete</b>Polineuropatia nova → cheque sempre <b>glicemia, B12 e TSH</b> (causas comuns e tratáveis), e lembre da <b>hanseníase</b> no Brasil.</div>`},
+   {label:'5. Tratamento',html:`<h3>💊 Como tratar</h3>
+<table class="med"><tr><th>Frente</th><th>Conduta</th></tr>
+<tr><td><b>Tratar a causa</b></td><td>Controle glicêmico, repor B12, tratar tireoide, suspender tóxico, poliquimioterapia na hanseníase</td></tr>
+<tr><td><b>Dor neuropática</b></td><td><b>Gabapentina/pregabalina</b>, <b>duloxetina</b>, antidepressivos tricíclicos (amitriptilina)</td></tr>
+<tr><td><b>Compressões</b></td><td>Túnel do carpo: órtese noturna, infiltração; <b>cirurgia de descompressão</b> se refratário</td></tr>
+<tr><td><b>Cuidados do pé</b></td><td>No diabético: inspeção diária, calçado adequado, prevenção de úlceras</td></tr></table>
+<div class="callout warn"><b>Atenção</b>A dor neuropática <b>não</b> responde bem a analgésico comum/AINE — usa-se as classes específicas acima. E o pé insensível do diabético exige prevenção rigorosa (uma úlcera pode levar à amputação).</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Neuropatias Periféricas</h3>
+<div class="mindmap"><div class="mm-center">NEUROPATIAS</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Padrões</b><ul><li>Mono / múltipla / poli</li><li>Bota e luva (poli)</li></ul></div>
+<div class="mm-branch"><b>Causas</b><ul><li>Diabetes (comum)</li><li>Álcool, B12, tireoide</li><li>Hanseníase (Brasil)</li></ul></div>
+<div class="mm-branch"><b>Compressões</b><ul><li>Mediano (carpo)</li><li>Ulnar, fibular (pé caído), radial</li></ul></div>
+<div class="mm-branch"><b>Tratamento</b><ul><li>Tratar a causa</li><li>Dor: gabapentina/duloxetina</li><li>Cuidado do pé</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Dormência simétrica distal "em bota e luva"</td><td>Polineuropatia (pensar diabetes)</td></tr>
+<tr><td>Parestesia 1º-3º dedos, pior à noite, Tinel/Phalen +</td><td>Túnel do carpo (mediano)</td></tr>
+<tr><td>Pé caído</td><td>Nervo fibular</td></tr>
+<tr><td>Mancha hipoestésica + nervo espessado</td><td>Hanseníase</td></tr>
+<tr><td>Polineuropatia nova — rastrear</td><td>Glicemia, B12, TSH</td></tr>
+<tr><td>Dor neuropática</td><td>Gabapentina/pregabalina, duloxetina, tricíclico</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Defina o padrão. ② Diabetes é a causa mais comum de poli. ③ Hanseníase no Brasil. ④ Dor neuropática tem tratamento próprio.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Tratar dor neuropática só com AINE. ② Esquecer B12/TSH/glicemia na investigação. ③ Não lembrar da hanseníase. ④ Negligenciar o pé diabético insensível.</div>`}
+  ],
+  questions:[
+    {stem:'Diabético de longa data com dormência e queimação simétrica nos pés, em padrão "bota". Tipo de neuropatia?',opts:['Mononeuropatia','Polineuropatia distal simétrica','Radiculopatia isolada','Miopatia'],correct:1,expl:'<b>B.</b> Padrão distal simétrico em bota/luva = polineuropatia (diabética, a mais comum).'},
+    {stem:'Gestante com parestesia nos três primeiros dedos da mão, pior à noite, Phalen positivo. Diagnóstico?',opts:['Síndrome do túnel do carpo (mediano)','Neuropatia ulnar','Pé caído','ELA'],correct:0,expl:'<b>A.</b> Território do mediano (1º-3º dedos) + Tinel/Phalen + fator de risco (gestação) = túnel do carpo.'},
+    {stem:'No Brasil, neuropatia + mancha cutânea com perda de sensibilidade + nervo espessado sugere:',opts:['Diabetes','Hanseníase','Hipotireoidismo','Alcoolismo'],correct:1,expl:'<b>B.</b> Hanseníase é causa importante de neuropatia no Brasil (notificação compulsória).'},
+    {stem:'Qual a melhor opção para dor neuropática?',opts:['Apenas paracetamol','Gabapentina/pregabalina ou duloxetina','Antibiótico','Corticoide em pulso'],correct:1,expl:'<b>B.</b> A dor neuropática responde a gabapentina/pregabalina, duloxetina e tricíclicos — não ao analgésico comum.'}
+  ],
+  cards:[
+    {tag:'Padrões',q:'Quais os padrões de neuropatia?',a:'Mononeuropatia, mononeuropatia múltipla e polineuropatia (distal simétrica, em bota e luva).'},
+    {tag:'Causa comum',q:'Causa mais comum de polineuropatia?',a:'Diabetes (sensitiva distal; risco de pé diabético).'},
+    {tag:'Brasil',q:'Causa de neuropatia importante no Brasil?',a:'Hanseníase (manchas hipoestésicas, nervos espessados).'},
+    {tag:'Carpo',q:'Túnel do carpo — território e testes?',a:'Mediano (1º-3º dedos); Tinel e Phalen positivos.'},
+    {tag:'Rastreio',q:'O que checar numa polineuropatia nova?',a:'Glicemia/HbA1c, B12 e TSH.'},
+    {tag:'Dor',q:'Tratamento da dor neuropática?',a:'Gabapentina/pregabalina, duloxetina, tricíclicos.'}
+  ],
+  cases:[{title:'Caso — Formigamento nos pés',hist:'Homem, 60a, diabético há 15 anos, com dormência e queimação simétrica em ambos os pés, pior à noite; já teve uma pequena ferida no pé que demorou a cicatrizar.',exam:'Hipoestesia distal em bota, reflexos aquileus reduzidos, sem força diminuída proximal.',labs:'HbA1c elevada; ENMG com polineuropatia axonal sensitiva.',reason:'Padrão distal simétrico sensitivo em diabético de longa data = polineuropatia diabética, com pé em risco.',dx:'Polineuropatia diabética.',tx:'Otimizar controle glicêmico, dor neuropática com pregabalina/duloxetina, cuidados intensivos do pé (inspeção, calçado) e checar B12/TSH.'}]
+});
+
+MODULES.push({
+  id:'bell', emoji:'😐', region:'brainstem', tema:'Neuromuscular',
+  title:'Paralisia Facial Periférica (Bell)', sub:'Periférica x central e a regra da testa',
+  prio:'alta', topics:['Paralisia de Bell','Nervo facial','Central x periférico','Corticoide'],
+  subtopics:[
+   {label:'1. O que é (e por que acontece)',html:`<h3>😐 Entendendo do zero</h3>
+<p>O <b>nervo facial (VII par)</b> comanda os músculos da expressão de metade do rosto. A <b>paralisia de Bell</b> é a paralisia <b>periférica</b> e <b>idiopática</b> desse nervo (muito associada a reativação viral, como o herpes simples), de <b>início agudo</b> e geralmente <b>unilateral</b>.</p>
+<div class="callout mne"><b>Fixe a ideia</b>Bell = paralisia facial <b>periférica</b>, súbita, de um lado, que acomete <b>toda a hemiface</b> (inclusive a testa). Na maioria, recupera bem.</div>`},
+   {label:'2. Central x periférico (A REGRA)',html:`<h3>🧠 A pergunta que decide tudo: a testa enruga?</h3>
+<p>A parte de cima do rosto (testa) recebe inervação dos <b>dois</b> hemisférios; a parte de baixo, só do lado oposto. Por isso:</p>
+<table class="med"><tr><th></th><th>Periférica (Bell)</th><th>Central (ex.: AVC)</th></tr>
+<tr><td>Testa do lado afetado</td><td><b>Acometida</b> (NÃO enruga, não fecha o olho)</td><td><b>Poupada</b> (ainda enruga)</td></tr>
+<tr><td>Face inferior</td><td>Paralisada</td><td>Paralisada</td></tr>
+<tr><td>O que pensar</td><td>Lesão do nervo facial</td><td>Lesão acima do núcleo (cérebro) → investigar AVC</td></tr></table>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 320 160" width="100%" style="max-width:340px">
+<g><circle cx="80" cy="75" r="55" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<line x1="55" y1="48" x2="72" y2="48" stroke="#8fd4c8" stroke-width="3"/>
+<line x1="90" y1="52" x2="107" y2="52" stroke="#5a4a6a" stroke-width="3" stroke-dasharray="3 3"/>
+<circle cx="63" cy="66" r="4" fill="#cfd8e3"/><circle cx="98" cy="66" r="4" fill="#cfd8e3"/>
+<path d="M58 100 Q80 108 102 92" fill="none" stroke="#cfd8e3" stroke-width="3"/>
+<text x="80" y="150" text-anchor="middle" font-size="11" fill="#ef4444" font-weight="700">PERIFÉRICA: testa cai</text></g>
+<g><circle cx="240" cy="75" r="55" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<line x1="215" y1="48" x2="232" y2="48" stroke="#8fd4c8" stroke-width="3"/>
+<line x1="250" y1="48" x2="267" y2="48" stroke="#8fd4c8" stroke-width="3"/>
+<circle cx="223" cy="66" r="4" fill="#cfd8e3"/><circle cx="258" cy="66" r="4" fill="#cfd8e3"/>
+<path d="M218 100 Q240 108 262 92" fill="none" stroke="#cfd8e3" stroke-width="3"/>
+<text x="240" y="150" text-anchor="middle" font-size="11" fill="#8fd4c8" font-weight="700">CENTRAL: testa preservada</text></g>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">Esquerda: na periférica, a testa do lado afetado <b>não enruga</b>. Direita: na central, a testa é <b>poupada</b> (enruga) — sinal de alerta para AVC.</div>
+</div>
+<div class="callout warn"><b>Pegadinha que salva vidas</b>Se a <b>testa é poupada</b> (paralisa só a face inferior), é <b>central</b> → investigar <b>AVC</b>, não é Bell.</div>`},
+   {label:'3. Quadro clínico',html:`<h3>🩺 Como se apresenta a Bell</h3>
+<ul><li>Início <b>agudo</b> (horas), <b>unilateral</b>: desvio da rima para o lado são, apagamento do sulco nasolabial, não consegue <b>franzir a testa</b> nem <b>fechar o olho</b>.</li>
+<li><b>Sinal de Bell</b>: ao tentar fechar o olho, o globo <b>revira para cima</b> (e a pálpebra não fecha).</li>
+<li>Pode haver <b>hiperacusia</b> (som alto incomoda), alteração do <b>paladar</b> (2/3 anteriores da língua) e dor retroauricular.</li></ul>
+<div class="callout tip"><b>Avaliação</b>Bell é diagnóstico clínico. O exame deve confirmar que é periférico (testa acometida) e procurar pistas de causa secundária.</div>`},
+   {label:'4. Diagnóstico e diferenciais',html:`<h3>🔍 O que descartar</h3>
+<table class="med"><tr><th>Diferencial</th><th>Pista</th></tr>
+<tr><td><b>AVC</b></td><td>Testa <b>poupada</b> + outros déficits → central, investigar</td></tr>
+<tr><td><b>Síndrome de Ramsay Hunt</b></td><td>Herpes-zóster do gânglio geniculado: paralisia facial + <b>vesículas no pavilhão/conduto auditivo</b> + dor</td></tr>
+<tr><td>Otite/colesteatoma, tumor de parótida</td><td>Sinais otológicos; massa em parótida</td></tr>
+<tr><td>Doença de <b>Lyme</b>, bilateral</td><td>Paralisia bilateral ou contexto epidemiológico</td></tr></table>
+<div class="callout mne"><b>Atalho</b>Periférico + idiopático = Bell. Periférico + vesículas no ouvido = Ramsay Hunt. Testa poupada = central (AVC).</div>`},
+   {label:'5. Tratamento',html:`<h3>💊 Como tratar</h3>
+<table class="med"><tr><th>Medida</th><th>Detalhe</th></tr>
+<tr><td><b>Corticoide</b></td><td><b>Precoce</b> (primeiras 72h) — melhora a recuperação. Pilar do tratamento</td></tr>
+<tr><td><b>Antiviral</b></td><td>Associar em casos graves e no <b>Ramsay Hunt</b></td></tr>
+<tr><td><b>Proteção ocular</b></td><td><b>Essencial</b>: como o olho não fecha, usar <b>lubrificante</b> e <b>oclusão noturna</b> para evitar <b>úlcera de córnea</b></td></tr></table>
+<h3>Prognóstico</h3>
+<p>A maioria <b>recupera bem</b> em semanas. Pior prognóstico em paralisia completa e idosos.</p>
+<div class="callout warn"><b>Não esqueça o olho</b>A complicação mais temida no dia a dia é a <b>lesão da córnea</b> pelo olho que não fecha — sempre prescrever proteção ocular.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Paralisia Facial (Bell)</h3>
+<div class="mindmap"><div class="mm-center">PARALISIA FACIAL</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Periférica x central</b><ul><li>Periférica: testa cai</li><li>Central: testa poupada → AVC</li></ul></div>
+<div class="mm-branch"><b>Bell</b><ul><li>Aguda, unilateral</li><li>Sinal de Bell, hiperacusia, paladar</li></ul></div>
+<div class="mm-branch"><b>Diferenciais</b><ul><li>Ramsay Hunt (vesículas)</li><li>Otite, parótida, Lyme</li></ul></div>
+<div class="mm-branch"><b>Tratamento</b><ul><li>Corticoide precoce</li><li>Antiviral (grave/Ramsay Hunt)</li><li>Proteção ocular</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Paralisia de toda a hemiface (testa cai)</td><td>Periférica (Bell)</td></tr>
+<tr><td>Testa poupada (só face inferior)</td><td>Central → investigar AVC</td></tr>
+<tr><td>Paralisia facial + vesículas no ouvido</td><td>Ramsay Hunt</td></tr>
+<tr><td>Tratamento da Bell</td><td>Corticoide precoce (± antiviral) + proteção ocular</td></tr>
+<tr><td>Olho não fecha</td><td>Lubrificante + oclusão (evitar úlcera de córnea)</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Testa cai = periférica (Bell); testa poupada = central (AVC). ② Corticoide precoce. ③ Proteção ocular sempre. ④ Vesículas no ouvido = Ramsay Hunt.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Chamar de Bell uma paralisia central (testa poupada) e perder um AVC. ② Esquecer a proteção ocular (risco de córnea). ③ Não reconhecer Ramsay Hunt (precisa antiviral). ④ Iniciar corticoide tardiamente (o ganho é maior nas primeiras 72h).</div>`}
+  ],
+  flowMx:{ title:'Abordagem da paralisia facial', steps:[
+    'O paciente consegue franzir a testa do lado afetado?',
+    'NÃO enruga (testa acometida) → paralisia PERIFÉRICA.',
+    'Periférica + vesículas no ouvido → Ramsay Hunt (associar antiviral).',
+    'Periférica idiopática → paralisia de Bell.',
+    'Testa POUPADA (enruga) → paralisia CENTRAL → investigar AVC.',
+    'Bell: corticoide precoce (±antiviral) + proteção ocular (lubrificante/oclusão).'
+  ]},
+  questions:[
+    {stem:'Homem, 40a, acorda com desvio da boca e não consegue franzir a testa nem fechar o olho do lado direito; resto do exame normal. Tipo de paralisia?',opts:['Central (AVC)','Periférica (Bell)','Miastenia','Enxaqueca'],correct:1,expl:'<b>B.</b> Acometimento de TODA a hemiface, incluindo a testa, indica paralisia periférica (Bell).'},
+    {stem:'Paciente com paralisia facial em que a TESTA é poupada (ainda enruga). O que isso indica?',opts:['Paralisia de Bell típica','Lesão central — investigar AVC','Ramsay Hunt','Túnel do carpo'],correct:1,expl:'<b>B.</b> Testa poupada = padrão central → investigar AVC, não é Bell.'},
+    {stem:'Paralisia facial periférica + vesículas no pavilhão auricular e dor. Diagnóstico?',opts:['Bell idiopática','Síndrome de Ramsay Hunt','AVC','Otite média simples'],correct:1,expl:'<b>B.</b> Herpes-zóster do gânglio geniculado (Ramsay Hunt) — associa-se antiviral ao corticoide.'},
+    {stem:'Além do corticoide precoce, qual cuidado é essencial na Bell?',opts:['Proteção ocular (lubrificante/oclusão)','Antibiótico oral','Anticoagulação','Repouso absoluto no escuro'],correct:0,expl:'<b>A.</b> Como o olho não fecha, a proteção ocular previne úlcera de córnea.'}
+  ],
+  cards:[
+    {tag:'Regra',q:'Como diferenciar periférica de central?',a:'Periférica acomete a testa (não enruga); central poupa a testa (enruga) → investigar AVC.'},
+    {tag:'Bell',q:'O que é a paralisia de Bell?',a:'Paralisia facial periférica, aguda, unilateral e idiopática (associada a vírus).'},
+    {tag:'Sinais',q:'Sinais associados na Bell?',a:'Sinal de Bell, hiperacusia, alteração do paladar (2/3 anteriores), dor retroauricular.'},
+    {tag:'Ramsay Hunt',q:'Quando suspeitar?',a:'Paralisia facial + vesículas no ouvido/pavilhão → associar antiviral.'},
+    {tag:'Tratamento',q:'Tratamento da Bell?',a:'Corticoide precoce (primeiras 72h), ± antiviral, e proteção ocular.'},
+    {tag:'Complicação',q:'Maior cuidado prático?',a:'Proteger a córnea (olho não fecha) com lubrificante e oclusão.'}
+  ],
+  cases:[{title:'Caso — Rosto torto ao acordar',hist:'Mulher, 35a, acordou com a boca desviada à esquerda e não consegue fechar o olho direito nem levantar a sobrancelha direita; teve resfriado na semana anterior.',exam:'Paralisia de toda a hemiface direita (incluindo testa), sinal de Bell presente, sem outros déficits.',labs:'Sem vesículas; exame neurológico restante normal.',reason:'Acometimento de toda a hemiface (testa incluída), agudo, isolado e idiopático = paralisia de Bell periférica.',dx:'Paralisia facial periférica (de Bell).',tx:'Corticoide precoce (primeiras 72h), proteção ocular com lubrificante e oclusão noturna; orientar recuperação habitual em semanas.'}]
+});
+
 const REGION_INFO = {
   frontal:{name:'Lobo Frontal',msg:'Funções executivas ativadas.',color:'#38BDF8',represents:'Neuroanatomia, cognição, demências'},
   parietal:{name:'Lobo Parietal',msg:'Processamento sensorial desbloqueado.',color:'#22D3EE',represents:'Sensibilidade, síndromes corticais'},
@@ -2770,6 +3343,7 @@ const ACHIEVEMENTS=[
   {id:'cef',name:'Domador das Cefaleias',medal:'🤕',desc:'80% em todas as cefaleias',check:()=>['enxaqueca','tensional','salvas','cef_sec'].every(x=>moduleProgress(byId(x))>=80)},
   {id:'inf',name:'Guardião das Meninges',medal:'🦠',desc:'80% em Infecções do SNC',check:()=>['mening_bac','mening_vir','enceph_hsv'].every(x=>moduleProgress(byId(x))>=80)},
   {id:'emerg',name:'Rei das Emergências',medal:'🚑',desc:'80% em todo o Trauma (TCE)',check:()=>['tce_aval','tce_hemat','tce_leve'].every(x=>moduleProgress(byId(x))>=80)},
+  {id:'neuromusc',name:'Mestre Neuromuscular',medal:'💪',desc:'80% no bloco Neuromuscular',check:()=>['miastenia','ela','neuropatias','bell'].every(x=>moduleProgress(byId(x))>=80)},
   {id:'streak3',name:'Constância',medal:'🔥',desc:'3 dias seguidos de estudo',check:sp=>sp.studyStreak>=3},
   {id:'streak7',name:'Disciplina de Aço',medal:'💎',desc:'7 dias seguidos',check:sp=>sp.studyStreak>=7},
   {id:'q50',name:'Maratonista',medal:'🏃',desc:'50 questões respondidas',check:sp=>sp.questionsAnswered>=50},
@@ -2937,7 +3511,13 @@ const SCORES = {
   demencias:`<h3>🎯 Delirium x Demência</h3><table class="med"><tr><th></th><th>Delirium</th><th>Demência</th></tr><tr><td>Início</td><td>Agudo</td><td>Insidioso</td></tr><tr><td>Atenção</td><td>Alterada</td><td>Preservada (início)</td></tr><tr><td>Curso</td><td>Flutuante</td><td>Progressivo</td></tr><tr><td>Reversível</td><td>Sim</td><td>Em geral não</td></tr></table><div class="callout mne"><b>Reversíveis:</b> TSH, B12, sífilis/HIV, hidrocefalia de pressão normal, depressão, subdural, medicações.</div>`,
   demencias_outras:`<h3>🎯 Tipos não-Alzheimer</h3><table class="med"><tr><th>Tipo</th><th>Marca</th></tr><tr><td>Vascular</td><td>Em degraus + fatores de risco</td></tr><tr><td>Corpos de Lewy</td><td>Flutuação + alucinação visual + parkinsonismo (não dar neuroléptico)</td></tr><tr><td>Frontotemporal</td><td>Jovem + comportamento; memória preservada</td></tr><tr><td>Creutzfeldt-Jakob</td><td>Rápida + mioclonias</td></tr></table>`,
   parkinson:`<h3>🎯 TRAP & diferenciais</h3><table class="med"><tr><th>TRAP</th><th></th></tr><tr><td>Tremor</td><td>de repouso</td></tr><tr><td>Rigidez</td><td>roda denteada</td></tr><tr><td>Acinesia</td><td>bradicinesia (obrigatória)</td></tr><tr><td>Postural</td><td>instabilidade (tardia)</td></tr></table><div class="callout mne"><b>Excluir:</b> parkinsonismo por neuroléptico/metoclopramida (simétrico, reversível). <b>Tratar:</b> levodopa (mais eficaz).</div>`,
-  mov_outros:`<h3>🎯 Hipercinéticos</h3><table class="med"><tr><th>Distúrbio</th><th>Chave</th></tr><tr><td>Tremor essencial</td><td>Ação/postura, melhora com álcool → propranolol</td></tr><tr><td>Distonia</td><td>Postura torcida → toxina botulínica</td></tr><tr><td>Huntington</td><td>Coreia + demência, CAG, autossômica dominante</td></tr><tr><td>Tourette</td><td>Tiques motor + vocal, supressíveis</td></tr></table>`
+  mov_outros:`<h3>🎯 Hipercinéticos</h3><table class="med"><tr><th>Distúrbio</th><th>Chave</th></tr><tr><td>Tremor essencial</td><td>Ação/postura, melhora com álcool → propranolol</td></tr><tr><td>Distonia</td><td>Postura torcida → toxina botulínica</td></tr><tr><td>Huntington</td><td>Coreia + demência, CAG, autossômica dominante</td></tr><tr><td>Tourette</td><td>Tiques motor + vocal, supressíveis</td></tr></table>`,
+  esclerose_multipla:`<h3>🎯 EM — chave diagnóstica</h3><table class="med"><tr><th>Item</th><th>Achado</th></tr><tr><td>Critério</td><td>McDonald (disseminação espaço + tempo)</td></tr><tr><td>RM</td><td>Periventricular — dedos de Dawson</td></tr><tr><td>Líquor</td><td>Bandas oligoclonais</td></tr><tr><td>Surto</td><td>Pulso de corticoide</td></tr><tr><td>Prevenção</td><td>Droga modificadora</td></tr></table><div class="callout mne"><b>Sinais:</b> neurite óptica, Lhermitte, Uhthoff.</div>`,
+  guillain_barre:`<h3>🎯 Guillain-Barré</h3><table class="med"><tr><th>Item</th><th>Chave</th></tr><tr><td>Clínica</td><td>Fraqueza ascendente simétrica + arreflexia</td></tr><tr><td>Antecedente</td><td>Infecção 1–3 sem antes</td></tr><tr><td>Líquor</td><td>Dissociação albumino-citológica</td></tr><tr><td>Tratamento</td><td>IVIg OU plasmaférese</td></tr><tr><td>Vigiar</td><td>Função respiratória</td></tr></table><div class="callout trap"><b>Corticoide isolado não é eficaz.</b></div>`,
+  miastenia:`<h3>🎯 Miastenia Gravis</h3><table class="med"><tr><th>Item</th><th>Chave</th></tr><tr><td>Clínica</td><td>Fatigabilidade (piora com uso)</td></tr><tr><td>Anticorpo</td><td>Anti-AChR (depois anti-MuSK)</td></tr><tr><td>ENMG</td><td>Decremento</td></tr><tr><td>Investigar</td><td>Timo (TC tórax)</td></tr><tr><td>Tratamento</td><td>Piridostigmina + imunossupressão; crise: IVIg/plasmaférese</td></tr></table><div class="callout trap"><b>Eaton-Lambert:</b> melhora com exercício, reflexos baixos, câncer de pulmão.</div>`,
+  ela:`<h3>🎯 ELA — neurônio motor</h3><table class="med"><tr><th>1º neurônio</th><th>2º neurônio</th></tr><tr><td>Espasticidade, hiperreflexia, Babinski</td><td>Atrofia, fasciculações, hipotonia</td></tr></table><div class="callout fast"><b>Marca:</b> sinais de 1º + 2º neurônio, SEM sensitivo. Excluir compressão cervical. Riluzol + suporte.</div>`,
+  neuropatias:`<h3>🎯 Neuropatias periféricas</h3><table class="med"><tr><th>Padrão/causa</th><th>Chave</th></tr><tr><td>Polineuropatia</td><td>Distal simétrica (bota e luva) — diabetes</td></tr><tr><td>Mediano</td><td>Túnel do carpo (1º-3º dedos, Tinel/Phalen)</td></tr><tr><td>Fibular</td><td>Pé caído</td></tr><tr><td>Brasil</td><td>Hanseníase (mancha + nervo espessado)</td></tr></table><div class="callout mne"><b>Rastreio:</b> glicemia, B12, TSH. Dor: gabapentina/duloxetina.</div>`,
+  bell:`<h3>🎯 Paralisia facial</h3><table class="med"><tr><th></th><th>Periférica (Bell)</th><th>Central (AVC)</th></tr><tr><td>Testa</td><td>Acometida (cai)</td><td>Poupada (enruga)</td></tr></table><div class="callout fast"><b>Bell:</b> corticoide precoce + proteção ocular. Vesículas no ouvido = Ramsay Hunt (antiviral).</div>`
 };
 
 /* separar subtópicos em Teoria / Mapa / Revisão / Dicas */
@@ -3399,17 +3979,28 @@ function cardMastered(c){ return (c.reps||0)>=4 || (c.interval||0)>=21; }
 function cardStats(list){ return { total:list.length, dominated:list.filter(cardMastered).length, pending:list.filter(cardDue).length }; }
 function cardFrontText(c){ if(c.type==='cloze') return (c.front||'').replace(/\{([^}]*)\}/g,'[ ... ]'); return c.front||''; }
 function cardBackText(c){ if(c.type==='cloze') return (c.front||'').replace(/\{([^}]*)\}/g,'<b style="color:var(--teal)">$1</b>'); if(c.type==='tf') return (c.back==='V'?'Verdadeiro ✔':'Falso ✘'); return c.back||''; }
+function mdCard(t){ return String(t==null?'':t)
+  .replace(/\*\*([\s\S]+?)\*\*/g,'<b>$1</b>')
+  .replace(/\{a:([\s\S]*?)\}/g,'<span style="color:#3b82f6;font-weight:600">$1</span>')
+  .replace(/\{v:([\s\S]*?)\}/g,'<span style="color:#ef4444;font-weight:600">$1</span>')
+  .replace(/\{p:([\s\S]*?)\}/g,'<span style="color:var(--text)">$1</span>'); }
+function fmtCardFront(c){ if(c.type==='cloze') return mdCard(esc(c.front||'').replace(/\{([^}]*)\}/g,'[ ... ]')); return mdCard(esc(c.front||'')); }
+function fmtCardBack(c){ if(c.type==='cloze'){ var t=esc(c.front||'').replace(/\{([^}]*)\}/g,'<b style="color:var(--teal)">$1</b>'); return mdCard(t); } if(c.type==='tf') return (c.back==='V'?'Verdadeiro ✔':'Falso ✘'); return mdCard(esc(c.back||'')); }
+function stripTok(t){ return String(t==null?'':t).replace(/\*\*/g,'').replace(/\{[avp]:([\s\S]*?)\}/g,'$1'); }
+function cardPreview(c){ return esc(stripTok(cardFrontText(c))).replace(/\s+/g,' ').slice(0,100); }
 
 function renderCardCreator(m, subLabel){
   const type=(creatorState[m.id]&&creatorState[m.id].type)||'basic';
+  const ed=(creatorState[m.id]&&creatorState[m.id].editId)?(State.data.userCards||[]).find(function(x){return x.id===creatorState[m.id].editId;}):null;
+  const edF=ed?esc(ed.front||''):''; const edB=ed?esc(ed.back||''):''; const edI=ed?esc(ed.img||''):'';
   const here=cardsFor(m.id, subLabel); const st=cardStats(here);
   const all=cardsFor(m.id); const sta=cardStats(all);
   let fields='';
-  if(type==='basic'){ fields='<div class="fcc-field"><label>Frente</label><textarea class="fcc-input" id="fccFront" rows="2" placeholder="Ex.: Janela da trombólise no AVC isquêmico?"></textarea></div><div class="fcc-field"><label>Verso</label><textarea class="fcc-input" id="fccBack" rows="2" placeholder="Ex.: Até 4,5h do último visto bem."></textarea></div>'; }
-  else if(type==='qa'){ fields='<div class="fcc-field"><label>Pergunta</label><textarea class="fcc-input" id="fccFront" rows="2"></textarea></div><div class="fcc-field"><label>Resposta</label><textarea class="fcc-input" id="fccBack" rows="2"></textarea></div>'; }
-  else if(type==='cloze'){ fields='<div class="fcc-field"><label>Texto — marque a lacuna entre chaves { }</label><textarea class="fcc-input" id="fccFront" rows="2" placeholder="Ex.: A janela da trombólise é de {4,5 horas}."></textarea></div>'; }
-  else if(type==='tf'){ fields='<div class="fcc-row"><div class="fcc-field"><label>Afirmação</label><textarea class="fcc-input" id="fccFront" rows="2"></textarea></div><div class="fcc-field" style="max-width:160px"><label>É verdadeira?</label><select class="fcc-input" id="fccBack"><option value="V">Verdadeiro</option><option value="F">Falso</option></select></div></div>'; }
-  else if(type==='image'){ fields='<div class="fcc-field"><label>URL da imagem</label><input class="fcc-input" id="fccImg" placeholder="https://..."></div><div class="fcc-row"><div class="fcc-field"><label>Pergunta</label><textarea class="fcc-input" id="fccFront" rows="2"></textarea></div><div class="fcc-field"><label>Resposta</label><textarea class="fcc-input" id="fccBack" rows="2"></textarea></div></div>'; }
+  if(type==='basic'){ fields='<div class="fcc-field"><label>Frente</label><textarea class="fcc-input" id="fccFront" onfocus="window.__cf=this" rows="2" placeholder="Ex.: Janela da trombólise no AVC isquêmico?">'+edF+'</textarea></div><div class="fcc-field"><label>Verso</label><textarea class="fcc-input" id="fccBack" onfocus="window.__cf=this" rows="2" placeholder="Ex.: Até 4,5h do último visto bem.">'+edB+'</textarea></div>'; }
+  else if(type==='qa'){ fields='<div class="fcc-field"><label>Pergunta</label><textarea class="fcc-input" id="fccFront" onfocus="window.__cf=this" rows="2">'+edF+'</textarea></div><div class="fcc-field"><label>Resposta</label><textarea class="fcc-input" id="fccBack" onfocus="window.__cf=this" rows="2">'+edB+'</textarea></div>'; }
+  else if(type==='cloze'){ fields='<div class="fcc-field"><label>Texto — marque a lacuna entre chaves { }</label><textarea class="fcc-input" id="fccFront" onfocus="window.__cf=this" rows="2" placeholder="Ex.: A janela da trombólise é de {4,5 horas}.">'+edF+'</textarea></div>'; }
+  else if(type==='tf'){ fields='<div class="fcc-row"><div class="fcc-field"><label>Afirmação</label><textarea class="fcc-input" id="fccFront" onfocus="window.__cf=this" rows="2">'+edF+'</textarea></div><div class="fcc-field" style="max-width:160px"><label>É verdadeira?</label><select class="fcc-input" id="fccBack"><option value="V" '+((!ed||ed.back!=='F')?'selected':'')+'>Verdadeiro</option><option value="F" '+((ed&&ed.back==='F')?'selected':'')+'>Falso</option></select></div></div>'; }
+  else if(type==='image'){ fields='<div class="fcc-field"><label>URL da imagem</label><input class="fcc-input" id="fccImg" value="'+edI+'" placeholder="https://..."></div><div class="fcc-row"><div class="fcc-field"><label>Pergunta</label><textarea class="fcc-input" id="fccFront" onfocus="window.__cf=this" rows="2">'+edF+'</textarea></div><div class="fcc-field"><label>Resposta</label><textarea class="fcc-input" id="fccBack" onfocus="window.__cf=this" rows="2">'+edB+'</textarea></div></div>'; }
   const listHtml=here.slice(-6).reverse().map(userCardRow).join('');
   return `<div class="fc-creator">
     <div class="fcc-head"><b>✏️ Flashcards Inteligentes</b>
@@ -3417,13 +4008,14 @@ function renderCardCreator(m, subLabel){
     <div style="font-size:.78rem;color:var(--text-dim);margin-bottom:10px">Vinculado a: <b style="color:var(--accent-2)">${esc(m.title)}</b> › ${esc(subLabel)} — criação imediata, sem sair da leitura.</div>
     <div class="fcc-types">${CARD_TYPES.map(t=>'<span class="fcc-type '+(type===t[0]?'active':'')+'" onclick="setCreatorType(\''+m.id+'\',\''+t[0]+'\')">'+t[1]+'</span>').join('')}</div>
     ${fields}
-    <button class="btn btn-primary btn-sm" onclick="addUserCard('${m.id}')">＋ Adicionar cartão</button>
+    <div class="fcc-fmt"><span class="fcc-fmtlbl">Formatação:</span><button type="button" class="fmtb" onclick="cfFmt('b')" title="Negrito"><b>N</b></button><button type="button" class="fmtb" style="color:#3b82f6" onclick="cfFmt('a')" title="Azul">A</button><button type="button" class="fmtb" style="color:#ef4444" onclick="cfFmt('v')" title="Vermelho">A</button><button type="button" class="fmtb" onclick="cfFmt('p')" title="Preto (padrão)">A</button><span class="fcc-fmthint">selecione o texto e clique</span></div>
+    ${ed?('<div class="fcc-edit">✎ Editando cartão<span class="uc-edit" style="margin-left:auto" onclick="cancelEdit(\''+m.id+'\')">✕ cancelar</span></div><button class="btn btn-primary btn-sm" onclick="saveUserCard(\''+m.id+'\')">💾 Salvar alterações</button>'):('<button class="btn btn-primary btn-sm" onclick="addUserCard(\''+m.id+'\')">＋ Adicionar cartão</button>')}
     ${here.length?'<div style="margin-top:12px;font-size:.72rem;color:var(--text-dim);font-weight:700;letter-spacing:.06em">SEUS CARTÕES NESTE TÓPICO</div>'+listHtml:''}
   </div>`;
 }
 function userCardRow(c){
   const badge = cardMastered(c)?'<span class="uc-badge uc-mast">dominado</span>':(cardDue(c)?'<span class="uc-badge uc-due">revisar</span>':'<span class="uc-badge" style="background:var(--surface);color:var(--text-dim)">ok</span>');
-  return '<div class="usercard"><span class="uc-q">'+esc(cardFrontText(c)).slice(0,90)+'</span>'+badge+'<span class="uc-meta">'+(c.reviews||0)+'rev</span><span class="uc-del" title="Excluir" onclick="delUserCard(\''+c.id+'\')">✕</span></div>';
+  return '<div class="usercard"><span class="uc-q">'+cardPreview(c)+'</span>'+badge+'<span class="uc-meta">'+(c.reviews||0)+'rev</span><span class="uc-edit" title="Editar" onclick="editUserCard(\''+c.id+'\')">✎</span><span class="uc-del" title="Excluir" onclick="delUserCard(\''+c.id+'\')">✕</span></div>';
 }
 window.setCreatorType=function(id,t){ creatorState[id]={type:t}; renderTab(); };
 window.addUserCard=function(matId){
@@ -3441,6 +4033,33 @@ window.addUserCard=function(matId){
   bumpDaily('created'); addNP(3,'flashcard criado'); refreshProgress(); persist(true);
   toast('🧠 Flashcard criado e vinculado!','');
   renderTab();
+};
+window.cfFmt=function(kind){
+  var el=window.__cf; if(!el||el.tagName!=='TEXTAREA'){ el=document.getElementById('fccBack')||document.getElementById('fccFront'); }
+  if(!el||el.tagName!=='TEXTAREA'){ toast('Clique no campo e selecione o trecho',''); return; }
+  var w={b:['**','**'],a:['{a:','}'],v:['{v:','}'],p:['{p:','}']}[kind]; if(!w)return;
+  var s=el.selectionStart||0, e=el.selectionEnd||0, val=el.value, sel=val.slice(s,e)||'texto';
+  el.value=val.slice(0,s)+w[0]+sel+w[1]+val.slice(e); el.focus();
+  var p=s+w[0].length; try{el.setSelectionRange(p,p+sel.length);}catch(_){}
+};
+window.editUserCard=function(cid){
+  var c=(State.data.userCards||[]).find(function(x){return x.id===cid;}); if(!c)return;
+  creatorState[c.matId]={type:c.type, editId:cid};
+  if(typeof curMod!=='undefined' && curMod===c.matId){ renderTab(); }
+  else { try{ openModule(c.matId); setTab('teoria'); }catch(e){ renderTab(); } }
+  toast('✎ Editando cartão — edite e salve','');
+};
+window.cancelEdit=function(matId){ if(creatorState[matId]) delete creatorState[matId].editId; renderTab(); };
+window.saveUserCard=function(matId){
+  var st=creatorState[matId]||{}; var cid=st.editId; if(!cid){ addUserCard(matId); return; }
+  var c=(State.data.userCards||[]).find(function(x){return x.id===cid;}); if(!c){ delete st.editId; renderTab(); return; }
+  var type=st.type||c.type; var g=function(id){var el=document.getElementById(id);return el?el.value.trim():'';};
+  var front=g('fccFront'), back=g('fccBack'), img=g('fccImg');
+  if(type==='cloze'){ if(!front||front.indexOf('{')<0){ toast('Marque a lacuna com chaves { }',''); return; } }
+  else if(!front){ toast('Preencha a frente/pergunta',''); return; }
+  if((type==='basic'||type==='qa'||type==='image') && !back){ toast('Preencha o verso/resposta',''); return; }
+  c.type=type; c.front=front; c.back=(type==='tf'?(back||'V'):back); c.img=img||'';
+  delete st.editId; persist(true); refreshProgress(); toast('💾 Cartão atualizado!',''); renderTab();
 };
 window.delUserCard=function(cid){ State.data.userCards=(State.data.userCards||[]).filter(c=>c.id!==cid); persist(); refreshProgress(); if(curMod&&document.getElementById('modBody'))renderTab(); else navigate(currentView); };
 
@@ -3475,8 +4094,8 @@ function renderReviewSession(){
   const img = (c.type==='image'&&c.img)? '<img src="'+esc(c.img)+'" style="max-width:100%;max-height:160px;border-radius:10px;margin-bottom:10px" onerror="this.style.display=\'none\'">':'';
   return `<div class="card glass"><div style="display:flex;justify-content:space-between;margin-bottom:10px"><span class="pill violet">Sessão de revisão</span><span class="mono" style="color:var(--text-dim);font-size:.8rem">${srSession.idx+1} / ${srSession.queue.length}</span></div>
     <div class="fc-stage"><div class="fc ${srSession.flip?'flip':''}" id="srCard" onclick="srFlip()">
-      <div class="fc-face fc-front"><span class="tagm">${esc(byId(c.matId).title||'')} · ${esc(c.subtema||'')}</span>${img}<div class="fc-q">${esc(cardFrontText(c))}</div><span class="fc-hint">clique para ver a resposta</span></div>
-      <div class="fc-face fc-back"><span class="tagm">resposta</span><div class="fc-a">${cardBackText(c)}</div><span class="fc-hint">avalie abaixo</span></div>
+      <div class="fc-face fc-front"><span class="tagm">${esc(byId(c.matId).title||'')} · ${esc(c.subtema||'')}</span>${img}<div class="fc-q">${fmtCardFront(c)}</div><span class="fc-hint">clique para ver a resposta</span></div>
+      <div class="fc-face fc-back"><span class="tagm">resposta</span><div class="fc-a">${fmtCardBack(c)}</div><span class="fc-hint">avalie abaixo</span></div>
     </div></div>
     <div class="sr-rate"><button class="btn-sm rate-err" onclick="srRate('errei')">Errei</button><button class="btn-sm rate-hard" onclick="srRate('dificil')">Difícil</button><button class="btn-sm rate-med" onclick="srRate('medio')">Médio</button><button class="btn-sm rate-easy" onclick="srRate('facil')">Fácil</button></div>
     <div style="text-align:center;margin-top:10px"><button class="btn btn-ghost btn-sm" onclick="endSrSession()">Encerrar sessão</button></div></div>`;
@@ -3517,7 +4136,7 @@ function wireCentral(){
     if(q.value){ const s=q.value.toLowerCase(); list=list.filter(c=>((c.front||'')+' '+(c.back||'')).toLowerCase().indexOf(s)>=0); }
     const el=document.getElementById('cfList'); if(!el)return;
     if(!list.length){ el.innerHTML='<p style="color:var(--text-soft);font-size:.88rem">Nenhum flashcard ainda. Crie cartões direto na aba <b>Teoria</b> de cada matéria — a área de criação fica sempre visível ali.</p>'; return; }
-    el.innerHTML=list.slice(0,200).map(c=>{ const m=byId(c.matId); return '<div class="usercard"><span class="uc-q">'+esc(cardFrontText(c)).slice(0,100)+'</span><span class="uc-meta">'+esc(m.title||'')+' · '+(c.reviews||0)+'rev</span>'+(cardMastered(c)?'<span class="uc-badge uc-mast">dominado</span>':(cardDue(c)?'<span class="uc-badge uc-due">revisar</span>':''))+'<span class="uc-del" onclick="delUserCard(\''+c.id+'\')">✕</span></div>'; }).join('');
+    el.innerHTML=list.slice(0,200).map(c=>{ const m=byId(c.matId); return '<div class="usercard"><span class="uc-q">'+cardPreview(c)+'</span><span class="uc-meta">'+esc(m.title||'')+' · '+(c.reviews||0)+'rev</span>'+(cardMastered(c)?'<span class="uc-badge uc-mast">dominado</span>':(cardDue(c)?'<span class="uc-badge uc-due">revisar</span>':''))+'<span class="uc-edit" onclick="editUserCard(\''+c.id+'\')">✎</span><span class="uc-del" onclick="delUserCard(\''+c.id+'\')">✕</span></div>'; }).join('');
   }
   ml.onchange=draw; df.onchange=draw; q.oninput=draw; draw();
 }
