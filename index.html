@@ -3298,6 +3298,190 @@ MODULES.push({
   cases:[{title:'Caso — Rosto torto ao acordar',hist:'Mulher, 35a, acordou com a boca desviada à esquerda e não consegue fechar o olho direito nem levantar a sobrancelha direita; teve resfriado na semana anterior.',exam:'Paralisia de toda a hemiface direita (incluindo testa), sinal de Bell presente, sem outros déficits.',labs:'Sem vesículas; exame neurológico restante normal.',reason:'Acometimento de toda a hemiface (testa incluída), agudo, isolado e idiopático = paralisia de Bell periférica.',dx:'Paralisia facial periférica (de Bell).',tx:'Corticoide precoce (primeiras 72h), proteção ocular com lubrificante e oclusão noturna; orientar recuperação habitual em semanas.'}]
 });
 
+/* ---------- 11. EMERGÊNCIAS E CONSCIÊNCIA ---------- */
+MODULES.push({
+  id:'coma', emoji:'🌑', region:'brainstem', tema:'Emergências e Consciência',
+  title:'Coma e Rebaixamento de Consciência', sub:'Avaliação do paciente comatoso: pupilas, tronco e causas',
+  prio:'altíssima', topics:['Coma','Glasgow','SARA','Pupilas','Reflexos de tronco'],
+  subtopics:[
+   {label:'1. O que é consciência',html:`<h3>🌑 Entendendo do zero</h3>
+<p>A consciência tem <b>dois componentes</b>, e isso explica tudo:</p>
+<ul><li><b>Nível</b> (estar acordado/alerta): depende do <b>SARA</b> — sistema ativador reticular ascendente, que fica no <b>tronco encefálico</b> e "liga" o cérebro.</li>
+<li><b>Conteúdo</b> (perceber a si e o ambiente): depende dos <b>hemisférios cerebrais (córtex)</b>.</li></ul>
+<div style="background:#0a0f1c;border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;text-align:center">
+<svg viewBox="0 0 280 150" width="100%" style="max-width:300px">
+<ellipse cx="140" cy="55" rx="100" ry="42" fill="#46566a" stroke="#cfd8e3" stroke-width="2"/>
+<text x="140" y="50" text-anchor="middle" font-size="11" fill="#e7edf5">córtex (conteúdo)</text>
+<path d="M120 95 Q140 90 160 95 L155 130 Q140 136 125 130 Z" fill="#5a4a6a" stroke="#cfd8e3" stroke-width="2"/>
+<text x="195" y="118" font-size="10" fill="#f2a33a">tronco</text>
+<g fill="#f2a33a"><circle cx="140" cy="100" r="3"/><circle cx="138" cy="92" r="3"/><circle cx="142" cy="84" r="3"/><circle cx="140" cy="76" r="3"/></g>
+<text x="60" y="100" text-anchor="middle" font-size="10" fill="#f2a33a">SARA</text>
+<text x="60" y="112" text-anchor="middle" font-size="8" fill="#f2a33a">(nível/alerta)</text>
+</svg>
+<div style="font-size:.76rem;color:var(--text-dim);margin-top:4px">O <b>SARA</b> (tronco) mantém o alerta; o <b>córtex</b> dá o conteúdo. Rebaixar consciência = lesar o tronco/SARA <b>ou</b> os dois hemisférios.</div>
+</div>
+<div class="callout mne"><b>Regra de ouro</b>Para haver coma, ou há lesão <b>do tronco (SARA)</b>, ou há disfunção <b>difusa dos dois hemisférios</b> (típico das causas tóxico-metabólicas). Uma lesão de <b>um</b> hemisfério só, sem compressão do tronco, não costuma dar coma.</div>`},
+   {label:'2. Espectro e Glasgow',html:`<h3>📉 Do sonolento ao coma</h3>
+<table class="med"><tr><th>Nível</th><th>Descrição</th></tr>
+<tr><td>Sonolência</td><td>Desperta fácil ao estímulo, volta a dormir</td></tr>
+<tr><td>Torpor/obnubilação</td><td>Desperta com dificuldade</td></tr>
+<tr><td>Estupor</td><td>Só responde a estímulo vigoroso/doloroso</td></tr>
+<tr><td><b>Coma</b></td><td>Não desperta, olhos fechados, sem resposta proposital</td></tr></table>
+<p>Quantifique com a <b>Escala de Glasgow</b> (3 a 15; abertura ocular + verbal + motora). Lembre: <b>Glasgow ≤ 8 = coma → proteger via aérea (intubar)</b>.</p>
+<div class="callout tip"><b>Dica</b>Use a melhor resposta motora como o item mais informativo do prognóstico; registre também as <b>pupilas</b> separadamente (a Glasgow não as inclui).</div>`},
+   {label:'3. Causas (estrutural x metabólica)',html:`<h3>🔍 Duas grandes categorias</h3>
+<table class="med"><tr><th></th><th>Estrutural</th><th>Tóxico-metabólica (mais comum)</th></tr>
+<tr><td>Exemplos</td><td>AVC, hemorragia, tumor, abscesso, herniação, TCE</td><td>Hipoglicemia, distúrbios do sódio, hepática/urêmica, hipóxia, sepse, intoxicações, pós-crise</td></tr>
+<tr><td>Pistas</td><td><b>Sinais focais/lateralização</b>, pupilas assimétricas, início súbito</td><td>Exame <b>simétrico</b>, sem foco; pupilas em geral reativas; flutuação</td></tr>
+<tr><td>Conduta</td><td>Neuroimagem urgente ± neurocirurgia</td><td>Corrigir a causa (glicose, sódio, etc.)</td></tr></table>
+<div class="callout mne"><b>Atalho</b><b>Foco/lateralização → pense estrutural</b> (imagem!). <b>Simétrico, sem foco → tóxico-metabólico</b> (corrigir o distúrbio). Pupilas reativas favorecem metabólico.</div>`},
+   {label:'4. Avaliação do paciente em coma',html:`<h3>🩺 Roteiro de avaliação</h3>
+<table class="med"><tr><th>Passo</th><th>O que fazer</th></tr>
+<tr><td><b>ABC + glicemia</b></td><td>Via aérea (Glasgow ≤8 → intubar), O₂, acesso; <b>glicemia capilar</b>; tiamina antes de glicose no etilista</td></tr>
+<tr><td><b>"Coquetel" do coma</b></td><td>Conforme suspeita: <b>glicose</b> (hipoglicemia), <b>tiamina</b>, <b>naloxona</b> (opioide)</td></tr>
+<tr><td><b>Pupilas</b></td><td>Tamanho e reatividade (ver abaixo)</td></tr>
+<tr><td><b>Reflexos de tronco</b></td><td>Fotomotor, córneo-palpebral, <b>oculocefálico</b> ("olhos de boneca"), oculovestibular (prova calórica), tosse</td></tr>
+<tr><td><b>Padrão motor/respiratório</b></td><td>Localiza dor? Decorticação/descerebração? Respiração de Cheyne-Stokes, etc.</td></tr></table>
+<h3>O que as pupilas dizem</h3>
+<ul><li><b>Puntiformes e reativas</b>: opioides ou lesão pontina.</li>
+<li><b>Médio-fixas</b>: lesão mesencefálica.</li>
+<li><b>Uma dilatada e fixa</b> (anisocoria): <b>herniação</b> (compressão do III par) — emergência.</li>
+<li><b>Ambas fixas e dilatadas</b>: lesão grave/anóxia.</li>
+<li><b>Reativas com coma</b>: aponta para causa <b>metabólica</b>.</li></ul>
+<div class="callout warn"><b>Sinais de herniação</b>Anisocoria com pupila fixa + deterioração + tríade de Cushing (hipertensão, bradicardia, respiração irregular) → medidas anti-HIC (cabeceira, osmoterapia) e neurocirurgia urgente.</div>`},
+   {label:'5. Síndromes que confundem',html:`<h3>🧩 Não é tudo coma</h3>
+<table class="med"><tr><th>Quadro</th><th>Diferença essencial</th></tr>
+<tr><td><b>Locked-in (encarceramento)</b></td><td>Paciente <b>consciente</b>, mas tetraplégico e anártrico (lesão pontina ventral); comunica-se por <b>movimentos verticais dos olhos/piscar</b>. NÃO é coma!</td></tr>
+<tr><td><b>Estado vegetativo / vigília sem responsividade</b></td><td>Abre os olhos e tem ciclos sono-vigília, mas <b>sem consciência</b> do ambiente</td></tr>
+<tr><td><b>Estado de consciência mínima</b></td><td>Respostas inconsistentes, porém reproduzíveis</td></tr>
+<tr><td><b>Mutismo acinético</b></td><td>Vigil, mas não inicia movimento/fala (lesões frontais)</td></tr>
+<tr><td><b>Morte encefálica</b></td><td>Ausência completa e irreversível de TODAS as funções encefálicas (ver matéria específica)</td></tr></table>
+<div class="callout trap"><b>Pegadinha humanitária e de prova</b>No <b>locked-in</b>, a pessoa está <b>acordada e consciente</b> — apenas não consegue se mover. Nunca o confunda com coma ou morte encefálica.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Coma</h3>
+<div class="mindmap"><div class="mm-center">COMA</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Anatomia</b><ul><li>Nível = SARA (tronco)</li><li>Conteúdo = córtex</li></ul></div>
+<div class="mm-branch"><b>Causas</b><ul><li>Estrutural (foco → imagem)</li><li>Metabólica (simétrico → corrigir)</li></ul></div>
+<div class="mm-branch"><b>Avaliação</b><ul><li>ABC + glicemia + coquetel</li><li>Pupilas + reflexos de tronco</li><li>Glasgow ≤8 → intubar</li></ul></div>
+<div class="mm-branch"><b>Confundem</b><ul><li>Locked-in (consciente!)</li><li>Vegetativo, mutismo acinético</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Coma com sinais focais/anisocoria</td><td>Causa estrutural → neuroimagem urgente</td></tr>
+<tr><td>Coma simétrico, pupilas reativas</td><td>Causa tóxico-metabólica → corrigir</td></tr>
+<tr><td>Glasgow ≤8</td><td>Intubar</td></tr>
+<tr><td>Pupilas puntiformes</td><td>Opioide ou lesão pontina</td></tr>
+<tr><td>Pupila dilatada fixa unilateral</td><td>Herniação (III par)</td></tr>
+<tr><td>Consciente, tetraplégico, move só os olhos</td><td>Locked-in (não é coma)</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Nível = tronco/SARA; conteúdo = córtex. ② Sempre glicemia + coquetel do coma. ③ Pupilas e reflexos de tronco localizam a lesão. ④ Glasgow ≤8 = intubar.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Esquecer hipoglicemia (causa rápida e reversível). ② Confundir locked-in com coma. ③ Não medir/registrar pupilas (a Glasgow não as inclui). ④ Atrasar a imagem quando há lateralização.</div>`}
+  ],
+  flowDx:{ title:'Coma: estrutural ou metabólico?', start:'k1', nodes:{
+    k1:{q:'Há sinais focais/lateralização ou pupilas assimétricas?',opts:[{t:'Sim',go:'rEstr'},{t:'Não',go:'k2'}]},
+    k2:{q:'Exame simétrico, pupilas reativas, contexto de distúrbio sistêmico?',opts:[{t:'Sim',go:'rMet'},{t:'Incerto',go:'rImg'}]}
+  }, results:{
+    rEstr:{title:'Provável causa estrutural',body:'Neuroimagem urgente (TC). Tratar HIC/herniação; avaliar neurocirurgia.'},
+    rMet:{title:'Provável causa tóxico-metabólica',body:'Corrigir glicemia, sódio, hipóxia; checar drogas/sepse/função hepática e renal.'},
+    rImg:{title:'Investigar amplamente',body:'Glicemia e coquetel do coma já; neuroimagem e exames metabólicos; considerar líquor se infecção.'}
+  }},
+  questions:[
+    {stem:'Paciente em coma, exame simétrico, pupilas reativas, sem sinais focais. Glicemia 28 mg/dL. Causa e conduta?',opts:['Estrutural; neurocirurgia','Tóxico-metabólica (hipoglicemia); glicose EV','Locked-in; observar','Morte encefálica'],correct:1,expl:'<b>B.</b> Coma simétrico, pupilas reativas e hipoglicemia = causa metabólica reversível → glicose EV imediata (tiamina antes no etilista).'},
+    {stem:'Comatoso com pupila direita dilatada e fixa, deteriorando. O que pensar?',opts:['Intoxicação por opioide','Herniação (compressão do III par) — emergência','Estado vegetativo','Tremor essencial'],correct:1,expl:'<b>B.</b> Anisocoria com pupila fixa + piora = herniação → anti-HIC e neurocirurgia.'},
+    {stem:'Qual exame deve ser feito imediatamente em todo coma?',opts:['Ressonância eletiva','Glicemia capilar','EEG','Punção lombar de rotina'],correct:1,expl:'<b>B.</b> A glicemia (e o coquetel do coma) é prioridade — hipoglicemia é causa comum e rapidamente reversível.'},
+    {stem:'Paciente acordado, sem mover os membros, comunicando-se apenas com movimentos verticais dos olhos. Diagnóstico?',opts:['Coma','Síndrome locked-in','Morte encefálica','Estado vegetativo'],correct:1,expl:'<b>B.</b> Locked-in: consciência preservada com tetraplegia e anartria (lesão pontina ventral); comunica-se pelos olhos.'}
+  ],
+  cards:[
+    {tag:'Anatomia',q:'Quais os dois componentes da consciência?',a:'Nível (SARA, no tronco) e conteúdo (córtex).'},
+    {tag:'Coma',q:'O que é necessário para haver coma?',a:'Lesão do tronco/SARA ou disfunção difusa dos dois hemisférios.'},
+    {tag:'Causas',q:'Estrutural x metabólica?',a:'Estrutural: foco/assimetria → imagem. Metabólica: simétrico, pupilas reativas → corrigir.'},
+    {tag:'Primeiro exame',q:'O que checar de imediato?',a:'Glicemia (e coquetel: glicose, tiamina, naloxona).'},
+    {tag:'Pupilas',q:'Pupila dilatada fixa unilateral sugere?',a:'Herniação (compressão do III par).'},
+    {tag:'Confunde',q:'O que é locked-in?',a:'Paciente consciente, tetraplégico, comunica-se pelos olhos — não é coma.'}
+  ],
+  cases:[{title:'Caso — Encontrado torporoso',hist:'Homem, 55a, etilista, encontrado torporoso em casa; sem trauma evidente.',exam:'Glasgow 9, exame simétrico, pupilas médias e reativas, sem sinais focais.',labs:'Glicemia 32 mg/dL.',reason:'Coma simétrico com pupilas reativas e hipoglicemia em etilista = causa tóxico-metabólica reversível.',dx:'Rebaixamento por hipoglicemia.',tx:'Proteger via aérea conforme Glasgow, tiamina seguida de glicose EV, reavaliar nível de consciência; investigar outras causas se não melhorar.'}]
+});
+
+MODULES.push({
+  id:'morte_encefalica', emoji:'⚰️', region:'brainstem', tema:'Emergências e Consciência',
+  title:'Morte Encefálica', sub:'Critérios do CFM: pré-requisitos, exames, apneia e complementar',
+  prio:'alta', topics:['Morte encefálica','CFM 2173/2017','Teste de apneia','Exame complementar'],
+  subtopics:[
+   {label:'1. O que é (e por que importa)',html:`<h3>⚰️ Entendendo do zero</h3>
+<p>Morte encefálica (ME) é a <b>parada completa e irreversível de TODAS as funções do encéfalo</b> — inclusive do <b>tronco encefálico</b>, que controla a respiração e os reflexos vitais. Legalmente e medicamente, <b>ME é a morte da pessoa</b>, ainda que o coração continue batendo com o auxílio de aparelhos.</p>
+<p>No Brasil, o processo é regido pela <b>Resolução CFM nº 2.173/2017</b>. O diagnóstico deve ser <b>preciso, padronizado e documentado</b> — e é obrigatório em todo paciente com coma não perceptivo e apneia persistente, <b>independentemente</b> de ser doador.</p>
+<div class="callout mne"><b>Fixe a ideia</b>ME = ausência completa e irreversível de função de <b>todo o encéfalo, incluindo o tronco</b>. É morte. Protocolo padronizado e obrigatório.</div>`},
+   {label:'2. Pré-requisitos',html:`<h3>✅ Antes de abrir o protocolo</h3>
+<p>Só se inicia a avaliação se TODOS estes pré-requisitos estiverem presentes:</p>
+<table class="med"><tr><th>Pré-requisito</th><th>Detalhe</th></tr>
+<tr><td><b>Causa conhecida e irreversível</b></td><td>Lesão encefálica de causa estabelecida, capaz de causar a ME</td></tr>
+<tr><td><b>Coma não perceptivo e arreativo</b></td><td>Sem qualquer resposta supraespinhal</td></tr>
+<tr><td><b>Excluir confundidores</b></td><td>Tratar/afastar <b>hipotermia</b> (temperatura &gt; 35°C), distúrbios <b>hidroeletrolíticos/metabólicos</b> graves, <b>intoxicações</b>/sedativos e <b>bloqueadores neuromusculares</b></td></tr>
+<tr><td><b>Estabilidade</b></td><td>PA e oxigenação adequadas para a avaliação</td></tr></table>
+<div class="callout warn"><b>Por que isso é decisivo</b>Sedativos, hipotermia ou distúrbios metabólicos podem <b>mimetizar</b> ME. Se não forem corrigidos/excluídos, o protocolo <b>não pode</b> ser iniciado — esse é um dos pontos mais cobrados.</div>`},
+   {label:'3. Exame clínico',html:`<h3>🩺 Os dois exames clínicos</h3>
+<p>São necessários <b>dois exames clínicos</b>, cada um por um <b>médico diferente</b> e <b>capacitado</b>; o exame clínico deve demonstrar coma não perceptivo e ausência dos reflexos fotomotor, córneo-palpebral, oculocefálico, vestíbulo-calórico e de tosse.</p>
+<table class="med"><tr><th>Reflexo de tronco</th><th>Na ME</th></tr>
+<tr><td>Fotomotor (pupilar)</td><td>Ausente (pupilas fixas)</td></tr>
+<tr><td>Córneo-palpebral</td><td>Ausente</td></tr>
+<tr><td>Oculocefálico ("olhos de boneca")</td><td>Ausente</td></tr>
+<tr><td>Vestíbulo-calórico (prova calórica)</td><td>Ausente</td></tr>
+<tr><td>Tosse</td><td>Ausente</td></tr></table>
+<p><b>Intervalo entre os exames</b> (CFM 2.173/2017): o intervalo mínimo entre o 1º e o 2º exame clínico é de uma hora nos pacientes com idade igual ou maior a dois anos; nas demais faixas etárias o intervalo é maior e varia conforme a idade.</p>
+<div class="callout tip"><b>Quem faz</b>Pelo menos um dos médicos deve ter <b>capacitação específica</b>; e nenhum dos que determinam a ME pode participar da equipe de transplante.</div>`},
+   {label:'4. Teste de apneia',html:`<h3>💨 O teste de apneia (obrigatório)</h3>
+<p>É o teste que confirma a <b>ausência de drive respiratório</b> (função do tronco). O teste de apneia deve ser realizado uma única vez e comprovar ausência de movimentos respiratórios na presença de hipercapnia (PaCO₂ superior a 55 mmHg).</p>
+<table class="med"><tr><th>Etapa</th><th>Detalhe</th></tr>
+<tr><td>Preparo</td><td>Pré-oxigenar; garantir estabilidade hemodinâmica</td></tr>
+<tr><td>Execução</td><td>Desconectar o ventilador mantendo <b>oxigenação</b>; observar o tórax</td></tr>
+<tr><td>Resultado positivo (compatível com ME)</td><td><b>Nenhum</b> movimento respiratório com PaCO₂ &gt; 55 mmHg</td></tr>
+<tr><td>Interromper se</td><td>Hipotensão, hipoxemia grave ou arritmia</td></tr></table>
+<div class="callout trap"><b>Pegadinhas</b>① Em situações com ausência de respiração por <b>causas extracranianas/farmacológicas</b>, o teste é <b>vedado</b> até reverter. ② <b>Teste negativo</b> = QUALQUER movimento respiratório → NÃO é ME. ③ Não repetir o teste de apneia se o primeiro já foi positivo.</div>`},
+   {label:'5. Exame complementar e documentação',html:`<h3>🧪 Confirmação obrigatória</h3>
+<p>No Brasil, além do exame clínico e do teste de apneia, é obrigatório um exame complementar que demonstre, de forma inequívoca, a ausência de perfusão sanguínea, de atividade elétrica ou de atividade metabólica encefálica. Pode ser:</p>
+<table class="med"><tr><th>O que demonstra</th><th>Exames possíveis</th></tr>
+<tr><td>Ausência de <b>perfusão</b></td><td>Arteriografia cerebral, <b>Doppler transcraniano</b></td></tr>
+<tr><td>Ausência de <b>atividade elétrica</b></td><td><b>Eletroencefalograma</b></td></tr>
+<tr><td>Ausência de <b>atividade metabólica</b></td><td>Cintilografia / SPECT cerebral</td></tr></table>
+<h3>Fechamento</h3>
+<ul><li>Preencher o <b>Termo de Declaração de Morte Encefálica</b>; registrar tudo no prontuário.</li>
+<li>Comunicar a <b>família</b> e a <b>central de transplantes</b> (a notificação é obrigatória; a doação depende de autorização familiar).</li></ul>
+<div class="callout mne"><b>Resumo do protocolo</b><b>Pré-requisitos</b> → <b>2 exames clínicos</b> (médicos diferentes/capacitados, com intervalo) → <b>teste de apneia</b> → <b>exame complementar</b> obrigatório → documentação e comunicação.</div>`},
+   {label:'Mapa Mental',html:`<h3>🧠 Mapa mental — Morte Encefálica</h3>
+<div class="mindmap"><div class="mm-center">MORTE ENCEFÁLICA</div><div class="mm-trunk"></div><div class="mm-branches">
+<div class="mm-branch"><b>Conceito</b><ul><li>Parada irreversível de todo o encéfalo</li><li>Inclui o tronco</li><li>CFM 2.173/2017</li></ul></div>
+<div class="mm-branch"><b>Pré-requisitos</b><ul><li>Causa conhecida/irreversível</li><li>Excluir hipotermia, drogas, metabólico</li></ul></div>
+<div class="mm-branch"><b>Exames</b><ul><li>2 clínicos (médicos diferentes)</li><li>Ausência dos reflexos de tronco</li><li>Teste de apneia (PaCO₂ &gt;55)</li></ul></div>
+<div class="mm-branch"><b>Complementar</b><ul><li>EEG / Doppler / arteriografia / cintilografia</li><li>Documentar + comunicar</li></ul></div>
+</div></div>`},
+   {label:'Revisão de véspera',html:`<h3>📌 Revisão de véspera</h3>
+<table class="med"><tr><th>Situação</th><th>Resposta</th></tr>
+<tr><td>Antes de iniciar o protocolo</td><td>Causa conhecida + excluir hipotermia/drogas/metabólico</td></tr>
+<tr><td>Quantos exames clínicos e quem faz</td><td>2, por médicos diferentes e capacitados</td></tr>
+<tr><td>Intervalo (≥2 anos)</td><td>Mínimo de 1 hora (varia nas demais idades)</td></tr>
+<tr><td>Reflexos de tronco na ME</td><td>Todos ausentes (fotomotor, córneo, oculocefálico, vestíbulo-calórico, tosse)</td></tr>
+<tr><td>Teste de apneia positivo</td><td>Sem movimentos respiratórios com PaCO₂ &gt; 55 mmHg</td></tr>
+<tr><td>Exame complementar</td><td>Obrigatório (EEG, Doppler, arteriografia ou cintilografia)</td></tr></table>`},
+   {label:'Dicas & Pegadinhas',html:`<h3>💡 Dicas</h3>
+<div class="callout fast"><b>Lembre</b>① Excluir confundidores ANTES (hipotermia/drogas/metabólico). ② 2 exames clínicos + apneia + complementar. ③ ME inclui o tronco. ④ Documentar e comunicar.</div>
+<div class="callout trap"><b>Pegadinhas</b>① Iniciar protocolo sem corrigir hipotermia/sedação. ② Esquecer que o exame complementar é OBRIGATÓRIO no Brasil. ③ Confundir ME com estado vegetativo ou locked-in (nesses, há função encefálica). ④ Permitir que médico da equipe de transplante faça a determinação.</div>`}
+  ],
+  questions:[
+    {stem:'Antes de iniciar o protocolo de morte encefálica, é indispensável:',opts:['Apenas um exame clínico','Causa conhecida e exclusão de hipotermia, drogas e distúrbios metabólicos','Consentimento para doação','Parada cardíaca'],correct:1,expl:'<b>B.</b> Pré-requisitos: causa conhecida/irreversível e exclusão de confundidores (hipotermia, sedativos/bloqueadores, distúrbios metabólicos).'},
+    {stem:'Sobre os exames clínicos na ME (CFM 2.173/2017):',opts:['Um único médico faz os dois','Dois exames por médicos diferentes e capacitados, com intervalo','Não precisa de intervalo','Pode ser feito pela equipe de transplante'],correct:1,expl:'<b>B.</b> São dois exames por médicos diferentes/capacitados, com intervalo (≥1h em ≥2 anos); quem determina não participa do transplante.'},
+    {stem:'O teste de apneia é considerado positivo (compatível com ME) quando:',opts:['Há movimentos respiratórios débeis','Não há movimentos respiratórios com PaCO₂ > 55 mmHg','A PaCO₂ permanece normal','O paciente tosse'],correct:1,expl:'<b>B.</b> Ausência de movimentos respiratórios com hipercapnia (PaCO₂ > 55 mmHg) confirma ausência de drive respiratório.'},
+    {stem:'No Brasil, o exame complementar na morte encefálica é:',opts:['Opcional','Obrigatório (perfusão, atividade elétrica ou metabólica)','Substituível pelo Glasgow','Apenas para doadores'],correct:1,expl:'<b>B.</b> É obrigatório e deve comprovar ausência de perfusão (Doppler/arteriografia), de atividade elétrica (EEG) ou metabólica (cintilografia).'}
+  ],
+  cards:[
+    {tag:'Conceito',q:'O que é morte encefálica?',a:'Parada completa e irreversível de todas as funções do encéfalo, incluindo o tronco. É a morte.'},
+    {tag:'Lei',q:'Qual resolução rege no Brasil?',a:'Resolução CFM nº 2.173/2017.'},
+    {tag:'Pré-requisitos',q:'O que excluir antes?',a:'Hipotermia (>35°C), distúrbios metabólicos/eletrolíticos graves, intoxicação/sedativos e bloqueadores neuromusculares; ter causa conhecida.'},
+    {tag:'Clínico',q:'Quantos exames e reflexos?',a:'2 exames (médicos diferentes/capacitados); ausência de fotomotor, córneo, oculocefálico, vestíbulo-calórico e tosse.'},
+    {tag:'Apneia',q:'Quando é positivo?',a:'Sem movimentos respiratórios com PaCO₂ > 55 mmHg.'},
+    {tag:'Complementar',q:'É obrigatório? Quais?',a:'Sim. EEG, Doppler transcraniano, arteriografia ou cintilografia.'}
+  ],
+  cases:[{title:'Caso — Coma após hemorragia maciça',hist:'Paciente com hemorragia cerebral extensa, em ventilação mecânica, sem sedação há tempo suficiente, normotérmico e sem distúrbios metabólicos.',exam:'Coma não perceptivo; ausência de todos os reflexos de tronco.',labs:'Teste de apneia: sem movimentos respiratórios com PaCO₂ 60 mmHg.',reason:'Causa conhecida e irreversível, confundidores excluídos, exame clínico e apneia compatíveis — falta confirmar com complementar e repetir o exame clínico.',dx:'Protocolo de morte encefálica em andamento.',tx:'Repetir o exame clínico por segundo médico capacitado após o intervalo, realizar exame complementar obrigatório, preencher o Termo de ME e comunicar família e central de transplantes.'}]
+});
+
 const REGION_INFO = {
   frontal:{name:'Lobo Frontal',msg:'Funções executivas ativadas.',color:'#38BDF8',represents:'Neuroanatomia, cognição, demências'},
   parietal:{name:'Lobo Parietal',msg:'Processamento sensorial desbloqueado.',color:'#22D3EE',represents:'Sensibilidade, síndromes corticais'},
@@ -3358,6 +3542,7 @@ const ACHIEVEMENTS=[
   {id:'inf',name:'Guardião das Meninges',medal:'🦠',desc:'80% em Infecções do SNC',check:()=>['mening_bac','mening_vir','enceph_hsv'].every(x=>moduleProgress(byId(x))>=80)},
   {id:'emerg',name:'Rei das Emergências',medal:'🚑',desc:'80% em todo o Trauma (TCE)',check:()=>['tce_aval','tce_hemat','tce_leve'].every(x=>moduleProgress(byId(x))>=80)},
   {id:'neuromusc',name:'Mestre Neuromuscular',medal:'💪',desc:'80% no bloco Neuromuscular',check:()=>['miastenia','ela','neuropatias','bell'].every(x=>moduleProgress(byId(x))>=80)},
+  {id:'consc',name:'Guardião da Consciência',medal:'🌑',desc:'80% em Emergências e Consciência',check:()=>['coma','morte_encefalica'].every(x=>moduleProgress(byId(x))>=80)},
   {id:'streak3',name:'Constância',medal:'🔥',desc:'3 dias seguidos de estudo',check:sp=>sp.studyStreak>=3},
   {id:'streak7',name:'Disciplina de Aço',medal:'💎',desc:'7 dias seguidos',check:sp=>sp.studyStreak>=7},
   {id:'q50',name:'Maratonista',medal:'🏃',desc:'50 questões respondidas',check:sp=>sp.questionsAnswered>=50},
@@ -3531,7 +3716,9 @@ const SCORES = {
   miastenia:`<h3>🎯 Miastenia Gravis</h3><table class="med"><tr><th>Item</th><th>Chave</th></tr><tr><td>Clínica</td><td>Fatigabilidade (piora com uso)</td></tr><tr><td>Anticorpo</td><td>Anti-AChR (depois anti-MuSK)</td></tr><tr><td>ENMG</td><td>Decremento</td></tr><tr><td>Investigar</td><td>Timo (TC tórax)</td></tr><tr><td>Tratamento</td><td>Piridostigmina + imunossupressão; crise: IVIg/plasmaférese</td></tr></table><div class="callout trap"><b>Eaton-Lambert:</b> melhora com exercício, reflexos baixos, câncer de pulmão.</div>`,
   ela:`<h3>🎯 ELA — neurônio motor</h3><table class="med"><tr><th>1º neurônio</th><th>2º neurônio</th></tr><tr><td>Espasticidade, hiperreflexia, Babinski</td><td>Atrofia, fasciculações, hipotonia</td></tr></table><div class="callout fast"><b>Marca:</b> sinais de 1º + 2º neurônio, SEM sensitivo. Excluir compressão cervical. Riluzol + suporte.</div>`,
   neuropatias:`<h3>🎯 Neuropatias periféricas</h3><table class="med"><tr><th>Padrão/causa</th><th>Chave</th></tr><tr><td>Polineuropatia</td><td>Distal simétrica (bota e luva) — diabetes</td></tr><tr><td>Mediano</td><td>Túnel do carpo (1º-3º dedos, Tinel/Phalen)</td></tr><tr><td>Fibular</td><td>Pé caído</td></tr><tr><td>Brasil</td><td>Hanseníase (mancha + nervo espessado)</td></tr></table><div class="callout mne"><b>Rastreio:</b> glicemia, B12, TSH. Dor: gabapentina/duloxetina.</div>`,
-  bell:`<h3>🎯 Paralisia facial</h3><table class="med"><tr><th></th><th>Periférica (Bell)</th><th>Central (AVC)</th></tr><tr><td>Testa</td><td>Acometida (cai)</td><td>Poupada (enruga)</td></tr></table><div class="callout fast"><b>Bell:</b> corticoide precoce + proteção ocular. Vesículas no ouvido = Ramsay Hunt (antiviral).</div>`
+  bell:`<h3>🎯 Paralisia facial</h3><table class="med"><tr><th></th><th>Periférica (Bell)</th><th>Central (AVC)</th></tr><tr><td>Testa</td><td>Acometida (cai)</td><td>Poupada (enruga)</td></tr></table><div class="callout fast"><b>Bell:</b> corticoide precoce + proteção ocular. Vesículas no ouvido = Ramsay Hunt (antiviral).</div>`,
+  coma:`<h3>🎯 Coma — chave</h3><table class="med"><tr><th>Tipo</th><th>Pista</th></tr><tr><td>Estrutural</td><td>Foco/anisocoria → imagem</td></tr><tr><td>Tóxico-metabólico</td><td>Simétrico, pupilas reativas → corrigir</td></tr></table><div class="callout fast"><b>Sempre:</b> glicemia + coquetel (glicose, tiamina, naloxona). Glasgow ≤8 → intubar. Pupila fixa unilateral = herniação.</div>`,
+  morte_encefalica:`<h3>🎯 Morte encefálica (CFM 2.173/2017)</h3><table class="med"><tr><th>Etapa</th><th>Detalhe</th></tr><tr><td>Pré-requisitos</td><td>Causa conhecida; excluir hipotermia/drogas/metabólico</td></tr><tr><td>Exame clínico</td><td>2 médicos diferentes; reflexos de tronco ausentes</td></tr><tr><td>Apneia</td><td>Sem respirar com PaCO₂ &gt;55</td></tr><tr><td>Complementar</td><td>Obrigatório (EEG/Doppler/arteriografia/cintilografia)</td></tr></table>`
 };
 
 /* separar subtópicos em Teoria / Mapa / Revisão / Dicas */
